@@ -2,7 +2,7 @@
 
 module Rye; class Box;
   
-  # Rye::Box::Response
+  # Rye::Box::Rap
   #
   # This class is a modified Array which is returned by
   # all command methods. The commands output is split
@@ -12,7 +12,7 @@ module Rye; class Box;
   # This class also contains a reference to the instance
   # of Rye::Box that the command was executed on.
   #
-  class Response < Array 
+  class Rap < Array 
      # A reference to the Rye::Bos instance the command
      # was executed on.
     attr_reader :box
@@ -28,11 +28,12 @@ module Rye; class Box;
     # one, otherwise the value of Array#to_s
     def to_s
       return self.first if self.size == 1
+      return "" if self.size == 0
       super
     end
     
     #---
-    # If Box's shell methods return Response objects, then 
+    # If Box's shell methods return Rap objects, then 
     # we can do stuff like this
     # rbox.cp '/etc' | rbox2['/tmp']
     #def |(other)

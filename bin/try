@@ -1,0 +1,67 @@
+#!/usr/bin/ruby
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+
+require 'rubygems'
+require 'stringio'
+require 'yaml'
+require 'rye'
+
+# ------------------------------------------------------------------
+#   EXAMPLE 1 -- Basic Usage
+#
+
+rbox = Rye::Box.new('localhost')
+
+puts rbox.uptime                # => 11:02  up 16:01, 3 users
+
+puts rbox.ls('rye.test')        # => ls: rye.test: No such file or directory
+puts rbox.touch('rye.test')     # => nil
+puts rbox.rm('rye.test')        # => nil
+
+puts rbox.echo('$HOME')         # => $HOME
+
+puts rbox.pwd                   # => /home/rye
+puts rbox['/usr/bin'].pwd       # => /usr/bin
+puts rbox.pwd                   # => /usr/bin
+puts rbox.cd('/home/rye').pwd   # => /home/rye
+
+puts rbox.commands.join(', ')   # => pwd, touch, echo, wc, ...
+
+rbox.disconnect
+
+
+# ------------------------------------------------------------------
+#   EXAMPLE 2 -- Custom Commands
+#
+
+rbox = Rye::Box.new('localhost')
+rbox.add_keys('/private/key/path')  # Specify additional private keys
+
+begin
+  puts rbox.git('--help')  
+rescue NoMethodError => ex
+  puts ex.message                   # => undefined method `git' for #<Rye::Box ...>
+end
+
+module Rye::Box::Cmd
+  def git(*args); cmd("git", args);  end
+end
+
+puts rbox.git('--help')             # => usage: git [--version] ...
+puts rbox.commands.member?('git')   # => true
+
+
+__END__
+
+#rbox2 = Rye::Box.new('ec2-174-129-173-3.compute-1.amazonaws.com', 'root')
+#rbox.add_keys('/Users/delano/Projects/git/rudy/.rudy/key-test-app.private')
+#rbox.connect
+#puts rbox.date
+#puts rbox.pwd
+
+rgroup = Rye::Group.new('root', 'keydir/file')
+rgroup.add_hosts('ec2-174-129-173-3.compute-1.amazonaws.com')
+rgroup.command('hostname')
+

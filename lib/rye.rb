@@ -1,10 +1,10 @@
 
 require 'rubygems' unless defined? Gem
-require 'sysinfo'
-require 'escape'
+require 'net/ssh'
 require 'thread'
 require 'highline'
-require 'rye'
+require 'esc'
+require 'sys'
 
 # = Rye
 #

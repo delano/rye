@@ -13,14 +13,14 @@ module Rye
   #
   # You can also run local commands through SSH
   #
-  #     rbox = Rye::Box.new('localhost) 
+  #     rbox = Rye::Box.new('localhost') 
   #     rbox.hostname   # => localhost
   #
   #     rbox = Rye::Box.new
   #     rbox.hostname   # => localhost
   #
   class Box 
-    include Rye::Box::Commands
+    include Rye::Box::Cmd
     
     @@agent_env ||= Hash.new  # holds ssh-agent env vars
     
@@ -32,36 +32,45 @@ module Rye
     attr_accessor :host
     attr_accessor :user
     
-    def initialize(host='localhost', user=nil, opts={})
-      user ||= Rye.sysinfo.user
+    # * +host+ The hostname to connect to. The default is localhost.
+    # * +opts+ a hash of optional arguments in the following format:
+    #
+    # * :user => the username to connect as. Default: the current user. 
+    # * :keypairs => one or more private key file paths (passwordless login)
+    # * :debug => an IO object to print Rye::Box debugging info to
+    # * :error => an IO object to print Rye::Box errors to. Default: STDERR
+    def initialize(host='localhost', opts={})
       
       opts = {
+        :user => Rye.sysinfo.user, 
         :keypairs => [],
-        :stdout => STDOUT,
-        :stderr => STDERR,
+        :debug => nil,
+        :error => STDERR,
       }.merge(opts)
       
       @mutex = Mutex.new
       @mutex.synchronize { Box.start_sshagent_environment }   # One thread only
       
+      at_exit {
+        self.disconnect
+        Box.end_sshagent_environment
+      }
+      
       @host = host
-      @user = user
+      @user = opts[:user]
       @keypaths = add_keys(opts[:keypaths])
       @stdout = opts[:stdout]
       @stderr = opts[:stderr]
     end
     
-    
-    at_exit {
-      Box.end_sshagent_environment
-    }
      
     # Returns an Array of system commands available over SSH
     def can
-      Rye::Box::Commands.instance_methods
+      Rye::Box::Cmd.instance_methods
     end
     alias :commands :can
-       
+    alias :cmds :can
+    
     # Change the current working directory (sort of). 
     #
     # I haven't been able to wrangle Net::SSH to do my bidding. 
@@ -97,17 +106,20 @@ module Rye
     def connect
       raise Rye::NoHost unless @host
       disconnect if @ssh 
-      @stderr.puts "Opening connection to #{@host}"
+      debug "Opening connection to #{@host}"
       @ssh = Net::SSH.start(@host, @user) 
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
     
+    def debug(msg); @debug.puts msg if @debug; end
+    def error(msg); @error.puts msg if @error; end
+    
     # Close the SSH session  with +@host+
     def disconnect
       return unless @ssh && !@ssh.closed?
       @ssh.loop(0.1) { @ssh.busy? }
-      @stderr.puts "Closing connection to #{@ssh.host}"
+      debug "Closing connection to #{@ssh.host}"
       @ssh.close
     end
     
@@ -220,7 +232,6 @@ module Rye
       # 
       def Box.start_sshagent_environment
         return if @@agent_env["SSH_AGENT_PID"]
-        
         lines = Rye::Box.shell("ssh-agent", '-s') || ''
         lines.split($/).each do |line|
           next unless line.index("echo").nil?
@@ -270,11 +281,11 @@ module Rye
           cwd = Escape.shell_command('cd', @current_working_directory)
           cmd_clean = "%s && %s" % [cwd, cmd_clean]
         end
-        @stderr.puts "Executing: %s" % cmd_clean
+        debug "Executing: %s" % cmd_clean
         output = @ssh.exec! cmd_clean
-        Rye::Box::Response.new(self, (output || '').split($/))
+        Rye::Box::Rap.new(self, (output || '').split($/))
       end
-      
+      alias :cmd :command
       
 
   end
