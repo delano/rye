@@ -13,40 +13,27 @@ module Rye
   #
   # You can also run local commands through SSH
   #
-<<<<<<< HEAD:lib/rye/box.rb
   #     rbox = Rye::Box.new('localhost') 
-=======
-  #     rbox = Rye::Box.new('localhost) 
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
   #     rbox.hostname   # => localhost
   #
   #     rbox = Rye::Box.new
   #     rbox.hostname   # => localhost
   #
   class Box 
-<<<<<<< HEAD:lib/rye/box.rb
     include Rye::Cmd
-=======
-    include Rye::Box::Commands
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
-    
+
     @@agent_env ||= Hash.new  # holds ssh-agent env vars
     
       # An instance of Net::SSH::Connection::Session
     attr_reader :ssh
-<<<<<<< HEAD:lib/rye/box.rb
     
     attr_reader :debug
     attr_reader :error
-=======
-    attr_reader :stdout
-    attr_reader :stderr
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
     
     attr_accessor :host
     attr_accessor :user
-    
-<<<<<<< HEAD:lib/rye/box.rb
+
+
     # * +host+ The hostname to connect to. The default is localhost.
     # * +opts+ a hash of optional arguments in the following format:
     #
@@ -87,38 +74,7 @@ module Rye
     alias :commands :can
     alias :cmds :can
     
-=======
-    def initialize(host='localhost', user=nil, opts={})
-      user ||= Rye.sysinfo.user
-      
-      opts = {
-        :keypairs => [],
-        :stdout => STDOUT,
-        :stderr => STDERR,
-      }.merge(opts)
-      
-      @mutex = Mutex.new
-      @mutex.synchronize { Box.start_sshagent_environment }   # One thread only
-      
-      @host = host
-      @user = user
-      @keypaths = add_keys(opts[:keypaths])
-      @stdout = opts[:stdout]
-      @stderr = opts[:stderr]
-    end
     
-    
-    at_exit {
-      Box.end_sshagent_environment
-    }
-     
-    # Returns an Array of system commands available over SSH
-    def can
-      Rye::Box::Commands.instance_methods
-    end
-    alias :commands :can
-       
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
     # Change the current working directory (sort of). 
     #
     # I haven't been able to wrangle Net::SSH to do my bidding. 
@@ -146,13 +102,9 @@ module Rye
     
     # Add an environment variable to the command
     def add_env(n, v)
-<<<<<<< HEAD:lib/rye/box.rb
       debug "Added env: #{n}=#{v}"
       (@current_environment_variables ||= {})[n] = v
       self
-=======
-      
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
     end
     
     # Open an SSH session with +@host+.  
@@ -160,29 +112,17 @@ module Rye
     def connect
       raise Rye::NoHost unless @host
       disconnect if @ssh 
-<<<<<<< HEAD:lib/rye/box.rb
       debug "Opening connection to #{@host}"
-=======
-      @stderr.puts "Opening connection to #{@host}"
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
       @ssh = Net::SSH.start(@host, @user) 
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
-<<<<<<< HEAD:lib/rye/box.rb
 
-=======
-    
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
     # Close the SSH session  with +@host+
     def disconnect
       return unless @ssh && !@ssh.closed?
       @ssh.loop(0.1) { @ssh.busy? }
-<<<<<<< HEAD:lib/rye/box.rb
       debug "Closing connection to #{@ssh.host}"
-=======
-      @stderr.puts "Closing connection to #{@ssh.host}"
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
       @ssh.close
     end
     
@@ -195,10 +135,7 @@ module Rye
       Rye::Box.shell("ssh-add") # Add the user's default keys
       self
     end
-<<<<<<< HEAD:lib/rye/box.rb
     alias :add_key :add_keys
-=======
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
     
     # Returns an Array of info about the currently available
     # SSH keys, as provided by the SSH Agent. See
@@ -299,10 +236,7 @@ module Rye
       # 
       def Box.start_sshagent_environment
         return if @@agent_env["SSH_AGENT_PID"]
-<<<<<<< HEAD:lib/rye/box.rb
-=======
-        
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
+
         lines = Rye::Box.shell("ssh-agent", '-s') || ''
         lines.split($/).each do |line|
           next unless line.index("echo").nil?
@@ -317,7 +251,6 @@ module Rye
       
       # Kill the local instance of the SSH Agent we started.
       #
-<<<<<<< HEAD:lib/rye/box.rb
       # Calls this command via the local shell:
       #
       #     $ ssh-agent -k
@@ -347,18 +280,7 @@ module Rye
         [env, cmd].join(' ')
       end
       
-=======
-      #     $ echo $SSH_AGENT_PID
-      #     99416
-      #     $ kill -9 99416
-      #
-      def Box.end_sshagent_environment
-        pid = @@agent_env["SSH_AGENT_PID"]
-        Rye::Box.shell("kill", ['-9', pid]) if pid
-        nil
-      end
-      
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
+
       # Execute a command over SSH
       #
       # * +args+ is a command name and list of arguments. 
@@ -379,7 +301,6 @@ module Rye
         args = args.first.split(/\s+/) if args.size == 1
         cmd, args = args.flatten.compact
         cmd_clean = Escape.shell_command(cmd, *args).to_s
-<<<<<<< HEAD:lib/rye/box.rb
         cmd_clean = prepend_env(cmd_clean)
         cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
         if @current_working_directory
@@ -391,18 +312,7 @@ module Rye
         Rye::Rap.new(self, (output || '').split($/))
       end
       alias :cmd :command
-=======
-        cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
-        if @current_working_directory
-          cwd = Escape.shell_command('cd', @current_working_directory)
-          cmd_clean = "%s && %s" % [cwd, cmd_clean]
-        end
-        @stderr.puts "Executing: %s" % cmd_clean
-        output = @ssh.exec! cmd_clean
-        Rye::Box::Response.new(self, (output || '').split($/))
-      end
-      
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye/box.rb
+
       
 
   end

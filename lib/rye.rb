@@ -1,18 +1,11 @@
 
 require 'rubygems' unless defined? Gem
-<<<<<<< HEAD:lib/rye.rb
+
 require 'net/ssh'
 require 'thread'
 require 'highline'
 require 'esc'
 require 'sys'
-=======
-require 'sysinfo'
-require 'escape'
-require 'thread'
-require 'highline'
-require 'rye'
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye.rb
 
 # = Rye
 #
@@ -29,14 +22,9 @@ require 'rye'
 #
 module Rye
   extend self
-<<<<<<< HEAD:lib/rye.rb
-  
+
   unless defined?(SYSINFO)
     VERSION = 0.2.freeze
-=======
-  unless defined?(SYSINFO)
-    VERSION = 0.1.freeze
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye.rb
     SYSINFO = SystemInfo.new.freeze
   end
   
@@ -44,33 +32,16 @@ module Rye
   def sysinfo; SYSINFO;  end
   
   class CommandNotFound < RuntimeError; end
-<<<<<<< HEAD:lib/rye.rb
   class NoBoxes < RuntimeError; end
-=======
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye.rb
   class NoHost < RuntimeError; end
   class NotConnected < RuntimeError; end
   
   # Reload Rye dynamically. Useful with irb. 
   def reload
-<<<<<<< HEAD:lib/rye.rb
     pat = File.join(File.dirname(__FILE__), 'rye')
     %w{rap cmd box set}.each {|lib| load File.join(pat, "#{lib}.rb") }
   end
-  
 
-=======
-    pat = File.join(File.dirname(__FILE__), 'rye', '**', '*.rb')
-    Dir.glob(pat).collect { |file| load file; file; }
-  end
-  
-  #def run
-    #@bgthread = Thread.new do
-    #  loop { @mutex.synchronize { approach } }
-    #end
-    #@bgthread.join
-  #end
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:lib/rye.rb
 end
 
 
