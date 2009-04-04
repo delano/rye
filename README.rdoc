@@ -1,0 +1,35 @@
+= Rye - v0.1
+
+Run system commands via SSH locally and remotely in a Ruby way. 
+
+Rye is similar to Rush[http://rush.heroku.com] but it's all Ruby (no HTTP daemon) and it's less powerful by design. 
+
+
+== Installation
+
+One of:
+
+* sudo gem install rye
+* sudo gem install delano-rye --source http://gems.github.com/
+* $ git clone git://github.com/delano/rye.git
+
+== Example
+
+     rbox = Rye::Box.new('filibuster')
+     rbox.hostname   # => filibuster
+
+     rbox['/etc/apache'].ls               # => ['httpd.conf','mime.types', ...]
+
+
+== Credits
+
+* Delano Mandelbaum (delano@solutious.com)
+
+== Thanks
+
+* Solutious Incorporated (http://solutious.com) for all the orange juice.
+* The country of Canada for making Rye Whiskey. 
+
+== License
+
+See: LICENSE.txt
