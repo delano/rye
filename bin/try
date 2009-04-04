@@ -1,70 +1,89 @@
 #!/usr/bin/ruby
 
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+# Rye -- A working example
+#
+# If your reading this via the rdocs you won't be able to see the code
+# See: http://github.com/delano/rye/blob/master/bin/try
+#
+# Usage: bin/try
+#
 
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'rubygems'
 require 'stringio'
 require 'yaml'
 require 'rye'
 
+=begin
+
+puts %Q(
 # ------------------------------------------------------------------
 #   EXAMPLE 1 -- Basic Usage
-#
+#)
 
 rbox = Rye::Box.new('localhost')
 
 # Commands are run as methods on the Rye::Box object
-
 puts rbox.uptime                # => 11:02  up 16:01, 3 users
-
 
 # The response value for all commands is a Rye::Rap object. The rap is a
 # subclass of Array so you can treat it as an Array, but it can also act 
-# like a String if there's only one element. It also keeps a reference to the 
-# object that called the command. In this case, it will keep a reference
+# like a String if there's only one element. 
+puts rbox.ls('rye.test')           # => ""
+puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
 
-puts rbox.ls('rye.test')        # => ls: rye.test: No such file or directory
-puts rbox.touch('rye.test')     # => nil
-puts rbox.rm('rye.test')        # => nil
+puts rbox.touch('rye.test')        # => ""
+puts rbox.rm('rye.test')           # => ""
+                                 
+# You can change directories
+puts rbox.pwd                      # => /home/rye
+puts rbox['/usr/bin'].pwd          # => /usr/bin
+puts rbox.pwd                      # => /usr/bin
+puts rbox.cd('/home/rye').pwd      # => /home/rye
 
-puts rbox.echo('$HOME')         # => $HOME
+# You can specify environment variables
+rbox.add_env(:RYE, "Forty Creek")
+rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
 
-puts rbox.pwd                   # => /home/rye
-puts rbox['/usr/bin'].pwd       # => /usr/bin
-puts rbox.pwd                   # => /usr/bin
-puts rbox.cd('/home/rye').pwd   # => /home/rye
+# The commands method returns an Array of available commands:                        
+puts rbox.commands.join(', ')      # => pwd, touch, echo, wc, ...
 
-puts rbox.commands.join(', ')   # => pwd, touch, echo, wc, ...
-
+# When you're done you can disconnect explicitly. 
+# (Although Rye does this automatically at exit.)
 rbox.disconnect
 
-
+puts %Q(
 # ------------------------------------------------------------------
 #   EXAMPLE 2 -- Custom Commands
-#
+#)
 
 rbox = Rye::Box.new('localhost')
 rbox.add_keys('/private/key/path')  # Specify additional private keys
 
-begin
-  puts rbox.git('--help')  
-  
-rescue NoMethodError => ex
-  puts ex.message                   # => undefined method `git' for #<Rye::Box ...>
-end
+# 'git' isn't defined by default
+p rbox.commands.member?('rye9000')   # => false
 
+# You can add your own commands to the Rye::Cmd class. They automatically
+# become available to all Rye::Box objects.
 module Rye::Cmd
-  def git(*args); cmd("git", args);  end
+  def rye9000(*args)
+    add_command("ls", args)
+  end
+  def somescript(*args)
+    add_command("/path/to/my/script", args)
+  end
 end
 
-puts rbox.git('--help')             # => usage: git [--version] ...
-puts rbox.commands.member?('git')   # => true
+p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
+p rbox.commands.member?('rye9000')   # => true
 
+=end
 
+puts %Q(
 # ------------------------------------------------------------------
 #   EXAMPLE 3 -- Accessing Multiple Machines
-#
+#)
 
 rset = Rye::Set.new
 rbox = Rye::Box.new
@@ -72,18 +91,25 @@ rbox = Rye::Box.new
 rset.add_keys('/private/key/path')       # For passwordless logins 
 rset.add_boxes(rbox, 'localhost')        # Add boxes as hostnames or objects
 
+
 # Calling methods on Rye::Set objects is very similar to calling them on
 # Rye::Box objects. In fact, it's identical:
 
 p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
 p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
 
-# And like Rye::Box, the response value is a Rye::Rap object containing 
-# the responses from each box. Each response is itself a Rye::Rap object.
+
+# Like Rye::Box, the response value is a Rye::Rap object containing the
+# responses from each box. Each response is itself a Rye::Rap object.
 
 unames = rset.uname
 p unames                             # => [["Darwin"], ["Darwin"]]
 puts unames.class                    # => Rye::Rap
+
+
+# The Rye::Rap object also keeps a reference to the object that called the 
+# command. In this case, it will keep a reference to Rye::Set:
+
 puts unames.set                      # => Rye::Set
 puts unames.set == rset              # => true
 puts unames.size                     # => 2
@@ -91,6 +117,8 @@ puts unames.first                    # => Darwin
 puts unames.first.class              # => Rye::Rap
 puts unames.first.box                # => Rye::Box
 puts unames.first.box == rbox        # => true
+
+
 
 # Envrionment variables can be set the same way as with Rye::Box
 rset.add_env(:RYE, "Forty Creek")

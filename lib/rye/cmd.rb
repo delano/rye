@@ -39,6 +39,8 @@ module Rye;
     def mount; cmd("mount"); end
     def python(*args); cmd('python', args); end
     def uptime; cmd("uptime"); end
+    def printenv(*args); cmd('printenv', args); end
+    # Consider Rye.sysinfo.os == :unix
   end
 
 end

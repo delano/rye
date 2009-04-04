@@ -21,7 +21,7 @@ module Rye
       @boxes = []
       
       @opts = {
-        :parallel => false,
+        :parallel => true,
         :user => Rye.sysinfo.user, 
         :keypairs => [],
         :debug => STDOUT,
@@ -32,6 +32,8 @@ module Rye
       
       @debug = @opts[:debug]
       @error = @opts[:error]
+      
+      add_keys(opts[:keypairs])
     end
     
     # * +boxes+ one or more boxes. Rye::Box objects will be added directly 
@@ -50,7 +52,8 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Rye::Set
     def add_key(*additional_keys)
-      @opts[:keypairs] += [additional_keys].flatten.compact || []
+      additional_keys = [additional_keys].flatten.compact || []
+      Rye.add_keys(additional_keys)
       self
     end
     alias :add_keys :add_key
@@ -60,6 +63,10 @@ module Rye
       self
     end
     alias :add_environment_variable :add_env
+    
+    def keys
+      Rye.keys
+    end
     
     def [](key=nil)
       run_command(:cd, key)
@@ -82,20 +89,31 @@ module Rye
     
     def run_command_parallel(meth, *args)
       debug "P: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
-      @mutex = Mutex.new
-      @bgthread = Thread.new do
-        #loop { @mutex.synchronize { approach } }
+      threads = []
+      
+      raps = Rye::Rap.new(self)
+      (@boxes || []).each do |box|
+        threads << Thread.new do
+          Thread.current[:rap] = box.send(meth, *args) # Store the result in the thread
+        end
       end
-      @bgthread.join
+      
+      threads.each do |t| 
+        sleep 0.01
+        t.join            # Wait for the thread to finish
+        raps << t[:rap]   # Grab the result
+      end
+      
+      raps
     end
     
     def run_command_serial(meth, *args)
       debug "S: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
-      rap = Rye::Rap.new(self)
+      raps = Rye::Rap.new(self)
       (@boxes || []).each do |box|
-        rap << box.send(meth, *args)
+        raps << box.send(meth, *args)
       end
-      rap
+      raps
     end
     
     def debug(msg); @debug.puts msg if @debug; end

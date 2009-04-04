@@ -28,7 +28,7 @@
 # * URI
 # * HTML
 # * shell command
-module Escape
+module Escape #:nodoc:
   module_function
 
   class StringWrapper

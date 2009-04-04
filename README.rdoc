@@ -1,8 +1,10 @@
 = Rye - v0.2
 
-Run system commands via SSH locally and remotely in a Ruby way. Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and it's less powerful by design (for safety). 
+Run system commands via SSH locally and remotely in a Ruby way. 
 
-See +bin/try+ for a bunch of working examples. 
+Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and it's less powerful by design (for safety). 
+
+See +bin/try+ for a bunch of working examples.
 
 == Installation
 
@@ -63,12 +65,42 @@ One of:
     puts rbox.commands.member?('git')   # => true
 
 
+== EXAMPLE 3 -- Multiple Machines
+
+    rset = Rye::Set.new
+    rbox = Rye::Box.new
+    
+    rset.add_keys('/private/key/path')       # For passwordless logins 
+    rset.add_boxes(rbox, 'localhost')        # Add boxes as hostnames or objects
+    
+    # Calling methods on Rye::Set objects is very similar to calling them on
+    # Rye::Box objects. In fact, it's identical:
+    
+    p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
+    p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
+    
+    # And like Rye::Box, the response value is a Rye::Rap object containing 
+    # the responses from each box. Each response is itself a Rye::Rap object.
+    
+    unames = rset.uname
+    p unames                             # => [["Darwin"], ["Darwin"]]
+    puts unames.class                    # => Rye::Rap
+    puts unames.set                      # => Rye::Set
+    puts unames.set == rset              # => true
+    puts unames.size                     # => 2
+    puts unames.first                    # => Darwin
+    puts unames.first.class              # => Rye::Rap
+    puts unames.first.box                # => Rye::Box
+    puts unames.first.box == rbox        # => true
+
+
 == What you can't do
 
 * You can't use file globs. This means you can't do this: <tt>rbox.ls('*.rb')</tt>. 
+* Commands arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>. 
 * Only a subset of commands are available. You can circumvent this by adding your own (see Example 2)
 
-Why? Using a Ruby interface to execute shell commands is pretty awesome, particularly when to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why some stuff isn't available in Rye that you would otherwise expect to be able to do (particularly the file globs). There's probably a way to do it safely but it's not obvious yet.
+Why? All commands arguments are escaped. Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why some stuff isn't available in Rye that you would otherwise expect to be able to do (particularly the file globs). There's probably a way to do it safely but it's not obvious yet.
 
 
 == Credits

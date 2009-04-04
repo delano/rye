@@ -17,6 +17,9 @@ module Rye;
      # was executed by (Rye::Box or Rye::Set)
     attr_reader :obj
     
+     # An array containing any STDERR output 
+    attr_reader :stderr
+    
     # * +obj+ an instance of Rye::Box or Rye::Set
     # * +args+ anything that can sent to Array#new
     def initialize(obj, *args)
@@ -26,6 +29,35 @@ module Rye;
     
     alias :box :obj
     alias :set :obj
+    
+    # Returns a reference to the Rye::Rap object (which 
+    # acts like an Array that contains the STDOUT from the
+    # command executed over SSH). This is available to 
+    # maintain consistency with the stderr method. 
+    def stdout
+      self
+    end
+    
+    # Add STDERR output from the command executed via SSH. 
+    def add_stderr(*args)
+      args = args.flatten.compact
+      args = args.first.split($/) if args.size == 1
+      @stderr ||= []
+      @stderr << args
+      @stderr.flatten!
+      self
+    end
+    
+    # Add STDOUT output from the command executed via SSH. 
+    # This is available to maintain consistency with the 
+    # add_stderr method. Otherwise there's no need to use
+    # this method (treat the Rye::Rap object like an Array).
+    def add_stdout(*args)
+      args = args.flatten.compact
+      args = args.first.split($/) if args.size == 1
+      self << args
+      self.flatten!
+    end
     
     # Returns the first element if there it's the only
     # one, otherwise the value of Array#to_s

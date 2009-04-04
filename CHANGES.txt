@@ -1,17 +1,19 @@
 RYE, CHANGES
 
+#### 0.3 (2009-04-??) ###############################
 
-<<<<<<< HEAD:CHANGES.txt
+* NEW: Rye::Set supports executing commands parallel 
+* NEW: Rye::Rap now contains STDERR output from command
+* FIX: Rye::Box wasn't properly adding keypairs to SSH Agent
+* CHANGE: Moved all SSH key stuff to Rye (used to be done per Box)
+
+
 #### 0.2 (2009-04-04) ###############################
 
 * FIX: ssh-agent shutdown wasn't deleting the SSH tmp directory
 * NEW: Now with more rdocs!
 
-
 #### 0.1 (2009-04-03) ###############################
-=======
-#### 0.3 (2009-04-??) ###############################
->>>>>>> f5023f2e193e5c82d5a8d06cfb877c4fd4912055:CHANGES.txt
 
 Initial public release
 

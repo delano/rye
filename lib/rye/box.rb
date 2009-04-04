@@ -21,8 +21,6 @@ module Rye
   #
   class Box 
     include Rye::Cmd
-
-    @@agent_env ||= Hash.new  # holds ssh-agent env vars
     
       # An instance of Net::SSH::Connection::Session
     attr_reader :ssh
@@ -50,20 +48,18 @@ module Rye
         :error => STDERR,
       }.merge(opts)
       
-      # TODO: move to Rye
-      @mutex = Mutex.new
-      @mutex.synchronize { Box.start_sshagent_environment }   # One thread only
-      
+      # Close the SSH session before Ruby exits. This will do nothing
+      # if disconnect has already been called explicitly. 
       at_exit {
         self.disconnect
-        Box.end_sshagent_environment
       }
-      
+            
       @host = host
       @user = opts[:user]
       @debug = opts[:debug]
       @error = opts[:error]
-      add_keys(opts[:keypaths])
+      
+      add_keys(opts[:keypairs])
     end
     
      
@@ -131,25 +127,18 @@ module Rye
     # Returns the instance of Box
     def add_keys(*additional_keys)
       additional_keys = [additional_keys].flatten.compact || []
-      Rye::Box.shell("ssh-add", additional_keys) if additional_keys
-      Rye::Box.shell("ssh-add") # Add the user's default keys
+      Rye.add_keys(additional_keys)
       self
     end
     alias :add_key :add_keys
     
     # Returns an Array of info about the currently available
     # SSH keys, as provided by the SSH Agent. See
-    # Box.start_sshagent_environment
+    # Rye.start_sshagent_environment
     #
     # Returns: [[bits, finger-print, file-path], ...]
     def keys
-      # 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)
-      # 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)
-      keystr = Rye::Box.shell("ssh-add", '-l')
-      return nil unless keystr
-      keystr.split($/).collect do |key|
-        key.split(/\s+/)
-      end
+      Rye.keys
     end
     
     # Takes a command with arguments and returns it in a 
@@ -213,59 +202,6 @@ module Rye
     
     private
       
-      # Start the SSH Agent locally. This is important
-      # primarily because Rye relies on it for SSH key
-      # management. If the agent doesn't start then 
-      # passwordless logins won't work. 
-      #
-      # This method starts an instances of ssh-agent
-      # and sets the appropriate environment so all
-      # local commands run by Rye will have access be aware
-      # of this instance of the agent too. 
-      #
-      # The equivalent commands on the shell are:
-      # 
-      #     $ ssh-agent -s
-      #     SSH_AUTH_SOCK=/tmp/ssh-tGvaOXIXSr/agent.12951; export SSH_AUTH_SOCK;
-      #     SSH_AGENT_PID=12952; export SSH_AGENT_PID;
-      #     $ SSH_AUTH_SOCK=/tmp/ssh-tGvaOXIXSr/agent.12951; export SSH_AUTH_SOCK;
-      #     $ SSH_AGENT_PID=12952; export SSH_AGENT_PID;
-      #
-      # NOTE: The OpenSSL library (The C one, not the Ruby one) 
-      # must be installed for this to work.
-      # 
-      def Box.start_sshagent_environment
-        return if @@agent_env["SSH_AGENT_PID"]
-
-        lines = Rye::Box.shell("ssh-agent", '-s') || ''
-        lines.split($/).each do |line|
-          next unless line.index("echo").nil?
-          line = line.slice(0..(line.index(';')-1))
-          key, value = line.chomp.split( /=/ )
-          @@agent_env[key] = value
-        end
-        ENV["SSH_AUTH_SOCK"] = @@agent_env["SSH_AUTH_SOCK"]
-        ENV["SSH_AGENT_PID"] = @@agent_env["SSH_AGENT_PID"]
-        nil
-      end
-      
-      # Kill the local instance of the SSH Agent we started.
-      #
-      # Calls this command via the local shell:
-      #
-      #     $ ssh-agent -k
-      #
-      # which uses the SSH_AUTH_SOCK and SSH_AGENT_PID environment variables 
-      # to determine which ssh-agent to kill. 
-      #
-      def Box.end_sshagent_environment
-        pid = @@agent_env["SSH_AGENT_PID"]
-        Rye::Box.shell("ssh-agent", '-k') || ''
-        #Rye::Box.shell("kill", ['-9', pid]) if pid
-        @@agent_env.clear
-        nil
-      end
-      
       
       def debug(msg); @debug.puts msg if @debug; end
       def error(msg); @error.puts msg if @error; end
@@ -295,24 +231,43 @@ module Rye
       #
       #     $ ls -l 'arg1' 'arg2'
       #
-      def command(*args)
+      def add_command(*args)
         connect if !@ssh || @ssh.closed?
         raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
         args = args.first.split(/\s+/) if args.size == 1
         cmd, args = args.flatten.compact
         cmd_clean = Escape.shell_command(cmd, *args).to_s
         cmd_clean = prepend_env(cmd_clean)
-        cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
+        #cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
         if @current_working_directory
           cwd = Escape.shell_command('cd', @current_working_directory)
           cmd_clean = [cwd, cmd_clean].join('; ')
         end
         debug "Executing: %s" % cmd_clean
-        output = @ssh.exec! cmd_clean
-        Rye::Rap.new(self, (output || '').split($/))
+        stdout, stderr = net_ssh_exec! cmd_clean
+        rap = Rye::Rap.new(self)
+        rap.add_stdout(stdout || '')
+        rap.add_stderr(stderr || '')
+        rap
       end
-      alias :cmd :command
+      alias :cmd :add_command
 
+
+      def net_ssh_exec!(command)
+        block ||= Proc.new do |ch, type, data|
+          ch[:stdout] ||= ""
+          ch[:stderr] ||= ""
+          ch[:stdout] << data if type == :stdout
+          ch[:stderr] << data if type == :stderr
+        end
+        p @host
+        s = Net::SSH.start(@host, @user) 
+        channel = s.exec(command, &block)
+        channel.wait  # block until we get a response
+        
+        [channel[:stdout], channel[:stderr]]
+      end
+      
       
 
   end
