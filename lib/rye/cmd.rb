@@ -1,7 +1,7 @@
 
-module Rye; class Box;
+module Rye;
   
-  # = Rye::Box::Cmd
+  # = Rye::Cmd
   #
   # This class contains all of the shell command methods
   # available to an instance of Rye::Box. For security and 
@@ -35,9 +35,10 @@ module Rye; class Box;
     def echo(*args); cmd('echo', args); end
     def sleep(seconds=1); cmd("sleep", seconds); end
     def touch(*args); cmd('touch', args); end
+    def uname(*args); cmd('uname', args); end
     def mount; cmd("mount"); end
     def python(*args); cmd('python', args); end
     def uptime; cmd("uptime"); end
   end
 
-end; end
+end

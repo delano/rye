@@ -1,8 +1,8 @@
 
 
-module Rye; class Box;
+module Rye;
   
-  # Rye::Box::Rap
+  # Rye::Rap
   #
   # This class is a modified Array which is returned by
   # all command methods. The commands output is split
@@ -13,16 +13,19 @@ module Rye; class Box;
   # of Rye::Box that the command was executed on.
   #
   class Rap < Array 
-     # A reference to the Rye::Bos instance the command
-     # was executed on.
-    attr_reader :box
+     # A reference to the Rye object instance the command
+     # was executed by (Rye::Box or Rye::Set)
+    attr_reader :obj
     
-    # * +b+ an instance of Rye::Box
+    # * +obj+ an instance of Rye::Box or Rye::Set
     # * +args+ anything that can sent to Array#new
-    def initialize(b, *args)
-      @box = b
+    def initialize(obj, *args)
+      @obj = obj
       super *args
     end
+    
+    alias :box :obj
+    alias :set :obj
     
     # Returns the first element if there it's the only
     # one, otherwise the value of Array#to_s
@@ -44,4 +47,4 @@ module Rye; class Box;
     
   end
   
-end; end
+end

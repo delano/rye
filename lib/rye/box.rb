@@ -20,14 +20,15 @@ module Rye
   #     rbox.hostname   # => localhost
   #
   class Box 
-    include Rye::Box::Cmd
+    include Rye::Cmd
     
     @@agent_env ||= Hash.new  # holds ssh-agent env vars
     
       # An instance of Net::SSH::Connection::Session
     attr_reader :ssh
-    attr_reader :stdout
-    attr_reader :stderr
+    
+    attr_reader :debug
+    attr_reader :error
     
     attr_accessor :host
     attr_accessor :user
@@ -48,6 +49,7 @@ module Rye
         :error => STDERR,
       }.merge(opts)
       
+      # TODO: move to Rye
       @mutex = Mutex.new
       @mutex.synchronize { Box.start_sshagent_environment }   # One thread only
       
@@ -58,15 +60,15 @@ module Rye
       
       @host = host
       @user = opts[:user]
-      @keypaths = add_keys(opts[:keypaths])
-      @stdout = opts[:stdout]
-      @stderr = opts[:stderr]
+      @debug = opts[:debug]
+      @error = opts[:error]
+      add_keys(opts[:keypaths])
     end
     
      
     # Returns an Array of system commands available over SSH
     def can
-      Rye::Box::Cmd.instance_methods
+      Rye::Cmd.instance_methods
     end
     alias :commands :can
     alias :cmds :can
@@ -98,7 +100,9 @@ module Rye
     
     # Add an environment variable to the command
     def add_env(n, v)
-      
+      debug "Added env: #{n}=#{v}"
+      (@current_environment_variables ||= {})[n] = v
+      self
     end
     
     # Open an SSH session with +@host+.  
@@ -111,10 +115,7 @@ module Rye
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
-    
-    def debug(msg); @debug.puts msg if @debug; end
-    def error(msg); @error.puts msg if @error; end
-    
+
     # Close the SSH session  with +@host+
     def disconnect
       return unless @ssh && !@ssh.closed?
@@ -132,6 +133,7 @@ module Rye
       Rye::Box.shell("ssh-add") # Add the user's default keys
       self
     end
+    alias :add_key :add_keys
     
     # Returns an Array of info about the currently available
     # SSH keys, as provided by the SSH Agent. See
@@ -246,14 +248,33 @@ module Rye
       
       # Kill the local instance of the SSH Agent we started.
       #
-      #     $ echo $SSH_AGENT_PID
-      #     99416
-      #     $ kill -9 99416
+      # Calls this command via the local shell:
+      #
+      #     $ ssh-agent -k
+      #
+      # which uses the SSH_AUTH_SOCK and SSH_AGENT_PID environment variables 
+      # to determine which ssh-agent to kill. 
       #
       def Box.end_sshagent_environment
         pid = @@agent_env["SSH_AGENT_PID"]
-        Rye::Box.shell("kill", ['-9', pid]) if pid
+        Rye::Box.shell("ssh-agent", '-k') || ''
+        #Rye::Box.shell("kill", ['-9', pid]) if pid
+        @@agent_env.clear
         nil
+      end
+      
+      
+      def debug(msg); @debug.puts msg if @debug; end
+      def error(msg); @error.puts msg if @error; end
+
+      
+      def prepend_env(cmd)
+        return cmd unless @current_environment_variables.is_a?(Hash)
+        env = ''
+        @current_environment_variables.each_pair do |n,v|
+          env << "export #{n}=#{Escape.shell_single_word(v)}; "
+        end
+        [env, cmd].join(' ')
       end
       
       # Execute a command over SSH
@@ -276,14 +297,15 @@ module Rye
         args = args.first.split(/\s+/) if args.size == 1
         cmd, args = args.flatten.compact
         cmd_clean = Escape.shell_command(cmd, *args).to_s
+        cmd_clean = prepend_env(cmd_clean)
         cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
         if @current_working_directory
           cwd = Escape.shell_command('cd', @current_working_directory)
-          cmd_clean = "%s && %s" % [cwd, cmd_clean]
+          cmd_clean = [cwd, cmd_clean].join('; ')
         end
         debug "Executing: %s" % cmd_clean
         output = @ssh.exec! cmd_clean
-        Rye::Box::Rap.new(self, (output || '').split($/))
+        Rye::Rap.new(self, (output || '').split($/))
       end
       alias :cmd :command
       

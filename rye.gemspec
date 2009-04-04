@@ -1,7 +1,7 @@
 @spec = Gem::Specification.new do |s|
 	s.name = "rye"
   s.rubyforge_project = "rye"
-	s.version = "0.1"
+	s.version = "0.2"
 	s.summary = "Run system commands via SSH locally and remotely in a Ruby way."
 	s.description = s.summary
 	s.author = "Delano Mandelbaum"

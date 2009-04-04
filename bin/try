@@ -16,6 +16,12 @@ rbox = Rye::Box.new('localhost')
 
 puts rbox.uptime                # => 11:02  up 16:01, 3 users
 
+# The response value for all commands is a Rye::Rap object. The rap is a
+# subclass of Array so you can treat it as an Array, but it can also act 
+# like a String if there's only one element. It also keeps a reference to the 
+# object that called the command. In this case, it will keep a reference
+
+
 puts rbox.ls('rye.test')        # => ls: rye.test: No such file or directory
 puts rbox.touch('rye.test')     # => nil
 puts rbox.rm('rye.test')        # => nil
@@ -41,11 +47,12 @@ rbox.add_keys('/private/key/path')  # Specify additional private keys
 
 begin
   puts rbox.git('--help')  
+  
 rescue NoMethodError => ex
   puts ex.message                   # => undefined method `git' for #<Rye::Box ...>
 end
 
-module Rye::Box::Cmd
+module Rye::Cmd
   def git(*args); cmd("git", args);  end
 end
 
@@ -53,15 +60,39 @@ puts rbox.git('--help')             # => usage: git [--version] ...
 puts rbox.commands.member?('git')   # => true
 
 
-__END__
+# ------------------------------------------------------------------
+#   EXAMPLE 3 -- Accessing Multiple Machines
+#
 
-#rbox2 = Rye::Box.new('ec2-174-129-173-3.compute-1.amazonaws.com', 'root')
-#rbox.add_keys('/Users/delano/Projects/git/rudy/.rudy/key-test-app.private')
-#rbox.connect
-#puts rbox.date
-#puts rbox.pwd
+rset = Rye::Set.new
+rbox = Rye::Box.new
 
-rgroup = Rye::Group.new('root', 'keydir/file')
-rgroup.add_hosts('ec2-174-129-173-3.compute-1.amazonaws.com')
-rgroup.command('hostname')
+rset.add_keys('/private/key/path')       # For passwordless logins 
+rset.add_boxes(rbox, 'localhost')        # Add boxes as hostnames or objects
+
+# Calling methods on Rye::Set objects is very similar to calling them on
+# Rye::Box objects. In fact, it's identical:
+
+p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
+p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
+
+# And like Rye::Box, the response value is a Rye::Rap object containing 
+# the responses from each box. Each response is itself a Rye::Rap object.
+
+unames = rset.uname
+p unames                             # => [["Darwin"], ["Darwin"]]
+puts unames.class                    # => Rye::Rap
+puts unames.set                      # => Rye::Set
+puts unames.set == rset              # => true
+puts unames.size                     # => 2
+puts unames.first                    # => Darwin
+puts unames.first.class              # => Rye::Rap
+puts unames.first.box                # => Rye::Box
+puts unames.first.box == rbox        # => true
+
+# Envrionment variables can be set the same way as with Rye::Box
+rset.add_env(:RYE, "Forty Creek")
+p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
+
+
 

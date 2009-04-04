@@ -1,4 +1,4 @@
-= Rye - v0.1
+= Rye - v0.2
 
 Run system commands via SSH locally and remotely in a Ruby way. Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and it's less powerful by design (for safety). 
 
@@ -20,6 +20,11 @@ One of:
      rbox['/etc/apache'].ls               # => ['httpd.conf','mime.types', ...]
 
 == Example 2 -- Custom Commands
+
+
+== What you can't do
+
+I mentioned Rye is less powerful than Rush. 
 
 
 == Thanks

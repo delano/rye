@@ -21,8 +21,9 @@ require 'sys'
 #
 module Rye
   extend self
+  
   unless defined?(SYSINFO)
-    VERSION = 0.1.freeze
+    VERSION = 0.2.freeze
     SYSINFO = SystemInfo.new.freeze
   end
   
@@ -30,21 +31,17 @@ module Rye
   def sysinfo; SYSINFO;  end
   
   class CommandNotFound < RuntimeError; end
+  class NoBoxes < RuntimeError; end
   class NoHost < RuntimeError; end
   class NotConnected < RuntimeError; end
   
   # Reload Rye dynamically. Useful with irb. 
   def reload
-    pat = File.join(File.dirname(__FILE__), 'rye', '**', '*.rb')
-    Dir.glob(pat).collect { |file| load file; file; }
+    pat = File.join(File.dirname(__FILE__), 'rye')
+    %w{rap cmd box set}.each {|lib| load File.join(pat, "#{lib}.rb") }
   end
   
-  #def run
-    #@bgthread = Thread.new do
-    #  loop { @mutex.synchronize { approach } }
-    #end
-    #@bgthread.join
-  #end
+
 end
 
 
