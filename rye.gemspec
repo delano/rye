@@ -24,17 +24,23 @@
   LICENSE.txt
   README.rdoc
   Rakefile
+  bin/try
+  lib/esc.rb
   lib/rye.rb
   lib/rye/box.rb
   lib/rye/box/commands.rb
   lib/rye/box/response.rb
+  lib/rye/cmd.rb
+  lib/rye/rap.rb
+  lib/rye/set.rb
+  lib/sys.rb
   rye.gemspec
   )
   
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  s.executables = %w[]
+  s.executables = %w[try]
   
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
@@ -46,14 +52,6 @@
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 2
- 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<RedCloth>, [">= 4.0.4"])
-    else
-      s.add_dependency(%q<RedCloth>, [">= 4.0.4"])
-    end
-  else
-    s.add_dependency(%q<RedCloth>, [">= 4.0.4"])
   end
   
 end

@@ -14,13 +14,15 @@ require 'rye'
 
 rbox = Rye::Box.new('localhost')
 
+# Commands are run as methods on the Rye::Box object
+
 puts rbox.uptime                # => 11:02  up 16:01, 3 users
+
 
 # The response value for all commands is a Rye::Rap object. The rap is a
 # subclass of Array so you can treat it as an Array, but it can also act 
 # like a String if there's only one element. It also keeps a reference to the 
 # object that called the command. In this case, it will keep a reference
-
 
 puts rbox.ls('rye.test')        # => ls: rye.test: No such file or directory
 puts rbox.touch('rye.test')     # => nil
