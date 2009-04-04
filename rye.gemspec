@@ -28,8 +28,6 @@
   lib/esc.rb
   lib/rye.rb
   lib/rye/box.rb
-  lib/rye/box/commands.rb
-  lib/rye/box/response.rb
   lib/rye/cmd.rb
   lib/rye/rap.rb
   lib/rye/set.rb
