@@ -146,6 +146,11 @@ Why? In safe-mode, all command arguments are escaped which turns all arguments i
 Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why Rye disables this stuff by default. There's probably a way to do it safely but it's not obvious yet (to me). If you have any ideas, I'd love to hear them!
 
 
+== Command Whitelist
+
+Rye permits only a limited number of system commands to be run. This default whitelist is defined in Rye::Cmd but you can your commands in your projects (see Example 2).
+
+
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)
