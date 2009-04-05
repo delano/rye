@@ -158,11 +158,6 @@ Rye permits only a limited number of system commands to be run. This default whi
 == Thanks
 
 * Solutious Incorporated (http://solutious.com) for all the orange juice.
-* The country of Canada for making Rye Whisky. 
-
-
-== Kudos
-
 * http://github.com/adamwiggins/rush
 * http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb
 * http://www.nofluffjuststuff.com/blog/david_bock/2008/10/ruby_s_closure_cleanup_idiom_and_net_ssh.html
@@ -178,7 +173,7 @@ Rye permits only a limited number of system commands to be run. This default whi
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)
-
+* Escape, Copyright (C) 2006,2007 Tanaka Akira  <akr@fsij.org>
 
 == License
 
