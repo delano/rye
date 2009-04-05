@@ -11,6 +11,7 @@ when the command returns an exit code greater than 0.
 * CHANGED: Box.add_command renamed to Box.run_command
 * FIXED: Box.run_command was parsing arguments incorrectly 
 * FIXED: Box.net_ssh_exec was working on nil stderr
+* FIXED: bin/try handles the new command exceptions
 
 
 #### 0.3.2 (2009-04-05) #############################
