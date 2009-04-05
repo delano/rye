@@ -91,8 +91,10 @@ module Rye
     #
     # Returns a Rye::Rap object containing the responses from each Rye::Box. 
     def method_missing(meth, *args)
+      # Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.
+      meth = (Rye.sysinfo.ruby[1] == 8) ? meth.to_s : meth.to_sym
       raise Rye::NoBoxes if @boxes.empty?
-      raise Rye::CommandNotFound, meth.to_s unless Rye::Cmd.instance_methods.member?(meth.to_s)
+      raise Rye::CommandNotFound, meth.to_s unless Rye::Cmd.instance_methods.member?(meth)
       run_command(meth, *args)
     end
     

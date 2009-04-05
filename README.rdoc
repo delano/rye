@@ -137,13 +137,13 @@ One of:
 In safe-mode:
 
 * You can't use file globs. This means you can't do this: <tt>rbox.ls('*.rb')</tt>. 
-* Commands arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>.
+* Command arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>.
 * Pipes and operators don't work: <tt>|, &&, >, <, ||</tt>, etc...
 * Backticks don't work either: <tt>procs=`ps aux`</tt>
 
 Why? In safe-mode, all command arguments are escaped which turns all arguments into their literal values. 
 
-Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why some stuff isn't available in Rye that you would otherwise expect to be able to do (particularly the file globs). There's probably a way to do it safely but it's not obvious yet (to me). If you have any ideas, I'd love to hear them!
+Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why Rye disables this stuff by default. There's probably a way to do it safely but it's not obvious yet (to me). If you have any ideas, I'd love to hear them!
 
 
 == Credits
