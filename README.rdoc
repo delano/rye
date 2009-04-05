@@ -154,7 +154,7 @@ Using a Ruby interface to execute shell commands is pretty awesome, particularly
 == Thanks
 
 * Solutious Incorporated (http://solutious.com) for all the orange juice.
-* The country of Canada for making Rye Whiskey. 
+* The country of Canada for making Rye Whisky. 
 
 
 == Kudos
@@ -165,6 +165,11 @@ Using a Ruby interface to execute shell commands is pretty awesome, particularly
 * http://groups.google.com/group/ruby-talk-google/browse_thread/thread/674a6f6de15ceb49?pli=1
 * http://paste.lisp.org/display/6912
 
+== More Info
+
+* http://github.com/delano/rye
+* http://delano.github.com/rye
+* http://www.youtube.com/watch?v=_StUVh6ENuw
 
 == Credits
 
