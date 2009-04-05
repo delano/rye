@@ -169,7 +169,10 @@ module Rye
     end
     
     def inspect
-      %q{#<%s:%s safe=%s opts=%s>} % [self.class.to_s, self.host, self.safe, self.opts.inspect]
+      %q{#<%s:%s cwd=%s env=%s safe=%s opts=%s>} % 
+      [self.class.to_s, self.host, 
+       @current_working_directory, (@current_environment_variables || '').inspect,
+       self.safe, self.opts.inspect]
     end
     
     # Compares itself with the +other+ box. If the hostnames
@@ -287,16 +290,17 @@ module Rye
       # 
       def run_command(*args)
         connect if !@ssh || @ssh.closed?
+        args = args.flatten.compact
         args = args.first.split(/\s+/) if args.size == 1
-        cmd, args = args.flatten.compact
+        cmd = args.shift
         
         raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
-        
+
         cmd_clean = Rye::Box.escape(@safe, cmd, args)
         cmd_clean = prepend_env(cmd_clean)
         if @current_working_directory
           cwd = Rye::Box.escape(@safe, 'cd', @current_working_directory)
-          cmd_clean = [cwd, cmd_clean].join('; ')
+          cmd_clean = [cwd, cmd_clean].join(' && ')
         end
         debug "Executing: %s" % cmd_clean
         stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
@@ -342,6 +346,8 @@ module Rye
         
         channel[:exit_code] ||= 0
         channel[:exit_code] &&= channel[:exit_code].to_i
+        
+        channel[:stderr].gsub!(/bash: line \d+:\s+/, '')
         
         [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
       end
