@@ -45,19 +45,3 @@ Benchmark.bmbm do |x|
   x.report('rset-S:') { puts "%10s:%s:%s" % rset_serial.uname }
   x.report('rset-P:') { puts "%10s:%s:%s" % rset_parallel.uname }
 end
-
-__END__
-
-#p rset.sleep(1)
-
-p rbox_remote.echo('$HOME')
-
-local_files = rbox_local['/tmp/ssh-test'].ls
-remote_files = rbox_remote['/etc/ssh'].ls
-diff = remote_files - local_files
-
-puts "ETC DIFF:"
-puts diff
-
-rbox_remote = Rye::Box.new('ec2-75-101-255-188.compute-1.amazonaws.com', :user => 'root', :debug => STDOUT, :safe => false, :keys => '/proj/git/rudy/.rudy/key-test-app.private')
-
