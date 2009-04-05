@@ -14,13 +14,13 @@ require 'rye'
 
 
 machine_key = {
-  :host => 'ec2-75-101-255-188.compute-1.amazonaws.com',
+  :host => 'ryehost',
   :user => "root",
   :key => '/proj/git/rudy/.rudy/key-test-app.private'
 }
 
 machine_pass = {
-  :host => 'ec2-75-101-255-188.compute-1.amazonaws.com',
+  :host => 'ryehost',
   :user => 'pablo',
   :pass => 'pablo9001'
 }
