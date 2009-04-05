@@ -1,12 +1,12 @@
 @spec = Gem::Specification.new do |s|
-	s.name = "rye"
+  s.name = "rye"
   s.rubyforge_project = "rye"
-	s.version = "0.3"
-	s.summary = "Rye: Run system commands via SSH locally and remotely in a Ruby way."
-	s.description = s.summary
-	s.author = "Delano Mandelbaum"
-	s.email = "delano@solutious.com"
-	s.homepage = "http://solutious.com/"
+  s.version = "0.3"
+  s.summary = "Rye: Run system commands via SSH locally and remotely in a Ruby way."
+  s.description = s.summary
+  s.author = "Delano Mandelbaum"
+  s.email = "delano@solutious.com"
+  s.homepage = "http://solutious.com/"
   
   # = DEPENDENCIES =
   # Add all gem dependencies
@@ -33,6 +33,7 @@
   lib/rye/set.rb
   lib/sys.rb
   rye.gemspec
+  test/10_rye_test.rb
   )
   
   # = EXECUTABLES =

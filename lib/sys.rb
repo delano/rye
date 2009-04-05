@@ -5,7 +5,7 @@ require 'socket'
 # A container for the platform specific system information. 
 # Portions of this code were originally from Amazon's EC2 AMI tools, 
 # specifically lib/platform.rb. 
-class SystemInfo
+class SystemInfo #:nodoc:all
   VERSION = 2
   IMPLEMENTATIONS = [
     

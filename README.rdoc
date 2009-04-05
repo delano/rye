@@ -1,18 +1,18 @@
-= Rye - v0.2
+= Rye - v0.3
 
 Run system commands via SSH locally and remotely in a Ruby way. 
 
-Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and it's less powerful by design (for safety). 
+Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
-See +bin/try+ for a bunch of working examples.
+See +bin/try+ for working examples.
 
 == Installation
 
 One of:
 
-* sudo gem install rye
-* sudo gem install delano-rye --source http://gems.github.com/
-* $ git clone git://github.com/delano/rye.git
+    $ sudo gem install rye
+    $ sudo gem install delano-rye --source http://gems.github.com/
+    $ git clone git://github.com/delano/rye.git
 
 
 == EXAMPLE 1 -- Basic Usage
@@ -20,97 +20,142 @@ One of:
     rbox = Rye::Box.new('localhost')
     
     # Commands are run as methods on the Rye::Box object
-    
     puts rbox.uptime                # => 11:02  up 16:01, 3 users
-    
     
     # The response value for all commands is a Rye::Rap object. The rap is a
     # subclass of Array so you can treat it as an Array, but it can also act 
-    # like a String if there's only one element. It also keeps a reference to the 
-    # object that called the command. In this case, it will keep a reference
+    # like a String if there's only one element. 
+    puts rbox.ls('rye.test')           # => ""
+    puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
     
-    puts rbox.ls('rye.test')        # => ls: rye.test: No such file or directory
-    puts rbox.touch('rye.test')     # => nil
-    puts rbox.rm('rye.test')        # => nil
+    puts rbox.touch('rye.test')        # => ""
+    puts rbox.rm('rye.test')           # => ""
     
-    puts rbox.echo('$HOME')         # => $HOME
+    # You can change directories
+    puts rbox.pwd                      # => /home/rye
+    puts rbox['/usr/bin'].pwd          # => /usr/bin
+    puts rbox.pwd                      # => /usr/bin
+    puts rbox.cd('/home/rye').pwd      # => /home/rye
     
-    puts rbox.pwd                   # => /home/rye
-    puts rbox['/usr/bin'].pwd       # => /usr/bin
-    puts rbox.pwd                   # => /usr/bin
-    puts rbox.cd('/home/rye').pwd   # => /home/rye
+    # You can specify environment variables
+    rbox.add_env(:RYE, "Forty Creek")
+    rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
     
-    puts rbox.commands.join(', ')   # => pwd, touch, echo, wc, ...
+    # The commands method returns an Array of available commands:                        
+    puts rbox.commands.join(', ')      # => pwd, touch, echo, wc, ...
     
+    # When you're done you can disconnect explicitly. 
+    # (Although Rye does this automatically at exit.)
     rbox.disconnect
 
 
-== EXAMPLE 2 -- Custom Commands
-    
+== EXAMPLE 2 -- Disabling Safe-Mode
+
+    rbox_safe = Rye::Box.new('localhost')
+    rbox_wild = Rye::Box.new('localhost', :safe => false)
+
+    # Safe-mode is enabled by default. In safe-mode, all command 
+    # arguments are thoroughly escaped. This prevents access to
+    # environment variables and file globs (among other things).
+    p rbox_safe.echo('$HOME')                   # => "$HOME"
+    p rbox_safe['/etc'].ls('host*')             # => 
+    p rbox_safe.ls('-l | wc -l')                # => 
+    p rbox_safe.echo('$HOME > /tmp/rye-home')   # => "$HOME > /tmp/home"
+    p rbox_safe.cat('/tmp/rye-home')            # => 
+    p rbox_safe.cat('/tmp/rye-home').stderr     # => "No such file or directory"
+
+    # Here's the same commands with safe-mode disabled:
+    p rbox_wild.echo('$HOME')                   # => "/home/rye"
+    p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
+    p rbox_wild.ls('-l | wc -l')                # => 110
+    p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
+    p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
+    p rbox_wild.rm('/tmp/rye-home')             # =>
+
+
+
+== EXAMPLE 3 -- Custom Commands
+
     rbox = Rye::Box.new('localhost')
-    rbox.add_keys('/private/key/path')  # Specify additional private keys
+    rbox.add_keys('/private/key/path')   # Specify additional private keys
     
-    begin
-      puts rbox.git('--help')  
-      
-    rescue NoMethodError => ex
-      puts ex.message                   # => undefined method `git' for #<Rye::Box ...>
-    end
+    # There's currently no rye900 command
+    p rbox.commands.member?('rye9000')   # => false
     
+    # But we can add our own commands to the Rye::Cmd class. They 
+    # automatically become available to all Rye::Box objects.
     module Rye::Cmd
-      def git(*args); cmd("git", args);  end
+      def rye9000(*args)
+        add_command("ls", args)
+      end
+      def somescript(*args)
+        add_command("/path/to/my/script", args)
+      end
     end
     
-    puts rbox.git('--help')             # => usage: git [--version] ...
-    puts rbox.commands.member?('git')   # => true
+    # We can now run rye9000 (with arguments)
+    p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
+    p rbox.commands.member?('rye9000')   # => true
 
 
-== EXAMPLE 3 -- Multiple Machines
+== EXAMPLE 4 -- Accessing Multiple Machines
 
     rset = Rye::Set.new
     rbox = Rye::Box.new
     
-    rset.add_keys('/private/key/path')       # For passwordless logins 
-    rset.add_boxes(rbox, 'localhost')        # Add boxes as hostnames or objects
+    rset.add_keys('/private/key/path')     # For passwordless logins 
+    rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
     
     # Calling methods on Rye::Set objects is very similar to calling them on
     # Rye::Box objects. In fact, it's identical:
-    
     p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
     p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
     
-    # And like Rye::Box, the response value is a Rye::Rap object containing 
-    # the responses from each box. Each response is itself a Rye::Rap object.
-    
+    # Like Rye::Box, the response value is a Rye::Rap object containing the
+    # responses from each box. Each response is itself a Rye::Rap object.
     unames = rset.uname
-    p unames                             # => [["Darwin"], ["Darwin"]]
-    puts unames.class                    # => Rye::Rap
-    puts unames.set                      # => Rye::Set
-    puts unames.set == rset              # => true
-    puts unames.size                     # => 2
-    puts unames.first                    # => Darwin
-    puts unames.first.class              # => Rye::Rap
-    puts unames.first.box                # => Rye::Box
-    puts unames.first.box == rbox        # => true
+    p unames                               # => [["Darwin"], ["Darwin"]]
+    puts unames.class                      # => Rye::Rap
+    
+    # The Rye::Rap object also keeps a reference to the object that called the 
+    # command. In this case, it will keep a reference to Rye::Set:
+    puts unames.set.class                  # => Rye::Set
+    puts unames.set == rset                # => true
+    puts unames.size                       # => 2
+    puts unames.first                      # => Darwin
+    puts unames.first.class                # => Rye::Rap
+    puts unames.first.box.class            # => Rye::Box
+    puts unames.first.box == rbox          # => true
+    
+    # Envrionment variables can be set the same way as with Rye::Box
+    rset.add_env(:RYE, "Forty Creek")
+    p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
 
-== What you can't do
+== About Safe-Mode
+
+In safe-mode:
 
 * You can't use file globs. This means you can't do this: <tt>rbox.ls('*.rb')</tt>. 
-* Commands arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>. 
-* Only a subset of commands are available. You can circumvent this by adding your own (see Example 2)
+* Commands arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>.
+* Pipes and operators don't work: <tt>|, &&, >, <, ||</tt>, etc...
+* Backticks don't work either: <tt>procs=`ps aux`</tt>
 
-Why? All commands arguments are escaped. Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why some stuff isn't available in Rye that you would otherwise expect to be able to do (particularly the file globs). There's probably a way to do it safely but it's not obvious yet.
+Why? In safe-mode, all command arguments are escaped which turns all arguments into their literal values. 
+
+Using a Ruby interface to execute shell commands is pretty awesome, particularly to run them on several machines simultaneously. That's a lot of power and it's potentially very dangerous. That's why some stuff isn't available in Rye that you would otherwise expect to be able to do (particularly the file globs). There's probably a way to do it safely but it's not obvious yet (to me). If you have any ideas, I'd love to hear them!
 
 
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)
 
+
 == Thanks
 
 * Solutious Incorporated (http://solutious.com) for all the orange juice.
 * The country of Canada for making Rye Whiskey. 
+
 
 == Kudos
 
@@ -119,6 +164,7 @@ Why? All commands arguments are escaped. Using a Ruby interface to execute shell
 * http://www.nofluffjuststuff.com/blog/david_bock/2008/10/ruby_s_closure_cleanup_idiom_and_net_ssh.html
 * http://groups.google.com/group/ruby-talk-google/browse_thread/thread/674a6f6de15ceb49?pli=1
 * http://paste.lisp.org/display/6912
+
 
 == Credits
 

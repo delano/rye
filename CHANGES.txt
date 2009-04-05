@@ -1,17 +1,24 @@
 RYE, CHANGES
 
-#### 0.3 (2009-04-??) ###############################
+#### 0.3 (2009-04-05) ###############################
 
-* NEW: Rye::Set supports executing commands parallel 
-* NEW: Rye::Rap now contains STDERR output from command
-* FIX: Rye::Box wasn't properly adding keypairs to SSH Agent
-* CHANGE: Moved all SSH key stuff to Rye (used to be done per Box)
-
+* ADDED: Rye::Set supports executing commands parallel 
+* ADDED: Rye::Rap now contains STDERR output from command
+* FIXED: Rye::Box wasn't properly adding keypairs to SSH Agent
+* CHANGED: Moved all SSH key stuff to Rye (used to be done per Box)
+* ADDED: Supports all options provided by Net::SSH#start. This 
+includes support for password logins and proxies. 
+* ADDED: Safe mode can now be disabled (to allow file globs
+and environment variable access).
+* ADDED: Basic sanity test
+* FIXED: Rye::Box.method_missing Symbol/String ambiguity
+* ADDED: Mucho more rdocs and examples.
 
 #### 0.2 (2009-04-04) ###############################
 
-* FIX: ssh-agent shutdown wasn't deleting the SSH tmp directory
-* NEW: Now with more rdocs!
+* FIXED: ssh-agent shutdown wasn't deleting the SSH tmp directory
+* ADDED: Now with more rdocs!
+
 
 #### 0.1 (2009-04-03) ###############################
 

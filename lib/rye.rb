@@ -14,24 +14,27 @@ require 'sys'
 # Rye is similar to Rush[http://rush.heroku.com] but everything 
 # happens over SSH (no HTTP daemon) and the default settings are
 # less powerful (for safety). For example, file globs are disabled 
-# so unless you specify otherwise, you can't do this: 
+# so unless otherwise specified, you can't do this: 
 # <tt>rbox.rm('/etc/**/*')</tt>. 
 #
 # * See +bin/try+ for a bunch of working examples. 
-# * See Rye::Box#initialize for info about changing the defaults.
+# * See Rye::Box#initialize for info about disabling safe-mode.
 #
 module Rye
   extend self
 
   unless defined?(SYSINFO)
-    VERSION = 0.2.freeze
+    VERSION = 0.3.freeze
     SYSINFO = SystemInfo.new.freeze
   end
   
   @@agent_env = Hash.new  # holds ssh-agent env vars
   @@mutex = Mutex.new     # for synchronizing threads
   
+  # Accessor for an instance of SystemInfo
   def Rye.sysinfo; SYSINFO; end
+  
+  # Accessor for an instance of SystemInfo
   def sysinfo; SYSINFO;  end
   
   class CommandNotFound < RuntimeError; end
@@ -50,7 +53,10 @@ module Rye
     @@mutex
   end
   
-  def add_keys(keys)
+  
+  # Add one or more private keys to the SSH Agent. 
+  # * +keys+ one or more file paths to private keys used for passwordless logins. 
+  def add_keys(*keys)
     keys = [keys].flatten.compact || []
     return if keys.empty?
     Rye::Box.shell("ssh-add", keys) if keys
@@ -58,6 +64,12 @@ module Rye
     keys
   end
   
+  # Returns an Array of info about the currently available
+  # SSH keys, as provided by the SSH Agent. See
+  # Rye.start_sshagent_environment
+  #
+  # Returns: [[bits, finger-print, file-path], ...]
+  #
   def keys
     # 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)
     # 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)

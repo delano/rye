@@ -11,13 +11,11 @@ module Rye;
   #
   #     require 'rye'
   #     module Rye::Box::Cmd
-  #       def uptime; cmd("uptime"); end
-  #       def sleep(seconds=1); cmd("sleep", seconds); end
   #       def special(*args); cmd("/your/special/command", args); end
   #     end
   #
   #     rbox = Rye::Box.new
-  #     rbox.uptime   # => 11:02  up 8 days, 17:17, 2 users
+  #     rbox.special        # => "your output"
   #
   module Cmd
     def wc(*args); cmd('wc', args); end
@@ -25,9 +23,12 @@ module Rye;
     def mv(*args); cmd("mv", args); end
     def ls(*args); cmd('ls', args); end
     def rm(*args); cmd('rm', args); end
+    def ps(*args); cmd('ps', args); end
     def sh(*args); cmd('sh', args); end
     def env; cmd "env"; end
-    def pwd(key=nil); cmd "pwd"; end
+    def pwd; cmd "pwd"; end
+    def cat(*args); cmd('cat', args); end
+    def grep(*args); cmd('grep', args); end
     def date(*args); cmd('date', args); end
     def ruby(*args); cmd('ruby', args); end
     def perl(*args); cmd('perl', args); end

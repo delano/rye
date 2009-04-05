@@ -28,10 +28,10 @@
 # * URI
 # * HTML
 # * shell command
-module Escape #:nodoc:
+module Escape # :nodoc:all
   module_function
 
-  class StringWrapper
+  class StringWrapper # :nodoc:all
     class << self
       alias new_no_dup new
       def new(str)
@@ -61,7 +61,7 @@ module Escape #:nodoc:
     end
   end
 
-  class ShellEscaped < StringWrapper
+  class ShellEscaped < StringWrapper #:nodoc:all
   end
 
   # Escape.shell_command composes
@@ -119,7 +119,7 @@ module Escape #:nodoc:
     end
   end
 
-  class PercentEncoded < StringWrapper
+  class PercentEncoded < StringWrapper #:nodoc:all
   end
 
   # Escape.uri_segment escapes URI segment using percent-encoding.
@@ -162,7 +162,6 @@ module Escape #:nodoc:
     PercentEncoded.new_no_dup(s)
   end
 
-  # :stopdoc:
   def html_form_fast(pairs, sep='&')
     s = pairs.map {|k, v|
       # query-chars - pct-encoded - x-www-form-urlencoded-delimiters =
@@ -182,7 +181,6 @@ module Escape #:nodoc:
     }.join(sep)
     PercentEncoded.new_no_dup(s)
   end
-  # :startdoc:
 
   # Escape.html_form composes HTML form key-value pairs as a x-www-form-urlencoded encoded string.
   # It returns an instance of PercentEncoded.
@@ -243,16 +241,15 @@ module Escape #:nodoc:
     PercentEncoded.new_no_dup(r)
   end
 
-  class HTMLEscaped < StringWrapper
+  class HTMLEscaped < StringWrapper #:nodoc:all
   end
 
-  # :stopdoc:
   HTML_TEXT_ESCAPE_HASH = {
     '&' => '&amp;',
     '<' => '&lt;',
     '>' => '&gt;',
   }
-  # :startdoc:
+
 
   # Escape.html_text escapes a string appropriate for HTML text using character references.
   # It returns an instance of HTMLEscaped.
@@ -267,21 +264,20 @@ module Escape #:nodoc:
   #
   # This function is not appropriate for escaping HTML element attribute
   # because quotes are not escaped.
-  def html_text(str)
+  def html_text(str) #:nodoc:all
     s = str.gsub(/[&<>]/) {|ch| HTML_TEXT_ESCAPE_HASH[ch] }
     HTMLEscaped.new_no_dup(s)
   end
 
-  # :stopdoc:
-  HTML_ATTR_ESCAPE_HASH = {
+  HTML_ATTR_ESCAPE_HASH = { #:nodoc:all
     '&' => '&amp;',
     '<' => '&lt;',
     '>' => '&gt;',
     '"' => '&quot;',
   }
-  # :startdoc:
 
-  class HTMLAttrValue < StringWrapper
+
+  class HTMLAttrValue < StringWrapper #:nodoc:all
   end
 
   # Escape.html_attr_value encodes a string as a double-quoted HTML attribute using character references.
@@ -298,7 +294,7 @@ module Escape #:nodoc:
   # * '>' to '&gt;'
   # * '"' to '&quot;'
   #
-  def html_attr_value(str)
+  def html_attr_value(str) #:nodoc:all
     s = '"' + str.gsub(/[&<>"]/) {|ch| HTML_ATTR_ESCAPE_HASH[ch] } + '"'
     HTMLAttrValue.new_no_dup(s)
   end

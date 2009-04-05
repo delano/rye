@@ -15,7 +15,7 @@ CHANGES = "CHANGES.txt"
 LICENSE = "LICENSE.txt"
 
 # Files and directories to be deleted when you run "rake clean"
-CLEAN.include [ 'pkg', '*.gem', '.config']
+CLEAN.include [ 'doc', 'pkg', '*.gem', '.config' ]
 
 # Virginia assumes your project and gemspec have the same name
 name = (Dir.glob('*.gemspec') || ['rye']).first.split('.').first
@@ -38,10 +38,10 @@ end
 
 task :release => [ :rdoc, :package ]
 task :install => [ :rdoc, :package ] do
-	sh %{sudo gem install pkg/#{name}-#{version}.gem}
+  sh %{sudo gem install pkg/#{name}-#{version}.gem}
 end
 task :uninstall => [ :clean ] do
-	sh %{sudo gem uninstall #{name}}
+  sh %{sudo gem uninstall #{name}}
 end
 
 
@@ -67,15 +67,15 @@ end
 # RUBY DOCS TASK ==================================
 
 Rake::RDocTask.new do |t|
-	t.rdoc_dir = 'doc'
-	t.title    = @spec.summary
-	t.options << '--line-numbers' << '-A cattr_accessor=object'
-	t.options << '--charset' << 'utf-8'
-	t.rdoc_files.include(LICENSE)
-	t.rdoc_files.include(README)
-	t.rdoc_files.include(CHANGES)
-	#t.rdoc_files.include('bin/*')
-	t.rdoc_files.include('lib/**/*.rb')
+  t.rdoc_dir = 'doc'
+  t.title    = @spec.summary
+  t.options << '--line-numbers' << '-A cattr_accessor=object'
+  t.options << '--charset' << 'utf-8'
+  t.rdoc_files.include(LICENSE)
+  t.rdoc_files.include(README)
+  t.rdoc_files.include(CHANGES)
+  #t.rdoc_files.include('bin/*')
+  t.rdoc_files.include('lib/**/*.rb')
 end
 
 

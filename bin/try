@@ -15,7 +15,6 @@ require 'stringio'
 require 'yaml'
 require 'rye'
 
-=begin
 
 puts %Q(
 # ------------------------------------------------------------------
@@ -53,19 +52,47 @@ puts rbox.commands.join(', ')      # => pwd, touch, echo, wc, ...
 # (Although Rye does this automatically at exit.)
 rbox.disconnect
 
+
 puts %Q(
 # ------------------------------------------------------------------
-#   EXAMPLE 2 -- Custom Commands
+#   EXAMPLE 2 -- Disabling Safe-Mode
+#)
+
+rbox_safe = Rye::Box.new('localhost')
+rbox_wild = Rye::Box.new('localhost', :safe => false)
+
+# Safe-mode is enabled by default. In safe-mode, all command 
+# arguments are thoroughly escaped. This prevents access to
+# environment variables and file globs (among other things).
+p rbox_safe.echo('$HOME')                   # => "$HOME"
+p rbox_safe['/etc'].ls('host*')             # => 
+p rbox_safe.ls('-l | wc -l')                # => 
+p rbox_safe.echo('$HOME > /tmp/rye-home')   # => "$HOME > /tmp/home"
+p rbox_safe.cat('/tmp/rye-home')            # => 
+p rbox_safe.cat('/tmp/rye-home').stderr     # => "No such file or directory"
+
+# Here's the same commands with safe-mode disabled:
+p rbox_wild.echo('$HOME')                   # => "/home/rye"
+p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
+p rbox_wild.ls('-l | wc -l')                # => 110
+p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
+p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
+p rbox_wild.rm('/tmp/rye-home')             # =>
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 3 -- Custom Commands
 #)
 
 rbox = Rye::Box.new('localhost')
-rbox.add_keys('/private/key/path')  # Specify additional private keys
+rbox.add_keys('/private/key/path')   # Specify additional private keys
 
-# 'git' isn't defined by default
+# There's currently no rye900 command
 p rbox.commands.member?('rye9000')   # => false
 
-# You can add your own commands to the Rye::Cmd class. They automatically
-# become available to all Rye::Box objects.
+# But we can add our own commands to the Rye::Cmd class. They 
+# automatically become available to all Rye::Box objects.
 module Rye::Cmd
   def rye9000(*args)
     add_command("ls", args)
@@ -75,54 +102,47 @@ module Rye::Cmd
   end
 end
 
+# We can now run rye9000 (with arguments)
 p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
 p rbox.commands.member?('rye9000')   # => true
 
-=end
 
 puts %Q(
 # ------------------------------------------------------------------
-#   EXAMPLE 3 -- Accessing Multiple Machines
+#   EXAMPLE 4 -- Accessing Multiple Machines
 #)
 
 rset = Rye::Set.new
 rbox = Rye::Box.new
 
-rset.add_keys('/private/key/path')       # For passwordless logins 
-rset.add_boxes(rbox, 'localhost')        # Add boxes as hostnames or objects
-
+rset.add_keys('/private/key/path')     # For passwordless logins 
+rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
 
 # Calling methods on Rye::Set objects is very similar to calling them on
 # Rye::Box objects. In fact, it's identical:
-
 p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
 p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
 
-
 # Like Rye::Box, the response value is a Rye::Rap object containing the
 # responses from each box. Each response is itself a Rye::Rap object.
-
 unames = rset.uname
-p unames                             # => [["Darwin"], ["Darwin"]]
-puts unames.class                    # => Rye::Rap
-
+p unames                               # => [["Darwin"], ["Darwin"]]
+puts unames.class                      # => Rye::Rap
 
 # The Rye::Rap object also keeps a reference to the object that called the 
 # command. In this case, it will keep a reference to Rye::Set:
-
-puts unames.set                      # => Rye::Set
-puts unames.set == rset              # => true
-puts unames.size                     # => 2
-puts unames.first                    # => Darwin
-puts unames.first.class              # => Rye::Rap
-puts unames.first.box                # => Rye::Box
-puts unames.first.box == rbox        # => true
-
-
+puts unames.set.class                  # => Rye::Set
+puts unames.set == rset                # => true
+puts unames.size                       # => 2
+puts unames.first                      # => Darwin
+puts unames.first.class                # => Rye::Rap
+puts unames.first.box.class            # => Rye::Box
+puts unames.first.box == rbox          # => true
 
 # Envrionment variables can be set the same way as with Rye::Box
 rset.add_env(:RYE, "Forty Creek")
 p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
+
 
 
 

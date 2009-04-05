@@ -5,12 +5,13 @@ module Rye;
   # Rye::Rap
   #
   # This class is a modified Array which is returned by
-  # all command methods. The commands output is split
+  # all command methods. The command output is split
   # by line into an instance of this class. If there is
   # only a single element it will act like a String. 
   #
   # This class also contains a reference to the instance
-  # of Rye::Box that the command was executed on.
+  # of Rye::Box or Rye::Set that the command was executed 
+  # on. 
   #
   class Rap < Array 
      # A reference to the Rye object instance the command

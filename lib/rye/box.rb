@@ -10,14 +10,14 @@ module Rye
   #
   #     rbox = Rye::Box.new('filibuster')
   #     rbox.hostname   # => filibuster
+  #     rbox.uname      # => FreeBSD
+  #     rbox.uptime     # => 20:53  up 1 day,  1:52, 4 users
   #
   # You can also run local commands through SSH
   #
   #     rbox = Rye::Box.new('localhost') 
   #     rbox.hostname   # => localhost
-  #
-  #     rbox = Rye::Box.new
-  #     rbox.hostname   # => localhost
+  #     rbox.uname      # => Darwin
   #
   class Box 
     include Rye::Cmd
@@ -29,24 +29,40 @@ module Rye
     attr_reader :error
     
     attr_accessor :host
-    attr_accessor :user
+    
+    attr_accessor :safe
+    attr_accessor :opts
 
 
     # * +host+ The hostname to connect to. The default is localhost.
-    # * +opts+ a hash of optional arguments in the following format:
+    # * +opts+ a hash of optional arguments.
+    #
+    # The +opts+ hash excepts the following keys:
     #
     # * :user => the username to connect as. Default: the current user. 
-    # * :keypairs => one or more private key file paths (passwordless login)
-    # * :debug => an IO object to print Rye::Box debugging info to
+    # * :safe => should Rye be safe? Default: true
+    # * :keys => one or more private key file paths (passwordless login)
+    # * :password => the user's password (ignored if there's a valid private key)
+    # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
+    #
+    # NOTE: +opts+ can also contain any parameter supported by 
+    # Net::SSH.start that is not already mentioned above.
+    #
     def initialize(host='localhost', opts={})
       
-      opts = {
+      # These opts are use by Rye::Box and also passed to Net::SSH
+      @opts = {
         :user => Rye.sysinfo.user, 
-        :keypairs => [],
+        :safe => true,
+        :port => 22,
+        :keys => [],
         :debug => nil,
         :error => STDERR,
       }.merge(opts)
+      
+      # See Net::SSH.start
+      @opts[:paranoid] = true unless @opts[:safe] == false
       
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
@@ -55,11 +71,17 @@ module Rye
       }
             
       @host = host
-      @user = opts[:user]
-      @debug = opts[:debug]
-      @error = opts[:error]
       
-      add_keys(opts[:keypairs])
+      @safe = @opts.delete(:safe)
+      @debug = @opts.delete(:debug)
+      @error = @opts.delete(:error)
+      
+      add_keys(@opts[:keys])
+      
+      # We don't want Net::SSH to handle the keypairs. This may change
+      # but for we're letting ssh-agent do it. 
+      @opts.delete(:keys)
+      
     end
     
      
@@ -96,25 +118,20 @@ module Rye
     alias :cd :'[]'
     
     
-    # Add an environment variable to the command
-    def add_env(n, v)
-      debug "Added env: #{n}=#{v}"
-      (@current_environment_variables ||= {})[n] = v
-      self
-    end
-    
-    # Open an SSH session with +@host+.  
+    # Open an SSH session with +@host+. This called automatically
+    # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@host+ is not specified.
     def connect
       raise Rye::NoHost unless @host
       disconnect if @ssh 
       debug "Opening connection to #{@host}"
-      @ssh = Net::SSH.start(@host, @user) 
+      @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
 
-    # Close the SSH session  with +@host+
+    # Close the SSH session  with +@host+. This is called 
+    # automatically at exit if the connection is open. 
     def disconnect
       return unless @ssh && !@ssh.closed?
       @ssh.loop(0.1) { @ssh.busy? }
@@ -132,20 +149,26 @@ module Rye
     end
     alias :add_key :add_keys
     
-    # Returns an Array of info about the currently available
-    # SSH keys, as provided by the SSH Agent. See
-    # Rye.start_sshagent_environment
-    #
-    # Returns: [[bits, finger-print, file-path], ...]
+    # Add an environment variable. +n+ and +v+ are the name and value.
+    # Returns the instance of Rye::Box
+    def add_env(n, v)
+      debug "Added env: #{n}=#{v}"
+      (@current_environment_variables ||= {})[n] = v
+      self
+    end
+    alias :add_environment_variable :add_env
+    
+    # See Rye.keys
     def keys
       Rye.keys
     end
     
+    
     # Takes a command with arguments and returns it in a 
     # single String with escaped args and some other stuff. 
     # 
-    # * +args+ An Array. The first element must be the 
-    # command name, the rest are its aruments. 
+    # * +cmd+ The shell command name or absolute path.
+    # * +args+ an Array of command arguments.  
     #
     # The command is searched for in the local PATH (where
     # Rye is running). An exception is raised if it's not
@@ -157,12 +180,11 @@ module Rye
     # The command arguments are passed through Escape.shell_command
     # (that means you can't use environment variables or asterisks).
     #
-    def Box.prepare_command(*args)
+    def Box.prepare_command(cmd, *args)
       args &&= [args].flatten.compact
-      cmd = args.shift
       cmd = Rye::Box.which(cmd)
       raise CommandNotFound.new(cmd || 'nil') unless cmd
-      Escape.shell_command([cmd, *args]).to_s
+      Rye::Box.escape(@safe, cmd, *args)
     end
     
     # An all ruby implementation of unix "which" command. 
@@ -200,6 +222,14 @@ module Rye
       output
     end
     
+    # Creates a string from +cmd+ and +args+. If +safe+ is true
+    # it will send them through Escape.shell_command otherwise 
+    # it will return them joined by a space character. 
+    def Box.escape(safe, cmd, *args)
+      args = args.flatten.compact || []
+      safe ? Escape.shell_command(cmd, *args).to_s : [cmd, args].flatten.compact.join(' ')
+    end
+    
     private
       
       
@@ -207,6 +237,7 @@ module Rye
       def error(msg); @error.puts msg if @error; end
 
       
+      # Add the current environment variables to the beginning of +cmd+
       def prepend_env(cmd)
         return cmd unless @current_environment_variables.is_a?(Hash)
         env = ''
@@ -231,16 +262,20 @@ module Rye
       #
       #     $ ls -l 'arg1' 'arg2'
       #
+      # This method will try to connect to the host automatically
+      # but if it fails it will raise a Rye::NotConnected exception. 
+      # 
       def add_command(*args)
         connect if !@ssh || @ssh.closed?
-        raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
         args = args.first.split(/\s+/) if args.size == 1
         cmd, args = args.flatten.compact
-        cmd_clean = Escape.shell_command(cmd, *args).to_s
+        
+        raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
+        
+        cmd_clean = Rye::Box.escape(@safe, cmd, args)
         cmd_clean = prepend_env(cmd_clean)
-        #cmd_clean << " 2>&1" # STDERR into STDOUT. Works in DOS also.
         if @current_working_directory
-          cwd = Escape.shell_command('cd', @current_working_directory)
+          cwd = Rye::Box.escape(@safe, 'cd', @current_working_directory)
           cmd_clean = [cwd, cmd_clean].join('; ')
         end
         debug "Executing: %s" % cmd_clean
@@ -251,8 +286,10 @@ module Rye
         rap
       end
       alias :cmd :add_command
-
-
+      
+      # Executes +command+ via SSH
+      # Returns an Array with two elements, [stdout, stderr], representing
+      # the STDOUT and STDERR output by the command. They're Strings.
       def net_ssh_exec!(command)
         block ||= Proc.new do |ch, type, data|
           ch[:stdout] ||= ""
@@ -260,9 +297,8 @@ module Rye
           ch[:stdout] << data if type == :stdout
           ch[:stderr] << data if type == :stderr
         end
-        p @host
-        s = Net::SSH.start(@host, @user) 
-        channel = s.exec(command, &block)
+        
+        channel = @ssh.exec(command, &block)
         channel.wait  # block until we get a response
         
         [channel[:stdout], channel[:stderr]]

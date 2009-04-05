@@ -8,32 +8,37 @@ module Rye
     attr_reader :boxes
     
     # * +name+ The name of the set of machines
-    # * +opts+ a hash of optional arguments used as defaults for all
-    # for all Rye::Box objects. The options are:
+    # * +opts+ a hash of optional arguments 
     #
-    # * :parallel => run the commands in parallel? true (default) or false.
-    # * :user => the username to connect as. Default: the current user. 
-    # * :keypairs => one or more private key file paths (passwordless login)
-    # * :debug => an IO object to print Rye::Box debugging info to
-    # * :error => an IO object to print Rye::Box errors to. Default: STDERR
+    # The +opts+ hash is used as defaults for all for all Rye::Box objects. 
+    # All args supported by Rye::Box are available here with the addition of:
+    #
+    # * :parallel => run the commands in parallel? true or false (default).
+    #
     def initialize(name='default', opts={})
       @name = name
       @boxes = []
       
+      # These opts are use by Rye::Box and also passed to Net::SSH
       @opts = {
-        :parallel => true,
+        :parallel => false,
         :user => Rye.sysinfo.user, 
-        :keypairs => [],
-        :debug => STDOUT,
+        :safe => true,
+        :port => 22,
+        :keys => [],
+        :password => nil,
+        :proxy => nil,
+        :debug => nil,
         :error => STDERR,
       }.merge(opts)
       
       @parallel = @opts.delete(:parallel) # Rye::Box doesn't have :parallel
       
-      @debug = @opts[:debug]
-      @error = @opts[:error]
-      
-      add_keys(opts[:keypairs])
+      @safe = @opts.delete(:safe)
+      @debug = @opts.delete(:debug)
+      @error = @opts.delete(:error)
+
+      add_keys(@opts[:keys])
     end
     
     # * +boxes+ one or more boxes. Rye::Box objects will be added directly 
@@ -58,35 +63,49 @@ module Rye
     end
     alias :add_keys :add_key
     
+    # Add an environment variable. +n+ and +v+ are the name and value.
+    # Returns the instance of Rye::Set
     def add_env(n, v)
       run_command(:add_env, n, v)
       self
     end
     alias :add_environment_variable :add_env
     
+    # See Rye.keys
     def keys
       Rye.keys
     end
     
+    # See Rye::Box.[]
     def [](key=nil)
       run_command(:cd, key)
       self
     end
     alias :cd :'[]'
     
+    # Catches calls to Rye::Box commands. If +meth+ is the name of an 
+    # instance method defined in Rye::Cmd then we call it against all 
+    # the boxes in +@boxes+. Otherwise this method raises a
+    # Rye::CommandNotFound exception. It will also raise a Rye::NoBoxes
+    # exception if this set has no boxes defined. 
+    #
+    # Returns a Rye::Rap object containing the responses from each Rye::Box. 
     def method_missing(meth, *args)
       raise Rye::NoBoxes if @boxes.empty?
-      raise Rye::CommandNotFound, meth.to_s unless @boxes.first.respond_to?(meth)
+      raise Rye::CommandNotFound, meth.to_s unless Rye::Cmd.instance_methods.member?(meth.to_s)
       run_command(meth, *args)
     end
     
   private
     
+    # Determines whether to call the serial or parallel method, then calls it. 
     def run_command(meth, *args)
       runner = @parallel ? :run_command_parallel : :run_command_serial
       self.send(runner, meth, *args)
     end
     
+    
+    # Run the command on all boxes in parallel
     def run_command_parallel(meth, *args)
       debug "P: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
       threads = []
@@ -99,7 +118,7 @@ module Rye
       end
       
       threads.each do |t| 
-        sleep 0.01
+        sleep 0.01        # Give the thread some breathing room
         t.join            # Wait for the thread to finish
         raps << t[:rap]   # Grab the result
       end
@@ -107,6 +126,8 @@ module Rye
       raps
     end
     
+    
+    # Run the command on all boxes in serial
     def run_command_serial(meth, *args)
       debug "S: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
       raps = Rye::Rap.new(self)
@@ -118,8 +139,7 @@ module Rye
     
     def debug(msg); @debug.puts msg if @debug; end
     def error(msg); @error.puts msg if @error; end
-    
-    
+  
   end
   
 end
