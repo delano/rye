@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Apr 04 21:39:04 -0400 2009</span>
+          <span class='datetime'>Sat Apr 04 22:50:04 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -39,7 +39,7 @@
           <div id='description'>
             <h1><a href="../classes/Rye.html">Rye</a> - v0.3</h1>
             <p>
-            Run system commands via SSH locally and remotely in a Ruby way.
+            Safely run remote commands via SSH in Ruby.
             </p>
             <p>
             <a href="../classes/Rye.html">Rye</a> is similar to <a
@@ -49,7 +49,7 @@
             can&#8217;t do this: <tt>rbox.rm('-rf', '/etc/*<b>/</b>')</tt>.
             </p>
             <p>
-            See <tt>bin/try</tt> for working examples.
+            See bin/try for working examples.
             </p>
             <h2>Installation</h2>
             <p>
@@ -70,16 +70,16 @@
             </p>
             <ul>
             <li>You can&#8217;t use file globs. This means you can&#8217;t do this:
-            <tt>rbox.ls('*.rb')</tt>.
+            <tt>rbox.ls('*.rb')</tt>. +~+ also doesn&#8217;t work!
             
             </li>
-            <li>Command arguments cannot contain environment variables. However,
-            environment variables are available to the commands you run. This means you
-            can&#8217;t do this: <tt>rbox.echo('$HOME')</tt>.
+            <li>Command arguments cannot contain environment variables (however,
+            environment variables are available to the commands you run). This means
+            you can&#8217;t do this: <tt>rbox.echo('$HOME')</tt>.
             
             </li>
-            <li>Pipes and operators don&#8217;t work: <tt>|, &amp;&amp;, &gt;, &lt;,
-            ||</tt>, etc...
+            <li>Pipes and operators don&#8217;t work: <tt>|, &amp;&amp;, &gt;, &lt;, ||,
+            ~</tt>, etc...
             
             </li>
             <li>Backticks don&#8217;t work either: <tt>procs=`ps aux`</tt>
@@ -98,6 +98,13 @@
             There&#8217;s probably a way to do it safely but it&#8217;s not obvious yet
             (to me). If you have any ideas, I&#8217;d love to hear them!
             </p>
+            <h2>Command Whitelist</h2>
+            <p>
+            <a href="../classes/Rye.html">Rye</a> permits only a limited number of
+            system commands to be run. This default whitelist is defined in <a
+            href="../classes/Rye/Cmd.html">Rye::Cmd</a> but you can your commands in
+            your projects (see Example 2).
+            </p>
             <h2>Credits</h2>
             <ul>
             <li>Delano Mandelbaum (delano@solutious.com)
@@ -111,7 +118,7 @@
             
             </li>
             <li>The country of Canada for making <a href="../classes/Rye.html">Rye</a>
-            Whiskey.
+            Whisky.
             
             </li>
             </ul>
@@ -135,6 +142,19 @@
             </li>
             <li><a
             href="http://paste.lisp.org/display/6912">paste.lisp.org/display/6912</a>
+            
+            </li>
+            </ul>
+            <h2>More Info</h2>
+            <ul>
+            <li><a href="http://github.com/delano/rye">github.com/delano/rye</a>
+            
+            </li>
+            <li><a href="http://delano.github.com/rye">delano.github.com/rye</a>
+            
+            </li>
+            <li><a
+            href="http://www.youtube.com/watch?v=_StUVh6ENuw">www.youtube.com/watch?v=_StUVh6ENuw</a>
             
             </li>
             </ul>

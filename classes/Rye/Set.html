@@ -46,19 +46,19 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000051">new</a></li>
+              <li><a href="#M000056">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000059">[]</a></li>
-              <li><a href="#M000052">add_box</a></li>
-              <li><a href="#M000053">add_boxes</a></li>
-              <li><a href="#M000056">add_env</a></li>
-              <li><a href="#M000057">add_environment_variable</a></li>
-              <li><a href="#M000054">add_key</a></li>
-              <li><a href="#M000055">add_keys</a></li>
-              <li><a href="#M000058">keys</a></li>
-              <li><a href="#M000060">method_missing</a></li>
+              <li><a href="#M000064">[]</a></li>
+              <li><a href="#M000057">add_box</a></li>
+              <li><a href="#M000058">add_boxes</a></li>
+              <li><a href="#M000061">add_env</a></li>
+              <li><a href="#M000062">add_environment_variable</a></li>
+              <li><a href="#M000059">add_key</a></li>
+              <li><a href="#M000060">add_keys</a></li>
+              <li><a href="#M000063">keys</a></li>
+              <li><a href="#M000065">method_missing</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -93,8 +93,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000051'>
-                <a name='M000051'>      </a>
+              <div class='public-class method' id='method-M000056'>
+                <a name='M000056'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(name='default', opts={})</span>
@@ -120,15 +120,15 @@
                   </ul>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000051-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000056-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000051-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 18</span>&#x000A;18:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>=<span class="ruby-value str">'default'</span>, <span class="ruby-identifier">opts</span>={})&#x000A;19:       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;20:       <span class="ruby-ivar">@boxes</span> = []&#x000A;21:       &#x000A;22:       <span class="ruby-comment cmt"># These opts are use by Rye::Box and also passed to Net::SSH</span>&#x000A;23:       <span class="ruby-ivar">@opts</span> = {&#x000A;24:         <span class="ruby-identifier">:parallel</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,&#x000A;25:         <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">user</span>, &#x000A;26:         <span class="ruby-identifier">:safe</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,&#x000A;27:         <span class="ruby-identifier">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">22</span>,&#x000A;28:         <span class="ruby-identifier">:keys</span> =<span class="ruby-operator">&gt;</span> [],&#x000A;29:         <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;30:         <span class="ruby-identifier">:proxy</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;31:         <span class="ruby-identifier">:debug</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;32:         <span class="ruby-identifier">:error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">STDERR</span>,&#x000A;33:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)&#x000A;34:       &#x000A;35:       <span class="ruby-ivar">@parallel</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:parallel</span>) <span class="ruby-comment cmt"># Rye::Box doesn't have :parallel</span>&#x000A;36:       &#x000A;37:       <span class="ruby-ivar">@safe</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:safe</span>)&#x000A;38:       <span class="ruby-ivar">@debug</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:debug</span>)&#x000A;39:       <span class="ruby-ivar">@error</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:error</span>)&#x000A;40: &#x000A;41:       <span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@opts</span>[<span class="ruby-identifier">:keys</span>])&#x000A;42:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000056-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 18</span>&#x000A;18:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>=<span class="ruby-value str">'default'</span>, <span class="ruby-identifier">opts</span>={})&#x000A;19:       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;20:       <span class="ruby-ivar">@boxes</span> = []&#x000A;21:       &#x000A;22:       <span class="ruby-comment cmt"># These opts are use by Rye::Box and also passed to Net::SSH</span>&#x000A;23:       <span class="ruby-ivar">@opts</span> = {&#x000A;24:         <span class="ruby-identifier">:parallel</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,&#x000A;25:         <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">user</span>, &#x000A;26:         <span class="ruby-identifier">:safe</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>,&#x000A;27:         <span class="ruby-identifier">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">22</span>,&#x000A;28:         <span class="ruby-identifier">:keys</span> =<span class="ruby-operator">&gt;</span> [],&#x000A;29:         <span class="ruby-identifier">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;30:         <span class="ruby-identifier">:proxy</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;31:         <span class="ruby-identifier">:debug</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,&#x000A;32:         <span class="ruby-identifier">:error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">STDERR</span>,&#x000A;33:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)&#x000A;34:       &#x000A;35:       <span class="ruby-ivar">@parallel</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:parallel</span>) <span class="ruby-comment cmt"># Rye::Box doesn't have :parallel</span>&#x000A;36:       &#x000A;37:       <span class="ruby-ivar">@safe</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:safe</span>)&#x000A;38:       <span class="ruby-ivar">@debug</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:debug</span>)&#x000A;39:       <span class="ruby-ivar">@error</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:error</span>)&#x000A;40: &#x000A;41:       <span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@opts</span>[<span class="ruby-identifier">:keys</span>])&#x000A;42:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000059'>
-                <a name='M000059'>      </a>
+              <div class='public-instance method' id='method-M000064'>
+                <a name='M000064'>      </a>
                 <div class='synopsis'>
                   <span class='name'>[]</span>
                   <span class='arguments'>(key=nil)</span>
@@ -139,14 +139,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000059-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000064-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000059-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 80</span>&#x000A;80:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;81:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">:cd</span>, <span class="ruby-identifier">key</span>)&#x000A;82:       <span class="ruby-keyword kw">self</span>&#x000A;83:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000064-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 80</span>&#x000A;80:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;81:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">:cd</span>, <span class="ruby-identifier">key</span>)&#x000A;82:       <span class="ruby-keyword kw">self</span>&#x000A;83:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000052'>
-                <a name='M000052'>      </a>
+              <div class='public-instance method' id='method-M000057'>
+                <a name='M000057'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_box</span>
                   <span class='arguments'>(*boxes)</span>
@@ -164,26 +164,26 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000052-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000057-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000052-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_box</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">boxes</span>)&#x000A;48:       <span class="ruby-identifier">boxes</span> = <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> &#x000A;49:       <span class="ruby-ivar">@boxes</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">box</span><span class="ruby-operator">|</span>&#x000A;50:         <span class="ruby-identifier">box</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">box</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@keys</span>) <span class="ruby-operator">:</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">box</span>, <span class="ruby-ivar">@opts</span>)&#x000A;51:       <span class="ruby-keyword kw">end</span>&#x000A;52:       <span class="ruby-ivar">@boxes</span>&#x000A;53:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000057-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_box</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">boxes</span>)&#x000A;48:       <span class="ruby-identifier">boxes</span> = <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> &#x000A;49:       <span class="ruby-ivar">@boxes</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">box</span><span class="ruby-operator">|</span>&#x000A;50:         <span class="ruby-identifier">box</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">box</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@keys</span>) <span class="ruby-operator">:</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">box</span>, <span class="ruby-ivar">@opts</span>)&#x000A;51:       <span class="ruby-keyword kw">end</span>&#x000A;52:       <span class="ruby-ivar">@boxes</span>&#x000A;53:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000053'>
-                <a name='M000053'>      </a>
+              <div class='public-instance method' id='method-M000058'>
+                <a name='M000058'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_boxes</span>
                   <span class='arguments'>(*boxes)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Set.html#M000052">add_box</a>
+                  Alias for <a href="Set.html#M000057">add_box</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000056'>
-                <a name='M000056'>      </a>
+              <div class='public-instance method' id='method-M000061'>
+                <a name='M000061'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_env</span>
                   <span class='arguments'>(n, v)</span>
@@ -195,26 +195,26 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000056-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000061-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000056-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_env</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)&#x000A;69:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">:add_env</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)&#x000A;70:       <span class="ruby-keyword kw">self</span>&#x000A;71:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000061-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_env</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)&#x000A;69:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">:add_env</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)&#x000A;70:       <span class="ruby-keyword kw">self</span>&#x000A;71:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000057'>
-                <a name='M000057'>      </a>
+              <div class='public-instance method' id='method-M000062'>
+                <a name='M000062'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_environment_variable</span>
                   <span class='arguments'>(n, v)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Set.html#M000056">add_env</a>
+                  Alias for <a href="Set.html#M000061">add_env</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000054'>
-                <a name='M000054'>      </a>
+              <div class='public-instance method' id='method-M000059'>
+                <a name='M000059'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_key</span>
                   <span class='arguments'>(*additional_keys)</span>
@@ -233,26 +233,26 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000054-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000059-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000054-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 59</span>&#x000A;59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_key</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">additional_keys</span>)&#x000A;60:       <span class="ruby-identifier">additional_keys</span> = [<span class="ruby-identifier">additional_keys</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []&#x000A;61:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-identifier">additional_keys</span>)&#x000A;62:       <span class="ruby-keyword kw">self</span>&#x000A;63:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000059-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 59</span>&#x000A;59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_key</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">additional_keys</span>)&#x000A;60:       <span class="ruby-identifier">additional_keys</span> = [<span class="ruby-identifier">additional_keys</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []&#x000A;61:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-identifier">additional_keys</span>)&#x000A;62:       <span class="ruby-keyword kw">self</span>&#x000A;63:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000055'>
-                <a name='M000055'>      </a>
+              <div class='public-instance method' id='method-M000060'>
+                <a name='M000060'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_keys</span>
                   <span class='arguments'>(*additional_keys)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Set.html#M000054">add_key</a>
+                  Alias for <a href="Set.html#M000059">add_key</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000058'>
-                <a name='M000058'>      </a>
+              <div class='public-instance method' id='method-M000063'>
+                <a name='M000063'>      </a>
                 <div class='synopsis'>
                   <span class='name'>keys</span>
                   <span class='arguments'>()</span>
@@ -263,14 +263,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000058-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000063-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000058-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">keys</span>&#x000A;76:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>&#x000A;77:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000063-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">keys</span>&#x000A;76:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>&#x000A;77:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000060'>
-                <a name='M000060'>      </a>
+              <div class='public-instance method' id='method-M000065'>
+                <a name='M000065'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
                   <span class='arguments'>(meth, *args)</span>
@@ -291,10 +291,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000060-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000065-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000060-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 93</span>&#x000A;93:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;94:       <span class="ruby-comment cmt"># Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.</span>&#x000A;95:       <span class="ruby-identifier">meth</span> = (<span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">ruby</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">8</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_sym</span>&#x000A;96:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">NoBoxes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">empty?</span>&#x000A;97:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">meth</span>)&#x000A;98:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;99:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000065-source'>    <span class="ruby-comment cmt"># File lib/rye/set.rb, line 93</span>&#x000A;93:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;94:       <span class="ruby-comment cmt"># Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.</span>&#x000A;95:       <span class="ruby-identifier">meth</span> = (<span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">ruby</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">8</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_sym</span>&#x000A;96:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">NoBoxes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">empty?</span>&#x000A;97:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">meth</span>)&#x000A;98:       <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;99:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
