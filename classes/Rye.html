@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: Rye [Rye: Run system commands via SSH locally and remotely in a Ruby way.]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <div class='name'>
+          <span class='type'>Module</span>
+          Rye
+        </div>
+        <ol class='paths'>
+          <li>
+            <a href="../files/lib/rye/box_rb.html">lib/rye/box.rb</a>
+          </li>
+          <li class='other'>
+            <a href="../files/lib/rye/cmd_rb.html">lib/rye/cmd.rb</a>
+          </li>
+          <li class='other'>
+            <a href="../files/lib/rye/rap_rb.html">lib/rye/rap.rb</a>
+          </li>
+          <li class='other'>
+            <a href="../files/lib/rye/set_rb.html">lib/rye/set.rb</a>
+          </li>
+          <li class='other'>
+            <a href="../files/lib/rye_rb.html">lib/rye.rb</a>
+          </li>
+          <li>
+            <a class='show' href='#' onclick='this.parentNode.parentNode.className += " expanded"; this.parentNode.removeChild(this); return false'>show all</a>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <h1><a href="Rye.html">Rye</a></h1>
+            <p>
+            Run system commands via SSH locally and remotely in a Ruby way.
+            </p>
+            <p>
+            <a href="Rye.html">Rye</a> is similar to <a
+            href="http://rush.heroku.com">Rush</a> but everything happens over SSH (no
+            HTTP daemon) and the default settings are less powerful (for safety). For
+            example, file globs are disabled so unless otherwise specified, you
+            can&#8217;t do this: <tt>rbox.rm('/etc/*<b>/</b>')</tt>.
+            </p>
+            <ul>
+            <li>See <tt>bin/try</tt> for a bunch of working examples.
+            
+            </li>
+            <li>See Rye::Box#initialize for info about disabling safe-mode.
+            
+            </li>
+            </ul>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000001">sysinfo</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000005">add_keys</a></li>
+              <li><a href="#M000006">keys</a></li>
+              <li><a href="#M000004">mutex</a></li>
+              <li><a href="#M000003">reload</a></li>
+              <li><a href="#M000002">sysinfo</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='class-list'>
+              <h2>Classes and Modules</h2>
+              Module <a href="Rye/Cmd.html" class="link">Rye::Cmd</a><br />
+              Class <a href="Rye/Box.html" class="link">Rye::Box</a><br />
+              Class <a href="Rye/CommandNotFound.html" class="link">Rye::CommandNotFound</a><br />
+              Class <a href="Rye/NoBoxes.html" class="link">Rye::NoBoxes</a><br />
+              Class <a href="Rye/NoHost.html" class="link">Rye::NoHost</a><br />
+              Class <a href="Rye/NotConnected.html" class="link">Rye::NotConnected</a><br />
+              Class <a href="Rye/Rap.html" class="link">Rye::Rap</a><br />
+              Class <a href="Rye/Set.html" class="link">Rye::Set</a><br />
+            </div>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>VERSION</td>
+                    <td>=</td>
+                    <td class='context-item-value'>0.3.freeze</td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>SYSINFO</td>
+                    <td>=</td>
+                    <td class='context-item-value'>SystemInfo.new.freeze</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000001'>
+                <a name='M000001'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>sysinfo</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Accessor for an instance of SystemInfo
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000001-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 35</span>&#x000A;35:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>; <span class="ruby-constant">SYSINFO</span>; <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000005'>
+                <a name='M000005'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_keys</span>
+                  <span class='arguments'>(*keys)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Add one or more private keys to the SSH Agent.
+                  </p>
+                  <ul>
+                  <li><tt>keys</tt> one or more file paths to private keys used for passwordless
+                  logins.
+                  
+                  </li>
+                  </ul>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000005-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 59</span>&#x000A;59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_keys</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">keys</span>)&#x000A;60:     <span class="ruby-identifier">keys</span> = [<span class="ruby-identifier">keys</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []&#x000A;61:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">empty?</span>&#x000A;62:     <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-value str">&quot;ssh-add&quot;</span>, <span class="ruby-identifier">keys</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">keys</span>&#x000A;63:     <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-value str">&quot;ssh-add&quot;</span>) <span class="ruby-comment cmt"># Add the user's default keys</span>&#x000A;64:     <span class="ruby-identifier">keys</span>&#x000A;65:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000006'>
+                <a name='M000006'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>keys</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns an Array of info about the currently available SSH keys, as
+                  provided by the SSH Agent. See Rye.start_sshagent_environment
+                  </p>
+                  <p>
+                  Returns: [[bits, finger-print, file-path], &#8230;]
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000006-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 73</span>&#x000A;73:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">keys</span>&#x000A;74:     <span class="ruby-comment cmt"># 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)</span>&#x000A;75:     <span class="ruby-comment cmt"># 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)</span>&#x000A;76:     <span class="ruby-identifier">keystr</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-value str">&quot;ssh-add&quot;</span>, <span class="ruby-value str">'-l'</span>)&#x000A;77:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">keystr</span>&#x000A;78:     <span class="ruby-identifier">keystr</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>&#x000A;79:       <span class="ruby-identifier">key</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)&#x000A;80:     <span class="ruby-keyword kw">end</span>&#x000A;81:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000004'>
+                <a name='M000004'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>mutex</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000004-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 52</span>&#x000A;52:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mutex</span>&#x000A;53:     <span class="ruby-ivar">@@mutex</span>&#x000A;54:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000003'>
+                <a name='M000003'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>reload</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Reload <a href="Rye.html">Rye</a> dynamically. Useful with irb. NOTE: does
+                  not reload rye.rb.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000003-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 47</span>&#x000A;47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload</span>&#x000A;48:     <span class="ruby-identifier">pat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>), <span class="ruby-value str">'rye'</span>)&#x000A;49:     <span class="ruby-node">%w{rap cmd box set}</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">lib</span><span class="ruby-operator">|</span> <span class="ruby-identifier">load</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">pat</span>, <span class="ruby-node">&quot;#{lib}.rb&quot;</span>) }&#x000A;50:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000002'>
+                <a name='M000002'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>sysinfo</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Accessor for an instance of SystemInfo
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000002-source'>    <span class="ruby-comment cmt"># File lib/rye.rb, line 38</span>&#x000A;38:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sysinfo</span>; <span class="ruby-constant">SYSINFO</span>;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

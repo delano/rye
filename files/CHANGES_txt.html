@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>File: CHANGES.txt [Rye: Run system commands via SSH locally and remotely in a Ruby way.]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>CHANGES.txt</h1>
+        <div class='paths'>
+          CHANGES.txt
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>Sat Apr 04 21:39:04 -0400 2009</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            RYE, CHANGES
+            </p>
+            <p>
+            #### 0.3.1 (2009-04-05) #############################
+            </p>
+            <ul>
+            <li>FIXED: Module.instance_methods bug. In Ruby 1.9 it&#8217;s Symbols (1.8 was
+            Strings).
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.3 (2009-04-05) ###############################
+            </p>
+            <ul>
+            <li>ADDED: <a href="../classes/Rye/Set.html">Rye::Set</a> supports executing
+            commands parallel
+            
+            </li>
+            <li>ADDED: <a href="../classes/Rye/Rap.html">Rye::Rap</a> now contains STDERR
+            output from command
+            
+            </li>
+            <li>FIXED: <a href="../classes/Rye/Box.html">Rye::Box</a> wasn&#8217;t properly
+            adding keypairs to SSH Agent
+            
+            </li>
+            <li>CHANGED: Moved all SSH key stuff to <a href="../classes/Rye.html">Rye</a>
+            (used to be done per Box)
+            
+            </li>
+            <li>ADDED: Supports all options provided by Net::SSH#start. This
+            
+            </li>
+            </ul>
+            <p>
+            includes support for password logins and proxies.
+            </p>
+            <ul>
+            <li>ADDED: Safe mode can now be disabled (to allow file globs
+            
+            </li>
+            </ul>
+            <p>
+            and environment variable access).
+            </p>
+            <ul>
+            <li>ADDED: Basic sanity test
+            
+            </li>
+            <li>FIXED: Rye::Box.method_missing Symbol/String ambiguity
+            
+            </li>
+            <li>ADDED: Mucho more rdocs and examples.
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.2 (2009-04-04) ###############################
+            </p>
+            <ul>
+            <li>FIXED: ssh-agent shutdown wasn&#8217;t deleting the SSH tmp directory
+            
+            </li>
+            <li>ADDED: Now with more rdocs!
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.1 (2009-04-03) ###############################
+            </p>
+            <p>
+            Initial public release
+            </p>
+          </div>
+          <div id='section'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

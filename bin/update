@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "Updating docs..."
+rm -rf files classes && mv doc/* . && rm -rf doc
+
