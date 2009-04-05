@@ -163,6 +163,26 @@ module Rye
       Rye.keys
     end
     
+    # Returns +@host+
+    def to_s
+      @host
+    end
+    
+    def inspect
+      %q{#<%s:%s safe=%s opts=%s>} % [self.class.to_s, self.host, self.safe, self.opts.inspect]
+    end
+    
+    # Compares itself with the +other+ box. If the hostnames
+    # are the same, this will return true. Otherwise false. 
+    def ==(other)
+      @host == other.host
+    end
+    
+    def scp(*args)
+      args = [args].flatten.compact || []
+      other = args.pop
+      p other
+    end
     
     # Takes a command with arguments and returns it in a 
     # single String with escaped args and some other stuff. 
@@ -265,7 +285,7 @@ module Rye
       # This method will try to connect to the host automatically
       # but if it fails it will raise a Rye::NotConnected exception. 
       # 
-      def add_command(*args)
+      def run_command(*args)
         connect if !@ssh || @ssh.closed?
         args = args.first.split(/\s+/) if args.size == 1
         cmd, args = args.flatten.compact
@@ -279,29 +299,51 @@ module Rye
           cmd_clean = [cwd, cmd_clean].join('; ')
         end
         debug "Executing: %s" % cmd_clean
-        stdout, stderr = net_ssh_exec! cmd_clean
+        stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
         rap = Rye::Rap.new(self)
         rap.add_stdout(stdout || '')
         rap.add_stderr(stderr || '')
+        rap.exit_code = ecode
+        rap.exit_signal = esignal
+        
+        raise Rye::CommandError.new(rap) if ecode > 0
+        
         rap
       end
-      alias :cmd :add_command
+      alias :cmd :run_command
       
       # Executes +command+ via SSH
-      # Returns an Array with two elements, [stdout, stderr], representing
-      # the STDOUT and STDERR output by the command. They're Strings.
+      # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
       def net_ssh_exec!(command)
-        block ||= Proc.new do |ch, type, data|
-          ch[:stdout] ||= ""
-          ch[:stderr] ||= ""
-          ch[:stdout] << data if type == :stdout
-          ch[:stderr] << data if type == :stderr
+        block ||= Proc.new do |channel, type, data|
+          channel[:stdout] ||= ""
+          channel[:stderr] ||= ""
+          channel[:stdout] << data if type == :stdout
+          channel[:stderr] << data if type == :stderr
+          channel.on_request("exit-status") do |ch, data|
+            # Anything greater than 0 is an error
+            channel[:exit_code] = data.read_long
+          end
+          channel.on_request("exit-signal") do |ch, data|
+            # This should be the POSIX SIGNAL that ended the process
+            channel[:exit_signal] = data.read_long
+          end
+          # For long-running commands like top, this will print the output.
+          # It cool, but we'd also need to enable STDIN to interact with 
+          # command. 
+          #channel.on_data do |ch, data|
+          #  puts "got stdout: #{data}"
+          #  channel.send_data "something for stdin\n"
+          #end
         end
         
         channel = @ssh.exec(command, &block)
         channel.wait  # block until we get a response
         
-        [channel[:stdout], channel[:stderr]]
+        channel[:exit_code] ||= 0
+        channel[:exit_code] &&= channel[:exit_code].to_i
+        
+        [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
       end
       
       

@@ -95,10 +95,10 @@ p rbox.commands.member?('rye9000')   # => false
 # automatically become available to all Rye::Box objects.
 module Rye::Cmd
   def rye9000(*args)
-    add_command("ls", args)
+    run_command("ls", args)
   end
   def somescript(*args)
-    add_command("/path/to/my/script", args)
+    run_command("/path/to/my/script", args)
   end
 end
 

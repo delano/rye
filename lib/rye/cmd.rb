@@ -28,6 +28,7 @@ module Rye;
     
     def env; cmd "env"; end
     def pwd; cmd "pwd"; end
+    def top; cmd "top"; end
     def svn(*args); cmd('svn', args); end
     def cvs(*args); cmd('cvs', args); end
     def git(*args); cmd('git', args); end

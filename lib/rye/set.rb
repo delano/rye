@@ -6,6 +6,7 @@ module Rye
   class Set
     attr_reader :name
     attr_reader :boxes
+    attr_reader :opts
     
     # * +name+ The name of the set of machines
     # * +opts+ a hash of optional arguments 
@@ -74,6 +75,14 @@ module Rye
     # See Rye.keys
     def keys
       Rye.keys
+    end
+    
+    def to_s
+      "%s: %s" % [self.name, ]
+    end
+    
+    def inspect
+      %q{#<%s:%s boxes=%s opts=%s>} % [self.class.to_s, self.name, self.boxes.join(','), self.opts.inspect]
     end
     
     # See Rye::Box.[]

@@ -20,6 +20,8 @@ module Rye;
     
      # An array containing any STDERR output 
     attr_reader :stderr
+    attr_accessor :exit_code
+    attr_accessor :exit_signal
     
     # * +obj+ an instance of Rye::Box or Rye::Set
     # * +args+ anything that can sent to Array#new

@@ -37,11 +37,19 @@ module Rye
   # Accessor for an instance of SystemInfo
   def sysinfo; SYSINFO;  end
   
-  class CommandNotFound < RuntimeError; end
   class NoBoxes < RuntimeError; end
   class NoHost < RuntimeError; end
   class NotConnected < RuntimeError; end
-  
+  class CommandNotFound < RuntimeError; end
+  class CommandError < RuntimeError
+    # * +rap+ a Rye::Rap object
+    def initialize(rap)
+      @rap = rap
+    end
+    def message
+      "(code: %s) %s" % [@rap.exit_code, @rap.stderr.join($/)]
+    end
+  end
   # Reload Rye dynamically. Useful with irb. 
   # NOTE: does not reload rye.rb. 
   def reload

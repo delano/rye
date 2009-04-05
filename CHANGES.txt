@@ -1,6 +1,17 @@
 RYE, CHANGES
 
 
+#### 0.4.0 (2009-04-??) #############################
+
+* ADDED: to_s and inspect methods for cleaner debugging output
+* ADDED: == method for Rye::Box
+* ADDED: exit code and exit signal to Rye::Rap objects
+* ADDED: commands now raise a Rye::CommandError exception 
+when the command returns an exit code greater than 0. 
+* CHANGED: Box.add_command renamed to Box.run_command
+ 
+
+
 #### 0.3.2 (2009-04-05) #############################
 
 * FIXED: Module.instance_methods bug. In Ruby 1.9 it's Symbols (1.8 was Strings).
