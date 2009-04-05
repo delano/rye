@@ -39,7 +39,7 @@
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  s.executables = %w[try]
+  #s.executables = %w[]
   
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
