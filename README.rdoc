@@ -56,22 +56,17 @@ One of:
 
     # Safe-mode is enabled by default. In safe-mode, all command 
     # arguments are thoroughly escaped. This prevents access to
-    # environment variables and file globs (among other things).
-    p rbox_safe.echo('$HOME')                   # => "$HOME"
-    p rbox_safe['/etc'].ls('host*')             # => 
-    p rbox_safe.ls('-l | wc -l')                # => 
-    p rbox_safe.echo('$HOME > /tmp/rye-home')   # => "$HOME > /tmp/home"
-    p rbox_safe.cat('/tmp/rye-home')            # => 
-    p rbox_safe.cat('/tmp/rye-home').stderr     # => "No such file or directory"
+		# environment variables and file globs (among other things).
+		p rbox_safe.echo('$HOME')                                    # => "$HOME"
+		p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
+		p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
 
-    # Here's the same commands with safe-mode disabled:
-    p rbox_wild.echo('$HOME')                   # => "/home/rye"
-    p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
-    p rbox_wild.ls('-l | wc -l')                # => 110
-    p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
-    p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
-    p rbox_wild.rm('/tmp/rye-home')             # =>
-
+		# Here's the same commands with safe-mode disabled:
+		p rbox_wild.echo('$HOME')                   # => "/home/rye"
+		p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
+		p rbox_wild.ls('-l | wc -l')                # => 110
+		p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
+		p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
 
 
 == EXAMPLE 3 -- Custom Commands

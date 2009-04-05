@@ -357,7 +357,7 @@ module Rye
         channel[:exit_code] ||= 0
         channel[:exit_code] &&= channel[:exit_code].to_i
         
-        channel[:stderr].gsub!(/bash: line \d+:\s+/, '')
+        channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
         
         [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
       end

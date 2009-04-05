@@ -29,17 +29,13 @@ puts rbox.uptime                # => 11:02  up 16:01, 3 users
 # The response value for all commands is a Rye::Rap object. The rap is a
 # subclass of Array so you can treat it as an Array, but it can also act 
 # like a String if there's only one element. 
-puts rbox.ls('rye.test')           # => ""
-puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
-
-puts rbox.touch('rye.test')        # => ""
-puts rbox.rm('rye.test')           # => ""
+puts rbox.ls('/')                  # => []
                                  
 # You can change directories
 puts rbox.pwd                      # => /home/rye
 puts rbox['/usr/bin'].pwd          # => /usr/bin
 puts rbox.pwd                      # => /usr/bin
-puts rbox.cd('/home/rye').pwd      # => /home/rye
+puts rbox.cd(Rye.sysinfo.home).pwd # => /home/rye
 
 # You can specify environment variables
 rbox.add_env(:RYE, "Forty Creek")
@@ -64,12 +60,9 @@ rbox_wild = Rye::Box.new('localhost', :safe => false)
 # Safe-mode is enabled by default. In safe-mode, all command 
 # arguments are thoroughly escaped. This prevents access to
 # environment variables and file globs (among other things).
-p rbox_safe.echo('$HOME')                   # => "$HOME"
-p rbox_safe['/etc'].ls('host*')             # => 
-p rbox_safe.ls('-l | wc -l')                # => 
-p rbox_safe.echo('$HOME > /tmp/rye-home')   # => "$HOME > /tmp/home"
-p rbox_safe.cat('/tmp/rye-home')            # => 
-p rbox_safe.cat('/tmp/rye-home').stderr     # => "No such file or directory"
+p rbox_safe.echo('$HOME')                                    # => "$HOME"
+p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
+p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
 
 # Here's the same commands with safe-mode disabled:
 p rbox_wild.echo('$HOME')                   # => "/home/rye"
@@ -77,7 +70,7 @@ p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
 p rbox_wild.ls('-l | wc -l')                # => 110
 p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
 p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
-p rbox_wild.rm('/tmp/rye-home')             # =>
+
 
 
 puts %Q(
@@ -143,6 +136,16 @@ puts unames.first.box == rbox          # => true
 rset.add_env(:RYE, "Forty Creek")
 p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
+__END__
 
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 5 -- ERROR HANDLING
+#)
 
+puts rbox.ls('rye.test')           # => ""
+puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
+
+puts rbox.touch('rye.test')        # => ""
+puts rbox.rm('rye.test')           # => ""
 

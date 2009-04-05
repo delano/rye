@@ -45,6 +45,7 @@ module Rye
   class NotConnected < RuntimeError; end
   class CommandNotFound < RuntimeError; end
   class CommandError < RuntimeError
+    attr_reader :rap
     # * +rap+ a Rye::Rap object
     def initialize(rap)
       @rap = rap
