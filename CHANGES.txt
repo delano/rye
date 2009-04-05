@@ -1,9 +1,11 @@
 RYE, CHANGES
 
 
-#### 0.3.1 (2009-04-05) #############################
+#### 0.3.2 (2009-04-05) #############################
 
 * FIXED: Module.instance_methods bug. In Ruby 1.9 it's Symbols (1.8 was Strings).
+* FIXED: Rye::Set#add_boxes didn't return self.
+# UPDATED: Lots of docs tweaks.
 
 
 #### 0.3 (2009-04-05) ###############################

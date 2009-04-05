@@ -49,7 +49,7 @@ module Rye
       @boxes += boxes.collect do |box|
         box.is_a?(Rye::Box) ? box.add_keys(@keys) : Rye::Box.new(box, @opts)
       end
-      @boxes
+      self
     end
     alias :add_boxes :add_box
     
