@@ -4,7 +4,7 @@ Safely run remote commands via SSH in Ruby.
 
 Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
-See bin/try for working examples.
+Here are some examples (which are also running in bin/try):
 
 == Installation
 
@@ -148,8 +148,16 @@ Using a Ruby interface to execute shell commands is pretty awesome, particularly
 
 == Command Whitelist
 
-Rye permits only a limited number of system commands to be run. This default whitelist is defined in Rye::Cmd but you can add your own commands as you please (see Example 2).
+Rye permits only a limited number of system commands to be run. This default whitelist is defined in Rye::Cmd[http://github.com/delano/rye/blob/master/lib/rye/cmd.rb] but you can add your own commands as you please (see Example 3).
 
+== Dependencies
+
+* OpenSSL[http://www.openssl.org] (The C library)
+* Ruby Gems:
+  * net-ssh
+  * net-scp
+  * highline
+  * drydock
 
 == Thanks
 

@@ -2,8 +2,11 @@
 require 'rubygems' unless defined? Gem
 
 require 'net/ssh'
+require 'net/scp'
 require 'thread'
 require 'highline'
+require 'openssl'
+
 require 'esc'
 require 'sys'
 
@@ -61,14 +64,95 @@ module Rye
     @@mutex
   end
   
+  # Looks for private keys in +path+ and returns and Array of paths
+  # to the files it fines. Raises an Exception if path does not exist.
+  # If path is a file rather than a directory, it will check whether
+  # that single file is a private key.
+  def find_private_keys(path)
+    raise "#{path} does not exist" unless File.exists?(path || '')
+    if File.directory?(path)
+      files = Dir.entries(path).collect { |file| File.join(path, file) }
+    else
+      files = [path]
+    end
+    
+    files = files.select do |file|
+      next if File.directory?(file)
+      pk = nil
+      begin
+        pk = load_private_key(file) 
+      rescue OpenSSL::PKey::PKeyError
+      end
+      !pk.nil?
+    end
+    files || []
+  end
   
+  
+  # Loads a private key from a file. It will correctly determine
+  # whether the file describes an RSA or DSA key, and will load it
+  # appropriately. The new key is returned. If the key itself is
+  # encrypted (requiring a passphrase to use), the user will be
+  # prompted to enter their password.
+  # NOTE: Taken from Net::SSH
+  def load_private_key( filename )
+    file = File.read( filename )
+
+    if file.match( /-----BEGIN DSA PRIVATE KEY-----/ )
+      key_type = OpenSSL::PKey::DSA
+    elsif file.match( /-----BEGIN RSA PRIVATE KEY-----/ )
+      key_type = OpenSSL::PKey::RSA
+    elsif file.match( /-----BEGIN (.*) PRIVATE KEY-----/ )
+      raise OpenSSL::PKey::PKeyError, "not a supported key type '#{$1}'"
+    else
+      raise OpenSSL::PKey::PKeyError, "not a private key (#{filename})"
+    end
+
+    encrypted_key = file.match( /ENCRYPTED/ )
+    password = encrypted_key ? 'nil' : nil
+    tries = 0
+
+    begin
+      return key_type.new( file, password )
+    rescue OpenSSL::PKey::RSAError, OpenSSL::PKey::DSAError => e
+      if encrypted_key && @prompter
+        tries += 1
+        if tries <= 3
+          password = @prompter.password(
+            "Enter password for #{filename}: " )
+          retry
+        else
+          raise
+        end
+      else
+        raise
+      end
+    end
+  end
+
+  # Loads a public key from a file. It will correctly determine whether
+  # the file describes an RSA or DSA key, and will load it
+  # appropriately. The new public key is returned.
+  # NOTE: Taken from Net::SSH
+  def load_public_key( filename )
+    data = File.open( filename ) { |file| file.read }
+    type, blob = data.split( / / )
+
+    blob = Base64.decode64( blob )
+    reader = @buffers.reader( blob )
+    key = reader.read_key or
+      raise OpenSSL::PKey::PKeyError,
+        "not a public key #{filename.inspect}"
+    return key
+  end
+
+
   # Add one or more private keys to the SSH Agent. 
   # * +keys+ one or more file paths to private keys used for passwordless logins. 
   def add_keys(*keys)
     keys = [keys].flatten.compact || []
     return if keys.empty?
     Rye::Box.shell("ssh-add", keys) if keys
-    Rye::Box.shell("ssh-add") # Add the user's default keys
     keys
   end
   
@@ -113,7 +197,6 @@ module Rye
   # 
   def start_sshagent_environment
     return if @@agent_env["SSH_AGENT_PID"]
-
     lines = Rye::Box.shell("ssh-agent", '-s') || ''
     lines.split($/).each do |line|
       next unless line.index("echo").nil?
@@ -123,6 +206,8 @@ module Rye
     end
     ENV["SSH_AUTH_SOCK"] = @@agent_env["SSH_AUTH_SOCK"]
     ENV["SSH_AGENT_PID"] = @@agent_env["SSH_AGENT_PID"]
+    
+    Rye::Box.shell("ssh-add") # Add the user's default keys
     nil
   end
   
@@ -150,6 +235,7 @@ module Rye
       start_sshagent_environment            # Run this now
       at_exit { end_sshagent_environment }  # Run this before Ruby exits
     }
+    
   rescue => ex
     STDERR.puts "Error initializing the SSH Agent (is OpenSSL installed?):"
     STDERR.puts ex.message

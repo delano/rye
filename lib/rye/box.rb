@@ -33,7 +33,9 @@ module Rye
     attr_accessor :safe
     attr_accessor :opts
 
-
+      # The most recent value from Box.cd or Box.[]
+    attr_reader :current_working_directory
+    
     # * +host+ The hostname to connect to. The default is localhost.
     # * +opts+ a hash of optional arguments.
     #
@@ -92,16 +94,24 @@ module Rye
     alias :commands :can
     alias :cmds :can
     
+    def copy_to(*boxes)
+      p boxes
+      
+      @scp = Net::SCP.start(@host, @opts[:user], @opts || {}) 
+      #@ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
+#      p @scp
+    end
     
+      
     # Change the current working directory (sort of). 
     #
     # I haven't been able to wrangle Net::SSH to do my bidding. 
     # "My bidding" in this case, is maintaining an open channel between commands.
-    # I'm using Net::SSH::Connection::Session#exec! for all commands
+    # I'm using Net::SSH::Connection::Session#exec for all commands
     # which is like a funky helper method that opens a new channel
     # each time it's called. This seems to be okay for one-off 
     # commands but changing the directory only works for the channel
-    # it's executed in. The next time exec! is called, there's a
+    # it's executed in. The next time exec is called, there's a
     # new channel which is back in the default (home) directory. 
     #
     # Long story short, the work around is to maintain the current
@@ -116,7 +126,6 @@ module Rye
       self
     end
     alias :cd :'[]'
-    
     
     # Open an SSH session with +@host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
@@ -309,6 +318,7 @@ module Rye
         rap.add_stderr(stderr || '')
         rap.exit_code = ecode
         rap.exit_signal = esignal
+        rap.cmd = cmd
         
         raise Rye::CommandError.new(rap) if ecode > 0
         

@@ -23,6 +23,9 @@ module Rye;
     attr_accessor :exit_code
     attr_accessor :exit_signal
     
+      # The command that was executed. 
+    attr_accessor :cmd
+    
     # * +obj+ an instance of Rye::Box or Rye::Set
     # * +args+ anything that can sent to Array#new
     def initialize(obj, *args)
@@ -68,6 +71,10 @@ module Rye;
       return self.first if self.size == 1
       return "" if self.size == 0
       super
+    end
+    
+    def >>(*other)
+      p other
     end
     
     #---

@@ -1,0 +1,53 @@
+#!/usr/bin/ruby
+
+# Rye -- A CLI for some handy SSH tools
+#
+# If your reading this via the rdocs you won't be able to see the code
+# See: http://github.com/delano/rye/blob/master/bin/rye
+#
+# Usage: rye
+#
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'rubygems'
+require 'stringio'
+require 'yaml'
+require 'drydock'
+require 'rye'
+
+include Drydock
+
+global :p, :path, String, "A directory containing SSH private keys or the path to a private key"
+
+before do |obj|
+  if obj.global.path
+    keys = Rye.find_private_keys(obj.global.path) 
+    Rye.add_keys(keys)
+  end
+end
+
+command :authorize, :authorize do
+  
+end
+command_alias :authorize, :authorise
+
+command :ssh do
+  
+end
+
+desc "Displays the private keys that Rye is aware of"
+command :keys do |obj|
+
+  Rye.keys.each do |key|
+    puts key.join(' ')
+  end
+end
+
+default :keys
+
+# We can Drydock specifically otherwise it will run at_exit. Rye also
+# uses at_exit for shutting down the ssh-agent. Ruby executes at_exit
+# blocks in reverse order so if Drydock is required first, it's block
+# will run after Rye shuts down the ssh-agent. 
+Drydock.run!(ARGV, STDIN)

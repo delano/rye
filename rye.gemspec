@@ -11,7 +11,9 @@
   # = DEPENDENCIES =
   # Add all gem dependencies
   s.add_dependency 'net-ssh'
+  s.add_dependency 'net-scp'
   s.add_dependency 'highline'
+  s.add_dependency 'drydock'
   
   # = MANIFEST =
   # The complete list of files to be included in the release. When GitHub packages your gem, 
@@ -39,7 +41,7 @@
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  #s.executables = %w[]
+  s.executables = %w[rye]
   
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
