@@ -136,9 +136,9 @@ One of:
 
 In safe-mode:
 
-* You can't use file globs. This means you can't do this: <tt>rbox.ls('*.rb')</tt>. 
-* Command arguments cannot contain environment variables. However, environment variables are available to the commands you run. This means you can't do this: <tt>rbox.echo('$HOME')</tt>.
-* Pipes and operators don't work: <tt>|, &&, >, <, ||</tt>, etc...
+* You can't use file globs. This means you can't do this: <tt>rbox.ls('*.rb')</tt>. +~+ also doesn't work!
+* Command arguments cannot contain environment variables (however, environment variables are available to the commands you run). This means you can't do this: <tt>rbox.echo('$HOME')</tt>.
+* Pipes and operators don't work: <tt>|, &&, >, <, ||, ~</tt>, etc...
 * Backticks don't work either: <tt>procs=`ps aux`</tt>
 
 Why? In safe-mode, all command arguments are escaped which turns all arguments into their literal values. 
