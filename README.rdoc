@@ -148,8 +148,7 @@ Using a Ruby interface to execute shell commands is pretty awesome, particularly
 
 == Command Whitelist
 
-Rye permits only a limited number of system commands to be run. This default whitelist is defined in Rye::Cmd but you can your commands in your projects (see Example 2).
-
+Rye permits only a limited number of system commands to be run. This default whitelist is defined in Rye::Cmd but you can add your own commands as you please (see Example 2).
 
 == Credits
 
