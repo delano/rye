@@ -2,7 +2,7 @@ html, body {
   height: 100%; }
 
 body {
-  font-family: !body_font;
+  font-family: Lucida Grande , Verdana, Arial, Helvetica, sans-serif;
   font-size: 90%;
   margin: 0;
   padding: 0;
@@ -46,9 +46,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal; }
 
 a {
-  color: !link; }
+  color: #0b3e71; }
   a:hover {
-    background: !light_link;
+    background: #336699;
     text-decoration: none;
     color: #eef; }
 
@@ -56,11 +56,11 @@ a {
   border: 0; }
 
 #description a, .method .description a, .header a {
-  color: !light_link; }
+  color: #336699; }
   #description a:hover,   .method .description a:hover,   .header a:hover {
     color: #eee; }
 #description h1 a, #description h2 a, #description h3 a, #description h4 a, #description h5 a, #description h6 a, .method .description h1 a, .method .description h2 a, .method .description h3 a, .method .description h4 a, .method .description h5 a, .method .description h6 a, .header h1 a, .header h2 a, .header h3 a, .header h4 a, .header h5 a, .header h6 a {
-  color: !link; }
+  color: #0b3e71; }
 
 ol {
   margin: 0;
@@ -85,14 +85,14 @@ table {
     background-color: #e8e8e8; }
     table thead th {
       font-variant: small-caps;
-      color: !light_text; }
+      color: #666666; }
   table tr {
     border-bottom: 1px solid silver; }
 
 #index a.show, div.header a.show {
   text-decoration: underline;
   font-style: italic;
-  color: !light_text; }
+  color: #666666; }
   #index a.show:after,   div.header a.show:after {
     content: " ..."; }
   #index a.show:hover,   div.header a.show:hover {
@@ -106,7 +106,7 @@ table {
   #index h1 {
     padding: .2em .5em .1em;
     background: #ccc;
-    font: "small-caps 1.2em" !title_font;
+    font: small-caps 1.2em Georgia, serif;
     color: #333;
     border-bottom: 1px solid gray; }
   #index form {
@@ -150,22 +150,22 @@ div.header {
   border-bottom: 1px solid silver; }
   div.header .name {
     font-size: 1.6em;
-    font-family: !title_font; }
+    font-family: Georgia, serif; }
     div.header .name .type {
-      color: !light_text;
+      color: #666666;
       font-size: 80%;
       font-variant: small-caps; }
   div.header h1.name {
     font-size: 2.2em; }
   div.header .paths, div.header .last-update, div.header .parent {
-    color: !light_text; }
+    color: #666666; }
   div.header .last-update .datetime {
-    color: !light_text - 30; }
+    color: #484848; }
   div.header .parent {
     margin-top: .3em; }
     div.header .parent strong {
       font-weight: normal;
-      color: !light_text - 30; }
+      color: #484848; }
 
 #content {
   padding: 12px 2%; }
@@ -173,7 +173,7 @@ div.header {
     position: relative;
     width: 72%; }
   #content pre, #content .method .synopsis {
-    font: !code_font; }
+    font: 14px Monaco, DejaVu Sans Mono , Bitstream Vera Sans Mono , Courier New , monospace; }
   #content pre {
     color: black;
     background: #eee;
@@ -181,7 +181,7 @@ div.header {
     padding: .5em .8em;
     overflow: auto; }
   #content p code, #content p tt,   #content li code, #content li tt,   #content dl code, #content dl tt {
-    font: !code_font;
+    font: 14px Monaco, DejaVu Sans Mono , Bitstream Vera Sans Mono , Courier New , monospace;
     background: #ffffe3;
     padding: 2px 3px;
     line-height: 1.4; }
@@ -192,7 +192,7 @@ div.header {
   #content #description p {
     margin-top: .5em; }
   #content #description h1, #content #description h2, #content #description h3, #content #description h4, #content #description h5, #content #description h6 {
-    font-family: !title_font; }
+    font-family: Georgia, serif; }
   #content #description h1 {
     font-size: 2.2em;
     margin-bottom: .2em;
@@ -200,23 +200,23 @@ div.header {
     padding-bottom: .1em; }
   #content #description h2 {
     font-size: 1.8em;
-    color: !dark_blue_text;
+    color: #0e3062;
     margin: .8em 0 .3em 0; }
   #content #description h3 {
     font-size: 1.6em;
     margin: .8em 0 .3em 0;
-    color: !light_text; }
+    color: #666666; }
   #content #description h4 {
     font-size: 1.4em;
     margin: .8em 0 .3em 0; }
   #content #description h5 {
     font-size: 1.2em;
     margin: .8em 0 .3em 0;
-    color: !dark_blue_text; }
+    color: #0e3062; }
   #content #description h6 {
     font-size: 1.0em;
     margin: .8em 0 .3em 0;
-    color: !light_text; }
+    color: #666666; }
   #content #description ul, #content #description ol,   #content .method .description ul, #content .method .description ol {
     margin: .8em 0;
     padding-left: 1.5em; }
@@ -239,7 +239,7 @@ div.header {
   #method-list h3 {
     font-variant: small-caps;
     text-transform: capitalize;
-    font-family: !title_font;
+    font-family: Georgia, serif;
     color: #666;
     font-size: 1.1em; }
   #method-list ol {
@@ -251,7 +251,7 @@ div.header {
   margin-bottom: 1em; }
 
 #context h2, #section h2 {
-  font: "small-caps 1.2em" !title_font;
+  font: small-caps 1.2em Georgia, serif;
   color: #444;
   margin: 1em 0 .2em 0; }
 
@@ -280,7 +280,7 @@ div.header {
   background: #ffffe4; }
 #methods .public-instance .synopsis {
   color: #eee;
-  background: !light_link; }
+  background: #336699; }
 
 #content .method .source pre {
   background: #262626;
