@@ -74,7 +74,7 @@ Rake::RDocTask.new do |t|
   t.rdoc_files.include(LICENSE)
   t.rdoc_files.include(README)
   t.rdoc_files.include(CHANGES)
-  #t.rdoc_files.include('bin/*')
+  t.rdoc_files.include('bin/*')
   t.rdoc_files.include('lib/**/*.rb')
 end
 
