@@ -2,7 +2,6 @@ RYE, CHANGES
 
 TODO
 
-* Use ssh-keyscan to build known_hosts
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 

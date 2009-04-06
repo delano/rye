@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+# THIS IS A SCRAP FILE.
+
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'rye'

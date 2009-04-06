@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-
+# THIS IS A SCRAP FILE.
 
 __END__
 require 'openssl'

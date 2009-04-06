@@ -54,8 +54,8 @@ puts $/, "[4] Base64 encoded, SSH2 format (manual)"
 puts Base64.encode64(rpk.public_key.to_blob).strip.gsub(/[\r\n]/, '')
 # AAAAB3NzaC1yc2EAAAABIwAAAQEAzRTl7NX++irdkHdH68/JFu9EXimuih6wgfDn0cIC15isHonssxN5i7SuIDfP9zLc9QJWgfUyn0nsdOp5Di8KStvidlMnNeZUSA2YwjQUH++1z4z5bbjUixCBkn8Jv6uV+CxPeB3DFJKOrc1DKfkzf1oaUhEPPcfS78ZGM7fEW5wXX8zXOS0BnRvX9oTpQtypdm6vjcdZnW76eSudjJvk0yruV6UquEcud+RVNtJlM7uqgm2CEBhD18qxQINwTG0NFALYMaNzXKrAu6MSvk9uHof/nSk4V5IwBh+2fQAyvukpgmqvL5yYVm1mXGs4DwG9ukJ+PuGzh02sUKcGoc3yIw==
 
-puts $/, "[5] Base64 encoded, SSH2 format (via Rye::Key.public_key_to_ssh2)"
-puts rpk.public_key_to_ssh2
+puts $/, "[5] Base64 encoded, SSH2 format (via Rye::Key.public_key.to_ssh2)"
+puts rpk.public_key.to_ssh2
 # ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzRTl7NX++irdkHdH68/JFu9EXimuih6wgfDn0cIC15isHonssxN5i7SuIDfP9zLc9QJWgfUyn0nsdOp5Di8KStvidlMnNeZUSA2YwjQUH++1z4z5bbjUixCBkn8Jv6uV+CxPeB3DFJKOrc1DKfkzf1oaUhEPPcfS78ZGM7fEW5wXX8zXOS0BnRvX9oTpQtypdm6vjcdZnW76eSudjJvk0yruV6UquEcud+RVNtJlM7uqgm2CEBhD18qxQINwTG0NFALYMaNzXKrAu6MSvk9uHof/nSk4V5IwBh+2fQAyvukpgmqvL5yYVm1mXGs4DwG9ukJ+PuGzh02sUKcGoc3yIw==
 
 puts $/, "[6] Base64 encoded, SSH2 format (via ssh-keygen -y -f #{private_key_path})"

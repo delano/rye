@@ -131,11 +131,11 @@ One of:
 
     rbox = Rye::Box.new('localhost', :safe => false)
 
-    # Rye follows the standard convention of taking exception to non-zero 
-    # exit code. It raises a Rye::CommandError. In this case, rye.test is
-    # not found by the ls command. 
+    # Rye follows the standard convention of taking exception to a non-zero 
+    # exit code by raising a Rye::CommandError. In this case, rye9000.test
+    # is not found by the ls command. 
     begin
-      rbox.ls('rye.test')
+      rbox.ls('rye9000.test')
     rescue Rye::CommandError => ex
       puts ex.exit_code                # => 1
       puts ex.stderr                   # => ls: rye.test: No such file or directory
