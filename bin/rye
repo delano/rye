@@ -21,44 +21,107 @@ include Drydock
 global :p, :path, String, "A directory containing SSH private keys or the path to a private key"
 
 before do |obj|
-
+  STDERR.puts
   # Load private keys if specified
   if obj.global.path
     keys = Rye.find_private_keys(obj.global.path) 
     Rye.add_keys(keys)
   end
-  
 end
 
+after do
+  STDERR.puts
+end
 
-desc "Adds your public keys a remote machine"
+desc "Add your public keys to one or more remote machines"
 option :u, :user, String, "Username"
 argv :hostname
-command :authorize, :authorize do |obj|
+command :authorize do |obj|
   raise "You must specify a host" unless obj.argv.hostname
-  opts = { :safe => false, :debug => STDOUT }
+  
+  highline = HighLine.new
+  
+  opts = { :safe => false, :debug => nil }
   opts[:user] = obj.option.user if obj.option.user
-  rbox = Rye::Box.new(obj.argv.hostname, opts)
-  rbox.ls('.ssh/authorized_keys2').empty?
-  rbox.echo 
+  
+  obj.argv.each do |hostname|
+    puts "Authorizing #{hostname}"
+    
+    retried = 0
+    begin
+      rbox = Rye::Box.new(hostname, opts).connect
+      
+      # We know we're already authorized b/c we didn't have to give a password
+      if retried == 0
+        puts "%s is already authorized" % rbox.opts[:user]
+        puts
+        next
+      end
+      
+    # An authentication failure means either the requested user doesn't
+    # exist on the remote machine or we need to supply a password. 
+    rescue Net::SSH::AuthenticationFailed => ex
+      retried += 1
+      opts[:password] = highline.ask("Password: ") { |q| q.echo = '*' }
+      retry unless retried > 3
+    rescue Net::SSH::AuthenticationFailed
+      STDERR.puts "Authentication failed."
+      exit 1
+    end
+    
+    Rye.keys.each do |key|
+      path = key[2]
+      puts "# Public key for #{path}"
+      k = Rye::Key.from_file(path).public_key.to_ssh2
+      rbox.mkdir('-p', '~/.ssh') # Silently create dir if it doesn't exist
+      rbox.echo("'#{k}' >> ~/.ssh/authorized_keys")
+      rbox.echo("'#{k}' >> ~/.ssh/authorized_keys2")
+      rbox.chmod('-R', '0600', '.ssh')
+    end
+    
+    puts
+  end
+  
 end
+command_alias :authorize, :authorise
 
-usage "rye key keypath"
-argv :keypath
-command :key do |obj|
-  raise "Must specific a keypath. See: rye key --help" unless obj.argv.keypath
-  k = Rye::Key.from_file(obj.argv.keypath)
-  puts '------------------',k.public_key
-  puts '------------------',k.public_key_to_ssh2
+
+desc "Generate a public key from a private key"
+
+
+
+desc "Fetch the host keys for remote machines (suitable for your ~/.ssh/known_hosts file)"
+usage "rye hostkey HOSTNAME [HOSTNAME2 HOSTNAME3 ...]"
+argv :hostname
+command :hostkeys do |obj|
+  raise "You must specify a host" unless obj.argv.hostname
+  ret = Rye.remote_host_keys(obj.argv.hostname)
+  STDERR.puts $/, ret.stderr, $/
+  puts ret.stdout
 end
+command_alias :hostkeys, :hostkey
 
 
-desc "Displays the private keys that Rye is aware of"
+desc "Display your private keys"
 command :keys do |obj|
   Rye.keys.each do |key|
     puts key.join(' ')
   end
 end
+
+desc "Display your public SSH keys"
+usage "rye pubkeys [--pem] [KEYPATH]"
+option :p, :pem, "Output in PEM format"
+argv :keypath
+command :pubkeys do |obj|
+  keys = obj.argv.empty? ? Rye.keys.collect { |k| k[2] } : obj.argv
+  keys.each do |path|
+    STDERR.puts "# Public SSH key for #{path}"
+    k = Rye::Key.from_file(path)
+    puts obj.option.pem ? k.public_key.to_pem : k.public_key.to_ssh2
+  end
+end
+command_alias :pubkeys, :pubkey
 
 
 default :keys

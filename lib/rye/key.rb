@@ -100,7 +100,10 @@ module Rye
     
     def public_key
       raise OpenSSL::PKey::PKeyError, "No public key" if !@keypair
-      public? ? @keypair : @keypair.public_key
+      pubkey = public? ? @keypair : @keypair.public_key
+      # Add the to_ssh2 method to the instance of OpenSSL::PKey::*SA only
+      def pubkey.to_ssh2; Rye::Key.public_key_to_ssh2(self);  end
+      pubkey
     end
       
     # Encrypt +text+ with this public or private key. The key must 
@@ -113,9 +116,12 @@ module Rye
     def dsa?; @authtype.upcase == "DSA"; end
     def encrypted?; @data && @data.match(/ENCRYPTED/); end
     
-    def public_key_to_ssh2
-      b64pub = ::Base64.encode64(public_key.to_blob).strip.gsub(/[\r\n]/, '')
-      "ssh-%s %s" % [authtype.downcase, b64pub]
+    # * +pubkey+ an instance of OpenSSL::PKey::RSA or OpenSSL::PKey::DSA
+    # Returns a public key in SSH format (suitable for ~/.ssh/authorized_keys)
+    def self.public_key_to_ssh2(pubkey)
+      authtype = pubkey.class.to_s.split('::').last.downcase
+      b64pub = ::Base64.encode64(pubkey.to_blob).strip.gsub(/[\r\n]/, '')
+      "ssh-%s %s" % [authtype, b64pub]  # => ssh-rsa AAAAB3NzaC1...=
     end
     
     def dump

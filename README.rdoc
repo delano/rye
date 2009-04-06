@@ -1,10 +1,10 @@
-= Rye - v0.3
+= Rye - v0.4
 
 Safely run remote commands via SSH in Ruby. 
 
 Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
-Here are some examples (which are also running in bin/try):
+See the examples below (which are taken from bin/try).
 
 == Installation
 
@@ -20,7 +20,7 @@ One of:
     rbox = Rye::Box.new('localhost')
     
     # Commands are run as methods on the Rye::Box object
-    puts rbox.uptime                # => 11:02  up 16:01, 3 users
+    puts rbox.uptime                   # => 11:02  up 16:01, 3 users
     
     # The response value for all commands is a Rye::Rap object. The rap is a
     # subclass of Array so you can treat it as an Array, but it can also act 
@@ -56,17 +56,17 @@ One of:
 
     # Safe-mode is enabled by default. In safe-mode, all command 
     # arguments are thoroughly escaped. This prevents access to
-		# environment variables and file globs (among other things).
-		p rbox_safe.echo('$HOME')                                    # => "$HOME"
-		p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
-		p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
+    # environment variables and file globs (among other things).
+    p rbox_safe.echo('$HOME')                                    # => "$HOME"
+    p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
+    p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
 
-		# Here's the same commands with safe-mode disabled:
-		p rbox_wild.echo('$HOME')                   # => "/home/rye"
-		p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
-		p rbox_wild.ls('-l | wc -l')                # => 110
-		p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
-		p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
+    # Here's the same commands with safe-mode disabled:
+    p rbox_wild.echo('$HOME')                   # => "/home/rye"
+    p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
+    p rbox_wild.ls('-l | wc -l')                # => 110
+    p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
+    p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
 
 
 == EXAMPLE 3 -- Custom Commands
@@ -171,9 +171,9 @@ Rye permits only a limited number of system commands to be run. This default whi
 
 == Related Reading
 
-[OpenSSH key creation HOWTO]	https://wiki.systemsx.ch/display/ITDOC/OpenSSH+key+creation+HOWTO
-[OpenSSH key management, Part 1]	http://www.ibm.com/developerworks/library/l-keyc.html
-[OpenSSL command-line HOWTO]	http://madboa.com/geek/openssl/
+[OpenSSH key creation HOWTO]  https://wiki.systemsx.ch/display/ITDOC/OpenSSH+key+creation+HOWTO
+[OpenSSH key management, Part 1]  http://www.ibm.com/developerworks/library/l-keyc.html
+[OpenSSL command-line HOWTO]  http://madboa.com/geek/openssl/
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)

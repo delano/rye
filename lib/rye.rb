@@ -1,6 +1,7 @@
 
 require 'rubygems' unless defined? Gem
 
+require 'tempfile'
 require 'net/ssh'
 require 'net/scp'
 require 'thread'
@@ -97,7 +98,7 @@ module Rye
   # Add one or more private keys to the SSH Agent. 
   # * +keys+ one or more file paths to private keys used for passwordless logins. 
   def add_keys(*keys)
-    keys = [keys].flatten.compact || []
+    keys = keys.flatten.compact || []
     return if keys.empty?
     Rye.shell("ssh-add", keys) if keys
     keys
@@ -114,12 +115,16 @@ module Rye
     # 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)
     keystr = Rye.shell("ssh-add", '-l')
     return nil unless keystr
-    keystr.split($/).collect do |key|
+    keystr.collect do |key|
       key.split(/\s+/)
     end
   end
   
-  
+  def remote_host_keys(*hostnames)
+    hostnames = hostnames.flatten.compact || []
+    return if hostnames.empty?
+    Rye.shell("ssh-keyscan", hostnames)
+  end
   
   # Takes a command with arguments and returns it in a 
   # single String with escaped args and some other stuff. 
@@ -175,15 +180,27 @@ module Rye
   # NOTE: shell is a bit paranoid so it escapes every argument. This means
   # you can only use literal values. That means no asterisks too. 
   #
-  def shell(cmd, args=[])
+  # Returns a Rye::Rap object containing the 
+  def shell(cmd, *args)
+    args = args.flatten.compact
     cmd = cmd.to_s if cmd.is_a?(Symbol)
-    # TODO: allow stdin to be send to cmd
+    # TODO: allow stdin to be sent to the cmd
+    tf = Tempfile.new(cmd)
     cmd = Rye.prepare_command(cmd, args)
-    cmd << " 2>&1" # Redirect STDERR to STDOUT. Works in DOS also.
+    cmd << " 2>#{tf.path}" # Redirect STDERR to file. Works in DOS too.
+    # Deal with STDOUT
     handle = IO.popen(cmd, "r")
-    output = handle.read.chomp
+    stdout = handle.read.chomp
     handle.close
-    output
+    # Then STDERR
+    stderr = File.exists?(tf.path) ? File.read(tf.path) : ''
+    tf.delete
+    # Create the response object
+    rap = Rye::Rap.new(self)
+    rap.add_stdout(stdout || '')
+    rap.add_stderr(stderr || '')
+    rap.exit_code = $?
+    rap
   end
   
   # Creates a string from +cmd+ and +args+. If +safe+ is true
@@ -220,8 +237,8 @@ module Rye
   # 
   def start_sshagent_environment
     return if @@agent_env["SSH_AGENT_PID"]
-    lines = Rye.shell("ssh-agent", '-s') || ''
-    lines.split($/).each do |line|
+    lines = Rye.shell("ssh-agent", '-s') || []
+    lines.each do |line|
       next unless line.index("echo").nil?
       line = line.slice(0..(line.index(';')-1))
       key, value = line.chomp.split( /=/ )
@@ -245,7 +262,7 @@ module Rye
   #
   def end_sshagent_environment
     pid = @@agent_env["SSH_AGENT_PID"]
-    Rye.shell("ssh-agent", '-k') || ''
+    Rye.shell("ssh-agent", '-k') || []
     #Rye.shell("kill", ['-9', pid]) if pid
     @@agent_env.clear
     nil

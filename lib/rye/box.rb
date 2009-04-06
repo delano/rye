@@ -183,116 +183,121 @@ module Rye
       @host == other.host
     end
     
+    def host_key
+      raise "No host" unless @host
+      Rye.remote_host_keys(@host)
+    end
     
-    private
+    
+  private
       
-      
-      def debug(msg); @debug.puts msg if @debug; end
-      def error(msg); @error.puts msg if @error; end
+    
+    def debug(msg); @debug.puts msg if @debug; end
+    def error(msg); @error.puts msg if @error; end
 
+    
+    # Add the current environment variables to the beginning of +cmd+
+    def prepend_env(cmd)
+      return cmd unless @current_environment_variables.is_a?(Hash)
+      env = ''
+      @current_environment_variables.each_pair do |n,v|
+        env << "export #{n}=#{Escape.shell_single_word(v)}; "
+      end
+      [env, cmd].join(' ')
+    end
+    
+
+    # Execute a command over SSH
+    #
+    # * +args+ is a command name and list of arguments. 
+    # The command name is the literal name of the command
+    # that will be executed in the remote shell. The arguments
+    # will be thoroughly escaped and passed to the command.
+    #
+    #     rbox = Rye::Box.new
+    #     rbox.ls '-l', 'arg1', 'arg2'
+    #
+    # is equivalent to
+    #
+    #     $ ls -l 'arg1' 'arg2'
+    #
+    # This method will try to connect to the host automatically
+    # but if it fails it will raise a Rye::NotConnected exception. 
+    # 
+    def run_command(*args)
+      connect if !@ssh || @ssh.closed?
+      args = args.flatten.compact
+      args = args.first.split(/\s+/) if args.size == 1
+      cmd = args.shift
       
-      # Add the current environment variables to the beginning of +cmd+
-      def prepend_env(cmd)
-        return cmd unless @current_environment_variables.is_a?(Hash)
-        env = ''
-        @current_environment_variables.each_pair do |n,v|
-          env << "export #{n}=#{Escape.shell_single_word(v)}; "
-        end
-        [env, cmd].join(' ')
+      # Symbols to switches. :l -> -l, :help -> --help
+      args.collect! do |a|
+        a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
+        a = "--#{a}" if a.is_a?(Symbol)
+        a
       end
       
+      raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
 
-      # Execute a command over SSH
-      #
-      # * +args+ is a command name and list of arguments. 
-      # The command name is the literal name of the command
-      # that will be executed in the remote shell. The arguments
-      # will be thoroughly escaped and passed to the command.
-      #
-      #     rbox = Rye::Box.new
-      #     rbox.ls '-l', 'arg1', 'arg2'
-      #
-      # is equivalent to
-      #
-      #     $ ls -l 'arg1' 'arg2'
-      #
-      # This method will try to connect to the host automatically
-      # but if it fails it will raise a Rye::NotConnected exception. 
-      # 
-      def run_command(*args)
-        connect if !@ssh || @ssh.closed?
-        args = args.flatten.compact
-        args = args.first.split(/\s+/) if args.size == 1
-        cmd = args.shift
-        
-        # Symbols to switches. :l -> -l, :help -> --help
-        args.collect! do |a|
-          a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
-          a = "--#{a}" if a.is_a?(Symbol)
-          a
-        end
-        
-        raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
-
-        cmd_clean = Rye.escape(@safe, cmd, args)
-        cmd_clean = prepend_env(cmd_clean)
-        if @current_working_directory
-          cwd = Rye.escape(@safe, 'cd', @current_working_directory)
-          cmd_clean = [cwd, cmd_clean].join(' && ')
-        end
-        
-        debug "Executing: %s" % cmd_clean
-        stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
-        rap = Rye::Rap.new(self)
-        rap.add_stdout(stdout || '')
-        rap.add_stderr(stderr || '')
-        rap.exit_code = ecode
-        rap.exit_signal = esignal
-        rap.cmd = cmd
-        
-        raise Rye::CommandError.new(rap) if ecode > 0
-        
-        rap
-      end
-      alias :cmd :run_command
-      
-      # Executes +command+ via SSH
-      # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
-      def net_ssh_exec!(command)
-        block ||= Proc.new do |channel, type, data|
-          channel[:stdout] ||= ""
-          channel[:stderr] ||= ""
-          channel[:stdout] << data if type == :stdout
-          channel[:stderr] << data if type == :stderr
-          channel.on_request("exit-status") do |ch, data|
-            # Anything greater than 0 is an error
-            channel[:exit_code] = data.read_long
-          end
-          channel.on_request("exit-signal") do |ch, data|
-            # This should be the POSIX SIGNAL that ended the process
-            channel[:exit_signal] = data.read_long
-          end
-          # For long-running commands like top, this will print the output.
-          # It cool, but we'd also need to enable STDIN to interact with 
-          # command. 
-          #channel.on_data do |ch, data|
-          #  puts "got stdout: #{data}"
-          #  channel.send_data "something for stdin\n"
-          #end
-        end
-        
-        channel = @ssh.exec(command, &block)
-        channel.wait  # block until we get a response
-        
-        channel[:exit_code] ||= 0
-        channel[:exit_code] &&= channel[:exit_code].to_i
-        
-        channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
-        
-        [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
+      cmd_clean = Rye.escape(@safe, cmd, args)
+      cmd_clean = prepend_env(cmd_clean)
+      if @current_working_directory
+        cwd = Rye.escape(@safe, 'cd', @current_working_directory)
+        cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
+      debug "Executing: %s" % cmd_clean
+      stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
+      rap = Rye::Rap.new(self)
+      rap.add_stdout(stdout || '')
+      rap.add_stderr(stderr || '')
+      rap.exit_code = ecode
+      rap.exit_signal = esignal
+      rap.cmd = cmd
       
+      raise Rye::CommandError.new(rap) if ecode > 0
+      
+      rap
+    end
+    alias :cmd :run_command
+    
+    # Executes +command+ via SSH
+    # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
+    def net_ssh_exec!(command)
+      block ||= Proc.new do |channel, type, data|
+        channel[:stdout] ||= ""
+        channel[:stderr] ||= ""
+        channel[:stdout] << data if type == :stdout
+        channel[:stderr] << data if type == :stderr
+        channel.on_request("exit-status") do |ch, data|
+          # Anything greater than 0 is an error
+          channel[:exit_code] = data.read_long
+        end
+        channel.on_request("exit-signal") do |ch, data|
+          # This should be the POSIX SIGNAL that ended the process
+          channel[:exit_signal] = data.read_long
+        end
+        # For long-running commands like top, this will print the output.
+        # It cool, but we'd also need to enable STDIN to interact with 
+        # command. 
+        #channel.on_data do |ch, data|
+        #  puts "got stdout: #{data}"
+        #  channel.send_data "something for stdin\n"
+        #end
+      end
+      
+      channel = @ssh.exec(command, &block)
+      channel.wait  # block until we get a response
+      
+      channel[:exit_code] ||= 0
+      channel[:exit_code] &&= channel[:exit_code].to_i
+      
+      channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
+      
+      [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
+    end
+    
+    
 
   end
 end
