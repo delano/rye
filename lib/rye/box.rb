@@ -94,14 +94,7 @@ module Rye
     alias :commands :can
     alias :cmds :can
     
-    def copy_to(*boxes)
-      p boxes
-      
-      @scp = Net::SCP.start(@host, @opts[:user], @opts || {}) 
-      #@ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
-#      p @scp
-    end
-    
+
       
     # Change the current working directory (sort of). 
     #
@@ -190,77 +183,6 @@ module Rye
       @host == other.host
     end
     
-    def scp(*args)
-      args = [args].flatten.compact || []
-      other = args.pop
-      p other
-    end
-    
-    # Takes a command with arguments and returns it in a 
-    # single String with escaped args and some other stuff. 
-    # 
-    # * +cmd+ The shell command name or absolute path.
-    # * +args+ an Array of command arguments.  
-    #
-    # The command is searched for in the local PATH (where
-    # Rye is running). An exception is raised if it's not
-    # found. NOTE: Because this happens locally, you won't
-    # want to use this method if the environment is quite
-    # different from the remote machine it will be executed
-    # on. 
-    #
-    # The command arguments are passed through Escape.shell_command
-    # (that means you can't use environment variables or asterisks).
-    #
-    def Box.prepare_command(cmd, *args)
-      args &&= [args].flatten.compact
-      cmd = Rye::Box.which(cmd)
-      raise CommandNotFound.new(cmd || 'nil') unless cmd
-      Rye::Box.escape(@safe, cmd, *args)
-    end
-    
-    # An all ruby implementation of unix "which" command. 
-    #
-    # * +executable+ the name of the executable
-    # 
-    # Returns the absolute path if found in PATH otherwise nil.
-    def Box.which(executable)
-      return unless executable.is_a?(String)
-      #return executable if File.exists?(executable) # SHOULD WORK, MUST TEST
-      shortname = File.basename(executable)
-      dir = Rye.sysinfo.paths.select do |path|    # dir contains all of the 
-        next unless File.exists? path             # occurrences of shortname  
-        Dir.new(path).entries.member?(shortname)  # found in the paths. 
-      end
-      File.join(dir.first, shortname) unless dir.empty? # Return just the first
-    end
-    
-    # Execute a local system command (via the shell, not SSH)
-    #  
-    # * +cmd+ the executable path (relative or absolute)
-    # * +args+ Array of arguments to be sent to the command. Each element
-    # is one argument:. i.e. <tt>['-l', 'some/path']</tt>
-    #
-    # NOTE: shell is a bit paranoid so it escapes every argument. This means
-    # you can only use literal values. That means no asterisks too. 
-    #
-    def Box.shell(cmd, args=[])
-      # TODO: allow stdin to be send to cmd
-      cmd = Box.prepare_command(cmd, args)
-      cmd << " 2>&1" # Redirect STDERR to STDOUT. Works in DOS also.
-      handle = IO.popen(cmd, "r")
-      output = handle.read.chomp
-      handle.close
-      output
-    end
-    
-    # Creates a string from +cmd+ and +args+. If +safe+ is true
-    # it will send them through Escape.shell_command otherwise 
-    # it will return them joined by a space character. 
-    def Box.escape(safe, cmd, *args)
-      args = args.flatten.compact || []
-      safe ? Escape.shell_command(cmd, *args).to_s : [cmd, args].flatten.compact.join(' ')
-    end
     
     private
       
@@ -303,14 +225,22 @@ module Rye
         args = args.first.split(/\s+/) if args.size == 1
         cmd = args.shift
         
+        # Symbols to switches. :l -> -l, :help -> --help
+        args.collect! do |a|
+          a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
+          a = "--#{a}" if a.is_a?(Symbol)
+          a
+        end
+        
         raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
 
-        cmd_clean = Rye::Box.escape(@safe, cmd, args)
+        cmd_clean = Rye.escape(@safe, cmd, args)
         cmd_clean = prepend_env(cmd_clean)
         if @current_working_directory
-          cwd = Rye::Box.escape(@safe, 'cd', @current_working_directory)
+          cwd = Rye.escape(@safe, 'cd', @current_working_directory)
           cmd_clean = [cwd, cmd_clean].join(' && ')
         end
+        
         debug "Executing: %s" % cmd_clean
         stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
         rap = Rye::Rap.new(self)

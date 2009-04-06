@@ -21,33 +21,56 @@ include Drydock
 global :p, :path, String, "A directory containing SSH private keys or the path to a private key"
 
 before do |obj|
+
+  # Load private keys if specified
   if obj.global.path
     keys = Rye.find_private_keys(obj.global.path) 
     Rye.add_keys(keys)
   end
-end
-
-command :authorize, :authorize do
   
 end
-command_alias :authorize, :authorise
 
-command :ssh do
-  
+
+desc "Adds your public keys a remote machine"
+option :u, :user, String, "Username"
+argv :hostname
+command :authorize, :authorize do |obj|
+  raise "You must specify a host" unless obj.argv.hostname
+  opts = { :safe => false, :debug => STDOUT }
+  opts[:user] = obj.option.user if obj.option.user
+  rbox = Rye::Box.new(obj.argv.hostname, opts)
+  rbox.ls('.ssh/authorized_keys2').empty?
+  rbox.echo 
 end
+
+usage "rye key keypath"
+argv :keypath
+command :key do |obj|
+  raise "Must specific a keypath. See: rye key --help" unless obj.argv.keypath
+  k = Rye::Key.from_file(obj.argv.keypath)
+  puts '------------------',k.public_key
+  puts '------------------',k.public_key_to_ssh2
+end
+
 
 desc "Displays the private keys that Rye is aware of"
 command :keys do |obj|
-
   Rye.keys.each do |key|
     puts key.join(' ')
   end
 end
 
+
 default :keys
+debug :on
 
 # We can Drydock specifically otherwise it will run at_exit. Rye also
 # uses at_exit for shutting down the ssh-agent. Ruby executes at_exit
 # blocks in reverse order so if Drydock is required first, it's block
 # will run after Rye shuts down the ssh-agent. 
-Drydock.run!(ARGV, STDIN)
+begin
+  Drydock.run!(ARGV, STDIN) if Drydock.run? && !Drydock.has_run?
+rescue => ex
+  STDERR.puts "ERROR (#{ex.class.to_s}): #{ex.message}"
+  STDERR.puts ex.backtrace if Drydock.debug?
+end

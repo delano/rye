@@ -43,6 +43,7 @@ module Rye;
     def perl(*args); cmd('perl', args); end
     def bash(*args); cmd('bash', args); end
     def echo(*args); cmd('echo', args); end
+    def test(*args); cmd('test', args); end
     
     def mount; cmd("mount"); end
     def sleep(seconds=1); cmd("sleep", seconds); end
@@ -52,6 +53,26 @@ module Rye;
     def uptime; cmd("uptime"); end
     def python(*args); cmd('python', args); end
     def printenv(*args); cmd('printenv', args); end
+    
+  
+    #  def copy_to(*boxes)
+    #    p boxes
+    #
+    #    @scp = Net::SCP.start(@host, @opts[:user], @opts || {}) 
+    #    #@ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
+    #     p @scp
+    #  end
+  
+  
+    #def copy_to(*args)
+    #  args = [args].flatten.compact || []
+    #  other = args.pop
+    #  p other
+    #end
+    
+    def exists?
+      cmd("uptime");
+    end
     
     # Consider Rye.sysinfo.os == :unix
   end

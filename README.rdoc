@@ -169,6 +169,11 @@ Rye permits only a limited number of system commands to be run. This default whi
 * http://delano.github.com/rye
 * http://www.youtube.com/watch?v=_StUVh6ENuw
 
+== Related Reading
+
+[OpenSSH key creation HOWTO]	https://wiki.systemsx.ch/display/ITDOC/OpenSSH+key+creation+HOWTO
+[OpenSSH key management, Part 1]	http://www.ibm.com/developerworks/library/l-keyc.html
+[OpenSSL command-line HOWTO]	http://madboa.com/geek/openssl/
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)

@@ -1,5 +1,10 @@
 RYE, CHANGES
 
+TODO
+
+* Use ssh-keyscan to build known_hosts
+* Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
+
 
 #### 0.4.0 (2009-04-??) #############################
 
@@ -12,6 +17,7 @@ when the command returns an exit code greater than 0.
 * FIXED: Box.run_command was parsing arguments incorrectly 
 * FIXED: Box.net_ssh_exec was working on nil stderr
 * FIXED: bin/try handles the new command exceptions
+* ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
 
 
 #### 0.3.2 (2009-04-05) #############################

@@ -24,13 +24,13 @@ puts %Q(
 rbox = Rye::Box.new('localhost')
 
 # Commands are run as methods on the Rye::Box object
-puts rbox.uptime                # => 11:02  up 16:01, 3 users
+puts rbox.uptime                   # => 11:02  up 16:01, 3 users
 
 # The response value for all commands is a Rye::Rap object. The rap is a
 # subclass of Array so you can treat it as an Array, but it can also act 
 # like a String if there's only one element. 
-puts rbox.ls('/')                  # => []
-                                 
+p rbox.ls(:a, '/')                 # => ['.', '..', 'bin', 'etc', ...]
+
 # You can change directories
 puts rbox.pwd                      # => /home/rye
 puts rbox['/usr/bin'].pwd          # => /usr/bin

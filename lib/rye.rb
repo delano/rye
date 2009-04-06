@@ -6,6 +6,7 @@ require 'net/scp'
 require 'thread'
 require 'highline'
 require 'openssl'
+require 'base64'
 
 require 'esc'
 require 'sys'
@@ -54,11 +55,12 @@ module Rye
       "(code: %s) %s" % [@rap.exit_code, @rap.stderr.join($/)]
     end
   end
+  
   # Reload Rye dynamically. Useful with irb. 
   # NOTE: does not reload rye.rb. 
   def reload
     pat = File.join(File.dirname(__FILE__), 'rye')
-    %w{rap cmd box set}.each {|lib| load File.join(pat, "#{lib}.rb") }
+    %w{key rap cmd box set}.each {|lib| load File.join(pat, "#{lib}.rb") }
   end
   
   def mutex
@@ -90,62 +92,6 @@ module Rye
   end
   
   
-  # Loads a private key from a file. It will correctly determine
-  # whether the file describes an RSA or DSA key, and will load it
-  # appropriately. The new key is returned. If the key itself is
-  # encrypted (requiring a passphrase to use), the user will be
-  # prompted to enter their password.
-  # NOTE: Taken from Net::SSH
-  def load_private_key( filename )
-    file = File.read( filename )
-
-    if file.match( /-----BEGIN DSA PRIVATE KEY-----/ )
-      key_type = OpenSSL::PKey::DSA
-    elsif file.match( /-----BEGIN RSA PRIVATE KEY-----/ )
-      key_type = OpenSSL::PKey::RSA
-    elsif file.match( /-----BEGIN (.*) PRIVATE KEY-----/ )
-      raise OpenSSL::PKey::PKeyError, "not a supported key type '#{$1}'"
-    else
-      raise OpenSSL::PKey::PKeyError, "not a private key (#{filename})"
-    end
-
-    encrypted_key = file.match( /ENCRYPTED/ )
-    password = encrypted_key ? 'nil' : nil
-    tries = 0
-
-    begin
-      return key_type.new( file, password )
-    rescue OpenSSL::PKey::RSAError, OpenSSL::PKey::DSAError => e
-      if encrypted_key && @prompter
-        tries += 1
-        if tries <= 3
-          password = @prompter.password(
-            "Enter password for #{filename}: " )
-          retry
-        else
-          raise
-        end
-      else
-        raise
-      end
-    end
-  end
-
-  # Loads a public key from a file. It will correctly determine whether
-  # the file describes an RSA or DSA key, and will load it
-  # appropriately. The new public key is returned.
-  # NOTE: Taken from Net::SSH
-  def load_public_key( filename )
-    data = File.open( filename ) { |file| file.read }
-    type, blob = data.split( / / )
-
-    blob = Base64.decode64( blob )
-    reader = @buffers.reader( blob )
-    key = reader.read_key or
-      raise OpenSSL::PKey::PKeyError,
-        "not a public key #{filename.inspect}"
-    return key
-  end
 
 
   # Add one or more private keys to the SSH Agent. 
@@ -153,7 +99,7 @@ module Rye
   def add_keys(*keys)
     keys = [keys].flatten.compact || []
     return if keys.empty?
-    Rye::Box.shell("ssh-add", keys) if keys
+    Rye.shell("ssh-add", keys) if keys
     keys
   end
   
@@ -166,12 +112,88 @@ module Rye
   def keys
     # 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)
     # 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)
-    keystr = Rye::Box.shell("ssh-add", '-l')
+    keystr = Rye.shell("ssh-add", '-l')
     return nil unless keystr
     keystr.split($/).collect do |key|
       key.split(/\s+/)
     end
   end
+  
+  
+  
+  # Takes a command with arguments and returns it in a 
+  # single String with escaped args and some other stuff. 
+  # 
+  # * +cmd+ The shell command name or absolute path.
+  # * +args+ an Array of command arguments.  
+  #
+  # The command is searched for in the local PATH (where
+  # Rye is running). An exception is raised if it's not
+  # found. NOTE: Because this happens locally, you won't
+  # want to use this method if the environment is quite
+  # different from the remote machine it will be executed
+  # on. 
+  #
+  # The command arguments are passed through Escape.shell_command
+  # (that means you can't use environment variables or asterisks).
+  #
+  def prepare_command(cmd, *args)
+    args &&= [args].flatten.compact
+    cmd = Rye.which(cmd)
+    raise CommandNotFound.new(cmd || 'nil') unless cmd
+    # Symbols to switches. :l -> -l, :help -> --help
+    args.collect! do |a|
+      a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
+      a = "--#{a}" if a.is_a?(Symbol)
+      a
+    end
+    Rye.escape(@safe, cmd, *args)
+  end
+  
+  # An all ruby implementation of unix "which" command. 
+  #
+  # * +executable+ the name of the executable
+  # 
+  # Returns the absolute path if found in PATH otherwise nil.
+  def which(executable)
+    return unless executable.is_a?(String)
+    #return executable if File.exists?(executable) # SHOULD WORK, MUST TEST
+    shortname = File.basename(executable)
+    dir = Rye.sysinfo.paths.select do |path|    # dir contains all of the 
+      next unless File.exists? path             # occurrences of shortname  
+      Dir.new(path).entries.member?(shortname)  # found in the paths. 
+    end
+    File.join(dir.first, shortname) unless dir.empty? # Return just the first
+  end
+  
+  # Execute a local system command (via the shell, not SSH)
+  #  
+  # * +cmd+ the executable path (relative or absolute)
+  # * +args+ Array of arguments to be sent to the command. Each element
+  # is one argument:. i.e. <tt>['-l', 'some/path']</tt>
+  #
+  # NOTE: shell is a bit paranoid so it escapes every argument. This means
+  # you can only use literal values. That means no asterisks too. 
+  #
+  def shell(cmd, args=[])
+    cmd = cmd.to_s if cmd.is_a?(Symbol)
+    # TODO: allow stdin to be send to cmd
+    cmd = Rye.prepare_command(cmd, args)
+    cmd << " 2>&1" # Redirect STDERR to STDOUT. Works in DOS also.
+    handle = IO.popen(cmd, "r")
+    output = handle.read.chomp
+    handle.close
+    output
+  end
+  
+  # Creates a string from +cmd+ and +args+. If +safe+ is true
+  # it will send them through Escape.shell_command otherwise 
+  # it will return them joined by a space character. 
+  def escape(safe, cmd, *args)
+    args = args.flatten.compact || []
+    safe ? Escape.shell_command(cmd, *args).to_s : [cmd, args].flatten.compact.join(' ')
+  end
+  
   
   private 
   
@@ -198,7 +220,7 @@ module Rye
   # 
   def start_sshagent_environment
     return if @@agent_env["SSH_AGENT_PID"]
-    lines = Rye::Box.shell("ssh-agent", '-s') || ''
+    lines = Rye.shell("ssh-agent", '-s') || ''
     lines.split($/).each do |line|
       next unless line.index("echo").nil?
       line = line.slice(0..(line.index(';')-1))
@@ -208,7 +230,7 @@ module Rye
     ENV["SSH_AUTH_SOCK"] = @@agent_env["SSH_AUTH_SOCK"]
     ENV["SSH_AGENT_PID"] = @@agent_env["SSH_AGENT_PID"]
     
-    Rye::Box.shell("ssh-add") # Add the user's default keys
+    Rye.shell("ssh-add") # Add the user's default keys
     nil
   end
   
@@ -223,8 +245,8 @@ module Rye
   #
   def end_sshagent_environment
     pid = @@agent_env["SSH_AGENT_PID"]
-    Rye::Box.shell("ssh-agent", '-k') || ''
-    #Rye::Box.shell("kill", ['-9', pid]) if pid
+    Rye.shell("ssh-agent", '-k') || ''
+    #Rye.shell("kill", ['-9', pid]) if pid
     @@agent_env.clear
     nil
   end
