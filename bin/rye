@@ -39,9 +39,9 @@ argv :hostname
 command :authorize do |obj|
   raise "You must specify a host" unless obj.argv.hostname
   
-  highline = HighLine.new
+  highline = HighLine.new # Used for password prompt
   
-  opts = { :safe => false, :debug => STDOUT }
+  opts = { :debug => nil }
   opts[:user] = obj.option.user if obj.option.user
   
   obj.argv.each do |hostname|
@@ -62,14 +62,14 @@ command :authorize do |obj|
     # exist on the remote machine or we need to supply a password. 
     rescue Net::SSH::AuthenticationFailed => ex
       retried += 1
-      opts[:password] = highline.ask("Password: ") { |q| q.echo = '*' }
+      opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
       retry unless retried > 3
     rescue Net::SSH::AuthenticationFailed
       STDERR.puts "Authentication failed."
       exit 1
     end
     
-    p rbox.authorize_keys
+    puts "Added public keys for: ", rbox.authorize_keys
     
     puts
   end

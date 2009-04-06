@@ -127,6 +127,52 @@ One of:
     p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
 
+== EXAMPLE 5 -- ERROR HANDLING
+
+    rbox = Rye::Box.new('localhost', :safe => false)
+
+    # Rye follows the standard convention of taking exception to non-zero 
+    # exit code. It raises a Rye::CommandError. In this case, rye.test is
+    # not found by the ls command. 
+    begin
+      rbox.ls('rye.test')
+    rescue Rye::CommandError => ex
+      puts ex.exit_code                # => 1
+      puts ex.stderr                   # => ls: rye.test: No such file or directory
+    end
+
+    # The Rye:Rap response objects also give you the STDOUT and STDERR
+    # content separately. Here we redirect STDOUT to STDERR, so this
+    # will return nothing:
+    puts rbox.uname('-a 1>&2').stdout    # =>
+
+    # It all went to STDERR:
+    puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
+
+    # There were no actual error so the exit code should be 0.
+    puts rbox.uname('-a 1>&2').exit_code # => 0
+
+== EXAMPLE 6 -- rye
+
+Rye comes with a command-line utility called <tt>rye</tt>.
+
+    # Prints the paths to your private keys
+    $ rye keys
+    
+    # Prints the server host keys (suitable for ~/.ssh/known_hosts)
+    $ rye hostkey HOST1 HOST2
+    
+    # Add your public keys to authorized_keys and authorized_keys2 
+    # on a remote machine
+    $ rye authorize HOST1 HOST2
+    
+More info:
+
+    $ rye -h
+    $ rye COMMAND -h
+    $ rye show-commands
+
+
 == About Safe-Mode
 
 In safe-mode:
@@ -154,6 +200,12 @@ Rye permits only a limited number of system commands to be run. This default whi
   * highline
   * drydock
 
+== Known Issues
+
+This list will grow. If you find one let me know!
+
+* Rye doesn't read the ~/.ssh/config file yet
+
 == Thanks
 
 * Solutious Incorporated (http://solutious.com) for all the orange juice.
@@ -169,11 +221,6 @@ Rye permits only a limited number of system commands to be run. This default whi
 * http://delano.github.com/rye
 * http://www.youtube.com/watch?v=_StUVh6ENuw
 
-== Related Reading
-
-[OpenSSH key creation HOWTO]  https://wiki.systemsx.ch/display/ITDOC/OpenSSH+key+creation+HOWTO
-[OpenSSH key management, Part 1]  http://www.ibm.com/developerworks/library/l-keyc.html
-[OpenSSL command-line HOWTO]  http://madboa.com/geek/openssl/
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)

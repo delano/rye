@@ -47,7 +47,6 @@ module Rye
   class NotConnected < RuntimeError; end
   class CommandNotFound < RuntimeError; end
   class CommandError < RuntimeError
-    attr_reader :rap
     # * +rap+ a Rye::Rap object
     def initialize(rap)
       @rap = rap
@@ -55,6 +54,9 @@ module Rye
     def message
       "(code: %s) %s" % [@rap.exit_code, @rap.stderr.join($/)]
     end
+    def stderr; @rap.stderr if @rap; end
+    def stdout; @rap.stdout if @rap; end
+    def exit_code; @rap.exit_code if @rap; end
   end
   
   # Reload Rye dynamically. Useful with irb. 
@@ -84,7 +86,8 @@ module Rye
       next if File.directory?(file)
       pk = nil
       begin
-        pk = load_private_key(file) 
+        tmp = Rye::Key.from_file(file) 
+        pk = tmp if tmp.private?
       rescue OpenSSL::PKey::PKeyError
       end
       !pk.nil?

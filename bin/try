@@ -114,7 +114,7 @@ rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
 # Calling methods on Rye::Set objects is very similar to calling them on
 # Rye::Box objects. In fact, it's identical:
 p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
-p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
+p rset['/usr'].ls    # => [['bin', 'etc', ...], ['bin', 'etc', ...]]
 
 # Like Rye::Box, the response value is a Rye::Rap object containing the
 # responses from each box. Each response is itself a Rye::Rap object.
@@ -136,16 +136,36 @@ puts unames.first.box == rbox          # => true
 rset.add_env(:RYE, "Forty Creek")
 p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
-__END__
 
 puts %Q(
 # ------------------------------------------------------------------
 #   EXAMPLE 5 -- ERROR HANDLING
 #)
 
-puts rbox.ls('rye.test')           # => ""
-puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
+rbox = Rye::Box.new('localhost', :safe => false)
 
-puts rbox.touch('rye.test')        # => ""
-puts rbox.rm('rye.test')           # => ""
+# Rye follows the standard convention of taking exception to non-zero 
+# exit code. It raises a Rye::CommandError. In this case, rye.test is
+# not found by the ls command. 
+begin
+  rbox.ls('rye.test')
+rescue Rye::CommandError => ex
+  puts ex.exit_code                # => 1
+  puts ex.stderr                   # => ls: rye.test: No such file or directory
+end
+
+# The Rye:Rap response objects also give you the STDOUT and STDERR
+# content separately. Here we redirect STDOUT to STDERR, so this
+# will return nothing:
+puts rbox.uname('-a 1>&2').stdout    # =>
+
+# It all went to STDERR:
+puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
+
+# There were no actual error so the exit code should be 0.
+puts rbox.uname('-a 1>&2').exit_code # => 0
+
+
+
+
 

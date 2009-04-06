@@ -191,9 +191,13 @@ module Rye
     
     # Copy the local public keys (as specified by Rye.keys) to 
     # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
-    # Returns an Array of the private keys files used to generate the public keys. 
+    # Returns an Array of the private keys files used to generate the public keys.
+    #
+    # NOTE: authorize_keys disables safe-mode for this box while it runs. 
+    #
     def authorize_keys
       added_keys = []
+      opts[:safe] = false
       Rye.keys.each do |key|
         path = key[2]
         debug "# Public key for #{path}"
@@ -204,6 +208,7 @@ module Rye
         self.chmod('-R', '0600', '.ssh')
         added_keys << path
       end
+      opts[:safe] = true
       added_keys
     end
     
