@@ -45,7 +45,7 @@
             safety, <a href="../Rye.html">Rye</a> only permits this whitelist of
             commands by default. However, you&#8217;re free to add methods with mixins.
             </p>
-            <pre>require 'rye'&#x000A;module Rye::Box::Cmd&#x000A;  def special(*args); cmd(&quot;/your/special/command&quot;, args); end&#x000A;end&#x000A;&#x000A;rbox = Rye::Box.new&#x000A;rbox.special        # =&gt; &quot;your output&quot;</pre>
+            <pre>require 'rye'&#x000A;module Rye::Box::Cmd&#x000A;  def special(*args); cmd(&quot;/your/special/command&quot;, args); end&#x000A;end&#x000A;&#x000A;rbox = Rye::Box.new('somehost')&#x000A;rbox.special        # =&gt; &quot;special on somehost&quot;</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
@@ -137,7 +137,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000040-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'uname'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000040-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'chmod'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000014'>
