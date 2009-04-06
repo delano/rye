@@ -14,8 +14,8 @@ module Rye;
   #       def special(*args); cmd("/your/special/command", args); end
   #     end
   #
-  #     rbox = Rye::Box.new
-  #     rbox.special        # => "your output"
+  #     rbox = Rye::Box.new('somehost')
+  #     rbox.special        # => "special on somehost"
   #
   module Cmd
     def wc(*args); cmd('wc', args); end
