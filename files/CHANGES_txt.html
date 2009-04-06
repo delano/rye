@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Apr 04 23:06:08 -0400 2009</span>
+          <span class='datetime'>Sun Apr 05 23:02:59 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -41,6 +41,62 @@
             RYE, CHANGES
             </p>
             <p>
+            TODO
+            </p>
+            <ul>
+            <li>Use ssh-keyscan to build known_hosts
+            
+            </li>
+            <li>Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.4.0 (2009-04-06) #############################
+            </p>
+            <ul>
+            <li>ADDED: to_s and inspect methods for cleaner debugging output
+            
+            </li>
+            <li>ADDED: == method for <a href="../classes/Rye/Box.html">Rye::Box</a>
+            
+            </li>
+            <li>ADDED: exit code and exit signal to <a
+            href="../classes/Rye/Rap.html">Rye::Rap</a> objects
+            
+            </li>
+            <li>ADDED: commands now raise a <a
+            href="../classes/Rye/CommandError.html">Rye::CommandError</a> exception
+            
+            </li>
+            </ul>
+            <p>
+            when the command returns an exit code greater than 0.
+            </p>
+            <ul>
+            <li>CHANGED: Box.add_command renamed to Box.run_command
+            
+            </li>
+            <li>FIXED: Box.run_command was parsing arguments incorrectly
+            
+            </li>
+            <li>FIXED: Box.net_ssh_exec was working on nil stderr
+            
+            </li>
+            <li>FIXED: bin/try handles the new command exceptions
+            
+            </li>
+            <li>ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
+            
+            </li>
+            <li>ADDED: Rye.host_keys
+            
+            </li>
+            <li>ADDED: bin/rye
+            
+            </li>
+            </ul>
+            <p>
             #### 0.3.2 (2009-04-05) #############################
             </p>
             <ul>
@@ -48,7 +104,7 @@
             Strings).
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Set.html#M000058">Rye::Set#add_boxes</a>
+            <li>FIXED: <a href="../classes/Rye/Set.html#M000070">Rye::Set#add_boxes</a>
             didn&#8217;t return self.
             
             </li>

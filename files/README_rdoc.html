@@ -31,13 +31,13 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Apr 04 22:57:57 -0400 2009</span>
+          <span class='datetime'>Sun Apr 05 23:01:14 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1><a href="../classes/Rye.html">Rye</a> - v0.3</h1>
+            <h1><a href="../classes/Rye.html">Rye</a> - v0.4</h1>
             <p>
             Safely run remote commands via SSH in Ruby.
             </p>
@@ -49,7 +49,7 @@
             can&#8217;t do this: <tt>rbox.rm('-rf', '/etc/*<b>/</b>')</tt>.
             </p>
             <p>
-            See bin/try for working examples.
+            See the examples below (which are taken from bin/try).
             </p>
             <h2>Installation</h2>
             <p>
@@ -57,13 +57,25 @@
             </p>
             <pre>$ sudo gem install rye&#x000A;$ sudo gem install delano-rye --source http://gems.github.com/&#x000A;$ git clone git://github.com/delano/rye.git</pre>
             <h2>EXAMPLE 1 &#8212; Basic Usage</h2>
-            <pre>rbox = Rye::Box.new('localhost')&#x000A;&#x000A;# Commands are run as methods on the Rye::Box object&#x000A;puts rbox.uptime                # =&gt; 11:02  up 16:01, 3 users&#x000A;&#x000A;# The response value for all commands is a Rye::Rap object. The rap is a&#x000A;# subclass of Array so you can treat it as an Array, but it can also act&#x000A;# like a String if there's only one element.&#x000A;puts rbox.ls('rye.test')           # =&gt; &quot;&quot;&#x000A;puts rbox.ls('rye.test').stderr    # =&gt; ls: rye.test: No such file or directory&#x000A;&#x000A;puts rbox.touch('rye.test')        # =&gt; &quot;&quot;&#x000A;puts rbox.rm('rye.test')           # =&gt; &quot;&quot;&#x000A;&#x000A;# You can change directories&#x000A;puts rbox.pwd                      # =&gt; /home/rye&#x000A;puts rbox['/usr/bin'].pwd          # =&gt; /usr/bin&#x000A;puts rbox.pwd                      # =&gt; /usr/bin&#x000A;puts rbox.cd('/home/rye').pwd      # =&gt; /home/rye&#x000A;&#x000A;# You can specify environment variables&#x000A;rbox.add_env(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env                           # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]&#x000A;&#x000A;# The commands method returns an Array of available commands:&#x000A;puts rbox.commands.join(', ')      # =&gt; pwd, touch, echo, wc, ...&#x000A;&#x000A;# When you're done you can disconnect explicitly.&#x000A;# (Although Rye does this automatically at exit.)&#x000A;rbox.disconnect</pre>
+            <pre>rbox = Rye::Box.new('localhost')&#x000A;&#x000A;# Commands are run as methods on the Rye::Box object&#x000A;puts rbox.uptime                   # =&gt; 11:02  up 16:01, 3 users&#x000A;&#x000A;# The response value for all commands is a Rye::Rap object. The rap is a&#x000A;# subclass of Array so you can treat it as an Array, but it can also act&#x000A;# like a String if there's only one element.&#x000A;puts rbox.ls('rye.test')           # =&gt; &quot;&quot;&#x000A;puts rbox.ls('rye.test').stderr    # =&gt; ls: rye.test: No such file or directory&#x000A;&#x000A;puts rbox.touch('rye.test')        # =&gt; &quot;&quot;&#x000A;puts rbox.rm('rye.test')           # =&gt; &quot;&quot;&#x000A;&#x000A;# You can change directories&#x000A;puts rbox.pwd                      # =&gt; /home/rye&#x000A;puts rbox['/usr/bin'].pwd          # =&gt; /usr/bin&#x000A;puts rbox.pwd                      # =&gt; /usr/bin&#x000A;puts rbox.cd('/home/rye').pwd      # =&gt; /home/rye&#x000A;&#x000A;# You can specify environment variables&#x000A;rbox.add_env(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env                           # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]&#x000A;&#x000A;# The commands method returns an Array of available commands:&#x000A;puts rbox.commands.join(', ')      # =&gt; pwd, touch, echo, wc, ...&#x000A;&#x000A;# When you're done you can disconnect explicitly.&#x000A;# (Although Rye does this automatically at exit.)&#x000A;rbox.disconnect</pre>
             <h2>EXAMPLE 2 &#8212; Disabling Safe-Mode</h2>
-            <pre>rbox_safe = Rye::Box.new('localhost')&#x000A;rbox_wild = Rye::Box.new('localhost', :safe =&gt; false)&#x000A;&#x000A;# Safe-mode is enabled by default. In safe-mode, all command&#x000A;# arguments are thoroughly escaped. This prevents access to&#x000A;# environment variables and file globs (among other things).&#x000A;p rbox_safe.echo('$HOME')                   # =&gt; &quot;$HOME&quot;&#x000A;p rbox_safe['/etc'].ls('host*')             # =&gt;&#x000A;p rbox_safe.ls('-l | wc -l')                # =&gt;&#x000A;p rbox_safe.echo('$HOME &gt; /tmp/rye-home')   # =&gt; &quot;$HOME &gt; /tmp/home&quot;&#x000A;p rbox_safe.cat('/tmp/rye-home')            # =&gt;&#x000A;p rbox_safe.cat('/tmp/rye-home').stderr     # =&gt; &quot;No such file or directory&quot;&#x000A;&#x000A;# Here's the same commands with safe-mode disabled:&#x000A;p rbox_wild.echo('$HOME')                   # =&gt; &quot;/home/rye&quot;&#x000A;p rbox_wild['/etc'].ls('host*')             # =&gt; [&quot;hostconfig&quot;, &quot;hosts&quot;]&#x000A;p rbox_wild.ls('-l | wc -l')                # =&gt; 110&#x000A;p rbox_wild.echo('$HOME &gt; /tmp/rye-home')   # =&gt;&#x000A;p rbox_wild.cat('/tmp/rye-home')            # =&gt; &quot;/home/rye&quot;&#x000A;p rbox_wild.rm('/tmp/rye-home')             # =&gt;</pre>
+            <pre>rbox_safe = Rye::Box.new('localhost')&#x000A;rbox_wild = Rye::Box.new('localhost', :safe =&gt; false)&#x000A;&#x000A;# Safe-mode is enabled by default. In safe-mode, all command&#x000A;# arguments are thoroughly escaped. This prevents access to&#x000A;# environment variables and file globs (among other things).&#x000A;p rbox_safe.echo('$HOME')                                    # =&gt; &quot;$HOME&quot;&#x000A;p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist&#x000A;p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # =&gt; '|' is not a valid ls arg&#x000A;&#x000A;# Here's the same commands with safe-mode disabled:&#x000A;p rbox_wild.echo('$HOME')                   # =&gt; &quot;/home/rye&quot;&#x000A;p rbox_wild['/etc'].ls('host*')             # =&gt; [&quot;hostconfig&quot;, &quot;hosts&quot;]&#x000A;p rbox_wild.ls('-l | wc -l')                # =&gt; 110&#x000A;p rbox_wild.echo('$HOME &gt; /tmp/rye-home')   # =&gt;&#x000A;p rbox_wild.cat('/tmp/rye-home')            # =&gt; &quot;/home/rye&quot;</pre>
             <h2>EXAMPLE 3 &#8212; Custom Commands</h2>
-            <pre>rbox = Rye::Box.new('localhost')&#x000A;rbox.add_keys('/private/key/path')   # Specify additional private keys&#x000A;&#x000A;# There's currently no rye900 command&#x000A;p rbox.commands.member?('rye9000')   # =&gt; false&#x000A;&#x000A;# But we can add our own commands to the Rye::Cmd class. They&#x000A;# automatically become available to all Rye::Box objects.&#x000A;module Rye::Cmd&#x000A;  def rye9000(*args)&#x000A;    add_command(&quot;ls&quot;, args)&#x000A;  end&#x000A;  def somescript(*args)&#x000A;    add_command(&quot;/path/to/my/script&quot;, args)&#x000A;  end&#x000A;end&#x000A;&#x000A;# We can now run rye9000 (with arguments)&#x000A;p rbox.rye9000('-a')                 # =&gt; [&quot;.&quot;, &quot;..&quot;, &quot;.bashrc&quot;, ...]&#x000A;p rbox.commands.member?('rye9000')   # =&gt; true</pre>
+            <pre>rbox = Rye::Box.new('localhost')&#x000A;rbox.add_keys('/private/key/path')   # Specify additional private keys&#x000A;&#x000A;# There's currently no rye900 command&#x000A;p rbox.commands.member?('rye9000')   # =&gt; false&#x000A;&#x000A;# But we can add our own commands to the Rye::Cmd class. They&#x000A;# automatically become available to all Rye::Box objects.&#x000A;module Rye::Cmd&#x000A;  def rye9000(*args)&#x000A;    run_command(&quot;ls&quot;, args)&#x000A;  end&#x000A;  def somescript(*args)&#x000A;    run_command(&quot;/path/to/my/script&quot;, args)&#x000A;  end&#x000A;end&#x000A;&#x000A;# We can now run rye9000 (with arguments)&#x000A;p rbox.rye9000('-a')                 # =&gt; [&quot;.&quot;, &quot;..&quot;, &quot;.bashrc&quot;, ...]&#x000A;p rbox.commands.member?('rye9000')   # =&gt; true</pre>
             <h2>EXAMPLE 4 &#8212; Accessing Multiple Machines</h2>
             <pre>rset = Rye::Set.new&#x000A;rbox = Rye::Box.new&#x000A;&#x000A;rset.add_keys('/private/key/path')     # For passwordless logins&#x000A;rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects&#x000A;&#x000A;# Calling methods on Rye::Set objects is very similar to calling them on&#x000A;# Rye::Box objects. In fact, it's identical:&#x000A;p rset.uptime        # =&gt; [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]&#x000A;p rset['/etc'].ls    # =&gt; [['file1', 'file2', ...], ['life1', 'life2', ...]]&#x000A;&#x000A;# Like Rye::Box, the response value is a Rye::Rap object containing the&#x000A;# responses from each box. Each response is itself a Rye::Rap object.&#x000A;unames = rset.uname&#x000A;p unames                               # =&gt; [[&quot;Darwin&quot;], [&quot;Darwin&quot;]]&#x000A;puts unames.class                      # =&gt; Rye::Rap&#x000A;&#x000A;# The Rye::Rap object also keeps a reference to the object that called the&#x000A;# command. In this case, it will keep a reference to Rye::Set:&#x000A;puts unames.set.class                  # =&gt; Rye::Set&#x000A;puts unames.set == rset                # =&gt; true&#x000A;puts unames.size                       # =&gt; 2&#x000A;puts unames.first                      # =&gt; Darwin&#x000A;puts unames.first.class                # =&gt; Rye::Rap&#x000A;puts unames.first.box.class            # =&gt; Rye::Box&#x000A;puts unames.first.box == rbox          # =&gt; true&#x000A;&#x000A;# Envrionment variables can be set the same way as with Rye::Box&#x000A;rset.add_env(:RYE, &quot;Forty Creek&quot;)&#x000A;p rset.env.first.select { |env| env =~ /RYE/ }  # =&gt; [&quot;RYE=Forty Creek&quot;]</pre>
+            <h2>EXAMPLE 5 &#8212; ERROR HANDLING</h2>
+            <pre>rbox = Rye::Box.new('localhost', :safe =&gt; false)&#x000A;&#x000A;# Rye follows the standard convention of taking exception to non-zero&#x000A;# exit code. It raises a Rye::CommandError. In this case, rye.test is&#x000A;# not found by the ls command.&#x000A;begin&#x000A;  rbox.ls('rye.test')&#x000A;rescue Rye::CommandError =&gt; ex&#x000A;  puts ex.exit_code                # =&gt; 1&#x000A;  puts ex.stderr                   # =&gt; ls: rye.test: No such file or directory&#x000A;end&#x000A;&#x000A;# The Rye:Rap response objects also give you the STDOUT and STDERR&#x000A;# content separately. Here we redirect STDOUT to STDERR, so this&#x000A;# will return nothing:&#x000A;puts rbox.uname('-a 1&gt;&amp;2').stdout    # =&gt;&#x000A;&#x000A;# It all went to STDERR:&#x000A;puts rbox.uname('-a 1&gt;&amp;2').stderr    # =&gt; Darwin ryehost 9.6.0 ...&#x000A;&#x000A;# There were no actual error so the exit code should be 0.&#x000A;puts rbox.uname('-a 1&gt;&amp;2').exit_code # =&gt; 0</pre>
+            <h2>EXAMPLE 6 &#8212; rye</h2>
+            <p>
+            <a href="../classes/Rye.html">Rye</a> comes with a command-line utility
+            called <tt>rye</tt>.
+            </p>
+            <pre># Prints the paths to your private keys&#x000A;$ rye keys&#x000A;&#x000A;# Prints the server host keys (suitable for ~/.ssh/known_hosts)&#x000A;$ rye hostkey HOST1 HOST2&#x000A;&#x000A;# Add your public keys to authorized_keys and authorized_keys2&#x000A;# on a remote machine&#x000A;$ rye authorize HOST1 HOST2</pre>
+            <p>
+            More info:
+            </p>
+            <pre>$ rye -h&#x000A;$ rye COMMAND -h&#x000A;$ rye show-commands</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -102,12 +114,39 @@
             <p>
             <a href="../classes/Rye.html">Rye</a> permits only a limited number of
             system commands to be run. This default whitelist is defined in <a
-            href="../classes/Rye/Cmd.html">Rye::Cmd</a> but you can add your own
-            commands as you please (see Example 2).
+            href="http://github.com/delano/rye/blob/master/lib/rye/cmd.rb">Rye::Cmd</a>
+            but you can add your own commands as you please (see Example 3).
             </p>
-            <h2>Credits</h2>
+            <h2>Dependencies</h2>
             <ul>
-            <li>Delano Mandelbaum (delano@solutious.com)
+            <li><a href="http://www.openssl.org">OpenSSL</a> (The C library)
+            
+            </li>
+            <li>Ruby Gems:
+            
+            <ul>
+            <li>net-ssh
+            
+            </li>
+            <li>net-scp
+            
+            </li>
+            <li>highline
+            
+            </li>
+            <li>drydock
+            
+            </li>
+            </ul>
+            </li>
+            </ul>
+            <h2>Known Issues</h2>
+            <p>
+            This list will grow. If you find one let me know!
+            </p>
+            <ul>
+            <li><a href="../classes/Rye.html">Rye</a> doesn&#8217;t read the ~/.ssh/config
+            file yet
             
             </li>
             </ul>
@@ -117,13 +156,6 @@
             for all the orange juice.
             
             </li>
-            <li>The country of Canada for making <a href="../classes/Rye.html">Rye</a>
-            Whisky.
-            
-            </li>
-            </ul>
-            <h2>Kudos</h2>
-            <ul>
             <li><a
             href="http://github.com/adamwiggins/rush">github.com/adamwiggins/rush</a>
             
@@ -161,6 +193,9 @@
             <h2>Credits</h2>
             <ul>
             <li>Delano Mandelbaum (delano@solutious.com)
+            
+            </li>
+            <li>Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
             
             </li>
             </ul>
