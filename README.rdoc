@@ -205,6 +205,8 @@ Rye permits only a limited number of system commands to be run. This default whi
 This list will grow. If you find one let me know!
 
 * Rye doesn't read the ~/.ssh/config file yet
+* Highline 1.5 not working in Ruby 1.9 (password prompts hang)
+
 
 == Thanks
 

@@ -75,6 +75,7 @@ command :authorize do |obj|
     end
     
     puts "Added public keys for: ", rbox.authorize_keys
+    puts "Now try: ssh #{rbox.opts[:user]}@#{hostname}"
     
     puts
   end
