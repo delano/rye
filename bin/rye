@@ -41,15 +41,16 @@ command :authorize do |obj|
   
   highline = HighLine.new # Used for password prompt
   
-  opts = { :debug => nil }
+  opts = { :debug => nil, :auth_methods => %w(publickey hostbased) }
   opts[:user] = obj.option.user if obj.option.user
   
   obj.argv.each do |hostname|
-    puts "Authorizing #{hostname}"
+    
     
     retried = 0
     begin
       rbox = Rye::Box.new(hostname, opts).connect
+      puts "Authorizing #{rbox.opts[:user]}@#{hostname}" if retried == 0
       
       # We know we're already authorized b/c we didn't have to give a password
       if retried == 0
@@ -61,12 +62,16 @@ command :authorize do |obj|
     # An authentication failure means either the requested user doesn't
     # exist on the remote machine or we need to supply a password. 
     rescue Net::SSH::AuthenticationFailed => ex
+      STDERR.puts
       retried += 1
-      opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
-      retry unless retried > 3
-    rescue Net::SSH::AuthenticationFailed
-      STDERR.puts "Authentication failed."
-      exit 1
+      if retried <= 3
+        #opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
+        opts[:auth_methods] = %w(password keyboard-interactive)
+        retry
+      else
+        STDERR.puts "Authentication failed."
+        exit 1 
+      end
     end
     
     puts "Added public keys for: ", rbox.authorize_keys
@@ -117,7 +122,7 @@ command_alias :pubkeys, :pubkey
 
 
 default :keys
-debug :on
+debug :off
 
 # We can Drydock specifically otherwise it will run at_exit. Rye also
 # uses at_exit for shutting down the ssh-agent. Ruby executes at_exit

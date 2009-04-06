@@ -197,18 +197,18 @@ module Rye
     #
     def authorize_keys
       added_keys = []
-      opts[:safe] = false
+      @safe= false
       Rye.keys.each do |key|
         path = key[2]
         debug "# Public key for #{path}"
         k = Rye::Key.from_file(path).public_key.to_ssh2
-        self.mkdir('-p', '~/.ssh') # Silently create dir if it doesn't exist
-        self.echo("'#{k}' >> ~/.ssh/authorized_keys")
-        self.echo("'#{k}' >> ~/.ssh/authorized_keys2")
-        self.chmod('-R', '0600', '.ssh')
+        self.mkdir('-p', '$HOME/.ssh') # Silently create dir if it doesn't exist
+        self.echo("'#{k}' >> $HOME/.ssh/authorized_keys")
+        self.echo("'#{k}' >> $HOME/.ssh/authorized_keys2")
+        self.chmod('-R', '0600', '$HOME/.ssh/authorized_keys*')
         added_keys << path
       end
-      opts[:safe] = true
+      @safe = true
       added_keys
     end
     

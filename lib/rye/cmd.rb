@@ -50,7 +50,7 @@ module Rye;
     def mkdir(*args); cmd('mkdir', args); end
     def touch(*args); cmd('touch', args); end
     def uname(*args); cmd('uname', args); end
-    def chmod(*args); cmd('uname', args); end
+    def chmod(*args); cmd('chmod', args); end
     
     def uptime; cmd("uptime"); end
     def python(*args); cmd('python', args); end

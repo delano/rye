@@ -5,6 +5,13 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.4.1 (2009-04-06) #############################
+
+* FIXED: Rye::Box.authorize_keys was not disabling safe mode properly
+* ADDED: "rye authorize" now specifically enforces the auth method order 
+* FIXED: Disabled debug mode. 
+
+
 #### 0.4.0 (2009-04-06) #############################
 
 * ADDED: to_s and inspect methods for cleaner debugging output
