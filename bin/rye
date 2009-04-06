@@ -41,7 +41,7 @@ command :authorize do |obj|
   
   highline = HighLine.new
   
-  opts = { :safe => false, :debug => nil }
+  opts = { :safe => false, :debug => STDOUT }
   opts[:user] = obj.option.user if obj.option.user
   
   obj.argv.each do |hostname|
@@ -69,15 +69,7 @@ command :authorize do |obj|
       exit 1
     end
     
-    Rye.keys.each do |key|
-      path = key[2]
-      puts "# Public key for #{path}"
-      k = Rye::Key.from_file(path).public_key.to_ssh2
-      rbox.mkdir('-p', '~/.ssh') # Silently create dir if it doesn't exist
-      rbox.echo("'#{k}' >> ~/.ssh/authorized_keys")
-      rbox.echo("'#{k}' >> ~/.ssh/authorized_keys2")
-      rbox.chmod('-R', '0600', '.ssh')
-    end
+    p rbox.authorize_keys
     
     puts
   end

@@ -183,11 +183,29 @@ module Rye
       @host == other.host
     end
     
+    # Returns the host SSH keys for this box
     def host_key
       raise "No host" unless @host
       Rye.remote_host_keys(@host)
     end
     
+    # Copy the local public keys (as specified by Rye.keys) to 
+    # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
+    # Returns an Array of the private keys files used to generate the public keys. 
+    def authorize_keys
+      added_keys = []
+      Rye.keys.each do |key|
+        path = key[2]
+        debug "# Public key for #{path}"
+        k = Rye::Key.from_file(path).public_key.to_ssh2
+        self.mkdir('-p', '~/.ssh') # Silently create dir if it doesn't exist
+        self.echo("'#{k}' >> ~/.ssh/authorized_keys")
+        self.echo("'#{k}' >> ~/.ssh/authorized_keys2")
+        self.chmod('-R', '0600', '.ssh')
+        added_keys << path
+      end
+      added_keys
+    end
     
   private
       
