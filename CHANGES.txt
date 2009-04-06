@@ -6,7 +6,7 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.4.0 (2009-04-??) #############################
+#### 0.4.0 (2009-04-06) #############################
 
 * ADDED: to_s and inspect methods for cleaner debugging output
 * ADDED: == method for Rye::Box
@@ -18,6 +18,8 @@ when the command returns an exit code greater than 0.
 * FIXED: Box.net_ssh_exec was working on nil stderr
 * FIXED: bin/try handles the new command exceptions
 * ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
+* ADDED: Rye.host_keys
+* ADDED: bin/rye
 
 
 #### 0.3.2 (2009-04-05) #############################

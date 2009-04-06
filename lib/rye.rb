@@ -29,7 +29,7 @@ module Rye
   extend self
 
   unless defined?(SYSINFO)
-    VERSION = 0.3.freeze
+    VERSION = 0.4.freeze
     SYSINFO = SystemInfo.new.freeze
   end
   

@@ -26,16 +26,25 @@
   LICENSE.txt
   README.rdoc
   Rakefile
+  bin/rye
   bin/try
   lib/esc.rb
   lib/rye.rb
   lib/rye/box.rb
   lib/rye/cmd.rb
+  lib/rye/key.rb
   lib/rye/rap.rb
   lib/rye/set.rb
   lib/sys.rb
   rye.gemspec
-  test/10_rye_test.rb
+  try/copying.rb
+  try/keys.rb
+  tst/10-key1
+  tst/10-key1.pub
+  tst/10-key2
+  tst/10-key2.pub
+  tst/10_keys_test.rb
+  tst/50_rye_test.rb
   )
   
   # = EXECUTABLES =
