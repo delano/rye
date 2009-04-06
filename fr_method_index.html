@@ -4331,114 +4331,116 @@
         
         Element.addMethods();
         var search_index = [
-          { method: '==', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000059"><span class="method_name">==</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: '>>', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000067"><span class="method_name">&gt;&gt;</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: '[]', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000078"><span class="method_name">[]</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: '[]', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000049"><span class="method_name">[]</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'add_box', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000069"><span class="method_name">add_box</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_boxes', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000070"><span class="method_name">add_boxes</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_env', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000073"><span class="method_name">add_env</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_env', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000054"><span class="method_name">add_env</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'add_environment_variable', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000055"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'add_environment_variable', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000074"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_key', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000053"><span class="method_name">add_key</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'add_key', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000071"><span class="method_name">add_key</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000052"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: '==', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000061"><span class="method_name">==</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: '>>', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000069"><span class="method_name">&gt;&gt;</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: '[]', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000051"><span class="method_name">[]</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: '[]', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000080"><span class="method_name">[]</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_box', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000071"><span class="method_name">add_box</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_boxes', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000072"><span class="method_name">add_boxes</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_env', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000056"><span class="method_name">add_env</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'add_env', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000075"><span class="method_name">add_env</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_environment_variable', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000057"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'add_environment_variable', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000076"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_key', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000073"><span class="method_name">add_key</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_key', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000055"><span class="method_name">add_key</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'add_keys', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000074"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'add_keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000054"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Box)</span></a>' },
           { method: 'add_keys', module: 'rye', html: '<a href="classes/Rye.html#M000006"><span class="method_name">add_keys</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'add_keys', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000072"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'add_stderr', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000064"><span class="method_name">add_stderr</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: 'add_stdout', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000065"><span class="method_name">add_stdout</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: 'authorize_keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000061"><span class="method_name">authorize_keys</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'awk', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000025"><span class="method_name">awk</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'bash', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000032"><span class="method_name">bash</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'can', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000046"><span class="method_name">can</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'cat', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000026"><span class="method_name">cat</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'chmod', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000040"><span class="method_name">chmod</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'cmds', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000048"><span class="method_name">cmds</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'commands', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000047"><span class="method_name">commands</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'connect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000050"><span class="method_name">connect</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'cp', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000014"><span class="method_name">cp</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'cvs', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000022"><span class="method_name">cvs</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'date', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000029"><span class="method_name">date</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'decrypt', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000094"><span class="method_name">decrypt</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'disconnect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000051"><span class="method_name">disconnect</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'dsa?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000098"><span class="method_name">dsa?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'dump', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000101"><span class="method_name">dump</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'echo', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000033"><span class="method_name">echo</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'encrypt', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000093"><span class="method_name">encrypt</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'encrypted?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000099"><span class="method_name">encrypted?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'env', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000019"><span class="method_name">env</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'add_stderr', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000066"><span class="method_name">add_stderr</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: 'add_stdout', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000067"><span class="method_name">add_stdout</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: 'authorize_keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000063"><span class="method_name">authorize_keys</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'awk', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000027"><span class="method_name">awk</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'bash', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000034"><span class="method_name">bash</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'can', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000048"><span class="method_name">can</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'cat', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000028"><span class="method_name">cat</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'chmod', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000042"><span class="method_name">chmod</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'cmds', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000050"><span class="method_name">cmds</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'commands', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000049"><span class="method_name">commands</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'connect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000052"><span class="method_name">connect</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'cp', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000016"><span class="method_name">cp</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'cvs', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000024"><span class="method_name">cvs</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'date', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000031"><span class="method_name">date</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'decrypt', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000096"><span class="method_name">decrypt</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'disconnect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000053"><span class="method_name">disconnect</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'dsa?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000100"><span class="method_name">dsa?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'dump', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000103"><span class="method_name">dump</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'echo', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000035"><span class="method_name">echo</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'encrypt', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000095"><span class="method_name">encrypt</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'encrypted?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000101"><span class="method_name">encrypted?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'env', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000021"><span class="method_name">env</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'escape', module: 'rye', html: '<a href="classes/Rye.html#M000012"><span class="method_name">escape</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'exists?', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000044"><span class="method_name">exists?</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'exit_code', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000084"><span class="method_name">exit_code</span> <span class="module_name">(Rye::CommandError)</span></a>' },
+          { method: 'exists?', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000046"><span class="method_name">exists?</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'exit_code', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000086"><span class="method_name">exit_code</span> <span class="module_name">(Rye::CommandError)</span></a>' },
           { method: 'find_private_keys', module: 'rye', html: '<a href="classes/Rye.html#M000005"><span class="method_name">find_private_keys</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'from_file', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000087"><span class="method_name">from_file</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'generate_pkey', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000086"><span class="method_name">generate_pkey</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'git', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000023"><span class="method_name">git</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'grep', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000028"><span class="method_name">grep</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'host_key', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000060"><span class="method_name">host_key</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'inspect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000058"><span class="method_name">inspect</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'inspect', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000103"><span class="method_name">inspect</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'inspect', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000077"><span class="method_name">inspect</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'keys', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000075"><span class="method_name">keys</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'from_file', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000089"><span class="method_name">from_file</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'generate_pkey', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000088"><span class="method_name">generate_pkey</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'git', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000025"><span class="method_name">git</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'grep', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000030"><span class="method_name">grep</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'host_key', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000062"><span class="method_name">host_key</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'inspect', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000105"><span class="method_name">inspect</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'inspect', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000079"><span class="method_name">inspect</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'inspect', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000060"><span class="method_name">inspect</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'keys', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000077"><span class="method_name">keys</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000058"><span class="method_name">keys</span> <span class="module_name">(Rye::Box)</span></a>' },
           { method: 'keys', module: 'rye', html: '<a href="classes/Rye.html#M000007"><span class="method_name">keys</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'keys', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000056"><span class="method_name">keys</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'ls', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000016"><span class="method_name">ls</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'message', module: 'rye::key::badfile', html: '<a href="classes/Rye/Key/BadFile.html#M000107"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadFile)</span></a>' },
-          { method: 'message', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000081"><span class="method_name">message</span> <span class="module_name">(Rye::CommandError)</span></a>' },
-          { method: 'message', module: 'rye::key::badperm', html: '<a href="classes/Rye/Key/BadPerm.html#M000109"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadPerm)</span></a>' },
-          { method: 'method_missing', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000079"><span class="method_name">method_missing</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'mkdir', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000037"><span class="method_name">mkdir</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'mount', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000035"><span class="method_name">mount</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'ls', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000018"><span class="method_name">ls</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'message', module: 'rye::key::badfile', html: '<a href="classes/Rye/Key/BadFile.html#M000109"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadFile)</span></a>' },
+          { method: 'message', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000083"><span class="method_name">message</span> <span class="module_name">(Rye::CommandError)</span></a>' },
+          { method: 'message', module: 'rye::key::badperm', html: '<a href="classes/Rye/Key/BadPerm.html#M000111"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadPerm)</span></a>' },
+          { method: 'method_missing', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000081"><span class="method_name">method_missing</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'mkdir', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000039"><span class="method_name">mkdir</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'mount', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000037"><span class="method_name">mount</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'mutex', module: 'rye', html: '<a href="classes/Rye.html#M000004"><span class="method_name">mutex</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'mv', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000015"><span class="method_name">mv</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'new', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000062"><span class="method_name">new</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: 'new', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000085"><span class="method_name">new</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'new', module: 'rye::key::badperm', html: '<a href="classes/Rye/Key/BadPerm.html#M000108"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadPerm)</span></a>' },
-          { method: 'new', module: 'rye::key::badfile', html: '<a href="classes/Rye/Key/BadFile.html#M000106"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadFile)</span></a>' },
-          { method: 'new', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000080"><span class="method_name">new</span> <span class="module_name">(Rye::CommandError)</span></a>' },
-          { method: 'new', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000045"><span class="method_name">new</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'new', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000068"><span class="method_name">new</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'perl', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000031"><span class="method_name">perl</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'mv', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000017"><span class="method_name">mv</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'new', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000087"><span class="method_name">new</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'new', module: 'rye::key::badperm', html: '<a href="classes/Rye/Key/BadPerm.html#M000110"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadPerm)</span></a>' },
+          { method: 'new', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000064"><span class="method_name">new</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: 'new', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000082"><span class="method_name">new</span> <span class="module_name">(Rye::CommandError)</span></a>' },
+          { method: 'new', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000070"><span class="method_name">new</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'new', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000047"><span class="method_name">new</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'new', module: 'rye::key::badfile', html: '<a href="classes/Rye/Key/BadFile.html#M000108"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadFile)</span></a>' },
+          { method: 'perl', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000033"><span class="method_name">perl</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'prepare_command', module: 'rye', html: '<a href="classes/Rye.html#M000009"><span class="method_name">prepare_command</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'printenv', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000043"><span class="method_name">printenv</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'private?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000095"><span class="method_name">private?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'private_key', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000091"><span class="method_name">private_key</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'ps', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000017"><span class="method_name">ps</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'public?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000096"><span class="method_name">public?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'public_key', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000092"><span class="method_name">public_key</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'public_key_to_ssh2', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000100"><span class="method_name">public_key_to_ssh2</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'pwd', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000020"><span class="method_name">pwd</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'python', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000042"><span class="method_name">python</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'printenv', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000045"><span class="method_name">printenv</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'private?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000097"><span class="method_name">private?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'private_key', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000093"><span class="method_name">private_key</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'ps', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000019"><span class="method_name">ps</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'public?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000098"><span class="method_name">public?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'public_key', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000094"><span class="method_name">public_key</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'public_key_to_ssh2', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000102"><span class="method_name">public_key_to_ssh2</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'pwd', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000022"><span class="method_name">pwd</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'python', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000044"><span class="method_name">python</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'reload', module: 'rye', html: '<a href="classes/Rye.html#M000003"><span class="method_name">reload</span> <span class="module_name">(Rye)</span></a>' },
           { method: 'remote_host_keys', module: 'rye', html: '<a href="classes/Rye.html#M000008"><span class="method_name">remote_host_keys</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'rsa?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000097"><span class="method_name">rsa?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'ruby', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000030"><span class="method_name">ruby</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'sed', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000024"><span class="method_name">sed</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'sh', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000018"><span class="method_name">sh</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'rsa?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000099"><span class="method_name">rsa?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'ruby', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000032"><span class="method_name">ruby</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'rye9000', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000013"><span class="method_name">rye9000</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'sed', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000026"><span class="method_name">sed</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'sh', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000020"><span class="method_name">sh</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'shell', module: 'rye', html: '<a href="classes/Rye.html#M000011"><span class="method_name">shell</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'sign', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000089"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'sign', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000088"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'sign_aws', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000090"><span class="method_name">sign_aws</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'sleep', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000036"><span class="method_name">sleep</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'stderr', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000082"><span class="method_name">stderr</span> <span class="module_name">(Rye::CommandError)</span></a>' },
-          { method: 'stdout', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000063"><span class="method_name">stdout</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: 'stdout', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000083"><span class="method_name">stdout</span> <span class="module_name">(Rye::CommandError)</span></a>' },
-          { method: 'sudo', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000027"><span class="method_name">sudo</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'supported_authentication?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000104"><span class="method_name">supported_authentication?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'supported_keytype?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000105"><span class="method_name">supported_keytype?</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'svn', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000021"><span class="method_name">svn</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'sign', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000091"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'sign', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000090"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'sign_aws', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000092"><span class="method_name">sign_aws</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'sleep', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000038"><span class="method_name">sleep</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'somescript', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000014"><span class="method_name">somescript</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'stderr', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000084"><span class="method_name">stderr</span> <span class="module_name">(Rye::CommandError)</span></a>' },
+          { method: 'stdout', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000065"><span class="method_name">stdout</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: 'stdout', module: 'rye::commanderror', html: '<a href="classes/Rye/CommandError.html#M000085"><span class="method_name">stdout</span> <span class="module_name">(Rye::CommandError)</span></a>' },
+          { method: 'sudo', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000029"><span class="method_name">sudo</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'supported_authentication?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000106"><span class="method_name">supported_authentication?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'supported_keytype?', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000107"><span class="method_name">supported_keytype?</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'svn', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000023"><span class="method_name">svn</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'sysinfo', module: 'rye', html: '<a href="classes/Rye.html#M000002"><span class="method_name">sysinfo</span> <span class="module_name">(Rye)</span></a>' },
           { method: 'sysinfo', module: 'rye', html: '<a href="classes/Rye.html#M000001"><span class="method_name">sysinfo</span> <span class="module_name">(Rye)</span></a>' },
-          { method: 'test', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000034"><span class="method_name">test</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'to_s', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000102"><span class="method_name">to_s</span> <span class="module_name">(Rye::Key)</span></a>' },
-          { method: 'to_s', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000057"><span class="method_name">to_s</span> <span class="module_name">(Rye::Box)</span></a>' },
-          { method: 'to_s', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000076"><span class="method_name">to_s</span> <span class="module_name">(Rye::Set)</span></a>' },
-          { method: 'to_s', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000066"><span class="method_name">to_s</span> <span class="module_name">(Rye::Rap)</span></a>' },
-          { method: 'touch', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000038"><span class="method_name">touch</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'uname', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000039"><span class="method_name">uname</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'uptime', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000041"><span class="method_name">uptime</span> <span class="module_name">(Rye::Cmd)</span></a>' },
-          { method: 'wc', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000013"><span class="method_name">wc</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'test', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000036"><span class="method_name">test</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'to_s', module: 'rye::key', html: '<a href="classes/Rye/Key.html#M000104"><span class="method_name">to_s</span> <span class="module_name">(Rye::Key)</span></a>' },
+          { method: 'to_s', module: 'rye::set', html: '<a href="classes/Rye/Set.html#M000078"><span class="method_name">to_s</span> <span class="module_name">(Rye::Set)</span></a>' },
+          { method: 'to_s', module: 'rye::box', html: '<a href="classes/Rye/Box.html#M000059"><span class="method_name">to_s</span> <span class="module_name">(Rye::Box)</span></a>' },
+          { method: 'to_s', module: 'rye::rap', html: '<a href="classes/Rye/Rap.html#M000068"><span class="method_name">to_s</span> <span class="module_name">(Rye::Rap)</span></a>' },
+          { method: 'touch', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000040"><span class="method_name">touch</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'uname', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000041"><span class="method_name">uname</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'uptime', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000043"><span class="method_name">uptime</span> <span class="module_name">(Rye::Cmd)</span></a>' },
+          { method: 'wc', module: 'rye::cmd', html: '<a href="classes/Rye/Cmd.html#M000015"><span class="method_name">wc</span> <span class="module_name">(Rye::Cmd)</span></a>' },
           { method: 'which', module: 'rye', html: '<a href="classes/Rye.html#M000010"><span class="method_name">which</span> <span class="module_name">(Rye)</span></a>' },
         ]
         $(document).observe('dom:loaded', function() {
@@ -4502,114 +4504,116 @@
       </form>
       <ol class='methods' id='search-results' style='display: none'></ol>
       <ol class='methods' id='index-entries'>
-        <li><a href="classes/Rye/Box.html#M000059"><span class="method_name">==</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000067"><span class="method_name">&gt;&gt;</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000078"><span class="method_name">[]</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000049"><span class="method_name">[]</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000069"><span class="method_name">add_box</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000070"><span class="method_name">add_boxes</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000073"><span class="method_name">add_env</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000054"><span class="method_name">add_env</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000055"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000074"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000053"><span class="method_name">add_key</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000071"><span class="method_name">add_key</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000052"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000061"><span class="method_name">==</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000069"><span class="method_name">&gt;&gt;</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000051"><span class="method_name">[]</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000080"><span class="method_name">[]</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000071"><span class="method_name">add_box</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000072"><span class="method_name">add_boxes</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000056"><span class="method_name">add_env</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000075"><span class="method_name">add_env</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000057"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000076"><span class="method_name">add_environment_variable</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000073"><span class="method_name">add_key</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000055"><span class="method_name">add_key</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000074"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000054"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Box)</span></a></li>
         <li><a href="classes/Rye.html#M000006"><span class="method_name">add_keys</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000072"><span class="method_name">add_keys</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000064"><span class="method_name">add_stderr</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000065"><span class="method_name">add_stdout</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000061"><span class="method_name">authorize_keys</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000025"><span class="method_name">awk</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000032"><span class="method_name">bash</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000046"><span class="method_name">can</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000026"><span class="method_name">cat</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000040"><span class="method_name">chmod</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000048"><span class="method_name">cmds</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000047"><span class="method_name">commands</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000050"><span class="method_name">connect</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000014"><span class="method_name">cp</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000022"><span class="method_name">cvs</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000029"><span class="method_name">date</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000094"><span class="method_name">decrypt</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000051"><span class="method_name">disconnect</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000098"><span class="method_name">dsa?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000101"><span class="method_name">dump</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000033"><span class="method_name">echo</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000093"><span class="method_name">encrypt</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000099"><span class="method_name">encrypted?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000019"><span class="method_name">env</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000066"><span class="method_name">add_stderr</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000067"><span class="method_name">add_stdout</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000063"><span class="method_name">authorize_keys</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000027"><span class="method_name">awk</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000034"><span class="method_name">bash</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000048"><span class="method_name">can</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000028"><span class="method_name">cat</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000042"><span class="method_name">chmod</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000050"><span class="method_name">cmds</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000049"><span class="method_name">commands</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000052"><span class="method_name">connect</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000016"><span class="method_name">cp</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000024"><span class="method_name">cvs</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000031"><span class="method_name">date</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000096"><span class="method_name">decrypt</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000053"><span class="method_name">disconnect</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000100"><span class="method_name">dsa?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000103"><span class="method_name">dump</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000035"><span class="method_name">echo</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000095"><span class="method_name">encrypt</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000101"><span class="method_name">encrypted?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000021"><span class="method_name">env</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000012"><span class="method_name">escape</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000044"><span class="method_name">exists?</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/CommandError.html#M000084"><span class="method_name">exit_code</span> <span class="module_name">(Rye::CommandError)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000046"><span class="method_name">exists?</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/CommandError.html#M000086"><span class="method_name">exit_code</span> <span class="module_name">(Rye::CommandError)</span></a></li>
         <li><a href="classes/Rye.html#M000005"><span class="method_name">find_private_keys</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000087"><span class="method_name">from_file</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000086"><span class="method_name">generate_pkey</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000023"><span class="method_name">git</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000028"><span class="method_name">grep</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000060"><span class="method_name">host_key</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000058"><span class="method_name">inspect</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000103"><span class="method_name">inspect</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000077"><span class="method_name">inspect</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000075"><span class="method_name">keys</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000089"><span class="method_name">from_file</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000088"><span class="method_name">generate_pkey</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000025"><span class="method_name">git</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000030"><span class="method_name">grep</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000062"><span class="method_name">host_key</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000105"><span class="method_name">inspect</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000079"><span class="method_name">inspect</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000060"><span class="method_name">inspect</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000077"><span class="method_name">keys</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000058"><span class="method_name">keys</span> <span class="module_name">(Rye::Box)</span></a></li>
         <li><a href="classes/Rye.html#M000007"><span class="method_name">keys</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000056"><span class="method_name">keys</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000016"><span class="method_name">ls</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key/BadFile.html#M000107"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadFile)</span></a></li>
-        <li><a href="classes/Rye/CommandError.html#M000081"><span class="method_name">message</span> <span class="module_name">(Rye::CommandError)</span></a></li>
-        <li><a href="classes/Rye/Key/BadPerm.html#M000109"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadPerm)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000079"><span class="method_name">method_missing</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000037"><span class="method_name">mkdir</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000035"><span class="method_name">mount</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000018"><span class="method_name">ls</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key/BadFile.html#M000109"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadFile)</span></a></li>
+        <li><a href="classes/Rye/CommandError.html#M000083"><span class="method_name">message</span> <span class="module_name">(Rye::CommandError)</span></a></li>
+        <li><a href="classes/Rye/Key/BadPerm.html#M000111"><span class="method_name">message</span> <span class="module_name">(Rye::Key::BadPerm)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000081"><span class="method_name">method_missing</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000039"><span class="method_name">mkdir</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000037"><span class="method_name">mount</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000004"><span class="method_name">mutex</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000015"><span class="method_name">mv</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000062"><span class="method_name">new</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000085"><span class="method_name">new</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key/BadPerm.html#M000108"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadPerm)</span></a></li>
-        <li><a href="classes/Rye/Key/BadFile.html#M000106"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadFile)</span></a></li>
-        <li><a href="classes/Rye/CommandError.html#M000080"><span class="method_name">new</span> <span class="module_name">(Rye::CommandError)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000045"><span class="method_name">new</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000068"><span class="method_name">new</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000031"><span class="method_name">perl</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000017"><span class="method_name">mv</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000087"><span class="method_name">new</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key/BadPerm.html#M000110"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadPerm)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000064"><span class="method_name">new</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/CommandError.html#M000082"><span class="method_name">new</span> <span class="module_name">(Rye::CommandError)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000070"><span class="method_name">new</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000047"><span class="method_name">new</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Key/BadFile.html#M000108"><span class="method_name">new</span> <span class="module_name">(Rye::Key::BadFile)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000033"><span class="method_name">perl</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000009"><span class="method_name">prepare_command</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000043"><span class="method_name">printenv</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000095"><span class="method_name">private?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000091"><span class="method_name">private_key</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000017"><span class="method_name">ps</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000096"><span class="method_name">public?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000092"><span class="method_name">public_key</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000100"><span class="method_name">public_key_to_ssh2</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000020"><span class="method_name">pwd</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000042"><span class="method_name">python</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000045"><span class="method_name">printenv</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000097"><span class="method_name">private?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000093"><span class="method_name">private_key</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000019"><span class="method_name">ps</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000098"><span class="method_name">public?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000094"><span class="method_name">public_key</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000102"><span class="method_name">public_key_to_ssh2</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000022"><span class="method_name">pwd</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000044"><span class="method_name">python</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000003"><span class="method_name">reload</span> <span class="module_name">(Rye)</span></a></li>
         <li><a href="classes/Rye.html#M000008"><span class="method_name">remote_host_keys</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000097"><span class="method_name">rsa?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000030"><span class="method_name">ruby</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000024"><span class="method_name">sed</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000018"><span class="method_name">sh</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000099"><span class="method_name">rsa?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000032"><span class="method_name">ruby</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000013"><span class="method_name">rye9000</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000026"><span class="method_name">sed</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000020"><span class="method_name">sh</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000011"><span class="method_name">shell</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000089"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000088"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000090"><span class="method_name">sign_aws</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000036"><span class="method_name">sleep</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/CommandError.html#M000082"><span class="method_name">stderr</span> <span class="module_name">(Rye::CommandError)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000063"><span class="method_name">stdout</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/CommandError.html#M000083"><span class="method_name">stdout</span> <span class="module_name">(Rye::CommandError)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000027"><span class="method_name">sudo</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000104"><span class="method_name">supported_authentication?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000105"><span class="method_name">supported_keytype?</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000021"><span class="method_name">svn</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000091"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000090"><span class="method_name">sign</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000092"><span class="method_name">sign_aws</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000038"><span class="method_name">sleep</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000014"><span class="method_name">somescript</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/CommandError.html#M000084"><span class="method_name">stderr</span> <span class="module_name">(Rye::CommandError)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000065"><span class="method_name">stdout</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/CommandError.html#M000085"><span class="method_name">stdout</span> <span class="module_name">(Rye::CommandError)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000029"><span class="method_name">sudo</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000106"><span class="method_name">supported_authentication?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000107"><span class="method_name">supported_keytype?</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000023"><span class="method_name">svn</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000002"><span class="method_name">sysinfo</span> <span class="module_name">(Rye)</span></a></li>
         <li><a href="classes/Rye.html#M000001"><span class="method_name">sysinfo</span> <span class="module_name">(Rye)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000034"><span class="method_name">test</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Key.html#M000102"><span class="method_name">to_s</span> <span class="module_name">(Rye::Key)</span></a></li>
-        <li><a href="classes/Rye/Box.html#M000057"><span class="method_name">to_s</span> <span class="module_name">(Rye::Box)</span></a></li>
-        <li><a href="classes/Rye/Set.html#M000076"><span class="method_name">to_s</span> <span class="module_name">(Rye::Set)</span></a></li>
-        <li><a href="classes/Rye/Rap.html#M000066"><span class="method_name">to_s</span> <span class="module_name">(Rye::Rap)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000038"><span class="method_name">touch</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000039"><span class="method_name">uname</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000041"><span class="method_name">uptime</span> <span class="module_name">(Rye::Cmd)</span></a></li>
-        <li><a href="classes/Rye/Cmd.html#M000013"><span class="method_name">wc</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000036"><span class="method_name">test</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Key.html#M000104"><span class="method_name">to_s</span> <span class="module_name">(Rye::Key)</span></a></li>
+        <li><a href="classes/Rye/Set.html#M000078"><span class="method_name">to_s</span> <span class="module_name">(Rye::Set)</span></a></li>
+        <li><a href="classes/Rye/Box.html#M000059"><span class="method_name">to_s</span> <span class="module_name">(Rye::Box)</span></a></li>
+        <li><a href="classes/Rye/Rap.html#M000068"><span class="method_name">to_s</span> <span class="module_name">(Rye::Rap)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000040"><span class="method_name">touch</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000041"><span class="method_name">uname</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000043"><span class="method_name">uptime</span> <span class="module_name">(Rye::Cmd)</span></a></li>
+        <li><a href="classes/Rye/Cmd.html#M000015"><span class="method_name">wc</span> <span class="module_name">(Rye::Cmd)</span></a></li>
         <li><a href="classes/Rye.html#M000010"><span class="method_name">which</span> <span class="module_name">(Rye)</span></a></li>
       </ol>
     </div>
