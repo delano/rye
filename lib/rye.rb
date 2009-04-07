@@ -22,6 +22,12 @@ require 'sys'
 # disabled so unless otherwise specified, you can't do this: 
 # <tt>rbox.rm('/etc/**/*')</tt>. 
 #
+# However, you can do this:
+#
+# rset = Rye::Set.new("dev-machines")
+# rset.add_boxes('host1', 'host2', 'host3', 'host4')
+# rset.ps('aux').grep
+#
 # * See +bin/try+ for a bunch of working examples. 
 # * See Rye::Box#initialize for info about disabling safe-mode.
 #

@@ -105,7 +105,7 @@ puts %Q(
 #   EXAMPLE 4 -- Accessing Multiple Machines
 #)
 
-rset = Rye::Set.new
+rset = Rye::Set.new('default', :parallel => true)
 rbox = Rye::Box.new
 
 rset.add_keys('/private/key/path')     # For passwordless logins 

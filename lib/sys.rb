@@ -6,51 +6,52 @@ require 'socket'
 # Portions of this code were originally from Amazon's EC2 AMI tools, 
 # specifically lib/platform.rb. 
 class SystemInfo #:nodoc:all
-  VERSION = 2
-  IMPLEMENTATIONS = [
+  unless defined?(IMPLEMENTATIONS)
+    VERSION = 4.freeze
+    IMPLEMENTATIONS = [
     
-    # These are for JRuby, System.getproperty('os.name'). 
-    # For a list of all values, see: http://lopica.sourceforge.net/os.html
-    [/mac\s*os\s*x/i,     :unix,    :osx     ],  
-    [/sunos/i,            :unix,    :solaris ], 
-    [/windows\s*ce/i,     :win32,   :windows ],
-    [/windows/i,          :win32,   :windows ],  
-    [/osx/i,              :unix,    :osx     ],
+      # These are for JRuby, System.getproperty('os.name'). 
+      # For a list of all values, see: http://lopica.sourceforge.net/os.html
+      [/mac\s*os\s*x/i,     :unix,    :osx     ],  
+      [/sunos/i,            :unix,    :solaris ], 
+      [/windows\s*ce/i,     :win32,   :windows ],
+      [/windows/i,          :win32,   :windows ],  
+      [/osx/i,              :unix,    :osx     ],
     
-    # TODO: implement other windows matches: # /djgpp|(cyg|ms|bcc)win|mingw/ (from mongrel)
+      # TODO: implement other windows matches: # /djgpp|(cyg|ms|bcc)win|mingw/ (from mongrel)
     
-    # These are for RUBY_PLATFORM and JRuby
-    [/java/i,    :java,    :java             ],
-    [/darwin/i,  :unix,    :osx              ],
-    [/linux/i,   :unix,    :linux            ],
-    [/freebsd/i, :unix,    :freebsd          ],
-    [/netbsd/i,  :unix,    :netbsd           ],
-    [/solaris/i, :unix,    :solaris          ],
-    [/irix/i,    :unix,    :irix             ],
-    [/cygwin/i,  :unix,    :cygwin           ],
-    [/mswin/i,   :win32,   :windows          ],
-    [/mingw/i,   :win32,   :mingw            ],
-    [/bccwin/i,  :win32,   :bccwin           ],
-    [/wince/i,   :win32,   :wince            ],
-    [/vms/i,     :vms,     :vms              ],
-    [/os2/i,     :os2,     :os2              ],
-    [nil,        :unknown, :unknown          ],
+      # These are for RUBY_PLATFORM and JRuby
+      [/java/i,    :java,    :java             ],
+      [/darwin/i,  :unix,    :osx              ],
+      [/linux/i,   :unix,    :linux            ],
+      [/freebsd/i, :unix,    :freebsd          ],
+      [/netbsd/i,  :unix,    :netbsd           ],
+      [/solaris/i, :unix,    :solaris          ],
+      [/irix/i,    :unix,    :irix             ],
+      [/cygwin/i,  :unix,    :cygwin           ],
+      [/mswin/i,   :win32,   :windows          ],
+      [/mingw/i,   :win32,   :mingw            ],
+      [/bccwin/i,  :win32,   :bccwin           ],
+      [/wince/i,   :win32,   :wince            ],
+      [/vms/i,     :vms,     :vms              ],
+      [/os2/i,     :os2,     :os2              ],
+      [nil,        :unknown, :unknown          ],
     
-  ]
+    ].freeze
 
-  ARCHITECTURES = [
-    [/(i\d86)/i,  :i386             ],
-    [/x86_64/i,   :x86_64           ],
-    [/x86/i,      :i386             ],  # JRuby
-    [/ia64/i,     :ia64             ],
-    [/alpha/i,    :alpha            ],
-    [/sparc/i,    :sparc            ],
-    [/mips/i,     :mips             ],
-    [/powerpc/i,  :powerpc          ],
-    [/universal/i,:universal        ],
-    [nil,         :unknown          ],
-  ]
-  
+    ARCHITECTURES = [
+      [/(i\d86)/i,  :i386             ],
+      [/x86_64/i,   :x86_64           ],
+      [/x86/i,      :i386             ],  # JRuby
+      [/ia64/i,     :ia64             ],
+      [/alpha/i,    :alpha            ],
+      [/sparc/i,    :sparc            ],
+      [/mips/i,     :mips             ],
+      [/powerpc/i,  :powerpc          ],
+      [/universal/i,:universal        ],
+      [nil,         :unknown          ],
+    ].freeze
+  end
 
 
   attr_reader :os 

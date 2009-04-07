@@ -128,6 +128,8 @@ module Rye
         end
       end
       
+      # Should it bubble up the exception for a single box?
+      # socket errors?
       threads.each do |t| 
         sleep 0.01        # Give the thread some breathing room
         t.join            # Wait for the thread to finish

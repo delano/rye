@@ -65,7 +65,7 @@ command :authorize do |obj|
       STDERR.puts
       retried += 1
       if retried <= 3
-        #opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
+        opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
         opts[:auth_methods] = %w(password keyboard-interactive)
         retry
       else

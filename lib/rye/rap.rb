@@ -73,9 +73,18 @@ module Rye;
       super
     end
     
-    def >>(*other)
-      p other
+    # NOTE: This is broken!
+    def grep *args
+      self.select do |boxrap|
+        b = boxrap.grep(*args)
+        b.empty? ? false : b
+      end
     end
+    
+    
+    #def >>(*other)
+    #  p other
+    #end
     
     #---
     # If Box's shell methods return Rap objects, then 

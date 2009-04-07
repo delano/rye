@@ -5,8 +5,7 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'rye'
-
-boxA = Rye::Box.new('ryehost', :user => "root")
+boxA = Rye::Box.new('localhost', :user => "delano")
 boxB = Rye::Box.new('127.0.0.1', :user => 'delano', :safe => false, :debug => STDOUT)
 set = Rye::Set.new
 set.add_boxes(boxA, boxB)

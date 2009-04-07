@@ -2,6 +2,8 @@
 
 # THIS IS A SCRAP FILE.
 
+
+
 __END__
 require 'openssl'
 key = OpenSSL::PKey::RSA.generate(1024)
