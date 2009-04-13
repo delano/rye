@@ -5,6 +5,13 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.4.2 (2009-04-13) #############################
+
+* ADDED: More helpful debug output
+* ADDED: hostname command to Rye::Cmd
+* CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle
+the ssh keys. 
+
 #### 0.4.1 (2009-04-06) #############################
 
 * FIXED: Rye::Box.authorize_keys was not disabling safe mode properly

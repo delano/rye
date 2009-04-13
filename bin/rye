@@ -125,7 +125,7 @@ command_alias :pubkeys, :pubkey
 default :keys
 debug :off
 
-# We can Drydock specifically otherwise it will run at_exit. Rye also
+# We call Drydock specifically otherwise it will run at_exit. Rye also
 # uses at_exit for shutting down the ssh-agent. Ruby executes at_exit
 # blocks in reverse order so if Drydock is required first, it's block
 # will run after Rye shuts down the ssh-agent. 

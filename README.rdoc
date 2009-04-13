@@ -206,7 +206,7 @@ This list will grow. If you find one let me know!
 
 * Rye doesn't read the ~/.ssh/config file yet
 * Highline 1.5 not working in Ruby 1.9 (password prompts hang)
-
+* Rye uses OpenSSL's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
 
 == Thanks
 

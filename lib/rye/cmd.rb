@@ -55,6 +55,7 @@ module Rye;
     def uptime; cmd("uptime"); end
     def python(*args); cmd('python', args); end
     def printenv(*args); cmd('printenv', args); end
+    def hostname(*args); cmd('hostname', args); end
     
   
     #  def copy_to(*boxes)

@@ -17,7 +17,7 @@ module Rye
   #
   #     rbox = Rye::Box.new('localhost') 
   #     rbox.hostname   # => localhost
-  #     rbox.uname      # => Darwin
+  #     rbox.uname(:a)  # => Darwin vanya 9.6.0 ...
   #
   class Box 
     include Rye::Cmd
@@ -78,11 +78,16 @@ module Rye
       @debug = @opts.delete(:debug)
       @error = @opts.delete(:error)
       
+      debug @opts.inspect
+            
       add_keys(@opts[:keys])
       
       # We don't want Net::SSH to handle the keypairs. This may change
       # but for we're letting ssh-agent do it. 
-      @opts.delete(:keys)
+      #@opts.delete(:keys)
+      
+
+      debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       
     end
     
@@ -146,7 +151,10 @@ module Rye
     # Returns the instance of Box
     def add_keys(*additional_keys)
       additional_keys = [additional_keys].flatten.compact || []
-      Rye.add_keys(additional_keys)
+      ret = Rye.add_keys(additional_keys)
+      debug "ssh-add exit_code: #{ret.exit_code}" 
+      debug "ssh-add stdout: #{ret.stdout}"
+      debug "ssh-add stderr: #{ret.stderr}"
       self
     end
     alias :add_key :add_keys
@@ -215,8 +223,8 @@ module Rye
   private
       
     
-    def debug(msg); @debug.puts msg if @debug; end
-    def error(msg); @error.puts msg if @error; end
+    def debug(msg="unknown debug msg"); @debug.puts msg if @debug; end
+    def error(msg="unknown error msg"); @error.puts msg if @error; end
 
     
     # Add the current environment variables to the beginning of +cmd+
@@ -248,6 +256,8 @@ module Rye
     # but if it fails it will raise a Rye::NotConnected exception. 
     # 
     def run_command(*args)
+      debug "run_command with keys: #{Rye.keys.inspect}"
+      
       connect if !@ssh || @ssh.closed?
       args = args.flatten.compact
       args = args.first.split(/\s+/) if args.size == 1

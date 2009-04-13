@@ -109,8 +109,7 @@ module Rye
   def add_keys(*keys)
     keys = keys.flatten.compact || []
     return if keys.empty?
-    Rye.shell("ssh-add", keys) if keys
-    keys
+    Rye.shell("ssh-add", keys)
   end
   
   # Returns an Array of info about the currently available
@@ -218,6 +217,10 @@ module Rye
   def escape(safe, cmd, *args)
     args = args.flatten.compact || []
     safe ? Escape.shell_command(cmd, *args).to_s : [cmd, args].flatten.compact.join(' ')
+  end
+  
+  def sshagent_info
+    @@agent_env
   end
   
   
