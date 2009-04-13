@@ -154,7 +154,21 @@ module Rye
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
-
+    
+    # Open an interactive SSH session. This only works if STDIN.tty?
+    # returns true. Otherwise it returns the SSH command that would 
+    # have been run. This requires the SSH command-line executable (ssh).
+    # * +run+ when set to false, it will return the SSH command as a String
+    # and not open an SSH session.
+    #
+    def interactive_ssh(run=true)
+      debug "interactive_ssh with keys: #{Rye.keys.inspect}"
+      run = false unless STDIN.tty?      
+      cmd = Rye.prepare_command("ssh", "#{@opts[:user]}@#{@host}")
+      return cmd unless run
+      system(cmd)
+    end
+    
     # Close the SSH session  with +@host+. This is called 
     # automatically at exit if the connection is open. 
     def disconnect
@@ -258,6 +272,7 @@ module Rye
       [env, cmd].join(' ')
     end
     
+
 
     # Execute a command over SSH
     #

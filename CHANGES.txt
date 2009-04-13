@@ -12,6 +12,7 @@ TODO
 * CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle
 the ssh keys. 
 * ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true 
+* ADDED: Rye::Box.interactive_ssh for opening an SSH session to the given box.
 
 #### 0.4.1 (2009-04-06) #############################
 
