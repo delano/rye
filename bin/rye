@@ -21,7 +21,6 @@ include Drydock
 global :p, :path, String, "A directory containing SSH private keys or the path to a private key"
 
 before do |obj|
-  STDERR.puts
   # Load private keys if specified
   if obj.global.path
     keys = Rye.find_private_keys(obj.global.path) 
@@ -30,7 +29,7 @@ before do |obj|
 end
 
 after do
-  STDERR.puts
+
 end
 
 desc "Add your public keys to one or more remote machines"
@@ -39,45 +38,16 @@ argv :hostname
 command :authorize do |obj|
   raise "You must specify a host" unless obj.argv.hostname
   
-  highline = HighLine.new # Used for password prompt
-  
   opts = { :debug => nil, :auth_methods => %w(publickey hostbased) }
   opts[:user] = obj.option.user if obj.option.user
   
   obj.argv.each do |hostname|
     
-    
-    retried = 0
-    begin
-      rbox = Rye::Box.new(hostname, opts).connect
-      puts "Authorizing #{rbox.opts[:user]}@#{hostname}" if retried == 0
-      
-      # We know we're already authorized b/c we didn't have to give a password
-      if retried == 0
-        puts "%s is already authorized" % rbox.opts[:user]
-        puts
-        next
-      end
-      
-    # An authentication failure means either the requested user doesn't
-    # exist on the remote machine or we need to supply a password. 
-    rescue Net::SSH::AuthenticationFailed => ex
-      STDERR.puts
-      retried += 1
-      if retried <= 3
-        opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
-        opts[:auth_methods] = %w(password keyboard-interactive)
-        retry
-      else
-        STDERR.puts "Authentication failed."
-        exit 1 
-      end
-    end
-    
+    rbox = Rye::Box.new(hostname, opts).connect
+    puts "Authorizing #{rbox.opts[:user]}@#{hostname}"
     puts "Added public keys for: ", rbox.authorize_keys
-    puts "Now try: ssh #{rbox.opts[:user]}@#{hostname}"
+    puts "Now try: " << "ssh #{rbox.opts[:user]}@#{hostname}"
     
-    puts
   end
   
 end

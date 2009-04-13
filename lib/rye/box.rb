@@ -128,11 +128,29 @@ module Rye
     # Open an SSH session with +@host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@host+ is not specified.
+    # Will attempt a password login up to 3 times if the initial 
+    # authentication fails. 
     def connect
       raise Rye::NoHost unless @host
       disconnect if @ssh 
       debug "Opening connection to #{@host}"
-      @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
+      highline = HighLine.new # Used for password prompt
+      retried = 0
+      begin
+        @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
+      rescue Net::SSH::AuthenticationFailed => ex
+        retried += 1
+        if STDIN.tty? && retried <= 3
+          @opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
+          @opts[:auth_methods] ||= []
+          @opts[:auth_methods] = %w(password)
+          retry
+        else
+          STDERR.puts "Authentication failed."
+          exit 1 
+        end
+      end
+      
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
@@ -151,10 +169,13 @@ module Rye
     # Returns the instance of Box
     def add_keys(*additional_keys)
       additional_keys = [additional_keys].flatten.compact || []
+      return if additional_keys.empty?
       ret = Rye.add_keys(additional_keys)
-      debug "ssh-add exit_code: #{ret.exit_code}" 
-      debug "ssh-add stdout: #{ret.stdout}"
-      debug "ssh-add stderr: #{ret.stderr}"
+      if ret.is_a?(Rye::Rap)
+        debug "ssh-add exit_code: #{ret.exit_code}" 
+        debug "ssh-add stdout: #{ret.stdout}"
+        debug "ssh-add stderr: #{ret.stderr}"
+      end
       self
     end
     alias :add_key :add_keys
@@ -210,7 +231,7 @@ module Rye
         path = key[2]
         debug "# Public key for #{path}"
         k = Rye::Key.from_file(path).public_key.to_ssh2
-        self.mkdir('-p', '$HOME/.ssh') # Silently create dir if it doesn't exist
+        self.mkdir(:p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
         self.echo("'#{k}' >> $HOME/.ssh/authorized_keys")
         self.echo("'#{k}' >> $HOME/.ssh/authorized_keys2")
         self.chmod('-R', '0600', '$HOME/.ssh/authorized_keys*')
@@ -311,7 +332,7 @@ module Rye
           channel[:exit_signal] = data.read_long
         end
         # For long-running commands like top, this will print the output.
-        # It cool, but we'd also need to enable STDIN to interact with 
+        # It's cool, but we'd also need to enable STDIN to interact with 
         # command. 
         #channel.on_data do |ch, data|
         #  puts "got stdout: #{data}"
