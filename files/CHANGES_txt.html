@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: CHANGES.txt [Rye: Run system commands via SSH locally and remotely in a Ruby way.]</title>
+    <title>File: CHANGES.txt [Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).]</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Apr 06 07:49:40 -0400 2009</span>
+          <span class='datetime'>Tue Apr 14 08:56:14 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -49,11 +49,47 @@
             </li>
             </ul>
             <p>
+            #### 0.4.3 (2009-04-14) #############################
+            </p>
+            <ul>
+            <li>ADDED: Rye::Box.missing_method to handle non existent commands
+            
+            </li>
+            <li>FIXED: All <a href="../classes/Rye/Cmd.html">Rye::Cmd</a> command methods
+            accept *args to make calling consistent.
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.4.2 (2009-04-13) #############################
+            </p>
+            <ul>
+            <li>ADDED: More helpful debug output
+            
+            </li>
+            <li>ADDED: hostname command to <a href="../classes/Rye/Cmd.html">Rye::Cmd</a>
+            
+            </li>
+            <li>CHANGE: Using OpenSSL&#8217;s ssh-agent but also let&#8217;s Net::SSH
+            handle the ssh keys.
+            
+            </li>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000054">Rye::Box.connect</a> now
+            supports multiple password attempts if STDIN.tty returns true
+            
+            </li>
+            <li>ADDED: <a
+            href="../classes/Rye/Box.html#M000055">Rye::Box.interactive_ssh</a> for
+            opening an SSH session to the given box.
+            
+            </li>
+            </ul>
+            <p>
             #### 0.4.1 (2009-04-06) #############################
             </p>
             <ul>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000063">Rye::Box.authorize_keys</a> was not
+            href="../classes/Rye/Box.html#M000066">Rye::Box.authorize_keys</a> was not
             disabling safe mode properly
             
             </li>
@@ -81,13 +117,9 @@
             </li>
             <li>ADDED: commands now raise a <a
             href="../classes/Rye/CommandError.html">Rye::CommandError</a> exception
+            when the command returns an exit code greater than 0.
             
             </li>
-            </ul>
-            <p>
-            when the command returns an exit code greater than 0.
-            </p>
-            <ul>
             <li>CHANGED: Box.add_command renamed to Box.run_command
             
             </li>
@@ -119,14 +151,14 @@
             Strings).
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Set.html#M000072">Rye::Set#add_boxes</a>
+            <li>FIXED: <a href="../classes/Rye/Set.html#M000076">Rye::Set#add_boxes</a>
             didn&#8217;t return self.
             
             </li>
+            <li>UPDATED: Lots of docs tweaks.
+            
+            </li>
             </ul>
-            <p>
-            # UPDATED: Lots of docs tweaks.
-            </p>
             <p>
             #### 0.3 (2009-04-05) ###############################
             </p>
@@ -147,26 +179,20 @@
             (used to be done per Box)
             
             </li>
-            <li>ADDED: Supports all options provided by Net::SSH#start. This
+            <li>ADDED: Supports all options provided by Net::SSH#start. This includes
+            support for password logins and proxies.
             
             </li>
-            </ul>
-            <p>
-            includes support for password logins and proxies.
-            </p>
-            <ul>
-            <li>ADDED: Safe mode can now be disabled (to allow file globs
+            <li>ADDED: Safe mode can now be disabled (to allow file globs and environment
+            variable access).
             
             </li>
-            </ul>
-            <p>
-            and environment variable access).
-            </p>
-            <ul>
             <li>ADDED: Basic sanity test
             
             </li>
-            <li>FIXED: Rye::Box.method_missing Symbol/String ambiguity
+            <li>FIXED: <a
+            href="../classes/Rye/Box.html#M000067">Rye::Box.method_missing</a>
+            Symbol/String ambiguity
             
             </li>
             <li>ADDED: Mucho more rdocs and examples.

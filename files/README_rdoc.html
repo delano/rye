@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>File: README.rdoc [Rye: Run system commands via SSH locally and remotely in a Ruby way.]</title>
+    <title>File: README.rdoc [Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).]</title>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Apr 06 07:49:40 -0400 2009</span>
+          <span class='datetime'>Tue Apr 14 08:57:56 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -39,7 +39,8 @@
           <div id='description'>
             <h1><a href="../classes/Rye.html">Rye</a> - v0.4</h1>
             <p>
-            Safely run remote commands via SSH in Ruby.
+            Safely run SSH commands on a bunch of machines at the same time (from
+            Ruby).
             </p>
             <p>
             <a href="../classes/Rye.html">Rye</a> is similar to <a
@@ -151,6 +152,16 @@
             
             </li>
             <li>Highline 1.5 not working in Ruby 1.9 (password prompts hang)
+            
+            </li>
+            <li><a href="../classes/Rye.html">Rye</a> uses OpenSSL&#8217;s ssh-agent (if it
+            exists). <a href="../classes/Rye.html">Rye</a> starts it up as a child
+            process and shuts it down using at_exit. If you have code in an at_exit
+            that rely&#8217;s on <a href="../classes/Rye.html">Rye</a>, make sure your
+            code runs before Rye&#8217;s at_exit block is called. For example, Drydock
+            uses at_exit too which is why in <a href="bin/rye.html">bin/rye</a> you can
+            see that Drydock is called explicitly so that Rye&#8217;s at_exit is
+            executed after Drydock executes a command.
             
             </li>
             </ul>
