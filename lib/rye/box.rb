@@ -147,7 +147,7 @@ module Rye
           retry
         else
           STDERR.puts "Authentication failed."
-          exit 1 
+          exit 0
         end
       end
       
@@ -253,6 +253,12 @@ module Rye
       end
       @safe = true
       added_keys
+    end
+    
+    # A handler for undefined commands. 
+    # Raises Rye::CommandNotFound exception.
+    def method_missing(meth, *args, &block)
+      raise Rye::CommandNotFound, "#{meth.to_s} (args: #{args.join(' ')})"
     end
     
   private

@@ -5,14 +5,21 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.4.3 (2009-04-14) #############################
+
+* ADDED: Rye::Box.missing_method to handle non existent commands
+* FIXED: All Rye::Cmd command methods accept *args to make calling consistent.
+
+
 #### 0.4.2 (2009-04-13) #############################
 
 * ADDED: More helpful debug output
 * ADDED: hostname command to Rye::Cmd
 * CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle
-the ssh keys. 
+  the ssh keys. 
 * ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true 
 * ADDED: Rye::Box.interactive_ssh for opening an SSH session to the given box.
+
 
 #### 0.4.1 (2009-04-06) #############################
 
@@ -27,7 +34,7 @@ the ssh keys.
 * ADDED: == method for Rye::Box
 * ADDED: exit code and exit signal to Rye::Rap objects
 * ADDED: commands now raise a Rye::CommandError exception 
-when the command returns an exit code greater than 0. 
+  when the command returns an exit code greater than 0. 
 * CHANGED: Box.add_command renamed to Box.run_command
 * FIXED: Box.run_command was parsing arguments incorrectly 
 * FIXED: Box.net_ssh_exec was working on nil stderr
@@ -41,7 +48,7 @@ when the command returns an exit code greater than 0.
 
 * FIXED: Module.instance_methods bug. In Ruby 1.9 it's Symbols (1.8 was Strings).
 * FIXED: Rye::Set#add_boxes didn't return self.
-# UPDATED: Lots of docs tweaks.
+* UPDATED: Lots of docs tweaks.
 
 
 #### 0.3 (2009-04-05) ###############################
@@ -51,9 +58,9 @@ when the command returns an exit code greater than 0.
 * FIXED: Rye::Box wasn't properly adding keypairs to SSH Agent
 * CHANGED: Moved all SSH key stuff to Rye (used to be done per Box)
 * ADDED: Supports all options provided by Net::SSH#start. This 
-includes support for password logins and proxies. 
+  includes support for password logins and proxies. 
 * ADDED: Safe mode can now be disabled (to allow file globs
-and environment variable access).
+  and environment variable access).
 * ADDED: Basic sanity test
 * FIXED: Rye::Box.method_missing Symbol/String ambiguity
 * ADDED: Mucho more rdocs and examples.
