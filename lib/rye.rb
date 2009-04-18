@@ -18,9 +18,9 @@ require 'sys'
 #
 # Rye is similar to Rush[http://rush.heroku.com] but everything 
 # happens over SSH (no HTTP daemon) and the default settings are
-# less dangerous (for safety). For example, file globs are  
-# disabled so unless otherwise specified, you can't do this: 
-# <tt>rbox.rm('/etc/**/*')</tt>. 
+# less dangerous (for safety). For example, file globs are and the
+# "rm" command are disabled so unless otherwise specified, you 
+# can't do this: <tt>rbox.rm('/etc/**/*')</tt>. 
 #
 # However, you can do this:
 #
