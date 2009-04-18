@@ -384,7 +384,7 @@ module Rye
     # preview_command and returns: [cmd, args]
     def prep_args(*args)
       args = args.flatten.compact
-      args = args.first.split(/\s+/) if args.size == 1
+      args = args.first.to_s.split(/\s+/) if args.size == 1
       cmd = args.shift
       
       # Symbols to switches. :l -> -l, :help -> --help
