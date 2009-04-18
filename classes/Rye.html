@@ -37,10 +37,10 @@
             <a href="../files/lib/rye/cmd_rb.html">lib/rye/cmd.rb</a>
           </li>
           <li class='other'>
-            <a href="../files/lib/rye/rap_rb.html">lib/rye/rap.rb</a>
+            <a href="../files/lib/rye/key_rb.html">lib/rye/key.rb</a>
           </li>
           <li class='other'>
-            <a href="../files/lib/rye/key_rb.html">lib/rye/key.rb</a>
+            <a href="../files/lib/rye/rap_rb.html">lib/rye/rap.rb</a>
           </li>
           <li class='other'>
             <a href="../files/lib/rye/set_rb.html">lib/rye/set.rb</a>
@@ -64,15 +64,16 @@
             <a href="Rye.html">Rye</a> is similar to <a
             href="http://rush.heroku.com">Rush</a> but everything happens over SSH (no
             HTTP daemon) and the default settings are less dangerous (for safety). For
-            example, file globs are disabled so unless otherwise specified, you
-            can&#8217;t do this: <tt>rbox.rm('/etc/*<b>/</b>')</tt>.
+            example, file globs are and the &#8220;rm&#8221; command are disabled so
+            unless otherwise specified, you can&#8217;t do this:
+            <tt>rbox.rm('/etc/*<b>/</b>')</tt>.
             </p>
             <p>
             However, you can do this:
             </p>
             <p>
             rset = <a
-            href="Rye/Set.html#M000074">Rye::Set.new</a>(&#8220;dev-machines&#8221;)
+            href="Rye/Set.html#M000083">Rye::Set.new</a>(&#8220;dev-machines&#8221;)
             rset.add_boxes(&#8216;host1&#8217;, &#8216;host2&#8217;,
             &#8216;host3&#8217;, &#8216;host4&#8217;) rset.ps(&#8216;aux&#8217;).grep
             </p>
@@ -129,7 +130,7 @@
                   <tr class='top-aligned-row context-row'>
                     <td class='context-item-name'>VERSION</td>
                     <td>=</td>
-                    <td class='context-item-value'>0.4.freeze</td>
+                    <td class='context-item-value'>0.5.freeze</td>
                   </tr>
                   <tr class='top-aligned-row context-row'>
                     <td class='context-item-name'>SYSINFO</td>
