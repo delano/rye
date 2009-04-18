@@ -11,7 +11,7 @@ TODO
 * ADDED: Rye::Box.authorize_keys_local and "rye authorize-local
 * FIXED: Bug in connect which prevented key-based logins for reconnections
 * FIXED: Method errors in JRuby
-
+* FIXED: Bug in Rye::Set.add_boxes pushing nils into the list of boxes
 
 #### 0.4.3 (2009-04-14) #############################
 

@@ -110,7 +110,7 @@ rbox = Rye::Box.new
 p rbox
 
 rset.add_keys('/private/key/path')     # For passwordless logins 
-rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
+rset.add_boxes(rbox, '127.0.0.1')      # Add boxes as hostnames or objects
 
 # Calling methods on Rye::Set objects is very similar to calling them on
 # Rye::Box objects. In fact, it's identical:

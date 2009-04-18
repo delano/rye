@@ -48,7 +48,9 @@ module Rye
     def add_box(*boxes)
       boxes = boxes.flatten.compact 
       @boxes += boxes.collect do |box|
-        box.is_a?(Rye::Box) ? box.add_keys(@keys) : Rye::Box.new(box, @opts)
+        b = box.is_a?(String) ? Rye::Box.new(box, @opts) : box
+        b.add_keys(@keys)
+        b
       end
       self
     end
