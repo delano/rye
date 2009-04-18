@@ -90,8 +90,12 @@ module Rye
       run_command(:cd, key)
       self
     end
-    alias :cd :'[]'
-    
+#    alias :cd :'[]'  # fix for jruby
+    def cd(key=nil)
+      run_command(:cd, key)
+      self
+    end
+
     # Catches calls to Rye::Box commands. If +meth+ is the name of an 
     # instance method defined in Rye::Cmd then we call it against all 
     # the boxes in +@boxes+. Otherwise this method raises a
@@ -118,6 +122,7 @@ module Rye
     
     # Run the command on all boxes in parallel
     def run_command_parallel(meth, *args)
+      p @boxes
       debug "P: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
       threads = []
       

@@ -107,6 +107,7 @@ puts %Q(
 
 rset = Rye::Set.new('default', :parallel => true)
 rbox = Rye::Box.new
+p rbox
 
 rset.add_keys('/private/key/path')     # For passwordless logins 
 rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects

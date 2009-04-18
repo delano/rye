@@ -25,6 +25,8 @@ module Rye;
     #def rm(*args); cmd('rm', args); end
     def ps(*args); cmd('ps', args); end
     def sh(*args); cmd('sh', args); end
+    def df(*args); cmd('df', args); end
+    def du(*args); cmd('du', args); end
     
     def env(*args); cmd "env"; end
     def pwd(*args); cmd "pwd"; end
@@ -44,15 +46,17 @@ module Rye;
     def bash(*args); cmd('bash', args); end
     def echo(*args); cmd('echo', args); end
     def test(*args); cmd('test', args); end
+    def mkfs(*args); cmd('mkfs', args); end
     
-    def mount(*args); cmd("mount"); end
+    def mount(*args); cmd("mount", args); end
     def sleep(seconds=1); cmd("sleep", seconds); end
     def mkdir(*args); cmd('mkdir', args); end
     def touch(*args); cmd('touch', args); end
     def uname(*args); cmd('uname', args); end
     def chmod(*args); cmd('chmod', args); end
     
-    def uptime(*args); cmd("uptime"); end
+    def umount(*args); cmd("umount", args); end
+    def uptime(*args); cmd("uptime", args); end
     def python(*args); cmd('python', args); end
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end

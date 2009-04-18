@@ -123,8 +123,12 @@ module Rye
       @current_working_directory = key
       self
     end
-    alias :cd :'[]'
-    
+#    alias :cd :'[]'  # fix for jruby
+    def cd(key=nil); 
+      @current_working_directory = key
+      self
+    end
+
     # Open an SSH session with +@host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@host+ is not specified.
@@ -133,9 +137,10 @@ module Rye
     def connect
       raise Rye::NoHost unless @host
       disconnect if @ssh 
-      debug "Opening connection to #{@host}"
+      debug "Opening connection to #{@host} as #{@opts[:user]}"
       highline = HighLine.new # Used for password prompt
       retried = 0
+      
       begin
         @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
       rescue Net::SSH::AuthenticationFailed => ex
@@ -143,7 +148,7 @@ module Rye
         if STDIN.tty? && retried <= 3
           @opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
           @opts[:auth_methods] ||= []
-          @opts[:auth_methods] = %w(password)
+          @opts[:auth_methods] << 'password'
           retry
         else
           STDERR.puts "Authentication failed."
@@ -151,8 +156,36 @@ module Rye
         end
       end
       
+      # We add :auth_methods (a Net::SSH joint) to force asking for a
+      # password if the initial (key-based) authentication fails. We
+      # need to delete the key from @opts otherwise it lingers until
+      # the next connection (if we switch_user is called for example).
+      @opts.delete :auth_methods if @opts.has_key?(:auth_methods)
+      
       @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
+    end
+    
+    # Close the SSH session  with +@host+. This is called 
+    # automatically at exit if the connection is open. 
+    def disconnect
+      return unless @ssh && !@ssh.closed?
+      @ssh.loop(0.1) { @ssh.busy? }
+      debug "Closing connection to #{@ssh.host}"
+      @ssh.close
+    end
+    
+    # Reconnect as another user
+    # * +newuser+ The username to reconnect as 
+    #
+    # NOTE: if there is an open connection, it's disconnected
+    # and a new one is opened for the given user. 
+    def switch_user(newuser)
+      return if newuser.to_s == self.user.to_s
+      @opts ||= {}
+      @opts[:user] = newuser
+      disconnect
+      connect
     end
     
     # Open an interactive SSH session. This only works if STDIN.tty?
@@ -169,15 +202,6 @@ module Rye
       system(cmd)
     end
     
-    # Close the SSH session  with +@host+. This is called 
-    # automatically at exit if the connection is open. 
-    def disconnect
-      return unless @ssh && !@ssh.closed?
-      @ssh.loop(0.1) { @ssh.busy? }
-      debug "Closing connection to #{@ssh.host}"
-      @ssh.close
-    end
-    
     # Add one or more private keys to the SSH Agent. 
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Box
@@ -190,7 +214,7 @@ module Rye
         debug "ssh-add stdout: #{ret.stdout}"
         debug "ssh-add stderr: #{ret.stderr}"
       end
-      self
+      self #MUST RETURN itself
     end
     alias :add_key :add_keys
     
@@ -202,6 +226,10 @@ module Rye
       self
     end
     alias :add_environment_variable :add_env
+    
+    def user
+      (@opts || {})[:user]
+    end
     
     # See Rye.keys
     def keys
@@ -236,7 +264,9 @@ module Rye
     # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
     # Returns an Array of the private keys files used to generate the public keys.
     #
-    # NOTE: authorize_keys disables safe-mode for this box while it runs. 
+    # NOTE: authorize_keys disables safe-mode for this box while it runs
+    # which will hit you funky style if your using a single instance
+    # of Rye::Box in a multithreaded situation. 
     #
     def authorize_keys
       added_keys = []
@@ -255,10 +285,31 @@ module Rye
       added_keys
     end
     
+    # Authorize the current user to login to the local machine via
+    # SSH without a password. This is the same functionality as
+    # authorize_keys except run with local shell commands. 
+    def authorize_keys_local
+      added_keys = []
+      Rye.keys.each do |key|
+        path = key[2]
+        debug "# Public key for #{path}"
+        k = Rye::Key.from_file(path).public_key.to_ssh2
+        Rye.shell(:mkdir, :p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
+        Rye.shell(:echo, "'#{k}' >> $HOME/.ssh/authorized_keys")
+        Rye.shell(:echo, "'#{k}' >> $HOME/.ssh/authorized_keys2")
+        Rye.shell(:chmod, '-R', '0600', '$HOME/.ssh/authorized_keys*')
+        added_keys << path
+      end
+      added_keys
+    end
+    
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
     def method_missing(meth, *args, &block)
       raise Rye::CommandNotFound, "#{meth.to_s} (args: #{args.join(' ')})"
+    end
+    def preview_command(*args)
+      prep_args(*args).join(' ')
     end
     
   private
@@ -300,18 +351,9 @@ module Rye
     def run_command(*args)
       debug "run_command with keys: #{Rye.keys.inspect}"
       
+      cmd, args = prep_args(*args)
+      
       connect if !@ssh || @ssh.closed?
-      args = args.flatten.compact
-      args = args.first.split(/\s+/) if args.size == 1
-      cmd = args.shift
-      
-      # Symbols to switches. :l -> -l, :help -> --help
-      args.collect! do |a|
-        a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
-        a = "--#{a}" if a.is_a?(Symbol)
-        a
-      end
-      
       raise Rye::NotConnected, @host unless @ssh && !@ssh.closed?
 
       cmd_clean = Rye.escape(@safe, cmd, args)
@@ -335,6 +377,24 @@ module Rye
       rap
     end
     alias :cmd :run_command
+    
+
+    
+    # Takes a list of arguments appropriate for run_command or
+    # preview_command and returns: [cmd, args]
+    def prep_args(*args)
+      args = args.flatten.compact
+      args = args.first.split(/\s+/) if args.size == 1
+      cmd = args.shift
+      
+      # Symbols to switches. :l -> -l, :help -> --help
+      args.collect! do |a|
+        a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
+        a = "--#{a}" if a.is_a?(Symbol)
+        a
+      end
+      [cmd, args]
+    end
     
     # Executes +command+ via SSH
     # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]

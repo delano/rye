@@ -4,6 +4,14 @@ TODO
 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
+#### 0.5.0 (2009-04-18) #############################
+
+* ADDED: Rye::Box.switch_user
+* ADDED: Several new commands to Rye::Cmd
+* ADDED: Rye::Box.authorize_keys_local and "rye authorize-local
+* FIXED: Bug in connect which prevented key-based logins for reconnections
+* FIXED: Method errors in JRuby
+
 
 #### 0.4.3 (2009-04-14) #############################
 
