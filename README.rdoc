@@ -2,7 +2,7 @@
 
 Safely run SSH commands on a bunch of machines at the same time (from Ruby).
 
-Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
+Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs and the "rm" command are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
 See the examples below (which are taken from bin/try).
 
