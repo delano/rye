@@ -58,6 +58,7 @@ module Rye;
     def umount(*args); cmd("umount", args); end
     def uptime(*args); cmd("uptime", args); end
     def python(*args); cmd('python', args); end
+    def history(*args); cmd('history', args); end
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
     
