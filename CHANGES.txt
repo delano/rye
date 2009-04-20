@@ -4,6 +4,11 @@ TODO
 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
+
+#### 0.5.2 (2009-04-20) #############################
+
+* FIXED: authorize-local command attempted to connect via SSH before authorizing.
+
 #### 0.5.0 (2009-04-18) #############################
 
 * ADDED: Rye::Box.switch_user

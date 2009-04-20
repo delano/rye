@@ -19,6 +19,10 @@ require 'rye'
 include Drydock
 
 global :p, :path, String, "A directory containing SSH private keys or the path to a private key"
+global :V, :version, "Display version number" do
+  puts "Rye version: #{Rye::VERSION}"
+  exit 0
+end
 
 before do |obj|
   # Load private keys if specified
@@ -57,7 +61,7 @@ desc "Add your public keys to your current account on this machine"
 command :authorize_local do |obj|
   user = Rye.sysinfo.user
   puts "Authorizing #{user}@localhost"
-  rbox = Rye::Box.new('localhost').connect
+  rbox = Rye::Box.new('localhost')
   puts "Added public keys for: ", rbox.authorize_keys_local
   puts "Now try: " << "ssh #{user}@localhost"
   
