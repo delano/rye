@@ -5,7 +5,14 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.5.2 (2009-04-20) #############################
+#### 0.5.3 (2009-04-20) #############################
+
+* FIXED: Rye::Box.connect raises exceptions instead of exits
+* ADDED: Rye::Box.connect now rescues HostKeyMismatch exceptions and 
+  prompts for a response. 
+  
+
+#### 0.5.2 (2009-04-19) #############################
 
 * FIXED: authorize-local command attempted to connect via SSH before authorizing.
 

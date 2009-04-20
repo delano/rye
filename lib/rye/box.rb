@@ -143,6 +143,15 @@ module Rye
       
       begin
         @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
+      rescue Net::SSH::HostKeyMismatch => ex
+        STDERR.puts ex.message
+        STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
+        if highline.ask("Continue? ").match(/y|yes/i)
+          @opts[:paranoid] = false
+          retry
+        else
+          raise Net::SSH::HostKeyMismatch
+        end
       rescue Net::SSH::AuthenticationFailed => ex
         retried += 1
         if STDIN.tty? && retried <= 3
@@ -151,8 +160,7 @@ module Rye
           @opts[:auth_methods] << 'password'
           retry
         else
-          STDERR.puts "Authentication failed."
-          exit 0
+          raise Net::SSH::AuthenticationFailed
         end
       end
       
