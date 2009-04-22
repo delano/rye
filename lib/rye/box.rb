@@ -146,7 +146,8 @@ module Rye
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
-        if highline.ask("Continue? ").match(/y|yes/i)
+        print "\a" # Ring the bell
+        if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
           @opts[:paranoid] = false
           retry
         else
