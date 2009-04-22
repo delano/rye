@@ -7,7 +7,7 @@ require 'socket'
 # specifically lib/platform.rb. 
 class SystemInfo #:nodoc:all
   unless defined?(IMPLEMENTATIONS)
-    VERSION = 4.freeze
+    VERSION = 5.freeze
     IMPLEMENTATIONS = [
     
       # These are for JRuby, System.getproperty('os.name'). 
@@ -121,7 +121,7 @@ class SystemInfo #:nodoc:all
       end
       
     end
-
+    
     [os, impl, arch]
   end
 
@@ -244,8 +244,11 @@ class SystemInfo #:nodoc:all
   def paths
     if @os == :unix
       (ENV['PATH'] || '').split(':')
-    elsif
-      (ENV['PATH'] || '').split(';') # Note tested!
+    elsif @os == :win32
+      (ENV['PATH'] || '').split(';') # Not tested!
+    elsif @os == :java
+      delim = @impl == :windows ? ';' : ':'
+      (ENV['PATH'] || '').split(delim)
     else
       raise "paths not implemented for: #{@os}"
     end
