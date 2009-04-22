@@ -263,6 +263,12 @@ class SystemInfo #:nodoc:all
       File.expand_path(ENV['HOME'])
     elsif @os == :win32
       File.expand_path(ENV['USERPROFILE'])
+    elsif @os == :java
+      if @impl == :windows
+        File.expand_path(ENV['USERPROFILE'])
+      else
+        File.expand_path(ENV['HOME'])
+      end
     else
       raise "paths not implemented for: #{@os}"
     end
