@@ -10,7 +10,6 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-require 'rubygems'
 require 'stringio'
 require 'yaml'
 require 'rye'
