@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Apr 18 11:17:06 -0400 2009</span>
+          <span class='datetime'>Wed Apr 22 09:45:58 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -49,10 +49,49 @@
             </li>
             </ul>
             <p>
+            #### 0.5.4 (2009-04-22) #############################
+            </p>
+            <ul>
+            <li>FIXED: Sys is now returning environment paths and home path in JRuby.
+            
+            </li>
+            <li>ADDED: Better Interrupt handling
+            
+            </li>
+            <li>ADDED: Rings terminal bell when asks to Continue after HostKey error.
+            
+            </li>
+            <li>CHANGE: Removed require &#8216;rubygems&#8217;
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.5.3 (2009-04-20) #############################
+            </p>
+            <ul>
+            <li>FIXED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a>
+            raises exceptions instead of exits
+            
+            </li>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a> now
+            rescues HostKeyMismatch exceptions and prompts for a response.
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.5.2 (2009-04-19) #############################
+            </p>
+            <ul>
+            <li>FIXED: authorize-local command attempted to connect via SSH before
+            authorizing.
+            
+            </li>
+            </ul>
+            <p>
             #### 0.5.0 (2009-04-18) #############################
             </p>
             <ul>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000061">Rye::Box.switch_user</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000062">Rye::Box.switch_user</a>
             
             </li>
             <li>ADDED: Several new commands to <a
@@ -60,7 +99,7 @@
             
             </li>
             <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000074">Rye::Box.authorize_keys_local</a>
+            href="../classes/Rye/Box.html#M000075">Rye::Box.authorize_keys_local</a>
             and &#8220;rye authorize-local
             
             </li>
@@ -71,7 +110,7 @@
             
             </li>
             <li>FIXED: Bug in <a
-            href="../classes/Rye/Set.html#M000085">Rye::Set.add_boxes</a> pushing nils
+            href="../classes/Rye/Set.html#M000086">Rye::Set.add_boxes</a> pushing nils
             into the list of boxes
             
             </li>
@@ -102,12 +141,12 @@
             handle the ssh keys.
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000059">Rye::Box.connect</a> now
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a> now
             supports multiple password attempts if STDIN.tty returns true
             
             </li>
             <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000062">Rye::Box.interactive_ssh</a> for
+            href="../classes/Rye/Box.html#M000063">Rye::Box.interactive_ssh</a> for
             opening an SSH session to the given box.
             
             </li>
@@ -117,7 +156,7 @@
             </p>
             <ul>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000073">Rye::Box.authorize_keys</a> was not
+            href="../classes/Rye/Box.html#M000074">Rye::Box.authorize_keys</a> was not
             disabling safe mode properly
             
             </li>
@@ -179,7 +218,7 @@
             Strings).
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Set.html#M000085">Rye::Set#add_boxes</a>
+            <li>FIXED: <a href="../classes/Rye/Set.html#M000086">Rye::Set#add_boxes</a>
             didn&#8217;t return self.
             
             </li>
@@ -219,7 +258,7 @@
             
             </li>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000075">Rye::Box.method_missing</a>
+            href="../classes/Rye/Box.html#M000076">Rye::Box.method_missing</a>
             Symbol/String ambiguity
             
             </li>
