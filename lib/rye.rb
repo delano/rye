@@ -2,6 +2,7 @@
 require 'rubygems' unless defined? Gem
 
 require 'tempfile'
+require 'logger'
 require 'net/ssh'
 require 'net/scp'
 require 'thread'
@@ -26,7 +27,7 @@ require 'sys'
 #
 # rset = Rye::Set.new("dev-machines")
 # rset.add_boxes('host1', 'host2', 'host3', 'host4')
-# rset.ps('aux').grep
+# rset.ps('aux')
 #
 # * See +bin/try+ for a bunch of working examples. 
 # * See Rye::Box#initialize for info about disabling safe-mode.
@@ -291,6 +292,7 @@ module Rye
   rescue => ex
     STDERR.puts "Error initializing the SSH Agent (is OpenSSL installed?):"
     STDERR.puts ex.message
+    STDERR.puts ex.backtrace
     exit 1
   end
   
