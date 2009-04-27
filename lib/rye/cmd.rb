@@ -73,6 +73,18 @@ module Rye;
     def upload(*files); net_scp_transfer!(:upload, *files); end
     def download(*files); net_scp_transfer!(:download, *files); end
     
+    # Does a remote path exist?
+    def file_exists?(path)
+      begin
+        ret = self.ls(path)
+      rescue Rye::CommandError => ex
+        ret = ex.rap
+      end
+      # "ls" returns a 0 exit code regardless of success in Linux
+      # But on OSX exit code is 1. This is why we look at STDERR. 
+      ret.stderr.empty?
+    end
+    
     # Consider Rye.sysinfo.os == :unix
   end
 
