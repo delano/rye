@@ -8,7 +8,8 @@
 # Usage: bin/try
 #
 
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+RYE_HOME = File.join(File.dirname(__FILE__), '..')
+$:.unshift File.join(RYE_HOME, 'lib')
 
 require 'stringio'
 require 'yaml'
@@ -34,7 +35,6 @@ p rbox.ls(:a, '/')                 # => ['.', '..', 'bin', 'etc', ...]
 puts rbox.pwd                      # => /home/rye
 puts rbox['/usr/bin'].pwd          # => /usr/bin
 puts rbox.pwd                      # => /usr/bin
-puts rbox.cd(Rye.sysinfo.home).pwd # => /home/rye
 
 # You can specify environment variables
 rbox.add_env(:RYE, "Forty Creek")
@@ -164,6 +164,33 @@ puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
 
 # There were no actual errors so the exit code should be 0.
 puts rbox.uname('-a 1>&2').exit_code # => 0
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 6 -- FILE TRANSFERS
+#)
+
+dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
+dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
+
+rbox = Rye::Box.new("localhost", :info => true)
+rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
+rbox.rm(:r, :f, dir_download)
+
+rbox.upload("#{RYE_HOME}/README.rdoc", 
+            "#{RYE_HOME}/LICENSE.txt", dir_upload)
+
+applejack = StringIO.new("Some in-memory content")
+rbox.upload(applejack, "#{dir_upload}/applejack.txt")
+
+p rbox.ls(dir_upload)            # => [README.rdoc, LICENSE.txt, applejack.txt]
+p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
+
+filecontent = StringIO.new
+rbox.download("#{dir_upload}/applejack.txt", filecontent)
+              
+p filecontent.read
 
 
 

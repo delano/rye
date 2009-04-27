@@ -152,20 +152,43 @@ One of:
     # There were no actual error so the exit code should be 0.
     puts rbox.uname('-a 1>&2').exit_code # => 0
 
-== EXAMPLE 6 -- rye
+    
+== EXAMPLE 6 -- FILE TRANSFERS
+
+    dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
+    dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
+
+    rbox = Rye::Box.new("localhost", :info => true)
+    rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
+    rbox.rm(:r, :f, dir_download)
+
+    rbox.upload("#{RYE_HOME}/README.rdoc", 
+                "#{RYE_HOME}/LICENSE.txt", dir_upload)
+
+    applejack = StringIO.new("Some in-memory content")
+    rbox.upload(applejack, "#{dir_upload}/applejack.txt")
+
+    p rbox.ls(dir_upload)            # => [README.rdoc, LICENSE.txt, applejack.txt]
+    p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
+
+    filecontent = StringIO.new
+    rbox.download("#{dir_upload}/applejack.txt", filecontent)
+
+    p filecontent.read
+
+== EXAMPLE 7 -- rye
 
 Rye comes with a command-line utility called <tt>rye</tt>.
 
     # Prints the paths to your private keys
     $ rye keys
-    
+
     # Prints the server host keys (suitable for ~/.ssh/known_hosts)
     $ rye hostkey HOST1 HOST2
-    
+
     # Add your public keys to authorized_keys and authorized_keys2 
     # on a remote machine
     $ rye authorize HOST1 HOST2
-    
 More info:
 
     $ rye -h

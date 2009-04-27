@@ -8,13 +8,16 @@ TODO
 #### 0.6.0 (2009-04-??) #############################
 
 * FIXED: handling of Process::Status ($?) in Rye.shell
-* CHANGE: The Rye::Rap object now contains the exit code as an integer for
-Rye.shell and Rye::Box.run_command (SSH) commands. 
 * ADDED: Rye::Box.umask= (a similar work around as cd / [])
 * ADDED: Rye::Box.file_exists?
+* ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
+* ADDED: Rye::Box.upload and Rye::Box.download
+* ADDED: Rye::SystemInfo.tmpdir
 * CHANGE: rm and kill are available in Rye::Cmd by default
 * CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote
-* ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
+* CHANGE: The Rye::Rap object now contains the exit code as an integer for
+Rye.shell and Rye::Box.run_command (SSH) commands.
+* UPDATED: Rdocs and README
 
 
 #### 0.5.4 (2009-04-22) #############################
@@ -37,50 +40,49 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 
 #### 0.5.0 (2009-04-18) #############################
 
-* ADDED: Rye::Box.switch_user
-* ADDED: Several new commands to Rye::Cmd
-* ADDED: Rye::Box.authorize_keys_local and "rye authorize-local
 * FIXED: Bug in connect which prevented key-based logins for reconnections
 * FIXED: Method errors in JRuby
 * FIXED: Bug in Rye::Set.add_boxes pushing nils into the list of boxes
+* ADDED: Rye::Box.switch_user
+* ADDED: Several new commands to Rye::Cmd
+* ADDED: Rye::Box.authorize_keys_local and "rye authorize-local
 
 
 #### 0.4.3 (2009-04-14) #############################
 
-* ADDED: Rye::Box.missing_method to handle non existent commands
 * FIXED: All Rye::Cmd command methods accept *args to make calling consistent.
+* ADDED: Rye::Box.missing_method to handle non existent commands
 
 #### 0.4.2 (2009-04-13) #############################
 
 * ADDED: More helpful debug output
 * ADDED: hostname command to Rye::Cmd
-* CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle
-  the ssh keys. 
 * ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true 
 * ADDED: Rye::Box.interactive_ssh for opening an SSH session to the given box.
+* CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle the ssh keys. 
 
 
 #### 0.4.1 (2009-04-06) #############################
 
 * FIXED: Rye::Box.authorize_keys_remote was not disabling safe mode properly
-* ADDED: "rye authorize" now specifically enforces the auth method order 
 * FIXED: Disabled debug mode. 
+* ADDED: "rye authorize" now specifically enforces the auth method order 
 
 
 #### 0.4.0 (2009-04-06) #############################
 
-* ADDED: to_s and inspect methods for cleaner debugging output
-* ADDED: == method for Rye::Box
-* ADDED: exit code and exit signal to Rye::Rap objects
-* ADDED: commands now raise a Rye::CommandError exception 
-  when the command returns an exit code greater than 0. 
-* CHANGED: Box.add_command renamed to Box.run_command
 * FIXED: Box.run_command was parsing arguments incorrectly 
 * FIXED: Box.net_ssh_exec was working on nil stderr
 * FIXED: bin/try handles the new command exceptions
+* ADDED: to_s and inspect methods for cleaner debugging output
+* ADDED: == method for Rye::Box
+* ADDED: exit code and exit signal to Rye::Rap objects
 * ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
 * ADDED: Rye.host_keys
 * ADDED: bin/rye
+* ADDED: commands now raise a Rye::CommandError exception 
+  when the command returns an exit code greater than 0. 
+* CHANGE: Box.add_command renamed to Box.run_command
 
 
 #### 0.3.2 (2009-04-05) #############################
@@ -92,17 +94,17 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 
 #### 0.3 (2009-04-05) ###############################
 
+* FIXED: Rye::Box wasn't properly adding keypairs to SSH Agent
+* FIXED: Rye::Box.method_missing Symbol/String ambiguity
 * ADDED: Rye::Set supports executing commands parallel 
 * ADDED: Rye::Rap now contains STDERR output from command
-* FIXED: Rye::Box wasn't properly adding keypairs to SSH Agent
-* CHANGED: Moved all SSH key stuff to Rye (used to be done per Box)
 * ADDED: Supports all options provided by Net::SSH#start. This 
-  includes support for password logins and proxies. 
+  includes support for password logins and proxies.
 * ADDED: Safe mode can now be disabled (to allow file globs
   and environment variable access).
 * ADDED: Basic sanity test
-* FIXED: Rye::Box.method_missing Symbol/String ambiguity
 * ADDED: Mucho more rdocs and examples.
+* CHANGE: Moved all SSH key stuff to Rye (used to be done per Box)
 
 
 #### 0.2 (2009-04-04) ###############################
