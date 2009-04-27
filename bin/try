@@ -143,7 +143,7 @@ puts %Q(
 #)
 
 rbox = Rye::Box.new('localhost', :safe => false)
- w  w 
+
 # Rye follows the standard convention of taking exception to a non-zero 
 # exit code by raising a Rye::CommandError. In this case, rye9000.test
 # is not found by the ls command.
@@ -162,7 +162,7 @@ puts rbox.uname('-a 1>&2').stdout    # =>
 # It all went to STDERR:
 puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
 
-# There were no actual error so the exit code should be 0.
+# There were no actual errors so the exit code should be 0.
 puts rbox.uname('-a 1>&2').exit_code # => 0
 
 

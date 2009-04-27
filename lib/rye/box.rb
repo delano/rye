@@ -147,7 +147,13 @@ module Rye
       @current_working_directory = key
       self
     end
-    
+    # Like [] except it returns an empty Rye::Rap object to mimick
+    # a regular command method. Call with nil key (or no arg) to 
+    # reset. 
+    def cd(key=nil)
+      @current_working_directory = key
+      ret = Rye::Rap.new(self)
+    end
     
     # Change the current umask (sort of -- works the same way as cd)
     # The default umask is 0022
@@ -181,8 +187,7 @@ module Rye
       
       begin
         @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
-        #puts @ssh.sync
-        #@ssh = @ssh.shell.sync
+
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
@@ -495,21 +500,21 @@ module Rye
         # For long-running commands like top, this will print the output.
         # It's cool, but we'd also need to enable STDIN to interact with 
         # command. 
-        channel.on_data do |ch, data|
-          puts "got stdout: #{data}"
-          #channel.send_data "something for stdin\n"
-        end
-        
-        channel.on_extended_data do |ch, data|
-          #puts "got stdout: #{data}"
-          #channel.send_data "something for stdin\n"
-        end
+        #channel.on_data do |ch, data|
+        #  puts "got stdout: #{data}"
+        #  #channel.send_data "something for stdin\n"
+        #end
+        #
+        #channel.on_extended_data do |ch, data|
+        #  #puts "got stdout: #{data}"
+        #  #channel.send_data "something for stdin\n"
+        #end
       end
       
       channel = @ssh.exec(command, &block)
       channel.wait  # block until we get a response
       
-      channel[:exit_code] ||= 0
+      channel[:exit_code] = 0 if channel[:exit_code] == nil
       channel[:exit_code] &&= channel[:exit_code].to_i
       
       channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
