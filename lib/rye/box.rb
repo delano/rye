@@ -244,14 +244,6 @@ module Rye
       @ssh.close
     end
     
-
-    # Does a remote path exist?
-    def file_exists?(path)
-      ret = self.ls(path)
-      # "ls" returns a 0 exit code regardless of success
-      # For some reason the same goes for "test". 
-      ret.stderr.empty?
-    end
     
     # Open an interactive SSH session. This only works if STDIN.tty?
     # returns true. Otherwise it returns the SSH command that would 
@@ -583,7 +575,7 @@ module Rye
       # there's more than one file because "other" could be a file name
       if files.size > 1 && !other.is_a?(StringIO)
         debug "CREATING TARGET DIRECTORY: #{other}"
-        self.mkdir(:p, other)
+        self.mkdir(:p, other) unless self.file_exists?(other)
       end
       
       Net::SCP.start(@host, @opts[:user], @opts || {}) do |scp|
