@@ -18,11 +18,17 @@ module Rye;
   #     rbox.special        # => "special on somehost"
   #
   module Cmd
+    
+    #--
+    # TODO: Clean this trite mess up!
+    #++
+    
+    def cd(*args); cmd('cd', args); end
     def wc(*args); cmd('wc', args); end
     def cp(*args); cmd("cp", args); end
     def mv(*args); cmd("mv", args); end
     def ls(*args); cmd('ls', args); end
-    #def rm(*args); cmd('rm', args); end
+    def rm(*args); cmd('rm', args); end
     def ps(*args); cmd('ps', args); end
     def sh(*args); cmd('sh', args); end
     def df(*args); cmd('df', args); end
@@ -37,7 +43,7 @@ module Rye;
     def awk(*args); cmd('awk', args); end
     def cat(*args); cmd('cat', args); end
     
-    #def kill(*args); cmd('kill', args); end
+    def kill(*args); cmd('kill', args); end
     def sudo(*args); cmd('sudo', args); end
     def grep(*args); cmd('grep', args); end
     def date(*args); cmd('date', args); end
@@ -54,10 +60,12 @@ module Rye;
     def touch(*args); cmd('touch', args); end
     def uname(*args); cmd('uname', args); end
     def chmod(*args); cmd('chmod', args); end
+    def chown(*args); cmd('chown', args); end
     
     def umount(*args); cmd("umount", args); end
     def uptime(*args); cmd("uptime", args); end
     def python(*args); cmd('python', args); end
+    def useradd(*args); cmd('useradd', args); end
     def history(*args); cmd('history', args); end
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end

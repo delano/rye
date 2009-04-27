@@ -5,6 +5,18 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.6.0 (2009-04-??) #############################
+
+* FIXED: handling of Process::Status ($?) in Rye.shell
+* CHANGE: The Rye::Rap object now contains the exit code as an integer for
+Rye.shell and Rye::Box.run_command (SSH) commands. 
+* ADDED: Rye::Box.umask= (a similar work around as cd / [])
+* ADDED: Rye::Box.file_exists?
+* CHANGE: rm and kill are available in Rye::Cmd by default
+* CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote
+* CHANGE: Removed Rye::Box.cd alias to [] for directory change
+
+
 #### 0.5.4 (2009-04-22) #############################
 
 * FIXED: Sys is now returning environment paths and home path in JRuby.
@@ -19,7 +31,6 @@ TODO
 * ADDED: Rye::Box.connect now rescues HostKeyMismatch exceptions and 
   prompts for a response. 
   
-
 #### 0.5.2 (2009-04-19) #############################
 
 * FIXED: authorize-local command attempted to connect via SSH before authorizing.
@@ -33,11 +44,11 @@ TODO
 * FIXED: Method errors in JRuby
 * FIXED: Bug in Rye::Set.add_boxes pushing nils into the list of boxes
 
+
 #### 0.4.3 (2009-04-14) #############################
 
 * ADDED: Rye::Box.missing_method to handle non existent commands
 * FIXED: All Rye::Cmd command methods accept *args to make calling consistent.
-
 
 #### 0.4.2 (2009-04-13) #############################
 
@@ -51,7 +62,7 @@ TODO
 
 #### 0.4.1 (2009-04-06) #############################
 
-* FIXED: Rye::Box.authorize_keys was not disabling safe mode properly
+* FIXED: Rye::Box.authorize_keys_remote was not disabling safe mode properly
 * ADDED: "rye authorize" now specifically enforces the auth method order 
 * FIXED: Disabled debug mode. 
 
@@ -93,11 +104,11 @@ TODO
 * FIXED: Rye::Box.method_missing Symbol/String ambiguity
 * ADDED: Mucho more rdocs and examples.
 
+
 #### 0.2 (2009-04-04) ###############################
 
 * FIXED: ssh-agent shutdown wasn't deleting the SSH tmp directory
 * ADDED: Now with more rdocs!
-
 
 #### 0.1 (2009-04-03) ###############################
 

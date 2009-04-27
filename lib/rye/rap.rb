@@ -20,7 +20,9 @@ module Rye;
     
      # An array containing any STDERR output 
     attr_reader :stderr
-    attr_accessor :exit_code
+    attr_reader :exit_code
+      # Only populated when calling via Rye::Shell 
+    attr_reader :pid 
     attr_accessor :exit_signal
     
       # The command that was executed. 
@@ -65,12 +67,29 @@ module Rye;
       self.flatten!
     end
     
+    # Parse the exit code. 
+    # * +code+ an exit code string or integer or Process::Status object
+    # For example, when running a command via Rye.shell, this method 
+    # is send $? which is Process::Status object. Via Rye::Box.run_command
+    # it's just an exit code returned by Net::SSH. 
+    # Returns the exit code as an Integer. 
+    def add_exit_code(code)
+      code = -1 unless code
+      if code.is_a?(Process::Status)
+        @exit_code, @pid = code.exitstatus.to_i, code.pid
+      else
+        @exit_code = code.to_i
+      end
+      @exit_code
+    end
+    def code; @exit_code; end
+    
     # Returns the first element if there it's the only
     # one, otherwise the value of Array#to_s
     def to_s
       return self.first if self.size == 1
       return "" if self.size == 0
-      super
+      self
     end
     
     # NOTE: This is broken!

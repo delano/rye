@@ -208,7 +208,7 @@ module Rye
     rap = Rye::Rap.new(self)
     rap.add_stdout(stdout || '')
     rap.add_stderr(stderr || '')
-    rap.exit_code = $?
+    rap.add_exit_code($?)
     rap
   end
   

@@ -48,7 +48,7 @@ command :authorize do |obj|
     
     puts "Authorizing #{rbox.opts[:user]}@#{hostname}"
     rbox = Rye::Box.new(hostname, opts).connect
-    puts "Added public keys for: ", rbox.authorize_keys
+    puts "Added public keys for: ", rbox.authorize_keys_remote
     puts "Now try: " << "ssh #{rbox.opts[:user]}@#{hostname}"
     
   end

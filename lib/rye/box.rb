@@ -19,12 +19,21 @@ module Rye
   #     rbox.hostname   # => localhost
   #     rbox.uname(:a)  # => Darwin vanya 9.6.0 ...
   #
+  #--
+  # * When anything confusing happens, enable debug in initialize
+  # by passing :debug => STDERR. This will output Rye debug info
+  # as well as Net::SSH info. This is VERY helpful for figuring
+  # out why some command is hanging or otherwise acting weird. 
+  # * If a remote command is hanging, it's probably because a
+  # Net::SSH channel is waiting on_extended_data (a prompt). 
+  #++
   class Box 
     include Rye::Cmd
     
       # An instance of Net::SSH::Connection::Session
     attr_reader :ssh
     
+    attr_reader :info
     attr_reader :debug
     attr_reader :error
     
@@ -35,6 +44,8 @@ module Rye
 
       # The most recent value from Box.cd or Box.[]
     attr_reader :current_working_directory
+      # The most recent valud for umask (or 0022)
+    attr_reader :current_umask
     
     # * +host+ The hostname to connect to. The default is localhost.
     # * +opts+ a hash of optional arguments.
@@ -45,6 +56,7 @@ module Rye
     # * :safe => should Rye be safe? Default: true
     # * :keys => one or more private key file paths (passwordless login)
     # * :password => the user's password (ignored if there's a valid private key)
+    # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
     #
@@ -59,6 +71,7 @@ module Rye
         :safe => true,
         :port => 22,
         :keys => [],
+        :info => nil,
         :debug => nil,
         :error => STDERR,
       }.merge(opts)
@@ -77,6 +90,15 @@ module Rye
       @safe = @opts.delete(:safe)
       @debug = @opts.delete(:debug)
       @error = @opts.delete(:error)
+      @info = @opts.delete(:info)
+      
+      @debug = STDERR if @debug == true
+      @error = STDERR if @error == true
+      @info = STDOUT if @info == true
+      
+      if @debug
+        @opts[:logger] = Logger.new(@debug)
+      end
       
       debug @opts.inspect
             
@@ -86,7 +108,9 @@ module Rye
       # but for we're letting ssh-agent do it. 
       #@opts.delete(:keys)
       
-
+      # From: capistrano/lib/capistrano/cli.rb
+      STDOUT.sync = true # so that Net::SSH prompts show up
+      
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       
     end
@@ -123,19 +147,33 @@ module Rye
       @current_working_directory = key
       self
     end
-#    alias :cd :'[]'  # fix for jruby
-    def cd(key=nil); 
-      @current_working_directory = key
+    
+    
+    # Change the current umask (sort of -- works the same way as cd)
+    # The default umask is 0022
+    def umask=(val='0022')
+      @current_umask = val
       self
     end
-
+    
+    # Execute subsequent commands via +su -c COMMAND user+
+    # * +user+ is the the remote user name to run as. Set to nil to remove. 
+    def su=(user)
+      @current_su = user
+      self
+    end
+      
     # Open an SSH session with +@host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@host+ is not specified.
     # Will attempt a password login up to 3 times if the initial 
     # authentication fails. 
-    def connect
+    # * +reconnect+ Disconnect first if already connected. The default
+    # is true. When set to false, connect will do nothing if already 
+    # connected. 
+    def connect(reconnect=true)
       raise Rye::NoHost unless @host
+      return if @ssh && !reconnect
       disconnect if @ssh 
       debug "Opening connection to #{@host} as #{@opts[:user]}"
       highline = HighLine.new # Used for password prompt
@@ -143,6 +181,8 @@ module Rye
       
       begin
         @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
+        #puts @ssh.sync
+        #@ssh = @ssh.shell.sync
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
@@ -175,16 +215,8 @@ module Rye
       self
     end
     
-    # Close the SSH session  with +@host+. This is called 
-    # automatically at exit if the connection is open. 
-    def disconnect
-      return unless @ssh && !@ssh.closed?
-      @ssh.loop(0.1) { @ssh.busy? }
-      debug "Closing connection to #{@ssh.host}"
-      @ssh.close
-    end
-    
-    # Reconnect as another user
+    # Reconnect as another user. This is different from su=
+    # which executes subsequent commands via +su -c COMMAND USER+. 
     # * +newuser+ The username to reconnect as 
     #
     # NOTE: if there is an open connection, it's disconnected
@@ -195,6 +227,25 @@ module Rye
       @opts[:user] = newuser
       disconnect
       connect
+    end
+    
+    
+    # Close the SSH session  with +@host+. This is called 
+    # automatically at exit if the connection is open. 
+    def disconnect
+      return unless @ssh && !@ssh.closed?
+      @ssh.loop(0.1) { @ssh.busy? }
+      debug "Closing connection to #{@ssh.host}"
+      @ssh.close
+    end
+    
+
+    # Does a remote path exist?
+    def file_exists?(path)
+      ret = self.ls(path)
+      # "ls" returns a 0 exit code regardless of success
+      # For some reason the same goes for "test". 
+      ret.stderr.empty?
     end
     
     # Open an interactive SSH session. This only works if STDIN.tty?
@@ -251,9 +302,10 @@ module Rye
     end
     
     def inspect
-      %q{#<%s:%s cwd=%s env=%s safe=%s opts=%s>} % 
+      %q{#<%s:%s cwd=%s umask=%s su=%s env=%s safe=%s opts=%s>} % 
       [self.class.to_s, self.host, 
-       @current_working_directory, (@current_environment_variables || '').inspect,
+       @current_working_directory, @current_umask,
+       @current_su, (@current_environment_variables || '').inspect,
        self.safe, self.opts.inspect]
     end
     
@@ -273,20 +325,24 @@ module Rye
     # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
     # Returns an Array of the private keys files used to generate the public keys.
     #
-    # NOTE: authorize_keys disables safe-mode for this box while it runs
+    # NOTE: authorize_keys_remote disables safe-mode for this box while it runs
     # which will hit you funky style if your using a single instance
     # of Rye::Box in a multithreaded situation. 
     #
-    def authorize_keys
+    def authorize_keys_remote(other_user=nil)
       added_keys = []
-      @safe= false
+      @safe = false
+      home_path = "$HOME/.."
+      
       Rye.keys.each do |key|
         path = key[2]
         debug "# Public key for #{path}"
         k = Rye::Key.from_file(path).public_key.to_ssh2
+        self.su = other_user  # does nothing if nil
         self.mkdir(:p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
         self.echo("'#{k}' >> $HOME/.ssh/authorized_keys")
         self.echo("'#{k}' >> $HOME/.ssh/authorized_keys2")
+        self.su = nil         # disable su if set
         self.chmod('-R', '0600', '$HOME/.ssh/authorized_keys*')
         added_keys << path
       end
@@ -296,7 +352,7 @@ module Rye
     
     # Authorize the current user to login to the local machine via
     # SSH without a password. This is the same functionality as
-    # authorize_keys except run with local shell commands. 
+    # authorize_keys_remote except run with local shell commands. 
     def authorize_keys_local
       added_keys = []
       Rye.keys.each do |key|
@@ -323,10 +379,9 @@ module Rye
     
   private
       
-    
     def debug(msg="unknown debug msg"); @debug.puts msg if @debug; end
     def error(msg="unknown error msg"); @error.puts msg if @error; end
-
+    def info(msg="unknown info msg"); @info.puts msg if @info; end
     
     # Add the current environment variables to the beginning of +cmd+
     def prepend_env(cmd)
@@ -367,17 +422,33 @@ module Rye
 
       cmd_clean = Rye.escape(@safe, cmd, args)
       cmd_clean = prepend_env(cmd_clean)
+      
+      # Add the current working directory before the command if supplied. 
+      # The command will otherwise run in the user's home directory.
       if @current_working_directory
         cwd = Rye.escape(@safe, 'cd', @current_working_directory)
         cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
+      # ditto (same explanation as cwd)
+      if @current_umask
+        cwd = Rye.escape(@safe, 'umask', @current_umask)
+        cmd_clean = [cwd, cmd_clean].join(' && ')
+      end
+      
+      if @current_su
+        cmd_clean = "su -c '%s'" %  cmd_clean.tr("'", "''")
+        cmd_clean = Rye.escape(@safe, cmd_clean, @current_su)
+      end
+      
+      info "COMMAND: #{cmd_clean}"
       debug "Executing: %s" % cmd_clean
-      stdout, stderr, ecode, esignal = net_ssh_exec! cmd_clean
+      
+      stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
       rap = Rye::Rap.new(self)
       rap.add_stdout(stdout || '')
       rap.add_stderr(stderr || '')
-      rap.exit_code = ecode
+      rap.add_exit_code(ecode)
       rap.exit_signal = esignal
       rap.cmd = cmd
       
@@ -386,8 +457,6 @@ module Rye
       rap
     end
     alias :cmd :run_command
-    
-
     
     # Takes a list of arguments appropriate for run_command or
     # preview_command and returns: [cmd, args]
@@ -408,9 +477,11 @@ module Rye
     # Executes +command+ via SSH
     # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
     def net_ssh_exec!(command)
+      
       block ||= Proc.new do |channel, type, data|
         channel[:stdout] ||= ""
         channel[:stderr] ||= ""
+        channel[:exit_code] ||= -1
         channel[:stdout] << data if type == :stdout
         channel[:stderr] << data if type == :stderr
         channel.on_request("exit-status") do |ch, data|
@@ -424,10 +495,15 @@ module Rye
         # For long-running commands like top, this will print the output.
         # It's cool, but we'd also need to enable STDIN to interact with 
         # command. 
-        #channel.on_data do |ch, data|
-        #  puts "got stdout: #{data}"
-        #  channel.send_data "something for stdin\n"
-        #end
+        channel.on_data do |ch, data|
+          puts "got stdout: #{data}"
+          #channel.send_data "something for stdin\n"
+        end
+        
+        channel.on_extended_data do |ch, data|
+          #puts "got stdout: #{data}"
+          #channel.send_data "something for stdin\n"
+        end
       end
       
       channel = @ssh.exec(command, &block)
