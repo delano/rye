@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 # 
-# Usage: test/10_rye_test.rb
+# Usage: test/50_rye_test.rb
 #
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')

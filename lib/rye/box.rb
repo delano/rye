@@ -386,6 +386,7 @@ module Rye
       
     def debug(msg="unknown debug msg"); @debug.puts msg if @debug; end
     def error(msg="unknown error msg"); @error.puts msg if @error; end
+    def pinfo(msg="unknown info msg"); @info.print msg if @info; end
     def info(msg="unknown info msg"); @info.puts msg if @info; end
     
     # Add the current environment variables to the beginning of +cmd+
@@ -539,6 +540,74 @@ module Rye
       [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
     end
     
+    
+    # * +direction+ is one of :upload, :download
+    # * +files+ is an Array of file paths, the content is direction specific.
+    # For downloads, +files+ is a list of files to download. The last element
+    # must be the local directory to download to. If downloading a single file
+    # the last element can be a file path. The target can also be a StringIO.
+    # For uploads, +files+ is a list of files to upload. The last element is
+    # the directory to upload to. If uploading a single file, the last element
+    # can be a file path. The list of files can also include StringIO objects.
+    # For both uploads and downloads, the target directory will be created if
+    # it does not exist, but only when multiple files are being transferred. 
+    # This method will fail early if there are obvious problems with the input
+    # parameters. An exception is raised and no files are transferred. 
+    def net_scp_transfer!(direction, *files)
+      direction ||= ''
+      unless [:upload, :download].member?(direction.to_sym)
+        raise "Must be one of: upload, download" 
+      end
+      
+      files = [files].flatten.compact || []
+      other = files.pop
+      
+      if direction == :upload && other.is_a?(StringIO)
+        raise "Cannot upload to a StringIO object"
+      end
+      
+      # Fail early. We check the 
+      files.each do |file|
+        if file.is_a?(StringIO)
+          raise "Cannot download a StringIO object" if direction == :download
+          raise "StringIO object not opened for reading" if file.closed_read?
+          # If a StringIO object is at end of file, SCP will hang. (TODO: SCP)
+          file.rewind if file.eof?
+        end
+      end
+      
+      debug "#{direction.to_s.upcase} TO: #{other}"
+      debug "FILES: " << files.join(', ')
+      
+      # Make sure the remote directory exists. We can do this only when
+      # there's more than one file because "other" could be a file name
+      if files.size > 1 && !other.is_a?(StringIO)
+        debug "CREATING TARGET DIRECTORY: #{other}"
+        self.mkdir(:p, other)
+      end
+      
+      Net::SCP.start(@host, @opts[:user], @opts || {}) do |scp|
+        transfers = []
+        files.each do |file|
+          debug file.to_s
+          transfers << scp.send(direction, file, other)  do |ch, n, s, t|
+            pinfo "#{n}: #{s}/#{t}b\r"  # update line: "file: sent/total"
+            @info.flush if @info        # make sure every line is printed
+          end
+        end
+        transfers.each { |t| t.wait }   # Run file transfers in parallel
+        info $/
+      end
+      
+      # StringIO objects return nothing when read until they are rewound
+      if other.is_a?(StringIO) 
+        other.rewind 
+        other
+      else
+        nil
+      end
+      
+    end
     
 
   end

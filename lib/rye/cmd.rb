@@ -70,25 +70,8 @@ module Rye;
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
     
-  
-    #  def copy_to(*boxes)
-    #    p boxes
-    #
-    #    @scp = Net::SCP.start(@host, @opts[:user], @opts || {}) 
-    #    #@ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
-    #     p @scp
-    #  end
-  
-  
-    #def copy_to(*args)
-    #  args = [args].flatten.compact || []
-    #  other = args.pop
-    #  p other
-    #end
-    
-    def exists?
-      cmd("uptime");
-    end
+    def upload(*files); net_scp_transfer!(:upload, *files); end
+    def download(*files); net_scp_transfer!(:download, *files); end
     
     # Consider Rye.sysinfo.os == :unix
   end
