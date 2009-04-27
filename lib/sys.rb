@@ -274,6 +274,19 @@ class SystemInfo #:nodoc:all
     end
   end
   
+  def tmpdir
+    if @os == :unix
+      (ENV['TMPDIR'] || '/tmp')
+    elsif @os == :win32
+      (ENV['TMPDIR'] || 'C:\\temp')
+    elsif @os == :java
+      default = @impl == :windows ? 'C:\\temp' : '/tmp'
+      (ENV['TMPDIR'] || default)
+    else
+      raise "paths not implemented for: #{@os}"
+    end
+  end
+  
   # Print friendly system information. 
   def to_s
     sprintf("Hostname: %s#{$/}IP Address: %s#{$/}System: %s#{$/}Uptime: %.2f (hours)#{$/}Ruby: #{ruby.join('.')}", 
