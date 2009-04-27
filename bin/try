@@ -37,7 +37,7 @@ puts rbox['/usr/bin'].pwd          # => /usr/bin
 puts rbox.pwd                      # => /usr/bin
 
 # You can specify environment variables
-rbox.add_env(:RYE, "Forty Creek")
+rbox.setenv(:RYE, "Forty Creek")
 rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
 
 # The commands method returns an Array of available commands:                        
@@ -133,7 +133,7 @@ puts unames.first.box.class            # => Rye::Box
 puts unames.first.box == rbox          # => true
 
 # Envrionment variables can be set the same way as with Rye::Box
-rset.add_env(:RYE, "Forty Creek")
+rset.setenv(:RYE, "Forty Creek")
 p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
 
@@ -191,8 +191,6 @@ filecontent = StringIO.new
 rbox.download("#{dir_upload}/applejack.txt", filecontent)
               
 p filecontent.read
-
-
 
 
 

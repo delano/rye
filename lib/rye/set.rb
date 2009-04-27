@@ -68,11 +68,11 @@ module Rye
     
     # Add an environment variable. +n+ and +v+ are the name and value.
     # Returns the instance of Rye::Set
-    def add_env(n, v)
-      run_command(:add_env, n, v)
+    def setenv(n, v)
+      run_command(:setenv, n, v)
       self
     end
-    alias :add_environment_variable :add_env
+    alias :setenvironment_variable :setenv
     
     # See Rye.keys
     def keys

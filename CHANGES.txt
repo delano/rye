@@ -8,11 +8,14 @@ TODO
 #### 0.6.0 (2009-04-??) #############################
 
 * FIXED: handling of Process::Status ($?) in Rye.shell
+* ADDED: Rye::Box.getenv
+* ADDED: Rye::Box.can? 
 * ADDED: Rye::Box.umask= (a similar work around as cd / [])
 * ADDED: Rye::Box.file_exists?
 * ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
 * ADDED: Rye::Box.upload and Rye::Box.download
 * ADDED: Rye::SystemInfo.tmpdir
+* CHANGE: Renamed Rye::Box.add_env to Rye::Box.setenv
 * CHANGE: rm and kill are available in Rye::Cmd by default
 * CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote
 * CHANGE: The Rye::Rap object now contains the exit code as an integer for

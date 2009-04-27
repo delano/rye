@@ -1,4 +1,4 @@
-= Rye - v0.5
+= Rye - v0.6
 
 Safely run SSH commands on a bunch of machines at the same time (from Ruby).
 
@@ -38,7 +38,7 @@ One of:
     puts rbox.cd('/home/rye').pwd      # => /home/rye
     
     # You can specify environment variables
-    rbox.add_env(:RYE, "Forty Creek")
+    rbox.setenv(:RYE, "Forty Creek")
     rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
     
     # The commands method returns an Array of available commands:                        
@@ -123,7 +123,7 @@ One of:
     puts unames.first.box == rbox          # => true
     
     # Envrionment variables can be set the same way as with Rye::Box
-    rset.add_env(:RYE, "Forty Creek")
+    rset.setenv(:RYE, "Forty Creek")
     p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
 
 
@@ -155,13 +155,11 @@ One of:
     
 == EXAMPLE 6 -- FILE TRANSFERS
 
+    rbox = Rye::Box.new("localhost", :info => true)
+
     dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
     dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
-
-    rbox = Rye::Box.new("localhost", :info => true)
-    rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
-    rbox.rm(:r, :f, dir_download)
-
+    
     rbox.upload("#{RYE_HOME}/README.rdoc", 
                 "#{RYE_HOME}/LICENSE.txt", dir_upload)
 

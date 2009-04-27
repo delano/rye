@@ -38,10 +38,9 @@ module Rye
     attr_reader :error
     
     attr_accessor :host
-    
     attr_accessor :safe
     attr_accessor :opts
-
+    
       # The most recent value from Box.cd or Box.[]
     attr_reader :current_working_directory
       # The most recent valud for umask (or 0022)
@@ -55,15 +54,17 @@ module Rye
     # * :user => the username to connect as. Default: the current user. 
     # * :safe => should Rye be safe? Default: true
     # * :keys => one or more private key file paths (passwordless login)
-    # * :password => the user's password (ignored if there's a valid private key)
     # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
+    # * :getenv => pre-fetch +host+ environment variables? (default: true)
+    # * :password => the user's password (ignored if there's a valid private key)
     #
     # NOTE: +opts+ can also contain any parameter supported by 
     # Net::SSH.start that is not already mentioned above.
     #
     def initialize(host='localhost', opts={})
+      @host = host
       
       # These opts are use by Rye::Box and also passed to Net::SSH
       @opts = {
@@ -74,34 +75,28 @@ module Rye
         :info => nil,
         :debug => nil,
         :error => STDERR,
+        :getenv => true,
       }.merge(opts)
-      
-      # See Net::SSH.start
-      @opts[:paranoid] = true unless @opts[:safe] == false
       
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
-      at_exit {
-        self.disconnect
-      }
-            
-      @host = host
+      at_exit { self.disconnect }
       
-      @safe = @opts.delete(:safe)
-      @debug = @opts.delete(:debug)
-      @error = @opts.delete(:error)
-      @info = @opts.delete(:info)
+      # @opts gets sent to Net::SSH so we need to remove the keys
+      # that are not meant for it. 
+      @safe, @debug = @opts.delete(:safe), @opts.delete(:debug)
+      @info, @error = @opts.delete(:info), @opts.delete(:error)
+      @getenv = {} if @opts.delete(:getenv) # Enable getenv with a hash
       
+      # Just in case someone sends a true value rather than IO object
       @debug = STDERR if @debug == true
       @error = STDERR if @error == true
       @info = STDOUT if @info == true
       
-      if @debug
-        @opts[:logger] = Logger.new(@debug)
-      end
+      @opts[:logger] = Logger.new(@debug) if @debug # Enable Net::SSH debugging
+      @opts[:paranoid] = true unless @opts[:safe] == false # See Net::SSH.start
       
-      debug @opts.inspect
-            
+      # Add the given private keys to the keychain that will be used for @host
       add_keys(@opts[:keys])
       
       # We don't want Net::SSH to handle the keypairs. This may change
@@ -112,19 +107,11 @@ module Rye
       STDOUT.sync = true # so that Net::SSH prompts show up
       
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
+      debug @opts.inspect
       
     end
     
-     
-    # Returns an Array of system commands available over SSH
-    def can
-      Rye::Cmd.instance_methods
-    end
-    alias :commands :can
-    alias :cmds :can
     
-
-      
     # Change the current working directory (sort of). 
     #
     # I haven't been able to wrangle Net::SSH to do my bidding. 
@@ -162,13 +149,7 @@ module Rye
       self
     end
     
-    # Execute subsequent commands via +su -c COMMAND user+
-    # * +user+ is the the remote user name to run as. Set to nil to remove. 
-    def su=(user)
-      @current_su = user
-      self
-    end
-      
+    
     # Open an SSH session with +@host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@host+ is not specified.
@@ -187,11 +168,10 @@ module Rye
       
       begin
         @ssh = Net::SSH.start(@host, @opts[:user], @opts || {}) 
-
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
-        print "\a" # Ring the bell
+        print "\a" if @info # Ring the bell
         if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
           @opts[:paranoid] = false
           retry
@@ -199,6 +179,7 @@ module Rye
           raise Net::SSH::HostKeyMismatch
         end
       rescue Net::SSH::AuthenticationFailed => ex
+        print "\a" if retried == 0 && @info # Ring the bell once
         retried += 1
         if STDIN.tty? && retried <= 3
           @opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
@@ -216,7 +197,6 @@ module Rye
       # the next connection (if we switch_user is called for example).
       @opts.delete :auth_methods if @opts.has_key?(:auth_methods)
       
-      @ssh.is_a?(Net::SSH::Connection::Session) && !@ssh.closed?
       self
     end
     
@@ -277,12 +257,14 @@ module Rye
     
     # Add an environment variable. +n+ and +v+ are the name and value.
     # Returns the instance of Rye::Box
-    def add_env(n, v)
-      debug "Added env: #{n}=#{v}"
+    def setenv(n, v)
+      debug "Adding env: #{n}=#{v}"
+      debug "prev value: #{@getenv[n]}"
+      @getenv[n] = v
       (@current_environment_variables ||= {})[n] = v
       self
     end
-    alias :add_environment_variable :add_env
+    alias :add_env :setenv  # deprecated?
     
     def user
       (@opts || {})[:user]
@@ -299,10 +281,10 @@ module Rye
     end
     
     def inspect
-      %q{#<%s:%s cwd=%s umask=%s su=%s env=%s safe=%s opts=%s>} % 
+      %q{#<%s:%s cwd=%s umask=%s env=%s safe=%s opts=%s>} % 
       [self.class.to_s, self.host, 
        @current_working_directory, @current_umask,
-       @current_su, (@current_environment_variables || '').inspect,
+       (@current_environment_variables || '').inspect,
        self.safe, self.opts.inspect]
     end
     
@@ -331,18 +313,27 @@ module Rye
       @safe = false
       home_path = "$HOME/.."
       
-      Rye.keys.each do |key|
-        path = key[2]
-        debug "# Public key for #{path}"
-        k = Rye::Key.from_file(path).public_key.to_ssh2
-        self.su = other_user  # does nothing if nil
-        self.mkdir(:p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
-        self.echo("'#{k}' >> $HOME/.ssh/authorized_keys")
-        self.echo("'#{k}' >> $HOME/.ssh/authorized_keys2")
-        self.su = nil         # disable su if set
-        self.chmod('-R', '0600', '$HOME/.ssh/authorized_keys*')
-        added_keys << path
+      files = ['$HOME/.ssh/authorized_keys', '$HOME/.ssh/authorized_keys2']
+      files.each do |authorized_key_path|
+        if self.file_exists?(authorized_key_path)
+          self.cp(authorized_key_path, "#{authorized_key_path}-previous")
+          authorized_keys = self.download(authorized_key_path)
+        end
+        authorized_keys ||= StringIO.new
+        
+        Rye.keys.each do |key|
+          path = key[2]
+          info "# Public key for #{path}"
+          k = Rye::Key.from_file(path).public_key.to_ssh2
+          authorized_keys.puts k
+        end
+        authorized_keys.rewind
+        self.mkdir(:p, :m, '700', '$HOME/.ssh')
+        self.upload(authorized_keys, authorized_key_path)
+        self.chmod('0600', authorized_key_path)
+        self.chown(:R, 'delano', '$HOME/.ssh')
       end
+      
       @safe = true
       added_keys
     end
@@ -401,7 +392,7 @@ module Rye
     # will be thoroughly escaped and passed to the command.
     #
     #     rbox = Rye::Box.new
-    #     rbox.ls '-l', 'arg1', 'arg2'
+    #     rbox.ls :l, 'arg1', 'arg2'
     #
     # is equivalent to
     #
@@ -434,30 +425,11 @@ module Rye
         cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
-      craxy_file = nil
-      if @current_su
-        # NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY
-        # The premise is that quotes get confusing (okay, granted this is a
-        # ridiculous solution) so we write a temporary script and call that
-        # via su. If I could figure out how to run multiple SSH commands on
-        # a the same channel, then we wouldn't need these darn shenanigans.
-        craxy_file = Rye.strand(16)
-        # echo 'sh command' > craxy_file
-        # su -c 'sh craxy_file' @current_su
-        update_script = "echo '#{cmd_clean.tr("'", "''")}' > #{craxy_file}"
-        info "SU: #{update_script}"
-        stdout, stderr, ecode, esignal = net_ssh_exec!(update_script)
-        cmd_clean = Rye.escape(@safe, "su", '-c', "'sh #{craxy_file}'", @current_su)
-      end
       
       info "COMMAND: #{cmd_clean}"
       debug "Executing: %s" % cmd_clean
       
       stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
-      
-      if craxy_file
-        net_ssh_exec!("rm #{craxy_file}") rescue nil
-      end
       
       rap = Rye::Rap.new(self)
       rap.add_stdout(stdout || '')
@@ -545,6 +517,8 @@ module Rye
     # it does not exist, but only when multiple files are being transferred. 
     # This method will fail early if there are obvious problems with the input
     # parameters. An exception is raised and no files are transferred. 
+    # Uploads always return nil. Downloads return nil unless the target is a
+    # StringIO object, then rewind is run on it and returned. 
     def net_scp_transfer!(direction, *files)
       direction ||= ''
       unless [:upload, :download].member?(direction.to_sym)
@@ -558,6 +532,12 @@ module Rye
         raise "Cannot upload to a StringIO object"
       end
       
+      # We allow a single file to be downloaded into a StringIO object
+      # but only when no target has been specified. 
+      if direction == :download && files.size == 1 && other.nil?
+        other = StringIO.new
+      end
+        
       # Fail early. We check the 
       files.each do |file|
         if file.is_a?(StringIO)

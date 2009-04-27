@@ -1,7 +1,7 @@
 @spec = Gem::Specification.new do |s|
   s.name = "rye"
   s.rubyforge_project = "rye"
-  s.version = "0.5.4"
+  s.version = "0.6.0"
   s.summary = "Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.description = s.summary
   s.author = "Delano Mandelbaum"
@@ -45,13 +45,14 @@
   tst/10-key2.pub
   tst/10_keys_test.rb
   tst/50_rye_test.rb
+  tst/60-file.mp3
+  tst/60_rbox_transfer_test.rb
   )
   
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
   s.executables = %w[rye]
-  
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
   s.has_rdoc = true
