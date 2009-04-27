@@ -441,15 +441,31 @@ module Rye
         cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
+      craxy_file = nil
       if @current_su
-        cmd_clean = "su -c '%s'" %  cmd_clean.tr("'", "''")
-        cmd_clean = Rye.escape(@safe, cmd_clean, @current_su)
+        # NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY NASTY
+        # The premise is that quotes get confusing (okay, granted this is a
+        # ridiculous solution) so we write a temporary script and call that
+        # via su. If I could figure out how to run multiple SSH commands on
+        # a the same channel, then we wouldn't need these darn shenanigans.
+        craxy_file = Rye.strand(16)
+        # echo 'sh command' > craxy_file
+        # su -c 'sh craxy_file' @current_su
+        update_script = "echo '#{cmd_clean.tr("'", "''")}' > #{craxy_file}"
+        info "SU: #{update_script}"
+        stdout, stderr, ecode, esignal = net_ssh_exec!(update_script)
+        cmd_clean = Rye.escape(@safe, "su", '-c', "'sh #{craxy_file}'", @current_su)
       end
       
       info "COMMAND: #{cmd_clean}"
       debug "Executing: %s" % cmd_clean
       
       stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
+      
+      if craxy_file
+        net_ssh_exec!("rm #{craxy_file}") rescue nil
+      end
+      
       rap = Rye::Rap.new(self)
       rap.add_stdout(stdout || '')
       rap.add_stderr(stderr || '')
@@ -472,8 +488,9 @@ module Rye
       
       # Symbols to switches. :l -> -l, :help -> --help
       args.collect! do |a|
-        a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
-        a = "--#{a}" if a.is_a?(Symbol)
+        if a.is_a?(Symbol)
+          a = (a.to_s.size == 1) ? "-#{a}" : "--#{a}"
+        end
         a
       end
       [cmd, args]

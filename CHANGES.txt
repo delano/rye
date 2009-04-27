@@ -14,6 +14,7 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 * ADDED: Rye::Box.file_exists?
 * CHANGE: rm and kill are available in Rye::Cmd by default
 * CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote
+* ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
 
 
 #### 0.5.4 (2009-04-22) #############################
