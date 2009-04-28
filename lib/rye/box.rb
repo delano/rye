@@ -362,6 +362,10 @@ module Rye
           authorized_keys.puts k
         end
         
+        # Remove duplicate authorized keys
+        authorized_keys.rewind
+        uniqlines = authorized_keys.readlines.uniq.join
+        authorized_keys = StringIO.new(uniqlines)
         # We need to rewind so that all of the StringIO object is uploaded
         authorized_keys.rewind
         
