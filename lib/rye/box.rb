@@ -372,7 +372,7 @@ module Rye
         self.mkdir(:p, :m, '700', File.dirname(akey_path))
         self.upload(authorized_keys, "#{homedir}/#{akey_path}")
         self.chmod('0600', akey_path)
-        self.chown(:R, "#{this_user}:#{this_user}", File.dirname(akey_path))
+        self.chown(:R, this_user.to_s, File.dirname(akey_path))
       end
       
       
