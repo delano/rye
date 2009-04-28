@@ -142,7 +142,7 @@ puts %Q(
 #   EXAMPLE 5 -- ERROR HANDLING
 #)
 
-rbox = Rye::Box.new('localhost', :safe => false)
+rbox = Rye::Box.new('localhost', :safe => false) # Note: safe mode is off
 
 # Rye follows the standard convention of taking exception to a non-zero 
 # exit code by raising a Rye::CommandError. In this case, rye9000.test
@@ -150,8 +150,8 @@ rbox = Rye::Box.new('localhost', :safe => false)
 begin
   rbox.ls('rye.test')
 rescue Rye::CommandError => ex
-  puts ex.exit_code                # => 1
-  puts ex.stderr                   # => ls: rye.test: No such file or directory
+  puts ex.exit_code                  # => 1
+  puts ex.stderr                     # => ls: rye.test: No such file or directory
 end
 
 # The Rye:Rap response objects also give you the STDOUT and STDERR
@@ -174,7 +174,12 @@ puts %Q(
 dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
 dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
 
-rbox = Rye::Box.new("localhost", :info => true)
+rbox = Rye::Box.new("localhost", :info => false)
+
+# Rye ships without an rm method (for safety!). Here 
+# we add the rm method only to this instance of rbox.
+def rbox.rm(*args); cmd('rm', args); end
+
 rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
 rbox.rm(:r, :f, dir_download)
 

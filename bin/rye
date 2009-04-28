@@ -118,8 +118,6 @@ begin
 rescue Drydock::ArgError, Drydock::OptError=> ex
   STDERR.puts ex.message
   STDERR.puts ex.usage
-rescue Rudy::Error => ex
-  STDERR.puts ex.message
 rescue => ex
   STDERR.puts "ERROR (#{ex.class.to_s}): #{ex.message}"
   STDERR.puts ex.backtrace if Drydock.debug?

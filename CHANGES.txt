@@ -5,9 +5,10 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.6.0 (2009-04-??) #############################
+#### 0.6.0 (2009-04-28) #############################
 
 * FIXED: handling of Process::Status ($?) in Rye.shell
+* FIXED: Removed reference to Rudy::Error in bin/rye
 * ADDED: Rye::Box.getenv
 * ADDED: Rye::Box.can? 
 * ADDED: Rye::Box.umask= (a similar work around as cd / [])

@@ -15,6 +15,11 @@
   s.add_dependency 'highline'
   s.add_dependency 'drydock'
   
+  # = EXECUTABLES =
+  # The list of executables in your project (if any). Don't include the path, 
+  # just the base filename.
+  s.executables = %w[rye]
+  
   # = MANIFEST =
   # The complete list of files to be included in the release. When GitHub packages your gem, 
   # it doesn't allow you to run any command that accesses the filesystem. You will get an
@@ -44,15 +49,11 @@
   tst/10-key2
   tst/10-key2.pub
   tst/10_keys_test.rb
-  tst/50_rye_test.rb
+  tst/50_rset_test.rb
   tst/60-file.mp3
   tst/60_rbox_transfer_test.rb
+  tst/70_rbox_env_test.rb
   )
-  
-  # = EXECUTABLES =
-  # The list of executables in your project (if any). Don't include the path, 
-  # just the base filename.
-  s.executables = %w[rye]
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
   s.has_rdoc = true

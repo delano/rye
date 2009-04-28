@@ -14,6 +14,7 @@ require "rye"
 tmpdir = Rye.sysinfo.tmpdir
 
 rbox = Rye::Box.new("localhost", :info => true)
+def rbox.rm(*args); cmd('rm', args); end
 rbox.rm(:r, :f, "#{tmpdir}/rye-upload") # Silently delete test dir
 
 # /tmp/rye-upload will be created if it doesn't exist
@@ -48,4 +49,5 @@ puts $/, "Content of /tmp/rye-download"
 puts rbox.ls(:l, "#{tmpdir}/rye-download")
 
 puts $/, "Content of applejack StringIO object"
+applejack.rewind
 puts applejack.read
