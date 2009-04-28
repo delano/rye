@@ -15,6 +15,8 @@ TODO
 * ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
 * ADDED: Rye::Box.upload and Rye::Box.download
 * ADDED: Rye::SystemInfo.tmpdir
+* CHANGE: Rye::Box.prep_args doesn't treat multicharacter Symbols as 
+command-line options any more (single character ones are still converted)
 * CHANGE: Renamed Rye::Box.add_env to Rye::Box.setenv
 * CHANGE: rm and kill are available in Rye::Cmd by default
 * CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote

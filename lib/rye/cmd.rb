@@ -71,7 +71,30 @@ module Rye;
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
     
+    # Transfer files to a machine via Net::SCP. 
+    # * +files+ is an Array of files to upload. The last element is the 
+    # directory to upload to. If uploading a single file, the last element
+    # can be a file path. The list of files can also include StringIO objects.
+    # The target directory will be created if it does not exist, but only 
+    # when multiple files are being transferred. 
+    # This method will fail early if there are obvious problems with the input
+    # parameters. An exception is raised and no files are transferred. 
+    # Always return nil.
+    #
+    # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
     def upload(*files); net_scp_transfer!(:upload, *files); end
+
+    # Transfer files from a machine via Net::SCP. 
+    # * +files+ is an Array of files to download. The last element must be the 
+    # local directory to download to. If downloading a single file the last 
+    # element can be a file path. The target can also be a StringIO object.
+    # The target directory will be created if it does not exist, but only 
+    # when multiple files are being transferred. 
+    # This method will fail early if there are obvious problems with the input
+    # parameters. An exception is raised and no files are transferred.
+    # Return nil or a StringIO object, if specified as the target.
+    #
+    # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
     def download(*files); net_scp_transfer!(:download, *files); end
     
     # Does a remote path exist?

@@ -108,7 +108,7 @@ module Rye
       
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       debug @opts.inspect
-      
+
     end
     
     
@@ -300,42 +300,80 @@ module Rye
       Rye.remote_host_keys(@host)
     end
     
+    # Uses the output of "useradd -D" to determine the default home
+    # directory. This returns a GUESS rather than the a user's real
+    # home directory. Currently used only by authorize_keys_remote.
+    def guess_user_home(other_user=nil)
+      # Some junk to determine where user home directories are by default.
+      # We're relying on the command "useradd -D" so this may not work on
+      # different Linuxen and definitely won't work on Windows.
+      # This code will be abstracted out once I find a decent home for it.
+      # /etc/default/useradd, HOME=/home OR useradd -D
+      # /etc/adduser.config, DHOME=/home OR ??
+      user_defaults = {}
+      raw = self.useradd(:D) rescue ["HOME=/home"]
+      raw.each do |nv|
+        n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
+        user_defaults[n] = v
+      end
+      "#{user_defaults['HOME']}/#{other_user}"
+    end
+    
     # Copy the local public keys (as specified by Rye.keys) to 
     # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
-    # Returns an Array of the private keys files used to generate the public keys.
-    #
+    # Returns a Rye::Rap object. The private keys files used to generate 
+    # the public keys are contained in stdout.
+    # Raises a Rye::ComandError if the home directory doesn't exit. 
     # NOTE: authorize_keys_remote disables safe-mode for this box while it runs
     # which will hit you funky style if your using a single instance
     # of Rye::Box in a multithreaded situation. 
     #
     def authorize_keys_remote(other_user=nil)
+      this_user = other_user || @user
       added_keys = []
-      @safe = false
-      home_path = "$HOME/.."
+      rap = Rye::Rap.new(self)
       
-      files = ['$HOME/.ssh/authorized_keys', '$HOME/.ssh/authorized_keys2']
-      files.each do |authorized_key_path|
-        if self.file_exists?(authorized_key_path)
-          self.cp(authorized_key_path, "#{authorized_key_path}-previous")
-          authorized_keys = self.download(authorized_key_path)
+      # The homedir path is important b/c this is where we're going to 
+      # look for the .ssh directory. That's where auth love is stored.
+      homedir = self.guess_user_home(this_user)
+      
+      unless self.file_exists?(homedir)
+        rap.add_exit_code(1)
+        rap.add_stderr("Path does not exist: #{homedir}")
+        raise Rye::CommandError.new(rap)
+      end
+      
+      # Let's go into the user's home directory that we now know exists.
+      self.cd homedir
+      
+      files = ['.ssh/authorized_keys', '.ssh/authorized_keys2']
+      files.each do |akey_path|
+        if self.file_exists?(akey_path)
+          # TODO: Make Rye::Cmd.incremental_backup
+          self.cp(akey_path, "#{akey_path}-previous")
+          authorized_keys = self.download("#{homedir}/#{akey_path}")
         end
         authorized_keys ||= StringIO.new
         
         Rye.keys.each do |key|
           path = key[2]
-          info "# Public key for #{path}"
+          info "# Adding public key for #{path}"
           k = Rye::Key.from_file(path).public_key.to_ssh2
           authorized_keys.puts k
         end
+        
+        # We need to rewind so that all of the StringIO object is uploaded
         authorized_keys.rewind
-        self.mkdir(:p, :m, '700', '$HOME/.ssh')
-        self.upload(authorized_keys, authorized_key_path)
-        self.chmod('0600', authorized_key_path)
-        self.chown(:R, 'delano', '$HOME/.ssh')
+        
+        self.mkdir(:p, :m, '700', File.dirname(akey_path))
+        self.upload(authorized_keys, "#{homedir}/#{akey_path}")
+        self.chmod('0600', akey_path)
+        self.chown(:R, "#{this_user}:#{this_user}", File.dirname(akey_path))
       end
       
-      @safe = true
-      added_keys
+      
+      rap.add_exit_code(0)
+      rap
     end
     
     # Authorize the current user to login to the local machine via
@@ -445,7 +483,9 @@ module Rye
     alias :cmd :run_command
     
     # Takes a list of arguments appropriate for run_command or
-    # preview_command and returns: [cmd, args]
+    # preview_command and returns: [cmd, args]. 
+    # Single character symbols with be converted to command line
+    # switches. Example:   +:l+ becomes +-l+
     def prep_args(*args)
       args = args.flatten.compact
       args = args.first.to_s.split(/\s+/) if args.size == 1
@@ -454,7 +494,7 @@ module Rye
       # Symbols to switches. :l -> -l, :help -> --help
       args.collect! do |a|
         if a.is_a?(Symbol)
-          a = (a.to_s.size == 1) ? "-#{a}" : "--#{a}"
+          a = (a.to_s.size == 1) ? "-#{a}" : a.to_s
         end
         a
       end
@@ -517,27 +557,33 @@ module Rye
     # it does not exist, but only when multiple files are being transferred. 
     # This method will fail early if there are obvious problems with the input
     # parameters. An exception is raised and no files are transferred. 
-    # Uploads always return nil. Downloads return nil unless the target is a
-    # StringIO object, then rewind is run on it and returned. 
+    # Uploads always return nil. Downloads return nil or a StringIO object if
+    # one is specified for the target. 
     def net_scp_transfer!(direction, *files)
       direction ||= ''
       unless [:upload, :download].member?(direction.to_sym)
         raise "Must be one of: upload, download" 
       end
       
+      if @current_working_directory
+        info "CWD (#{@current_working_directory}) not used"
+      end
+      
       files = [files].flatten.compact || []
-      other = files.pop
+
+      # We allow a single file to be downloaded into a StringIO object
+      # but only when no target has been specified. 
+      if direction == :download && files.size == 1
+        debug "Created StringIO for download"
+        other = StringIO.new
+      else
+        other = files.pop
+      end
       
       if direction == :upload && other.is_a?(StringIO)
         raise "Cannot upload to a StringIO object"
       end
-      
-      # We allow a single file to be downloaded into a StringIO object
-      # but only when no target has been specified. 
-      if direction == :download && files.size == 1 && other.nil?
-        other = StringIO.new
-      end
-        
+              
       # Fail early. We check the 
       files.each do |file|
         if file.is_a?(StringIO)
@@ -571,14 +617,7 @@ module Rye
         info $/
       end
       
-      # StringIO objects return nothing when read until they are rewound
-      if other.is_a?(StringIO) 
-        other.rewind 
-        other
-      else
-        nil
-      end
-      
+      other.is_a?(StringIO) ? other : nil
     end
     
 
