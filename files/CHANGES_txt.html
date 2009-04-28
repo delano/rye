@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Apr 22 09:45:58 -0400 2009</span>
+          <span class='datetime'>Tue Apr 28 08:28:22 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -45,6 +45,77 @@
             </p>
             <ul>
             <li>Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.6.0 (2009-04-28) #############################
+            </p>
+            <ul>
+            <li>FIXED: handling of Process::Status ($?) in <a
+            href="../classes/Rye.html#M000011">Rye.shell</a>
+            
+            </li>
+            <li>FIXED: Removed reference to Rudy::Error in <a
+            href="bin/rye.html">bin/rye</a>
+            
+            </li>
+            <li>ADDED: Rye::Box.getenv
+            
+            </li>
+            <li>ADDED: Rye::Box.can?
+            
+            </li>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000072">Rye::Box.umask=</a> (a
+            similar work around as cd / [])
+            
+            </li>
+            <li>ADDED: Rye::Box.file_exists?
+            
+            </li>
+            <li>ADDED: <a
+            href="../classes/Rye/Box.html#M000088">Rye::Box.authorize_keys_remote</a>
+            can now authorize for a different user
+            
+            </li>
+            <li>ADDED: Rye::Box.upload and Rye::Box.download
+            
+            </li>
+            <li>ADDED: Rye::SystemInfo.tmpdir
+            
+            </li>
+            <li>CHANGE: Rye::Box.prep_args doesn&#8217;t treat multicharacter Symbols as
+            
+            </li>
+            </ul>
+            <p>
+            command-line options any more (single character ones are still converted)
+            </p>
+            <ul>
+            <li>CHANGE: Renamed <a
+            href="../classes/Rye/Box.html#M000080">Rye::Box.add_env</a> to <a
+            href="../classes/Rye/Box.html#M000079">Rye::Box.setenv</a>
+            
+            </li>
+            <li>CHANGE: rm and kill are available in <a
+            href="../classes/Rye/Cmd.html">Rye::Cmd</a> by default
+            
+            </li>
+            <li>CHANGE: Rye::Box.authorize_keys renamed <a
+            href="../classes/Rye/Box.html#M000088">Rye::Box.authorize_keys_remote</a>
+            
+            </li>
+            <li>CHANGE: The <a href="../classes/Rye/Rap.html">Rye::Rap</a> object now
+            contains the exit code as an integer for
+            
+            </li>
+            </ul>
+            <p>
+            <a href="../classes/Rye.html#M000011">Rye.shell</a> and
+            Rye::Box.run_command (SSH) commands.
+            </p>
+            <ul>
+            <li>UPDATED: Rdocs and README
             
             </li>
             </ul>
@@ -69,11 +140,11 @@
             #### 0.5.3 (2009-04-20) #############################
             </p>
             <ul>
-            <li>FIXED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a>
+            <li>FIXED: <a href="../classes/Rye/Box.html#M000073">Rye::Box.connect</a>
             raises exceptions instead of exits
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a> now
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000073">Rye::Box.connect</a> now
             rescues HostKeyMismatch exceptions and prompts for a response.
             
             </li>
@@ -91,18 +162,6 @@
             #### 0.5.0 (2009-04-18) #############################
             </p>
             <ul>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000062">Rye::Box.switch_user</a>
-            
-            </li>
-            <li>ADDED: Several new commands to <a
-            href="../classes/Rye/Cmd.html">Rye::Cmd</a>
-            
-            </li>
-            <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000075">Rye::Box.authorize_keys_local</a>
-            and &#8220;rye authorize-local
-            
-            </li>
             <li>FIXED: Bug in connect which prevented key-based logins for reconnections
             
             </li>
@@ -110,8 +169,20 @@
             
             </li>
             <li>FIXED: Bug in <a
-            href="../classes/Rye/Set.html#M000086">Rye::Set.add_boxes</a> pushing nils
+            href="../classes/Rye/Set.html#M000102">Rye::Set.add_boxes</a> pushing nils
             into the list of boxes
+            
+            </li>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000074">Rye::Box.switch_user</a>
+            
+            </li>
+            <li>ADDED: Several new commands to <a
+            href="../classes/Rye/Cmd.html">Rye::Cmd</a>
+            
+            </li>
+            <li>ADDED: <a
+            href="../classes/Rye/Box.html#M000089">Rye::Box.authorize_keys_local</a>
+            and &#8220;rye authorize-local
             
             </li>
             </ul>
@@ -119,11 +190,11 @@
             #### 0.4.3 (2009-04-14) #############################
             </p>
             <ul>
-            <li>ADDED: Rye::Box.missing_method to handle non existent commands
-            
-            </li>
             <li>FIXED: All <a href="../classes/Rye/Cmd.html">Rye::Cmd</a> command methods
             accept *args to make calling consistent.
+            
+            </li>
+            <li>ADDED: Rye::Box.missing_method to handle non existent commands
             
             </li>
             </ul>
@@ -137,17 +208,17 @@
             <li>ADDED: hostname command to <a href="../classes/Rye/Cmd.html">Rye::Cmd</a>
             
             </li>
-            <li>CHANGE: Using OpenSSL&#8217;s ssh-agent but also let&#8217;s Net::SSH
-            handle the ssh keys.
-            
-            </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000060">Rye::Box.connect</a> now
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000073">Rye::Box.connect</a> now
             supports multiple password attempts if STDIN.tty returns true
             
             </li>
             <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000063">Rye::Box.interactive_ssh</a> for
+            href="../classes/Rye/Box.html#M000076">Rye::Box.interactive_ssh</a> for
             opening an SSH session to the given box.
+            
+            </li>
+            <li>CHANGE: Using OpenSSL&#8217;s ssh-agent but also let&#8217;s Net::SSH
+            handle the ssh keys.
             
             </li>
             </ul>
@@ -156,15 +227,15 @@
             </p>
             <ul>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000074">Rye::Box.authorize_keys</a> was not
-            disabling safe mode properly
+            href="../classes/Rye/Box.html#M000088">Rye::Box.authorize_keys_remote</a>
+            was not disabling safe mode properly
+            
+            </li>
+            <li>FIXED: Disabled debug mode.
             
             </li>
             <li>ADDED: &#8220;rye authorize&#8221; now specifically enforces the auth
             method order
-            
-            </li>
-            <li>FIXED: Disabled debug mode.
             
             </li>
             </ul>
@@ -172,24 +243,6 @@
             #### 0.4.0 (2009-04-06) #############################
             </p>
             <ul>
-            <li>ADDED: to_s and inspect methods for cleaner debugging output
-            
-            </li>
-            <li>ADDED: == method for <a href="../classes/Rye/Box.html">Rye::Box</a>
-            
-            </li>
-            <li>ADDED: exit code and exit signal to <a
-            href="../classes/Rye/Rap.html">Rye::Rap</a> objects
-            
-            </li>
-            <li>ADDED: commands now raise a <a
-            href="../classes/Rye/CommandError.html">Rye::CommandError</a> exception
-            when the command returns an exit code greater than 0.
-            
-            </li>
-            <li>CHANGED: Box.add_command renamed to Box.run_command
-            
-            </li>
             <li>FIXED: Box.run_command was parsing arguments incorrectly
             
             </li>
@@ -198,6 +251,16 @@
             </li>
             <li>FIXED: <a href="bin/try.html">bin/try</a> handles the new command
             exceptions
+            
+            </li>
+            <li>ADDED: to_s and inspect methods for cleaner debugging output
+            
+            </li>
+            <li>ADDED: == method for <a href="../classes/Rye/Box.html">Rye::Box</a>
+            
+            </li>
+            <li>ADDED: exit code and exit signal to <a
+            href="../classes/Rye/Rap.html">Rye::Rap</a> objects
             
             </li>
             <li>ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
@@ -209,6 +272,14 @@
             <li>ADDED: <a href="bin/rye.html">bin/rye</a>
             
             </li>
+            <li>ADDED: commands now raise a <a
+            href="../classes/Rye/CommandError.html">Rye::CommandError</a> exception
+            when the command returns an exit code greater than 0.
+            
+            </li>
+            <li>CHANGE: Box.add_command renamed to Box.run_command
+            
+            </li>
             </ul>
             <p>
             #### 0.3.2 (2009-04-05) #############################
@@ -218,7 +289,7 @@
             Strings).
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Set.html#M000086">Rye::Set#add_boxes</a>
+            <li>FIXED: <a href="../classes/Rye/Set.html#M000102">Rye::Set#add_boxes</a>
             didn&#8217;t return self.
             
             </li>
@@ -230,20 +301,21 @@
             #### 0.3 (2009-04-05) ###############################
             </p>
             <ul>
+            <li>FIXED: <a href="../classes/Rye/Box.html">Rye::Box</a> wasn&#8217;t properly
+            adding keypairs to SSH Agent
+            
+            </li>
+            <li>FIXED: <a
+            href="../classes/Rye/Box.html#M000090">Rye::Box.method_missing</a>
+            Symbol/String ambiguity
+            
+            </li>
             <li>ADDED: <a href="../classes/Rye/Set.html">Rye::Set</a> supports executing
             commands parallel
             
             </li>
             <li>ADDED: <a href="../classes/Rye/Rap.html">Rye::Rap</a> now contains STDERR
             output from command
-            
-            </li>
-            <li>FIXED: <a href="../classes/Rye/Box.html">Rye::Box</a> wasn&#8217;t properly
-            adding keypairs to SSH Agent
-            
-            </li>
-            <li>CHANGED: Moved all SSH key stuff to <a href="../classes/Rye.html">Rye</a>
-            (used to be done per Box)
             
             </li>
             <li>ADDED: Supports all options provided by Net::SSH#start. This includes
@@ -257,12 +329,11 @@
             <li>ADDED: Basic sanity test
             
             </li>
-            <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000076">Rye::Box.method_missing</a>
-            Symbol/String ambiguity
+            <li>ADDED: Mucho more rdocs and examples.
             
             </li>
-            <li>ADDED: Mucho more rdocs and examples.
+            <li>CHANGE: Moved all SSH key stuff to <a href="../classes/Rye.html">Rye</a>
+            (used to be done per Box)
             
             </li>
             </ul>
