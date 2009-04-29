@@ -330,7 +330,7 @@ module Rye
     # of Rye::Box in a multithreaded situation. 
     #
     def authorize_keys_remote(other_user=nil)
-      this_user = other_user || @user
+      this_user = other_user || opts[:user]
       added_keys = []
       rap = Rye::Rap.new(self)
       

@@ -1,7 +1,7 @@
 
 # Temporary fix before Highline 1.5.1 is release. This fixes
 # a the issue with Ruby 1.9 that causes the prompts to hang.
-$:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'highline-1.5.1')
+$:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'highline-1.5.1', 'lib')
 
 require 'tempfile'
 require 'logger'

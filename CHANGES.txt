@@ -4,6 +4,12 @@ TODO
 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
+
+#### 0.6.2 (2009-04-29) #############################
+
+* FIXED: I forgot to add highline to the gemspec file manifest. Cripes!
+
+
 #### 0.6.1 (2009-04-29) #############################
 
 * ADDED: Prints message to STDERR when passwordless login fails.

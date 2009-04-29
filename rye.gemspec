@@ -1,7 +1,7 @@
 @spec = Gem::Specification.new do |s|
   s.name = "rye"
   s.rubyforge_project = "rye"
-  s.version = "0.6.1"
+  s.version = "0.6.2"
   s.summary = "Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.description = s.summary
   s.author = "Delano Mandelbaum"
@@ -53,6 +53,36 @@
   tst/60-file.mp3
   tst/60_rbox_transfer_test.rb
   tst/70_rbox_env_test.rb
+  vendor/highline-1.5.1/CHANGELOG
+  vendor/highline-1.5.1/INSTALL
+  vendor/highline-1.5.1/LICENSE
+  vendor/highline-1.5.1/README
+  vendor/highline-1.5.1/Rakefile
+  vendor/highline-1.5.1/TODO
+  vendor/highline-1.5.1/examples/ansi_colors.rb
+  vendor/highline-1.5.1/examples/asking_for_arrays.rb
+  vendor/highline-1.5.1/examples/basic_usage.rb
+  vendor/highline-1.5.1/examples/color_scheme.rb
+  vendor/highline-1.5.1/examples/limit.rb
+  vendor/highline-1.5.1/examples/menus.rb
+  vendor/highline-1.5.1/examples/overwrite.rb
+  vendor/highline-1.5.1/examples/page_and_wrap.rb
+  vendor/highline-1.5.1/examples/password.rb
+  vendor/highline-1.5.1/examples/trapping_eof.rb
+  vendor/highline-1.5.1/examples/using_readline.rb
+  vendor/highline-1.5.1/lib/highline.rb
+  vendor/highline-1.5.1/lib/highline/color_scheme.rb
+  vendor/highline-1.5.1/lib/highline/compatibility.rb
+  vendor/highline-1.5.1/lib/highline/import.rb
+  vendor/highline-1.5.1/lib/highline/menu.rb
+  vendor/highline-1.5.1/lib/highline/question.rb
+  vendor/highline-1.5.1/lib/highline/system_extensions.rb
+  vendor/highline-1.5.1/setup.rb
+  vendor/highline-1.5.1/test/tc_color_scheme.rb
+  vendor/highline-1.5.1/test/tc_highline.rb
+  vendor/highline-1.5.1/test/tc_import.rb
+  vendor/highline-1.5.1/test/tc_menu.rb
+  vendor/highline-1.5.1/test/ts_all.rb
   )
   
   s.extra_rdoc_files = %w[README.rdoc LICENSE.txt]
