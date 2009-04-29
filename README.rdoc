@@ -105,6 +105,7 @@ Rye permits only a limited number of system commands to be run. This default whi
   * highline
   * drydock
 
+
 == Known Issues
 
 This list will grow. If you find one let me know!
@@ -113,20 +114,20 @@ This list will grow. If you find one let me know!
 * Highline 1.5 not working in Ruby 1.9 (password prompts hang)
 * Rye uses OpenSSL's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
 
+
 == Thanks
 
 * Solutious Incorporated (http://solutious.com) for all the orange juice.
-* http://github.com/adamwiggins/rush
-* http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb
-* http://www.nofluffjuststuff.com/blog/david_bock/2008/10/ruby_s_closure_cleanup_idiom_and_net_ssh.html
-* http://groups.google.com/group/ruby-talk-google/browse_thread/thread/674a6f6de15ceb49?pli=1
-* http://paste.lisp.org/display/6912
+* Kalin Harvey (http://rely.ca)
+* Rush[http://github.com/adamwiggins/rush]
+* Capistrano[http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb]
+
 
 == More Info
 
-* http://github.com/delano/rye
-* http://delano.github.com/rye
-* http://www.youtube.com/watch?v=_StUVh6ENuw
+* GitHub[http://github.com/delano/rye]
+* Rdocs[http://delano.github.com/rye]
+* Inspiration[http://www.youtube.com/watch?v=_StUVh6ENuw]
 
 == Credits
 
