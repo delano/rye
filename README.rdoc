@@ -24,8 +24,10 @@ Does it annoy you to manually authorize remote SSH accounts? Rye can help!
 Enable passwordless logins to HOST1 and HOST2:
 
     $ rye authorize HOST1 HOST2    
-    
-See `rye -h` for more info
+
+This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
+
+See <tt>rye -h</tt> for more info
     
     
 == EXAMPLE 2 -- Basic Usage
@@ -34,7 +36,8 @@ See `rye -h` for more info
     rbox.uptime                        # => 11:02  up 16:01, 3 users
     rbox['/usr/bin'].pwd               # => /usr/bin
     
-    # You can specify environment variables
+You can specify environment variables
+
     rbox.setenv(:RYE, "Forty Creek")
     rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
     
@@ -47,14 +50,13 @@ See `rye -h` for more info
     rset.add_keys('/private/key/path')     # For passwordless logins 
     rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
     
-    # Calling methods on Rye::Set objects is very similar to calling them on
-    # Rye::Box objects. In fact, it's identical:
+Calling methods on Rye::Set objects is very similar to calling them on Rye::Box objects. In fact, it's identical:
+
     p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
     p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
     
-
     
-== EXAMPLE 6 -- FILE TRANSFERS
+== EXAMPLE 4 -- FILE TRANSFERS
 
     rbox = Rye::Box.new("localhost", :info => true)
 
