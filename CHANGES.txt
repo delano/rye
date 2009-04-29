@@ -4,10 +4,12 @@ TODO
 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
-#### 0.6.1 (2009-04-??) #############################
+#### 0.6.1 (2009-04-29) #############################
 
 * ADDED: Prints message to STDERR when passwordless login fails.
-
+* ADDED: Highline 1.5.1 to vendor to fix the Ruby 1.9 issue (Highline
+1.5.1 is not released as a gem yet)
+* CHANGE: Cleaned examples and links in README
 
 #### 0.6.0 (2009-04-28) #############################
 

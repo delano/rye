@@ -1,5 +1,7 @@
 
-require 'rubygems' unless defined? Gem
+# Temporary fix before Highline 1.5.1 is release. This fixes
+# a the issue with Ruby 1.9 that causes the prompts to hang.
+$:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'highline-1.5.1')
 
 require 'tempfile'
 require 'logger'
@@ -32,6 +34,12 @@ require 'sys'
 # * See +bin/try+ for a bunch of working examples. 
 # * See Rye::Box#initialize for info about disabling safe-mode.
 #
+#--
+# The following posts were really helpful when I first wrote Rye:
+# http://www.nofluffjuststuff.com/blog/david_bock/2008/10/ruby_s_closure_cleanup_idiom_and_net_ssh.html
+# http://groups.google.com/group/ruby-talk-google/browse_thread/thread/674a6f6de15ceb49?pli=1
+# http://paste.lisp.org/display/6912
+#++
 module Rye
   extend self
 
