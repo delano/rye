@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Apr 29 17:26:41 -0400 2009</span>
+          <span class='datetime'>Wed Apr 29 17:37:06 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -72,13 +72,13 @@
             See <tt>rye -h</tt> for more info
             </p>
             <h2>EXAMPLE 2 &#8212; Basic Usage</h2>
-            <pre>rbox = Rye::Box.new('localhost')&#x000A;rbox.uptime                        # =&gt; 11:02  up 16:01, 3 users&#x000A;rbox['/usr/bin'].pwd               # =&gt; /usr/bin</pre>
+            <pre>rbox = Rye::Box.new('localhost')&#x000A;rbox.uptime                            # =&gt; 11:02  up 16:01, 3 users&#x000A;rbox['/usr/bin'].pwd                   # =&gt; /usr/bin</pre>
             <p>
             You can specify environment variables
             </p>
-            <pre>rbox.setenv(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env                           # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]</pre>
+            <pre>rbox.setenv(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env             # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]</pre>
             <h2>EXAMPLE 3 &#8212; Accessing Multiple Machines</h2>
-            <pre>rset = Rye::Set.new&#x000A;rbox = Rye::Box.new&#x000A;&#x000A;rset.add_keys('/private/key/path')     # For passwordless logins&#x000A;rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects</pre>
+            <pre>rset = Rye::Set.new&#x000A;rbox = Rye::Box.new&#x000A;&#x000A;rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects</pre>
             <p>
             Calling methods on <a href="../classes/Rye/Set.html">Rye::Set</a> objects
             is very similar to calling them on <a
@@ -87,7 +87,7 @@
             </p>
             <pre>p rset.uptime        # =&gt; [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]&#x000A;p rset['/etc'].ls    # =&gt; [['file1', 'file2', ...], ['life1', 'life2', ...]]</pre>
             <h2>EXAMPLE 4 &#8212; FILE TRANSFERS</h2>
-            <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.upload(&quot;#{RYE_HOME}/README.rdoc&quot;,&#x000A;            &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)            # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
+            <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.upload(&quot;#{RYE_HOME}/README.rdoc&quot;,&#x000A;            &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)      # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -97,9 +97,9 @@
             <tt>rbox.ls('*.rb')</tt>. <tt>~</tt> also doesn&#8217;t work!
             
             </li>
-            <li>Command arguments cannot contain environment variables (however,
-            environment variables are available to the commands you run). This means
-            you can&#8217;t do this: <tt>rbox.echo('$HOME')</tt>.
+            <li>You can&#8217;t use environment variables as arguments. This means you
+            can&#8217;t do this: <tt>rbox.echo('$HOME')</tt>. However, environment
+            variables are available to the commands you run.
             
             </li>
             <li>Pipes and operators don&#8217;t work: <tt>|, &amp;&amp;, &gt;, &lt;, ||,
@@ -159,9 +159,6 @@
             <ul>
             <li><a href="../classes/Rye.html">Rye</a> doesn&#8217;t read the ~/.ssh/config
             file yet
-            
-            </li>
-            <li>Highline 1.5 not working in Ruby 1.9 (password prompts hang)
             
             </li>
             <li><a href="../classes/Rye.html">Rye</a> uses OpenSSL&#8217;s ssh-agent (if it
