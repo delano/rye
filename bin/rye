@@ -35,7 +35,8 @@ after do
 
 end
 
-desc "Add your public keys to one or more remote machines"
+about "Add your public keys to one or more remote machines"
+usage "rye authorize [-u username] host"
 option :u, :user, String, "Username"
 argv :hostname
 command :authorize do |obj|
@@ -56,7 +57,7 @@ command :authorize do |obj|
 end
 command_alias :authorize, :authorise
 
-desc "Add your public keys to your current account on this machine"
+about "Add your public keys to your current account on this machine"
 command :authorize_local do |obj|
   user = Rye.sysinfo.user
   puts "Authorizing #{user}@localhost"
@@ -68,11 +69,11 @@ end
 command_alias :local_authorize, :local_authorise
 
 
-desc "Generate a public key from a private key"
+about "Generate a public key from a private key"
 
 
 
-desc "Fetch the host keys for remote machines (suitable for your ~/.ssh/known_hosts file)"
+about "Fetch the host keys for remote machines (suitable for your ~/.ssh/known_hosts file)"
 usage "rye hostkey HOSTNAME [HOSTNAME2 HOSTNAME3 ...]"
 argv :hostname
 command :hostkeys do |obj|
@@ -84,14 +85,14 @@ end
 command_alias :hostkeys, :hostkey
 
 
-desc "Display your private keys"
+about "Display your private keys"
 command :keys do |obj|
   Rye.keys.each do |key|
     puts key.join(' ')
   end
 end
 
-desc "Display your public SSH keys"
+about "Display your public SSH keys"
 usage "rye pubkeys [--pem] [KEYPATH]"
 option :p, :pem, "Output in PEM format"
 argv :keypath

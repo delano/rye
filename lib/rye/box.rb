@@ -182,6 +182,7 @@ module Rye
         print "\a" if retried == 0 && @info # Ring the bell once
         retried += 1
         if STDIN.tty? && retried <= 3
+          STDERR.puts "Passwordless login failed for #{@opts[:user]}"
           @opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
           @opts[:auth_methods] ||= []
           @opts[:auth_methods] << 'password'

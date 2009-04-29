@@ -4,7 +4,6 @@ Safely run SSH commands on a bunch of machines at the same time (from Ruby).
 
 Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs and the "rm" command are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
-See the examples below (which are taken from bin/try).
 
 == Installation
 
@@ -15,85 +14,32 @@ One of:
     $ git clone git://github.com/delano/rye.git
 
 
-== EXAMPLE 1 -- Basic Usage
+    See bin/try for examples!
+
+
+== EXAMPLE 1 -- SSH Authorization
+
+Does it annoy you to manually authorize remote SSH accounts? Rye can help!
+
+Enable passwordless logins to HOST1 and HOST2:
+
+    $ rye authorize HOST1 HOST2    
+    
+See `rye -h` for more info
+    
+    
+== EXAMPLE 2 -- Basic Usage
     
     rbox = Rye::Box.new('localhost')
-    
-    # Commands are run as methods on the Rye::Box object
-    puts rbox.uptime                   # => 11:02  up 16:01, 3 users
-    
-    # The response value for all commands is a Rye::Rap object. The rap is a
-    # subclass of Array so you can treat it as an Array, but it can also act 
-    # like a String if there's only one element. 
-    puts rbox.ls('rye.test')           # => ""
-    puts rbox.ls('rye.test').stderr    # => ls: rye.test: No such file or directory
-    
-    puts rbox.touch('rye.test')        # => ""
-    puts rbox.rm('rye.test')           # => ""
-    
-    # You can change directories
-    puts rbox.pwd                      # => /home/rye
-    puts rbox['/usr/bin'].pwd          # => /usr/bin
-    puts rbox.pwd                      # => /usr/bin
-    puts rbox.cd('/home/rye').pwd      # => /home/rye
+    rbox.uptime                        # => 11:02  up 16:01, 3 users
+    rbox['/usr/bin'].pwd               # => /usr/bin
     
     # You can specify environment variables
     rbox.setenv(:RYE, "Forty Creek")
     rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
     
-    # The commands method returns an Array of available commands:                        
-    puts rbox.commands.join(', ')      # => pwd, touch, echo, wc, ...
     
-    # When you're done you can disconnect explicitly. 
-    # (Although Rye does this automatically at exit.)
-    rbox.disconnect
-
-
-== EXAMPLE 2 -- Disabling Safe-Mode
-
-    rbox_safe = Rye::Box.new('localhost')
-    rbox_wild = Rye::Box.new('localhost', :safe => false)
-
-    # Safe-mode is enabled by default. In safe-mode, all command 
-    # arguments are thoroughly escaped. This prevents access to
-    # environment variables and file globs (among other things).
-    p rbox_safe.echo('$HOME')                                    # => "$HOME"
-    p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
-    p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
-
-    # Here's the same commands with safe-mode disabled:
-    p rbox_wild.echo('$HOME')                   # => "/home/rye"
-    p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
-    p rbox_wild.ls('-l | wc -l')                # => 110
-    p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
-    p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
-
-
-== EXAMPLE 3 -- Custom Commands
-
-    rbox = Rye::Box.new('localhost')
-    rbox.add_keys('/private/key/path')   # Specify additional private keys
-    
-    # There's currently no rye900 command
-    p rbox.commands.member?('rye9000')   # => false
-    
-    # But we can add our own commands to the Rye::Cmd class. They 
-    # automatically become available to all Rye::Box objects.
-    module Rye::Cmd
-      def rye9000(*args)
-        run_command("ls", args)
-      end
-      def somescript(*args)
-        run_command("/path/to/my/script", args)
-      end
-    end
-    
-    # We can now run rye9000 (with arguments)
-    p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
-    p rbox.commands.member?('rye9000')   # => true
-
-
-== EXAMPLE 4 -- Accessing Multiple Machines
+== EXAMPLE 3 -- Accessing Multiple Machines
 
     rset = Rye::Set.new
     rbox = Rye::Box.new
@@ -106,51 +52,6 @@ One of:
     p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
     p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
     
-    # Like Rye::Box, the response value is a Rye::Rap object containing the
-    # responses from each box. Each response is itself a Rye::Rap object.
-    unames = rset.uname
-    p unames                               # => [["Darwin"], ["Darwin"]]
-    puts unames.class                      # => Rye::Rap
-    
-    # The Rye::Rap object also keeps a reference to the object that called the 
-    # command. In this case, it will keep a reference to Rye::Set:
-    puts unames.set.class                  # => Rye::Set
-    puts unames.set == rset                # => true
-    puts unames.size                       # => 2
-    puts unames.first                      # => Darwin
-    puts unames.first.class                # => Rye::Rap
-    puts unames.first.box.class            # => Rye::Box
-    puts unames.first.box == rbox          # => true
-    
-    # Envrionment variables can be set the same way as with Rye::Box
-    rset.setenv(:RYE, "Forty Creek")
-    p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
-
-
-== EXAMPLE 5 -- ERROR HANDLING
-
-    rbox = Rye::Box.new('localhost', :safe => false)
-
-    # Rye follows the standard convention of taking exception to a non-zero 
-    # exit code by raising a Rye::CommandError. In this case, rye9000.test
-    # is not found by the ls command. 
-    begin
-      rbox.ls('rye9000.test')
-    rescue Rye::CommandError => ex
-      puts ex.exit_code                # => 1
-      puts ex.stderr                   # => ls: rye.test: No such file or directory
-    end
-
-    # The Rye:Rap response objects also give you the STDOUT and STDERR
-    # content separately. Here we redirect STDOUT to STDERR, so this
-    # will return nothing:
-    puts rbox.uname('-a 1>&2').stdout    # =>
-
-    # It all went to STDERR:
-    puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
-
-    # There were no actual error so the exit code should be 0.
-    puts rbox.uname('-a 1>&2').exit_code # => 0
 
     
 == EXAMPLE 6 -- FILE TRANSFERS
@@ -173,25 +74,6 @@ One of:
     rbox.download("#{dir_upload}/applejack.txt", filecontent)
 
     p filecontent.read
-
-== EXAMPLE 7 -- rye
-
-Rye comes with a command-line utility called <tt>rye</tt>.
-
-    # Prints the paths to your private keys
-    $ rye keys
-
-    # Prints the server host keys (suitable for ~/.ssh/known_hosts)
-    $ rye hostkey HOST1 HOST2
-
-    # Add your public keys to authorized_keys and authorized_keys2 
-    # on a remote machine
-    $ rye authorize HOST1 HOST2
-More info:
-
-    $ rye -h
-    $ rye COMMAND -h
-    $ rye show-commands
 
 
 == About Safe-Mode
