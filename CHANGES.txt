@@ -2,10 +2,11 @@ RYE, CHANGES
 
 TODO
 
+* Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.6.3 (2009-05-??) #############################
+#### 0.6.3 (2009-05-02) #############################
 
 * FIXED: Rye::Box.guess_user_home wasn't handling the username arg (only using default name)
 * ADDED: Rye::Cmd.can?

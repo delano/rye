@@ -194,7 +194,7 @@ p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
 
 filecontent = StringIO.new
 rbox.download("#{dir_upload}/applejack.txt", filecontent)
-              
+filecontent.rewind           
 p filecontent.read
 
 
