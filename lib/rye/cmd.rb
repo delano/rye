@@ -109,6 +109,17 @@ module Rye;
       ret.stderr.empty?
     end
     
+    # Return the value of uname in lowercase
+    # This is a temporary fix. We can use SysInfo for this, upload
+    # it, execute it directly, parse the output.
+    def ostype
+      return @ostype if @ostype # simple cache
+      os = self.uname.first rescue nil
+      os ||= 'unknown'
+      os &&= os.downcase
+      @ostype = os
+    end
+    
     # Returns the hash containing the parsed output of "env" on the 
     # remote machine. If the initialize option +:getenv+ was set to 
     # false, this will return an empty hash. 
@@ -116,6 +127,9 @@ module Rye;
     # the first time this method is called. 
     #
     #      puts rbox.getenv['HOME']    # => "/home/gloria" (remote)
+    #
+    # NOTE: This method should not raise an exception under normal
+    # circumstances. 
     #
     def getenv
       if @getenv && @getenv.empty? && self.can?(:env)
@@ -143,7 +157,9 @@ module Rye;
     alias :command? :can?
     alias :cmd? :can?
     
-    
+    def Cmd.can?(meth)
+      instance_methods.member?(meth)
+    end
     
     #--
     # * Consider a lock-down mode using method_added

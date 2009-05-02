@@ -301,10 +301,17 @@ module Rye
       Rye.remote_host_keys(@host)
     end
     
+    
     # Uses the output of "useradd -D" to determine the default home
     # directory. This returns a GUESS rather than the a user's real
     # home directory. Currently used only by authorize_keys_remote.
     def guess_user_home(other_user=nil)
+      this_user = other_user || opts[:user]
+      @guessed_homes ||= {}
+      
+      # A simple cache. 
+      return @guessed_homes[this_user] if @guessed_homes.has_key?(this_user)
+      
       # Some junk to determine where user home directories are by default.
       # We're relying on the command "useradd -D" so this may not work on
       # different Linuxen and definitely won't work on Windows.
@@ -314,10 +321,22 @@ module Rye
       user_defaults = {}
       raw = self.useradd(:D) rescue ["HOME=/home"]
       raw.each do |nv|
-        n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
-        user_defaults[n] = v
+
+        if self.ostype == "sunos"
+          #nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|
+          #  n = 'HOME' if n == 'basedir'
+          #  user_defaults[n.upcase] = v.strip
+          #end
+          # In Solaris, useradd -D says the default home path is /home
+          # but that directory is not writable. See: http://bit.ly/IJDD0
+          user_defaults['HOME'] = '/export/home'
+        else
+          n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
+          user_defaults[n] = v
+        end
       end
-      "#{user_defaults['HOME']}/#{other_user}"
+      
+      @guessed_homes[this_user] = "#{user_defaults['HOME']}/#{this_user}"
     end
     
     # Copy the local public keys (as specified by Rye.keys) to 
@@ -402,7 +421,7 @@ module Rye
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
     def method_missing(meth, *args, &block)
-      raise Rye::CommandNotFound, "#{meth.to_s} (args: #{args.join(' ')})"
+      raise Rye::CommandNotFound, "#{meth.to_s}"
     end
     def preview_command(*args)
       prep_args(*args).join(' ')
@@ -481,6 +500,10 @@ module Rye
       rap.exit_signal = esignal
       rap.cmd = cmd
       
+      # It seems a convention for various commands to return -1
+      # when something only mildly concerning happens. ls even 
+      # returns -1 for apparently no reason sometimes. In any
+      # case, the real errors are the ones greater than zero
       raise Rye::CommandError.new(rap) if ecode > 0
       
       rap

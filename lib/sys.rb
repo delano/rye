@@ -295,3 +295,8 @@ class SystemInfo #:nodoc:all
   
   
 end
+
+
+if $0 == __FILE__
+  puts SystemInfo.new.to_yaml
+end
