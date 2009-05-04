@@ -14,7 +14,7 @@ One of:
     $ git clone git://github.com/delano/rye.git
 
 
-    See bin/try for examples!
+See bin/try for examples!
 
 
 == EXAMPLE 1 -- SSH Authorization

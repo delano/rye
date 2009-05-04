@@ -6,6 +6,14 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.6.4 (2009-05-04) #############################
+
+* FIXED: authorize_remote was not returning to the directory it started with. 
+* ADDED: pre and post command hooks to Rye::Box
+* ADDED: Rye::Box.batch
+* ADDED: Support for OS X for Rye::Box.guess_user_home
+
+
 #### 0.6.3 (2009-05-02) #############################
 
 * FIXED: Rye::Box.guess_user_home wasn't handling the username arg (only using default name)

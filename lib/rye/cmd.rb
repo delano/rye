@@ -23,7 +23,8 @@ module Rye;
     # TODO: Clean this trite mess up!
     #++
     
-    def cd(*args); cmd('cd', args); end
+    # NOTE: See Rye::Box for the implementation of cd
+    #def cd(*args); cmd('cd', args); end
     def wc(*args); cmd('wc', args); end
     def cp(*args); cmd("cp", args); end
     def mv(*args); cmd("mv", args); end

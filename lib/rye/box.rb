@@ -46,6 +46,9 @@ module Rye
       # The most recent valud for umask (or 0022)
     attr_reader :current_umask
     
+    attr_writer :post_command_hook
+    attr_writer :pre_command_hook
+    
     # * +host+ The hostname to connect to. The default is localhost.
     # * +opts+ a hash of optional arguments.
     #
@@ -267,19 +270,14 @@ module Rye
     end
     alias :add_env :setenv  # deprecated?
     
-    def user
-      (@opts || {})[:user]
-    end
+    # The name of the user that opened the SSH connection
+    def user; (@opts || {})[:user]; end
     
     # See Rye.keys
-    def keys
-      Rye.keys
-    end
+    def keys; Rye.keys; end
     
-    # Returns +@host+
-    def to_s
-      @host
-    end
+    # Returns +user@host+
+    def to_s; '%s@%s' % [user, @host]; end
     
     def inspect
       %q{#<%s:%s cwd=%s umask=%s env=%s safe=%s opts=%s>} % 
@@ -301,7 +299,6 @@ module Rye
       Rye.remote_host_keys(@host)
     end
     
-    
     # Uses the output of "useradd -D" to determine the default home
     # directory. This returns a GUESS rather than the a user's real
     # home directory. Currently used only by authorize_keys_remote.
@@ -320,9 +317,10 @@ module Rye
       # /etc/adduser.config, DHOME=/home OR ??
       user_defaults = {}
       raw = self.useradd(:D) rescue ["HOME=/home"]
+      ostmp = self.ostype
       raw.each do |nv|
 
-        if self.ostype == "sunos"
+        if ostmp == "sunos"
           #nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|
           #  n = 'HOME' if n == 'basedir'
           #  user_defaults[n.upcase] = v.strip
@@ -330,6 +328,8 @@ module Rye
           # In Solaris, useradd -D says the default home path is /home
           # but that directory is not writable. See: http://bit.ly/IJDD0
           user_defaults['HOME'] = '/export/home'
+        elsif ostmp == "darwin"
+          user_defaults['HOME'] = '/Users'
         else
           n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
           user_defaults[n] = v
@@ -352,6 +352,8 @@ module Rye
       this_user = other_user || opts[:user]
       added_keys = []
       rap = Rye::Rap.new(self)
+      
+      prevdir = self.current_working_directory
       
       # The homedir path is important b/c this is where we're going to 
       # look for the .ssh directory. That's where auth love is stored.
@@ -395,6 +397,8 @@ module Rye
         self.chown(:R, this_user.to_s, File.dirname(akey_path))
       end
       
+      # And let's return to the directory we came from.
+      self.cd prevdir
       
       rap.add_exit_code(0)
       rap
@@ -423,9 +427,49 @@ module Rye
     def method_missing(meth, *args, &block)
       raise Rye::CommandNotFound, "#{meth.to_s}"
     end
+    
+    # Returns the command an arguments as a String. 
     def preview_command(*args)
       prep_args(*args).join(' ')
     end
+    
+    
+    # Supply a block to be called before every command. It's called
+    # with three arguments: command name, an Array of arguments, user name
+    #
+    def pre_command_hook(&block)
+      @pre_command_hook = block if block
+      @pre_command_hook
+    end
+    
+    # Execute a block in the context of an instance of Rye::Box. 
+    #
+    #     rbox = Rye::Box.new
+    #
+    #     rbox.batch do
+    #       ls :l
+    #       uname :a
+    #     end
+    # OR
+    #     rbox.batch(&block)
+    #
+    #
+    def batch(&block)
+      instance_eval &block
+    end
+    
+    # Supply a block to be called after every command. It's called
+    # with one argument: an instance of Rye::Rap.
+    #
+    # When this block is supplied, the command does not raise an 
+    # exception when the exit code is greater than 0 (the typical
+    # behavior) so the block needs to check the Rye::Rap object to
+    # determine whether an exception should be raised. 
+    def post_command_hook(&block)
+      @post_command_hook = block if block
+      @post_command_hook
+    end
+
     
   private
       
@@ -491,6 +535,19 @@ module Rye
       info "COMMAND: #{cmd_clean}"
       debug "Executing: %s" % cmd_clean
       
+      if @pre_command_hook.is_a?(Proc)
+        @pre_command_hook.call(cmd, args, opts[:user])  
+      end
+      
+      ## NOTE: Do not raise a CommandNotFound exception in this method.
+      # We want it to be possible to define methods to a single instance
+      # of Rye::Box. i.e. def rbox.rm()...
+      # can? returns the methods in Rye::Cmd so it would incorrectly
+      # return false. We could use self.respond_to? but it's possible
+      # to get a name collision. I could write a work around but I think
+      # this is good enough for now. 
+      ## raise Rye::CommandNotFound unless self.can?(cmd)
+      
       stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
       
       rap = Rye::Rap.new(self)
@@ -500,11 +557,15 @@ module Rye
       rap.exit_signal = esignal
       rap.cmd = cmd
       
-      # It seems a convention for various commands to return -1
-      # when something only mildly concerning happens. ls even 
-      # returns -1 for apparently no reason sometimes. In any
-      # case, the real errors are the ones greater than zero
-      raise Rye::CommandError.new(rap) if ecode > 0
+      if @post_command_hook.is_a?(Proc)
+        @post_command_hook.call(rap)
+      else
+        # It seems a convention for various commands to return -1
+        # when something only mildly concerning happens. ls even 
+        # returns -1 for apparently no reason sometimes. In any
+        # case, the real errors are the ones greater than zero
+        raise Rye::CommandError.new(rap) if ecode > 0
+      end
       
       rap
     end
@@ -594,7 +655,7 @@ module Rye
       end
       
       if @current_working_directory
-        info "CWD (#{@current_working_directory}) not used"
+        info "CWD (#{@current_working_directory})"
       end
       
       files = [files].flatten.compact || []
