@@ -3,17 +3,19 @@
 # a the issue with Ruby 1.9 that causes the prompts to hang.
 $:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'highline-1.5.1', 'lib')
 
-require 'tempfile'
 require 'logger'
+require 'thread'
+require 'base64'
 require 'net/ssh'
 require 'net/scp'
-require 'thread'
-require 'highline'
 require 'openssl'
-require 'base64'
+require 'tempfile'
+require 'highline'
+
+require 'storable'
+require 'sysinfo'
 
 require 'esc'
-require 'sys'
 
 # = Rye
 #
@@ -45,7 +47,7 @@ module Rye
 
   unless defined?(SYSINFO)
     VERSION = 0.6.freeze
-    SYSINFO = SystemInfo.new.freeze
+    SYSINFO = SysInfo.new.freeze
   end
   
   @@agent_env = Hash.new  # holds ssh-agent env vars

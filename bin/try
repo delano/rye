@@ -10,6 +10,7 @@
 
 RYE_HOME = File.join(File.dirname(__FILE__), '..')
 $:.unshift File.join(RYE_HOME, 'lib')
+%w{net-ssh sysinfo storable drydock}.each { |dir| $:.unshift File.join(File.dirname(__FILE__), '..', '..', dir, 'lib') }
 
 require 'stringio'
 require 'yaml'

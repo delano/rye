@@ -597,7 +597,7 @@ module Rye
       block ||= Proc.new do |channel, type, data|
         channel[:stdout] ||= ""
         channel[:stderr] ||= ""
-        channel[:exit_code] ||= -1
+        channel[:exit_code] ||= 0
         channel[:stdout] << data if type == :stdout
         channel[:stderr] << data if type == :stderr
         channel.on_request("exit-status") do |ch, data|

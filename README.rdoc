@@ -103,6 +103,8 @@ Rye permits only a limited number of system commands to be run. This default whi
   * net-scp
   * highline
   * drydock
+  * sysinfo
+  * storable
 
 
 == Known Issues

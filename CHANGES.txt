@@ -6,6 +6,13 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.6.5 (2009-05-10) #############################
+
+* CHANGE: Default exit code is now 0 instead of -1
+* CHANGE: Removed Sys (using sysinfo gem)
+* CHANGE: Removed vendor/highline-1.5.1 (it's now available via gem)
+
+
 #### 0.6.4 (2009-05-04) #############################
 
 * FIXED: authorize_remote was not returning to the directory it started with. 

@@ -9,6 +9,7 @@
 #
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+#%w{net-ssh sysinfo drydock}.each { |dir| $:.unshift File.join(File.dirname(__FILE__), '..', '..', dir, 'lib') }
 
 require 'stringio'
 require 'yaml'
