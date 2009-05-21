@@ -104,7 +104,8 @@ module Rye
       
       # We don't want Net::SSH to handle the keypairs. This may change
       # but for we're letting ssh-agent do it. 
-      #@opts.delete(:keys)
+      # TODO: Check if this should ot should not be enabled. 
+      @opts.delete(:keys)
       
       # From: capistrano/lib/capistrano/cli.rb
       STDOUT.sync = true # so that Net::SSH prompts show up

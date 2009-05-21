@@ -6,6 +6,11 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.6.6 (2009-05-21) #############################
+
+* CHANGE: Key management is handled by ssh-agent again (instead of Net::SSH)
+
+
 #### 0.6.5 (2009-05-10) #############################
 
 * CHANGE: Default exit code is now 0 instead of -1
