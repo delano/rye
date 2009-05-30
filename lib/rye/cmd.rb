@@ -98,6 +98,24 @@ module Rye;
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
     def download(*files); net_scp_transfer!(:download, *files); end
     
+    
+    def file_append(filepath, newcontent, backup=false)
+      if self.file_exists?(filepath) && backup
+        self.cp filepath, "#{filepath}-previous"
+      end
+      
+      file_content = self.download filepath
+      file_content ||= StringIO.new
+      if newcontent.is_a?(StringIO)
+        newcontent.rewind
+        file_content.puts newcontent.read
+      else
+        file_content.puts newcontent
+      end
+      
+      self.upload file_content, filepath
+    end
+    
     # Does a remote path exist?
     def file_exists?(path)
       begin

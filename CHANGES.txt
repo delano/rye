@@ -11,12 +11,12 @@ TODO
 
 * CHANGE: Rye::Box now uses unique instance variable names to encourage using
   instance variables in batch command blocks. 
-  
+* ADDED: Rye::Box#file_append
+
 
 #### 0.6.6 (2009-05-21) #############################
 
 * CHANGE: Key management is handled by ssh-agent again (instead of Net::SSH)
-
 
 #### 0.6.5 (2009-05-10) #############################
 
@@ -44,13 +44,13 @@ TODO
 
 * FIXED: I forgot to add highline to the gemspec file manifest. Cripes!
 
-
 #### 0.6.1 (2009-04-29) #############################
 
 * ADDED: Prints message to STDERR when passwordless login fails.
 * ADDED: Highline 1.5.1 to vendor to fix the Ruby 1.9 issue (Highline
 1.5.1 is not released as a gem yet)
 * CHANGE: Cleaned examples and links in README
+
 
 #### 0.6.0 (2009-04-28) #############################
 

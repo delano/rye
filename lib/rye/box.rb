@@ -728,7 +728,7 @@ module Rye
         raise "Cannot upload to a StringIO object"
       end
               
-      # Fail early. We check the 
+      # Fail early. We check whether the StringIO object is available to read
       files.each do |file|
         if file.is_a?(StringIO)
           raise "Cannot download a StringIO object" if direction == :download
