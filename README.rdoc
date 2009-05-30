@@ -1,4 +1,4 @@
-= Rye - v0.6
+= Rye - v0.7
 
 Safely run SSH commands on a bunch of machines at the same time (from Ruby).
 
