@@ -260,6 +260,41 @@ module Rye
     end
     alias :add_key :add_keys
     
+    # Return the value of uname in lowercase
+    # This is a temporary fix. We can use SysInfo for this, upload
+    # it, execute it directly, parse the output.
+    def ostype
+      return @ostype if @ostype # simple cache
+      os = self.uname.first rescue nil
+      os ||= 'unknown'
+      os &&= os.downcase
+      @ostype = os
+    end
+    
+    # Returns the hash containing the parsed output of "env" on the 
+    # remote machine. If the initialize option +:getenv+ was set to 
+    # false, this will return an empty hash. 
+    # This is a lazy loaded method so it fetches the remote envvars
+    # the first time this method is called. 
+    #
+    #      puts rbox.getenv['HOME']    # => "/home/gloria" (remote)
+    #
+    # NOTE: This method should not raise an exception under normal
+    # circumstances. 
+    #
+    def getenv
+      if @getenv && @getenv.empty? && self.can?(:env)
+        env = self.env rescue []
+        env.each do |nv| 
+          # Parse "GLORIA_HOME=/gloria/lives/here" into a name/value
+          # pair. The regexp ensures we split only at the 1st = sign
+          n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
+          @getenv[n] = v
+        end
+      end
+      @getenv
+    end
+    
     # Add an environment variable. +n+ and +v+ are the name and value.
     # Returns the instance of Rye::Box
     def setenv(n, v)
@@ -455,8 +490,25 @@ module Rye
     #     rbox.batch(&block)
     #
     #
-    def batch(&block)
-      instance_eval &block
+    def batch(*args, &block)
+      self.instance_exec *args, &block
+    end
+    
+    # instance_exec for Ruby 1.8 written by Mauricio Fernandez
+    # http://eigenclass.org/hiki/instance_exec
+    if RUBY_VERSION =~ /1.8/
+      module InstanceExecHelper; end
+      include InstanceExecHelper
+      def instance_exec(*args, &block) # !> method redefined; discarding old instance_exec
+        mname = "__instance_exec_#{Thread.current.object_id.abs}_#{object_id.abs}"
+        InstanceExecHelper.module_eval{ define_method(mname, &block) }
+        begin
+          ret = send(mname, *args)
+        ensure
+          InstanceExecHelper.module_eval{ undef_method(mname) } rescue nil
+        end
+        ret
+      end
     end
     
     # Supply a block to be called after every command. It's called

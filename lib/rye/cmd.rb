@@ -109,41 +109,6 @@ module Rye;
       # But on OSX exit code is 1. This is why we look at STDERR. 
       ret.stderr.empty?
     end
-    
-    # Return the value of uname in lowercase
-    # This is a temporary fix. We can use SysInfo for this, upload
-    # it, execute it directly, parse the output.
-    def ostype
-      return @ostype if @ostype # simple cache
-      os = self.uname.first rescue nil
-      os ||= 'unknown'
-      os &&= os.downcase
-      @ostype = os
-    end
-    
-    # Returns the hash containing the parsed output of "env" on the 
-    # remote machine. If the initialize option +:getenv+ was set to 
-    # false, this will return an empty hash. 
-    # This is a lazy loaded method so it fetches the remote envvars
-    # the first time this method is called. 
-    #
-    #      puts rbox.getenv['HOME']    # => "/home/gloria" (remote)
-    #
-    # NOTE: This method should not raise an exception under normal
-    # circumstances. 
-    #
-    def getenv
-      if @getenv && @getenv.empty? && self.can?(:env)
-        env = self.env rescue []
-        env.each do |nv| 
-          # Parse "GLORIA_HOME=/gloria/lives/here" into a name/value
-          # pair. The regexp ensures we split only at the 1st = sign
-          n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
-          @getenv[n] = v
-        end
-      end
-      @getenv
-    end
      
     # Returns an Array of system commands available over SSH
     def can

@@ -132,7 +132,8 @@ This list will grow. If you find one let me know!
 == Credits
 
 * Delano Mandelbaum (delano@solutious.com)
-* Escape, Copyright (C) 2006,2007 Tanaka Akira  <akr@fsij.org>
+* Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
+* Rye::Box#instance_exec (for Ruby 1.8) Mauricio Fernandez
 
 == License
 

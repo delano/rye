@@ -4,7 +4,8 @@ TODO
 
 * Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
-
+* Add S3 support for Rye::Box.upload / download
+* Use unique instance variable names (important for running executing blocks)
 
 #### 0.6.6 (2009-05-21) #############################
 
