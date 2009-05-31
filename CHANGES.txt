@@ -7,6 +7,12 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
+#### 0.7.1 (2009-05-31) #############################
+
+* CHANGE: Removed broken grep method from Rye::Rap
+* ADDED: Rye::Cmd#add_command helper for adding new command methods. 
+
+
 #### 0.7.0 (2009-05-30) #############################
 
 * CHANGE: Rye::Box now uses unique instance variable names to encourage using
