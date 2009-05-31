@@ -95,12 +95,12 @@ module Rye;
     end
     
     # NOTE: This is broken!
-    def grep *args
-      self.select do |boxrap|
-        b = boxrap.grep(*args)
-        b.empty? ? false : b
-      end
-    end
+    #def grep *args
+    #  self.select do |boxrap|
+    #    b = boxrap.grep(*args)
+    #    b.empty? ? false : b
+    #  end
+    #end
     
     
     #def >>(*other)

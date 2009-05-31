@@ -98,7 +98,9 @@ module Rye;
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
     def download(*files); net_scp_transfer!(:download, *files); end
     
-    
+    # Append +newcontent+ to remote +filepath+. If the file doesn't exist
+    # it will be created. If +backup+ is specified, +filepath+ will be 
+    # copied to +filepath-previous+ before appending. 
     def file_append(filepath, newcontent, backup=false)
       if self.file_exists?(filepath) && backup
         self.cp filepath, "#{filepath}-previous"
@@ -145,6 +147,28 @@ module Rye;
       instance_methods.member?(meth)
     end
     
+    # A helper for adding a command to Rye::Cmd. 
+    # * +meth+ the method name
+    # * +path+ (optional) filesystem path for the given method
+    # * +hard_args+ (optional) hardcoded arguments which are prepended to the 
+    #   argument list every time the method is called
+    # An optional block can be provided which will be called instead
+    # of calling a system command. 
+    def Cmd.add_command(meth, path=nil, *hard_args, &block)
+      path ||= meth.to_s
+      if block
+        hard_args.unshift(path) unless path.nil? # Don't lose an argument
+        define_method(meth) do |*args|
+          block.call(*hard_args, *args)
+        end
+      else
+        define_method(meth) do |*args|
+          cmd(path, *hard_args, *args)
+        end        
+      end
+    end
+    
+      
     #--
     # * Consider a lock-down mode using method_added
     # * Consider Rye.sysinfo.os == :unix
