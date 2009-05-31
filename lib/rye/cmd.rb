@@ -159,11 +159,13 @@ module Rye;
       if block
         hard_args.unshift(path) unless path.nil? # Don't lose an argument
         define_method(meth) do |*args|
-          block.call(*hard_args, *args)
+          hard_args += args
+          block.call(*hard_args)
         end
       else
         define_method(meth) do |*args|
-          cmd(path, *hard_args, *args)
+          hard_args += args
+          cmd(path, *hard_args)
         end        
       end
     end
