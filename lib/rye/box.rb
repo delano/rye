@@ -138,14 +138,24 @@ module Rye
     #     rbox.pwd              # => /usr/bin  ($ cd /usr/bin && pwd)
     #
     def [](key=nil)
-      @rye_current_working_directory = key
+      if key.nil? || key.index('/') == 0
+        @rye_current_working_directory = key
+      else
+        # Append to non-absolute paths
+        @rye_current_working_directory = File.join(getenv['PWD'], key)
+      end
       self
     end
     # Like [] except it returns an empty Rye::Rap object to mimick
     # a regular command method. Call with nil key (or no arg) to 
     # reset. 
     def cd(key=nil)
-      @rye_current_working_directory = key
+      if key.nil? || key.index('/') == 0
+        @rye_current_working_directory = key
+      else
+        # Append to non-absolute paths
+        @rye_current_working_directory = File.join(getenv['PWD'], key)
+      end
       ret = Rye::Rap.new(self)
     end
     
