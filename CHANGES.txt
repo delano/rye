@@ -10,6 +10,7 @@ TODO
 #### 0.7.1 (2009-06-01) #############################
 
 * CHANGE: Removed broken grep method from Rye::Rap
+* FIXED: Bug which prevented setting relative paths in non-home directory
 * ADDED: Rye::Cmd#add_command helper for adding new command methods. 
 * ADDED: pre-command-hook now sends the hostname to the block
 
