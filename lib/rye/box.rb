@@ -142,7 +142,7 @@ module Rye
         @rye_current_working_directory = key
       else
         # Append to non-absolute paths
-        @rye_current_working_directory = File.join(getenv['PWD'], key)
+        @rye_current_working_directory = File.join(@rye_current_working_directory, key)
       end
       self
     end
@@ -154,7 +154,7 @@ module Rye
         @rye_current_working_directory = key
       else
         # Append to non-absolute paths
-        @rye_current_working_directory = File.join(getenv['PWD'], key)
+        @rye_current_working_directory = File.join(@rye_current_working_directory, key)
       end
       ret = Rye::Rap.new(self)
     end
