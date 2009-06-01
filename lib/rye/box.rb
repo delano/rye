@@ -471,8 +471,11 @@ module Rye
     
     
     # Supply a block to be called before every command. It's called
-    # with three arguments: command name, an Array of arguments, user name
-    #
+    # with three arguments: command name, an Array of arguments, user name, hostname
+    # e.g.
+    #     rbox.pre_command_hook do |cmd,args,user,host|
+    #       ...
+    #     end
     def pre_command_hook(&block)
       @rye_pre_command_hook = block if block
       @rye_pre_command_hook
