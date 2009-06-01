@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: Rye::Rap [Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          Rye::Rap
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/rye/rap_rb.html">lib/rye/rap.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Array</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            <a href="Rap.html">Rye::Rap</a>
+            </p>
+            <p>
+            This class is a modified Array which is returned by all command methods.
+            The command output is split by line into an instance of this class. If
+            there is only a single element it will act like a String.
+            </p>
+            <p>
+            This class also contains a reference to the instance of <a
+            href="Box.html">Rye::Box</a> or <a href="Set.html">Rye::Set</a> that the
+            command was executed on.
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000113">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000117">add_exit_code</a></li>
+              <li><a href="#M000115">add_stderr</a></li>
+              <li><a href="#M000116">add_stdout</a></li>
+              <li><a href="#M000118">code</a></li>
+              <li><a href="#M000114">stdout</a></li>
+              <li><a href="#M000119">to_s</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='aliases-list'>
+              <h2>External Aliases</h2>
+              <div class='name-list'>
+                <table summary='External aliases'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>obj</td>
+                    <td>-&gt;</td>
+                    <td class='context-item-value'>box</td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>obj</td>
+                    <td>-&gt;</td>
+                    <td class='context-item-value'>set</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>cmd</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      The command that was executed.
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>exit_code</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>exit_signal</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>obj</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      A reference to the <a href="../Rye.html">Rye</a> object instance the
+                      command was executed by (<a href="Box.html">Rye::Box</a> or <a
+                      href="Set.html">Rye::Set</a>)
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>pid</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      Only populated when calling via Rye::Shell
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>stderr</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      An array containing any STDERR output
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000113'>
+                <a name='M000113'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(obj, *args)</span>
+                </div>
+                <div class='description'>
+                  <ul>
+                  <li><tt>obj</tt> an instance of <a href="Box.html">Rye::Box</a> or <a
+                  href="Set.html">Rye::Set</a>
+                  
+                  </li>
+                  <li><tt>args</tt> anything that can sent to Array#new
+                  
+                  </li>
+                  </ul>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000113-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000113-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 33</span>&#x000A;33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;34:       <span class="ruby-ivar">@obj</span> = <span class="ruby-identifier">obj</span>&#x000A;35:       <span class="ruby-ivar">@exit_code</span> = <span class="ruby-value">0</span>&#x000A;36:       <span class="ruby-ivar">@stderr</span> = []&#x000A;37:       <span class="ruby-keyword kw">super</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>&#x000A;38:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000117'>
+                <a name='M000117'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_exit_code</span>
+                  <span class='arguments'>(code)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Parse the exit code.
+                  </p>
+                  <ul>
+                  <li><tt>code</tt> an exit code string or integer or Process::Status object
+                  
+                  </li>
+                  </ul>
+                  <p>
+                  For example, when running a command via <a
+                  href="../Rye.html#M000011">Rye.shell</a>, this method is send $? which is
+                  Process::Status object. Via Rye::Box.run_command it&#8217;s just an exit
+                  code returned by Net::SSH. Returns the exit code as an Integer.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000117-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000117-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_exit_code</span>(<span class="ruby-identifier">code</span>)&#x000A;79:       <span class="ruby-identifier">code</span> = <span class="ruby-value">-1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">code</span>&#x000A;80:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-constant">Status</span>)&#x000A;81:         <span class="ruby-ivar">@exit_code</span>, <span class="ruby-ivar">@pid</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">exitstatus</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">code</span>.<span class="ruby-identifier">pid</span>&#x000A;82:       <span class="ruby-keyword kw">else</span>&#x000A;83:         <span class="ruby-ivar">@exit_code</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">to_i</span>&#x000A;84:       <span class="ruby-keyword kw">end</span>&#x000A;85:       <span class="ruby-ivar">@exit_code</span>&#x000A;86:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000115'>
+                <a name='M000115'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_stderr</span>
+                  <span class='arguments'>(*args)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Add STDERR output from the command executed via SSH.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000115-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000115-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 52</span>&#x000A;52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stderr</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;53:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;54:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;55:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">||=</span> []&#x000A;56:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;57:       <span class="ruby-ivar">@stderr</span>.<span class="ruby-identifier">flatten!</span>&#x000A;58:       <span class="ruby-keyword kw">self</span>&#x000A;59:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000116'>
+                <a name='M000116'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_stdout</span>
+                  <span class='arguments'>(*args)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Add STDOUT output from the command executed via SSH. This is available to
+                  maintain consistency with the <a href="Rap.html#M000115">add_stderr</a>
+                  method. Otherwise there&#8217;s no need to use this method (treat the <a
+                  href="Rap.html">Rye::Rap</a> object like an Array).
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000116-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000116-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stdout</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;66:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;67:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;68:       <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;69:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">flatten!</span>&#x000A;70:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000118'>
+                <a name='M000118'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>code</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000118-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000118-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 87</span>&#x000A;87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">code</span>; <span class="ruby-ivar">@exit_code</span>; <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000114'>
+                <a name='M000114'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>stdout</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a reference to the <a href="Rap.html">Rye::Rap</a> object (which
+                  acts like an Array that contains the STDOUT from the command executed over
+                  SSH). This is available to maintain consistency with the stderr method.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000114-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000114-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stdout</span>&#x000A;48:       <span class="ruby-keyword kw">self</span>&#x000A;49:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000119'>
+                <a name='M000119'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>to_s</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns the first element if there it&#8217;s the only one, otherwise the
+                  value of Array#to_s
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000119-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000119-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 91</span>&#x000A;91:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>&#x000A;92:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;93:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>&#x000A;94:       <span class="ruby-keyword kw">self</span>&#x000A;95:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
