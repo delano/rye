@@ -142,7 +142,8 @@ module Rye
         @rye_current_working_directory = key
       else
         # Append to non-absolute paths
-        @rye_current_working_directory = File.join(@rye_current_working_directory, key)
+        newpath = File.join(@rye_current_working_directory, key)
+        @rye_current_working_directory = File.expand_path(newpath)
       end
       self
     end
