@@ -32,7 +32,8 @@ module Rye
     def host; @rye_host; end
     def opts; @rye_opts; end
     def safe; @rye_safe; end
-
+    def user; (@rye_opts || {})[:user]; end
+    
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
     def safe=(val); @rye_safe = val; end
@@ -307,9 +308,6 @@ module Rye
       self
     end
     alias :add_env :setenv  # deprecated?
-    
-    # The name of the user that opened the SSH connection
-    def user; (@rye_opts || {})[:user]; end
     
     # See Rye.keys
     def keys; Rye.keys; end
@@ -591,7 +589,7 @@ module Rye
       debug "Executing: %s" % cmd_clean
       
       if @rye_pre_command_hook.is_a?(Proc)
-        @rye_pre_command_hook.call(cmd, args, opts[:user])  
+        @rye_pre_command_hook.call(cmd, args, user, host)  
       end
       
       ## NOTE: Do not raise a CommandNotFound exception in this method.
