@@ -43,6 +43,7 @@ module Rye;
     def sed(*args); cmd('sed', args); end
     def awk(*args); cmd('awk', args); end
     def cat(*args); cmd('cat', args); end
+    def tar(*args); cmd('tar', args); end
     
     #def kill(*args); cmd('kill', args); end
     def sudo(*args); cmd('sudo', args); end
@@ -54,6 +55,7 @@ module Rye;
     def echo(*args); cmd('echo', args); end
     def test(*args); cmd('test', args); end
     def mkfs(*args); cmd('mkfs', args); end
+    def gzip(*args); cmd('gzip', args); end
     
     def mount(*args); cmd("mount", args); end
     def sleep(*args); cmd("sleep", args); end
@@ -62,11 +64,15 @@ module Rye;
     def uname(*args); cmd('uname', args); end
     def chmod(*args); cmd('chmod', args); end
     def chown(*args); cmd('chown', args); end
+    def unzip(*args); cmd('unzip', args); end
+    def bzip2(*args); cmd('bzip2', args); end
     
     def umount(*args); cmd("umount", args); end
     def uptime(*args); cmd("uptime", args); end
     def python(*args); cmd('python', args); end
+    def gunzip(*args); cmd('gunzip', args); end
     def useradd(*args); cmd('useradd', args); end
+    def bunzip2(*args); cmd('bunzip2', args); end
     def getconf(*args); cmd('getconf', args); end
     def history(*args); cmd('history', args); end
     def printenv(*args); cmd('printenv', args); end
