@@ -511,6 +511,25 @@ module Rye
       self.instance_exec *args, &block
     end
     
+    # Like batch, except it disables safe mode before executing the block. 
+    # After executing the block, safe mode is returned back to whichever
+    # state it was previously in. In other words, this method won't enable
+    # safe mode if it was already disabled.
+    def unsafely(*args, &block)
+      previous_state = @rye_safe
+      disable_safe_mode
+      self.instance_exec *args, &block
+      @rye_safe = previous_state
+    end
+    
+    # See unsafely (except in reverse)
+    def safely(*args, &block)
+      previous_state = @rye_safe
+      enable_safe_mode
+      self.instance_exec *args, &block
+      @rye_safe = previous_state
+    end
+    
     # instance_exec for Ruby 1.8 written by Mauricio Fernandez
     # http://eigenclass.org/hiki/instance_exec
     if RUBY_VERSION =~ /1.8/
