@@ -36,8 +36,10 @@ module Rye
     
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
-    def safe=(val); @rye_safe = val; end
-
+    
+    def enable_safe_mode;  @rye_safe = true; end
+    def disable_safe_mode; @rye_safe = false; end
+    
     # The most recent value from Box.cd or Box.[]
     def current_working_directory; @rye_current_working_directory; end
 
@@ -100,7 +102,7 @@ module Rye
       @rye_info = STDOUT if @rye_info == true
       
       @rye_opts[:logger] = Logger.new(@rye_debug) if @rye_debug # Enable Net::SSH debugging
-      @rye_opts[:paranoid] = true unless @rye_opts[:safe] == false # See Net::SSH.start
+      @rye_opts[:paranoid] = true unless @rye_safe == false # See Net::SSH.start
       
       # Add the given private keys to the keychain that will be used for @rye_host
       add_keys(@rye_opts[:keys])
@@ -582,7 +584,7 @@ module Rye
       
       connect if !@rye_ssh || @rye_ssh.closed?
       raise Rye::NotConnected, @rye_host unless @rye_ssh && !@rye_ssh.closed?
-
+      
       cmd_clean = Rye.escape(@rye_safe, cmd, args)
       cmd_clean = prepend_env(cmd_clean)
       
