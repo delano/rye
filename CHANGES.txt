@@ -6,6 +6,16 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 * Add S3 support for Rye::Box.upload / download
 
+#### 0.7.3 (2009-06-03) #############################
+
+* ADDED: enable_safe_mode and disable_safe_mode methods
+* ADDED: New default Rye::Cmd methods: gzip, bzip, tar and all derivatives. 
+* FIXED: Net::SSH paranoid now set to false when safe mode is disabled.  
+
+
+#### 0.7.2 (2009-06-01) #############################
+
+*A re-release of 0.7.1 to force Rubyforge to update the gem*
 
 #### 0.7.1 (2009-06-01) #############################
 
