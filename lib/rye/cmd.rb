@@ -56,6 +56,7 @@ module Rye;
     def test(*args); cmd('test', args); end
     def mkfs(*args); cmd('mkfs', args); end
     def gzip(*args); cmd('gzip', args); end
+    def make(*args); cmd('make', args); end
     
     def mount(*args); cmd("mount", args); end
     def sleep(*args); cmd("sleep", args); end
@@ -77,6 +78,7 @@ module Rye;
     def history(*args); cmd('history', args); end
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
+    def configure(*args); cmd('./configure', args); end
     
     # Transfer files to a machine via Net::SCP. 
     # * +files+ is an Array of files to upload. The last element is the 
