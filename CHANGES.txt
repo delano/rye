@@ -10,7 +10,9 @@ TODO
 
 * ADDED: enable_safe_mode and disable_safe_mode methods
 * ADDED: New default Rye::Cmd methods: gzip, bzip, tar and all derivatives. 
-* ADDED: Rye::Box#safely and Rye::Box#unsafely methods
+* ADDED: Rye::Cmd#safely and Rye::Cmd#unsafely methods
+* ADDED: Rye::Cmd#digest_md5, Rye::Cmd#digest_sha1, Rye::Cmd#digest_sha2 methods
+* ADDED: Rye::Cmd#file_verified? method
 * FIXED: Net::SSH paranoid now set to false when safe mode is disabled.  
 
 

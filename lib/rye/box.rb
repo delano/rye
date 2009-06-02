@@ -530,6 +530,7 @@ module Rye
       @rye_safe = previous_state
     end
     
+    
     # instance_exec for Ruby 1.8 written by Mauricio Fernandez
     # http://eigenclass.org/hiki/instance_exec
     if RUBY_VERSION =~ /1.8/

@@ -124,7 +124,7 @@ module Rye;
       self.upload file_content, filepath
     end
     
-    # Does a remote path exist?
+    # Does +path+ from the current working directory?
     def file_exists?(path)
       begin
         ret = self.ls(path)
@@ -135,7 +135,42 @@ module Rye;
       # But on OSX exit code is 1. This is why we look at STDERR. 
       ret.stderr.empty?
     end
-     
+    
+    # Does the calculated digest of +path+ match the known +expected_digest+?
+    # This is useful for verifying downloaded files. 
+    # +digest_type+ must be one of: :md5, :sha1, :sha2
+    def file_verified?(path, expected_digest, digest_type=:md5)
+      return false unless file_exists?(path)
+      raise "Unknown disgest type: #{digest_type}" unless can?("digest_#{digest_type}")
+      digest = self.send("digest_#{digest_type}", path).first
+      info "#{digest_type} (#{path}) = #{digest}"
+      digest.to_s == expected_digest.to_s
+    end
+    
+    # * +files+ An Array of file paths 
+    # Returns an Array of MD5 digests for each of the given files
+    def digest_md5(*files)
+      files.flatten.collect { |file| 
+        File.exists?(file) ? Digest::MD5.hexdigest(File.read(file)) : nil
+      }
+    end
+    
+    # * +files+ An Array of file paths 
+    # Returns an Array of SH1 digests for each of the given files
+    def digest_sha1(*files)
+      files.flatten.collect { |file| 
+        File.exists?(file) ? Digest::SHA1.hexdigest(File.read(file)) : nil
+      }
+    end
+    
+    # * +files+ An Array of file paths 
+    # Returns an Array of SH2 digests for each of the given files
+    def digest_sha2(*files)
+      files.flatten.collect { |file| 
+        File.exists?(file) ? Digest::SHA2.hexdigest(File.read(file)) : nil
+      }
+    end
+    
     # Returns an Array of system commands available over SSH
     def can
       Rye::Cmd.instance_methods
