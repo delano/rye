@@ -45,30 +45,30 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000140">from_file</a></li>
-              <li><a href="#M000139">generate_pkey</a></li>
-              <li><a href="#M000138">new</a></li>
-              <li><a href="#M000153">public_key_to_ssh2</a></li>
-              <li><a href="#M000142">sign</a></li>
-              <li><a href="#M000143">sign_aws</a></li>
-              <li><a href="#M000157">supported_authentication?</a></li>
-              <li><a href="#M000158">supported_keytype?</a></li>
+              <li><a href="#M000155">from_file</a></li>
+              <li><a href="#M000154">generate_pkey</a></li>
+              <li><a href="#M000153">new</a></li>
+              <li><a href="#M000168">public_key_to_ssh2</a></li>
+              <li><a href="#M000157">sign</a></li>
+              <li><a href="#M000158">sign_aws</a></li>
+              <li><a href="#M000172">supported_authentication?</a></li>
+              <li><a href="#M000173">supported_keytype?</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000147">decrypt</a></li>
-              <li><a href="#M000151">dsa?</a></li>
-              <li><a href="#M000154">dump</a></li>
-              <li><a href="#M000146">encrypt</a></li>
-              <li><a href="#M000152">encrypted?</a></li>
-              <li><a href="#M000156">inspect</a></li>
-              <li><a href="#M000148">private?</a></li>
-              <li><a href="#M000144">private_key</a></li>
-              <li><a href="#M000149">public?</a></li>
-              <li><a href="#M000145">public_key</a></li>
-              <li><a href="#M000150">rsa?</a></li>
-              <li><a href="#M000141">sign</a></li>
-              <li><a href="#M000155">to_s</a></li>
+              <li><a href="#M000162">decrypt</a></li>
+              <li><a href="#M000166">dsa?</a></li>
+              <li><a href="#M000169">dump</a></li>
+              <li><a href="#M000161">encrypt</a></li>
+              <li><a href="#M000167">encrypted?</a></li>
+              <li><a href="#M000171">inspect</a></li>
+              <li><a href="#M000163">private?</a></li>
+              <li><a href="#M000159">private_key</a></li>
+              <li><a href="#M000164">public?</a></li>
+              <li><a href="#M000160">public_key</a></li>
+              <li><a href="#M000165">rsa?</a></li>
+              <li><a href="#M000156">sign</a></li>
+              <li><a href="#M000170">to_s</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -111,47 +111,47 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000140'>
-                <a name='M000140'>      </a>
+              <div class='public-class method' id='method-M000155'>
+                <a name='M000155'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_file</span>
                   <span class='arguments'>(path)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000140-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000155-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000140-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 35</span>&#x000A;35:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">path</span>)&#x000A;36:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadFile</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;37:       <span class="ruby-identifier">pkey</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)&#x000A;38:       <span class="ruby-identifier">file_perms</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">600</span>)&#x000A;39:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadPerm</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_perms</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pkey</span>.<span class="ruby-identifier">private?</span>&#x000A;40:       <span class="ruby-identifier">pkey</span>&#x000A;41:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000155-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 35</span>&#x000A;35:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">path</span>)&#x000A;36:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadFile</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;37:       <span class="ruby-identifier">pkey</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)&#x000A;38:       <span class="ruby-identifier">file_perms</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">600</span>)&#x000A;39:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadPerm</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_perms</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pkey</span>.<span class="ruby-identifier">private?</span>&#x000A;40:       <span class="ruby-identifier">pkey</span>&#x000A;41:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000139'>
-                <a name='M000139'>      </a>
+              <div class='public-class method' id='method-M000154'>
+                <a name='M000154'>      </a>
                 <div class='synopsis'>
                   <span class='name'>generate_pkey</span>
                   <span class='arguments'>(authtype=&quot;RSA&quot;, bits=1024)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000139-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000154-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000139-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 26</span>&#x000A;26:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generate_pkey</span>(<span class="ruby-identifier">authtype</span>=<span class="ruby-value str">&quot;RSA&quot;</span>, <span class="ruby-identifier">bits</span>=<span class="ruby-value">1024</span>)&#x000A;27:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">authtype</span>)&#x000A;28:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-node">&quot;Unknown authentication: #{authttype}&quot;</span> &#x000A;29:       <span class="ruby-keyword kw">end</span>&#x000A;30:       <span class="ruby-identifier">bits</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">bits</span>.<span class="ruby-identifier">to_i</span>&#x000A;31:       <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;RSA&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span> <span class="ruby-operator">:</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">DSA</span>&#x000A;32:       <span class="ruby-identifier">pk</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">bits</span>)&#x000A;33:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000154-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 26</span>&#x000A;26:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generate_pkey</span>(<span class="ruby-identifier">authtype</span>=<span class="ruby-value str">&quot;RSA&quot;</span>, <span class="ruby-identifier">bits</span>=<span class="ruby-value">1024</span>)&#x000A;27:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">authtype</span>)&#x000A;28:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-node">&quot;Unknown authentication: #{authttype}&quot;</span> &#x000A;29:       <span class="ruby-keyword kw">end</span>&#x000A;30:       <span class="ruby-identifier">bits</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">bits</span>.<span class="ruby-identifier">to_i</span>&#x000A;31:       <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;RSA&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span> <span class="ruby-operator">:</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">DSA</span>&#x000A;32:       <span class="ruby-identifier">pk</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">bits</span>)&#x000A;33:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000138'>
-                <a name='M000138'>      </a>
+              <div class='public-class method' id='method-M000153'>
+                <a name='M000153'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(data, name=nil)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000138-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000153-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000138-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 20</span>&#x000A;20:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;21:       <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">data</span>&#x000A;22:       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'default'</span>&#x000A;23:       <span class="ruby-identifier">parse_data</span>&#x000A;24:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000153-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 20</span>&#x000A;20:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;21:       <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">data</span>&#x000A;22:       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'default'</span>&#x000A;23:       <span class="ruby-identifier">parse_data</span>&#x000A;24:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000153'>
-                <a name='M000153'>      </a>
+              <div class='public-class method' id='method-M000168'>
+                <a name='M000168'>      </a>
                 <div class='synopsis'>
                   <span class='name'>public_key_to_ssh2</span>
                   <span class='arguments'>(pubkey)</span>
@@ -167,106 +167,106 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000153-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000168-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000153-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 82</span>&#x000A;82:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-identifier">pubkey</span>)&#x000A;83:       <span class="ruby-identifier">authtype</span> = <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'::'</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">downcase</span>&#x000A;84:       <span class="ruby-identifier">b64pub</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_blob</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[\r\n]/</span>, <span class="ruby-value str">''</span>)&#x000A;85:       <span class="ruby-value str">&quot;ssh-%s %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">authtype</span>, <span class="ruby-identifier">b64pub</span>]  <span class="ruby-comment cmt"># =&gt; ssh-rsa AAAAB3NzaC1...=</span>&#x000A;86:     <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-class method' id='method-M000142'>
-                <a name='M000142'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>sign</span>
-                  <span class='arguments'>(secret, string, digesttype=&quot;sha1&quot;)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000142-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000142-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 48</span>&#x000A;48:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-value str">&quot;sha1&quot;</span>)&#x000A;49:       <span class="ruby-ivar">@@digest</span> <span class="ruby-operator">||=</span> {} &#x000A;50:       <span class="ruby-ivar">@@digest</span>[<span class="ruby-identifier">digest</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">digesttype</span>)&#x000A;51:       <span class="ruby-identifier">sig</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">HMAC</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-ivar">@@digest</span>[<span class="ruby-identifier">digest</span>], <span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>).<span class="ruby-identifier">strip</span>&#x000A;52:     <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-class method' id='method-M000143'>
-                <a name='M000143'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>sign_aws</span>
-                  <span class='arguments'>(secret, string)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000143-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000143-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign_aws</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>)&#x000A;54:       <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-value str">&quot;sha1&quot;</span>)).<span class="ruby-identifier">strip</span>&#x000A;55:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000168-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 82</span>&#x000A;82:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-identifier">pubkey</span>)&#x000A;83:       <span class="ruby-identifier">authtype</span> = <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'::'</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">downcase</span>&#x000A;84:       <span class="ruby-identifier">b64pub</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_blob</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[\r\n]/</span>, <span class="ruby-value str">''</span>)&#x000A;85:       <span class="ruby-value str">&quot;ssh-%s %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">authtype</span>, <span class="ruby-identifier">b64pub</span>]  <span class="ruby-comment cmt"># =&gt; ssh-rsa AAAAB3NzaC1...=</span>&#x000A;86:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-class method' id='method-M000157'>
                 <a name='M000157'>      </a>
                 <div class='synopsis'>
-                  <span class='name'>supported_authentication?</span>
-                  <span class='arguments'>(val)</span>
+                  <span class='name'>sign</span>
+                  <span class='arguments'>(secret, string, digesttype=&quot;sha1&quot;)</span>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000157-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000157-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 109</span>&#x000A;109:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">val</span>)&#x000A;110:       [<span class="ruby-value str">&quot;RSA&quot;</span>, <span class="ruby-value str">&quot;DSA&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;111:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000157-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 48</span>&#x000A;48:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-value str">&quot;sha1&quot;</span>)&#x000A;49:       <span class="ruby-ivar">@@digest</span> <span class="ruby-operator">||=</span> {} &#x000A;50:       <span class="ruby-ivar">@@digest</span>[<span class="ruby-identifier">digest</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">digesttype</span>)&#x000A;51:       <span class="ruby-identifier">sig</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">HMAC</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-ivar">@@digest</span>[<span class="ruby-identifier">digest</span>], <span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>).<span class="ruby-identifier">strip</span>&#x000A;52:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-class method' id='method-M000158'>
                 <a name='M000158'>      </a>
                 <div class='synopsis'>
-                  <span class='name'>supported_keytype?</span>
-                  <span class='arguments'>(val)</span>
+                  <span class='name'>sign_aws</span>
+                  <span class='arguments'>(secret, string)</span>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000158-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000158-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 113</span>&#x000A;113:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">supported_keytype?</span>(<span class="ruby-identifier">val</span>)&#x000A;114:       [<span class="ruby-value str">&quot;PRIVATE&quot;</span>, <span class="ruby-value str">&quot;PUBLIC&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;115:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000158-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign_aws</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>)&#x000A;54:       <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-value str">&quot;sha1&quot;</span>)).<span class="ruby-identifier">strip</span>&#x000A;55:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-class method' id='method-M000172'>
+                <a name='M000172'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>supported_authentication?</span>
+                  <span class='arguments'>(val)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000172-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000172-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 109</span>&#x000A;109:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">val</span>)&#x000A;110:       [<span class="ruby-value str">&quot;RSA&quot;</span>, <span class="ruby-value str">&quot;DSA&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;111:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-class method' id='method-M000173'>
+                <a name='M000173'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>supported_keytype?</span>
+                  <span class='arguments'>(val)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000173-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000173-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 113</span>&#x000A;113:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">supported_keytype?</span>(<span class="ruby-identifier">val</span>)&#x000A;114:       [<span class="ruby-value str">&quot;PRIVATE&quot;</span>, <span class="ruby-value str">&quot;PUBLIC&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>)&#x000A;115:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000147'>
-                <a name='M000147'>      </a>
+              <div class='public-instance method' id='method-M000162'>
+                <a name='M000162'>      </a>
                 <div class='synopsis'>
                   <span class='name'>decrypt</span>
                   <span class='arguments'>(text)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000147-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000162-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000147-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 72</span>&#x000A;72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_decrypt&quot;</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">text</span>)); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000162-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 72</span>&#x000A;72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_decrypt&quot;</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">text</span>)); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000151'>
-                <a name='M000151'>      </a>
+              <div class='public-instance method' id='method-M000166'>
+                <a name='M000166'>      </a>
                 <div class='synopsis'>
                   <span class='name'>dsa?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000151-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000166-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000151-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 77</span>&#x000A;77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;DSA&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000166-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 77</span>&#x000A;77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;DSA&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000154'>
-                <a name='M000154'>      </a>
+              <div class='public-instance method' id='method-M000169'>
+                <a name='M000169'>      </a>
                 <div class='synopsis'>
                   <span class='name'>dump</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000154-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000169-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000154-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 88</span>&#x000A;88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump</span>&#x000A;89:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_text</span>&#x000A;90:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_pem</span>&#x000A;91:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000169-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 88</span>&#x000A;88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dump</span>&#x000A;89:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_text</span>&#x000A;90:       <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_pem</span>&#x000A;91:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000146'>
-                <a name='M000146'>      </a>
+              <div class='public-instance method' id='method-M000161'>
+                <a name='M000161'>      </a>
                 <div class='synopsis'>
                   <span class='name'>encrypt</span>
                   <span class='arguments'>(text)</span>
@@ -277,27 +277,27 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000146-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000161-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000146-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 71</span>&#x000A;71:     <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">encrypt</span><span class="ruby-identifier">encrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_encrypt&quot;</span>, <span class="ruby-identifier">text</span>)); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000161-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 71</span>&#x000A;71:     <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">encrypt</span><span class="ruby-identifier">encrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_encrypt&quot;</span>, <span class="ruby-identifier">text</span>)); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000152'>
-                <a name='M000152'>      </a>
+              <div class='public-instance method' id='method-M000167'>
+                <a name='M000167'>      </a>
                 <div class='synopsis'>
                   <span class='name'>encrypted?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000152-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000167-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000152-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encrypted?</span>; <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/ENCRYPTED/</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000167-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encrypted?</span>; <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/ENCRYPTED/</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000156'>
-                <a name='M000156'>      </a>
+              <div class='public-instance method' id='method-M000171'>
+                <a name='M000171'>      </a>
                 <div class='synopsis'>
                   <span class='name'>inspect</span>
                   <span class='arguments'>()</span>
@@ -309,92 +309,92 @@
                   <pre>&lt;Rye::Key:id_rsa.pub authtype=&quot;RSA&quot; keytype=&quot;PRIVATE&quot;&gt;</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000156-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000171-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000156-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 105</span>&#x000A;105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>&#x000A;106:       <span class="ruby-value str">'&lt;%s:%s authtype=&quot;%s&quot; keytype=&quot;%s&quot;&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>, <span class="ruby-ivar">@authtype</span>, <span class="ruby-ivar">@keytype</span>]&#x000A;107:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000171-source'>     <span class="ruby-comment cmt"># File lib/rye/key.rb, line 105</span>&#x000A;105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>&#x000A;106:       <span class="ruby-value str">'&lt;%s:%s authtype=&quot;%s&quot; keytype=&quot;%s&quot;&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>, <span class="ruby-ivar">@authtype</span>, <span class="ruby-ivar">@keytype</span>]&#x000A;107:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000148'>
-                <a name='M000148'>      </a>
+              <div class='public-instance method' id='method-M000163'>
+                <a name='M000163'>      </a>
                 <div class='synopsis'>
                   <span class='name'>private?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000148-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000163-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000148-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 74</span>&#x000A;74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">private?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;PRIVATE&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000163-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 74</span>&#x000A;74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">private?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;PRIVATE&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000144'>
-                <a name='M000144'>      </a>
+              <div class='public-instance method' id='method-M000159'>
+                <a name='M000159'>      </a>
                 <div class='synopsis'>
                   <span class='name'>private_key</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000144-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000159-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000144-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 57</span>&#x000A;57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">private_key</span>&#x000A;58:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-value str">&quot;No private key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">public?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>&#x000A;59:       <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>&#x000A;60:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000159-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 57</span>&#x000A;57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">private_key</span>&#x000A;58:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-value str">&quot;No private key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">public?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>&#x000A;59:       <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>&#x000A;60:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000149'>
-                <a name='M000149'>      </a>
+              <div class='public-instance method' id='method-M000164'>
+                <a name='M000164'>      </a>
                 <div class='synopsis'>
                   <span class='name'>public?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000149-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000164-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000149-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;PUBLIC&quot;</span>;  <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000164-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;PUBLIC&quot;</span>;  <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000145'>
-                <a name='M000145'>      </a>
+              <div class='public-instance method' id='method-M000160'>
+                <a name='M000160'>      </a>
                 <div class='synopsis'>
                   <span class='name'>public_key</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000145-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000160-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000145-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 62</span>&#x000A;62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public_key</span>&#x000A;63:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-value str">&quot;No public key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>&#x000A;64:       <span class="ruby-identifier">pubkey</span> = <span class="ruby-identifier">public?</span> <span class="ruby-value">? </span><span class="ruby-ivar">@keypair</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>&#x000A;65:       <span class="ruby-comment cmt"># Add the to_ssh2 method to the instance of OpenSSL::PKey::*SA only</span>&#x000A;66:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_ssh2</span>; <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-keyword kw">self</span>);  <span class="ruby-keyword kw">end</span>&#x000A;67:       <span class="ruby-identifier">pubkey</span>&#x000A;68:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000160-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 62</span>&#x000A;62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public_key</span>&#x000A;63:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-value str">&quot;No public key&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>&#x000A;64:       <span class="ruby-identifier">pubkey</span> = <span class="ruby-identifier">public?</span> <span class="ruby-value">? </span><span class="ruby-ivar">@keypair</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>&#x000A;65:       <span class="ruby-comment cmt"># Add the to_ssh2 method to the instance of OpenSSL::PKey::*SA only</span>&#x000A;66:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_ssh2</span>; <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-keyword kw">self</span>);  <span class="ruby-keyword kw">end</span>&#x000A;67:       <span class="ruby-identifier">pubkey</span>&#x000A;68:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000150'>
-                <a name='M000150'>      </a>
+              <div class='public-instance method' id='method-M000165'>
+                <a name='M000165'>      </a>
                 <div class='synopsis'>
                   <span class='name'>rsa?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000150-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000165-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000150-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 76</span>&#x000A;76:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;RSA&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000165-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 76</span>&#x000A;76:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;RSA&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000141'>
-                <a name='M000141'>      </a>
+              <div class='public-instance method' id='method-M000156'>
+                <a name='M000156'>      </a>
                 <div class='synopsis'>
                   <span class='name'>sign</span>
                   <span class='arguments'>(string, digesttype=&quot;sha1&quot;)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000141-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000156-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000141-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 44</span>&#x000A;44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sign</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-value str">&quot;sha1&quot;</span>)&#x000A;45:       <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>)&#x000A;46:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000156-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 44</span>&#x000A;44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sign</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-value str">&quot;sha1&quot;</span>)&#x000A;45:       <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>)&#x000A;46:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000155'>
-                <a name='M000155'>      </a>
+              <div class='public-instance method' id='method-M000170'>
+                <a name='M000170'>      </a>
                 <div class='synopsis'>
                   <span class='name'>to_s</span>
                   <span class='arguments'>()</span>
@@ -406,10 +406,10 @@
                   <pre>&lt;Rye::Key:id_rsa.pub&gt;</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000155-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000170-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000155-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 97</span>&#x000A;97:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>&#x000A;98:       <span class="ruby-value str">'&lt;%s:%s&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>]&#x000A;99:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000170-source'>    <span class="ruby-comment cmt"># File lib/rye/key.rb, line 97</span>&#x000A;97:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>&#x000A;98:       <span class="ruby-value str">'&lt;%s:%s&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>]&#x000A;99:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
