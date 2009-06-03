@@ -171,57 +171,6 @@ module Rye
     end
     
     
-    # Open an SSH session with +@rye_host+. This called automatically
-    # when you the first comamnd is run if it's not already connected.
-    # Raises a Rye::NoHost exception if +@rye_host+ is not specified.
-    # Will attempt a password login up to 3 times if the initial 
-    # authentication fails. 
-    # * +reconnect+ Disconnect first if already connected. The default
-    # is true. When set to false, connect will do nothing if already 
-    # connected. 
-    def connect(reconnect=true)
-      raise Rye::NoHost unless @rye_host
-      return if @rye_ssh && !reconnect
-      disconnect if @rye_ssh 
-      debug "Opening connection to #{@rye_host} as #{@rye_opts[:user]}"
-      highline = HighLine.new # Used for password prompt
-      retried = 0
-      
-      begin
-        @rye_ssh = Net::SSH.start(@rye_host, @rye_opts[:user], @rye_opts || {}) 
-      rescue Net::SSH::HostKeyMismatch => ex
-        STDERR.puts ex.message
-        STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
-        print "\a" if @rye_info # Ring the bell
-        if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
-          @rye_opts[:paranoid] = false
-          retry
-        else
-          raise Net::SSH::HostKeyMismatch
-        end
-      rescue Net::SSH::AuthenticationFailed => ex
-        print "\a" if retried == 0 && @rye_info # Ring the bell once
-        retried += 1
-        if STDIN.tty? && retried <= 3
-          STDERR.puts "Passwordless login failed for #{@rye_opts[:user]}"
-          @rye_opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
-          @rye_opts[:auth_methods] ||= []
-          @rye_opts[:auth_methods] << 'password'
-          retry
-        else
-          raise Net::SSH::AuthenticationFailed
-        end
-      end
-      
-      # We add :auth_methods (a Net::SSH joint) to force asking for a
-      # password if the initial (key-based) authentication fails. We
-      # need to delete the key from @rye_opts otherwise it lingers until
-      # the next connection (if we switch_user is called for example).
-      @rye_opts.delete :auth_methods if @rye_opts.has_key?(:auth_methods)
-      
-      self
-    end
-    
     # Reconnect as another user. This is different from su=
     # which executes subsequent commands via +su -c COMMAND USER+. 
     # * +newuser+ The username to reconnect as 
@@ -561,6 +510,59 @@ module Rye
     end
 
     
+    
+    # Open an SSH session with +@rye_host+. This called automatically
+    # when you the first comamnd is run if it's not already connected.
+    # Raises a Rye::NoHost exception if +@rye_host+ is not specified.
+    # Will attempt a password login up to 3 times if the initial 
+    # authentication fails. 
+    # * +reconnect+ Disconnect first if already connected. The default
+    # is true. When set to false, connect will do nothing if already 
+    # connected. 
+    def connect(reconnect=true)
+      raise Rye::NoHost unless @rye_host
+      return if @rye_ssh && !reconnect
+      disconnect if @rye_ssh 
+      debug "Opening connection to #{@rye_host} as #{@rye_opts[:user]}"
+      highline = HighLine.new # Used for password prompt
+      retried = 0
+      
+      begin
+        @rye_ssh = Net::SSH.start(@rye_host, @rye_opts[:user], @rye_opts || {}) 
+      rescue Net::SSH::HostKeyMismatch => ex
+        STDERR.puts ex.message
+        STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
+        print "\a" if @rye_info # Ring the bell
+        if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
+          @rye_opts[:paranoid] = false
+          retry
+        else
+          raise Net::SSH::HostKeyMismatch
+        end
+      rescue Net::SSH::AuthenticationFailed => ex
+        print "\a" if retried == 0 && @rye_info # Ring the bell once
+        retried += 1
+        if STDIN.tty? && retried <= 3
+          STDERR.puts "Passwordless login failed for #{@rye_opts[:user]}"
+          @rye_opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
+          @rye_opts[:auth_methods] ||= []
+          @rye_opts[:auth_methods] << 'password'
+          retry
+        else
+          raise Net::SSH::AuthenticationFailed
+        end
+      end
+      
+      # We add :auth_methods (a Net::SSH joint) to force asking for a
+      # password if the initial (key-based) authentication fails. We
+      # need to delete the key from @rye_opts otherwise it lingers until
+      # the next connection (if we switch_user is called for example).
+      @rye_opts.delete :auth_methods if @rye_opts.has_key?(:auth_methods)
+      
+      self
+    end
+    
+    
   private
       
     def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end
@@ -689,7 +691,16 @@ module Rye
         channel[:stderr] ||= ""
         channel[:exit_code] ||= 0
         channel[:stdout] << data if type == :stdout
-        channel[:stderr] << data if type == :stderr
+        if type == :stderr
+          # NOTE: Use sudo to test this since it prompts for a passwords. 
+          # Use sudo -K to kill the user's timestamp (ask for a password every time)
+          if data =~ /Password:/
+            ret = Annoy.get_user_input("Password: ", '*')
+            channel.send_data "#{ret}\n"
+          else
+            channel[:stderr] << data 
+          end
+        end
         channel.on_request("exit-status") do |ch, data|
           # Anything greater than 0 is an error
           channel[:exit_code] = data.read_long
@@ -698,22 +709,19 @@ module Rye
           # This should be the POSIX SIGNAL that ended the process
           channel[:exit_signal] = data.read_long
         end
-        # For long-running commands like top, this will print the output.
-        # It's cool, but we'd also need to enable STDIN to interact with 
-        # command. 
-        #channel.on_data do |ch, data|
-        #  puts "got stdout: #{data}"
-        #  #channel.send_data "something for stdin\n"
-        #end
-        #
-        #channel.on_extended_data do |ch, data|
-        #  #puts "got stdout: #{data}"
-        #  #channel.send_data "something for stdin\n"
-        #end
+        #p [type, data]
+        # INCOMPLETE / BROKEN
+        
+        # http://www.ruby-forum.com/topic/141814
+        # http://www.ruby-forum.com/topic/169997
       end
       
       channel = @rye_ssh.exec(command, &block)
+      
       channel.wait  # block until we get a response
+      channel.request_pty do |ch, success|
+        raise "Could not obtain pty (i.e. an interactive ssh session)" if !success
+      end
       
       channel[:exit_code] = 0 if channel[:exit_code] == nil
       channel[:exit_code] &&= channel[:exit_code].to_i

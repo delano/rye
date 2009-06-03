@@ -13,6 +13,8 @@ TODO
 * ADDED: Rye::Cmd#safely and Rye::Cmd#unsafely methods
 * ADDED: Rye::Cmd#digest_md5, Rye::Cmd#digest_sha1, Rye::Cmd#digest_sha2 methods
 * ADDED: Rye::Cmd#file_verified? method
+* ADDED: Rye::Box#net_ssh_exec! now checks and correctly prompts for a sudo response password. 
+  Note: this will be upgraded in for 0.8 to support any prompt. 
 * FIXED: Net::SSH paranoid now set to false when safe mode is disabled.  
 
 
