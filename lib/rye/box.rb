@@ -684,6 +684,14 @@ module Rye
     
     # Executes +command+ via SSH
     # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
+    # NOTE: This method needs to be replaced to fully support interactive 
+    # commands. This implementation is weird because it's getting just STDOUT and
+    # STDERR responses (check value of "type"). on_data and on_extended_data method
+    # hooks are not used. See the following threads for implementation ideas:
+    #
+    # http://www.ruby-forum.com/topic/141814
+    # http://www.ruby-forum.com/topic/169997
+    #
     def net_ssh_exec!(command)
       
       block ||= Proc.new do |channel, type, data|
@@ -709,11 +717,6 @@ module Rye
           # This should be the POSIX SIGNAL that ended the process
           channel[:exit_signal] = data.read_long
         end
-        #p [type, data]
-        # INCOMPLETE / BROKEN
-        
-        # http://www.ruby-forum.com/topic/141814
-        # http://www.ruby-forum.com/topic/169997
       end
       
       channel = @rye_ssh.exec(command, &block)

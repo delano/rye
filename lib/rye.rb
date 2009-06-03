@@ -113,9 +113,6 @@ module Rye
     files || []
   end
   
-  
-
-
   # Add one or more private keys to the SSH Agent. 
   # * +keys+ one or more file paths to private keys used for passwordless logins. 
   def add_keys(*keys)
