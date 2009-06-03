@@ -205,7 +205,7 @@ module Rye
     def interactive_ssh(run=true)
       debug "interactive_ssh with keys: #{Rye.keys.inspect}"
       run = false unless STDIN.tty?      
-      cmd = Rye.prepare_command("ssh", "#{@rye_opts[:user]}@rye_#{@rye_host}")
+      cmd = Rye.prepare_command("ssh", "#{@rye_opts[:user]}@#{@rye_host}")
       return cmd unless run
       system(cmd)
     end
@@ -531,7 +531,6 @@ module Rye
         @rye_ssh = Net::SSH.start(@rye_host, @rye_opts[:user], @rye_opts || {}) 
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
-        STDERR.puts "NOTE: EC2 instances generate new SSH keys on first boot."
         print "\a" if @rye_info # Ring the bell
         if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
           @rye_opts[:paranoid] = false

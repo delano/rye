@@ -7,6 +7,11 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
+#### 0.7.4 (2009-06-03) #############################
+
+* FIXED: Bug in Rye::Box#interactive_ssh related to instance variable renaming from 0.7.0.
+* CHANGE: Removed error message, "EC2 instances generate new SSH keys on first boot"
+
 #### 0.7.3 (2009-06-03) #############################
 
 * ADDED: enable_safe_mode and disable_safe_mode methods
