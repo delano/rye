@@ -94,6 +94,29 @@ module Rye;
       self
     end
     
+    # Output STDOUT content to (remote) +path+ 
+    # This works like a shell redirect so the file contents are 
+    # cleared before outputting. 
+    # 
+    #     rbox.ps('aux') > 'processes.log'
+    #
+    def >(path)
+      self.obj.unsafely { rm path }
+      self.obj.file_append(path, self)
+    end
+    
+    # Output STDOUT content to (remote) +path+ 
+    # This works like a shell redirect so if the target file
+    # exists the STDOUT content will be appended. 
+    #
+    #     rbox.ps('aux') >> 'processes.log'
+    #
+    def >>(path)
+      self.obj.file_append(path, self)
+    end
+    
+    
+    
     # NOTE: This is broken!
     #def grep *args
     #  self.select do |boxrap|
@@ -102,10 +125,6 @@ module Rye;
     #  end
     #end
     
-    
-    #def >>(*other)
-    #  p other
-    #end
     
     #---
     # If Box's shell methods return Rap objects, then 
