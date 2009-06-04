@@ -42,7 +42,6 @@ TODO
   instance variables in batch command blocks. 
 * ADDED: Rye::Box#file_append
 
-
 #### 0.6.6 (2009-05-21) #############################
 
 * CHANGE: Key management is handled by ssh-agent again (instead of Net::SSH)
