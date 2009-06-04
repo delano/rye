@@ -60,16 +60,18 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000128">new</a></li>
+              <li><a href="#M000129">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000132">add_exit_code</a></li>
-              <li><a href="#M000130">add_stderr</a></li>
-              <li><a href="#M000131">add_stdout</a></li>
-              <li><a href="#M000133">code</a></li>
-              <li><a href="#M000129">stdout</a></li>
-              <li><a href="#M000134">to_s</a></li>
+              <li><a href="#M000136">&gt;</a></li>
+              <li><a href="#M000137">&gt;&gt;</a></li>
+              <li><a href="#M000133">add_exit_code</a></li>
+              <li><a href="#M000131">add_stderr</a></li>
+              <li><a href="#M000132">add_stdout</a></li>
+              <li><a href="#M000134">code</a></li>
+              <li><a href="#M000130">stdout</a></li>
+              <li><a href="#M000135">to_s</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -143,8 +145,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000128'>
-                <a name='M000128'>      </a>
+              <div class='public-class method' id='method-M000129'>
+                <a name='M000129'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(obj, *args)</span>
@@ -161,15 +163,55 @@
                   </ul>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000128-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000129-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000128-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 33</span>&#x000A;33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;34:       <span class="ruby-ivar">@obj</span> = <span class="ruby-identifier">obj</span>&#x000A;35:       <span class="ruby-ivar">@exit_code</span> = <span class="ruby-value">0</span>&#x000A;36:       <span class="ruby-ivar">@stderr</span> = []&#x000A;37:       <span class="ruby-keyword kw">super</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>&#x000A;38:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000129-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 33</span>&#x000A;33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;34:       <span class="ruby-ivar">@obj</span> = <span class="ruby-identifier">obj</span>&#x000A;35:       <span class="ruby-ivar">@exit_code</span> = <span class="ruby-value">0</span>&#x000A;36:       <span class="ruby-ivar">@stderr</span> = []&#x000A;37:       <span class="ruby-keyword kw">super</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>&#x000A;38:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000132'>
-                <a name='M000132'>      </a>
+              <div class='public-instance method' id='method-M000136'>
+                <a name='M000136'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>&gt;</span>
+                  <span class='arguments'>(path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Output STDOUT content to (remote) <tt>path</tt> This works like a shell
+                  redirect so the file contents are cleared before outputting.
+                  </p>
+                  <pre>rbox.ps('aux') &gt; 'processes.log'</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000136-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000136-source'>     <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 103</span>&#x000A;103:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;</span>(<span class="ruby-identifier">path</span>)&#x000A;104:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">unsafely</span> { <span class="ruby-identifier">rm</span> <span class="ruby-identifier">path</span> }&#x000A;105:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">self</span>)&#x000A;106:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000137'>
+                <a name='M000137'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>&gt;&gt;</span>
+                  <span class='arguments'>(path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Output STDOUT content to (remote) <tt>path</tt> This works like a shell
+                  redirect so if the target file exists the STDOUT content will be appended.
+                  </p>
+                  <pre>rbox.ps('aux') &gt;&gt; 'processes.log'</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000137-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000137-source'>     <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 114</span>&#x000A;114:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;&gt;</span>(<span class="ruby-identifier">path</span>)&#x000A;115:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">self</span>)&#x000A;116:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000133'>
+                <a name='M000133'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_exit_code</span>
                   <span class='arguments'>(code)</span>
@@ -191,14 +233,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000132-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000133-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000132-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_exit_code</span>(<span class="ruby-identifier">code</span>)&#x000A;79:       <span class="ruby-identifier">code</span> = <span class="ruby-value">-1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">code</span>&#x000A;80:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-constant">Status</span>)&#x000A;81:         <span class="ruby-ivar">@exit_code</span>, <span class="ruby-ivar">@pid</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">exitstatus</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">code</span>.<span class="ruby-identifier">pid</span>&#x000A;82:       <span class="ruby-keyword kw">else</span>&#x000A;83:         <span class="ruby-ivar">@exit_code</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">to_i</span>&#x000A;84:       <span class="ruby-keyword kw">end</span>&#x000A;85:       <span class="ruby-ivar">@exit_code</span>&#x000A;86:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000133-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_exit_code</span>(<span class="ruby-identifier">code</span>)&#x000A;79:       <span class="ruby-identifier">code</span> = <span class="ruby-value">-1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">code</span>&#x000A;80:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Process</span><span class="ruby-operator">::</span><span class="ruby-constant">Status</span>)&#x000A;81:         <span class="ruby-ivar">@exit_code</span>, <span class="ruby-ivar">@pid</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">exitstatus</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">code</span>.<span class="ruby-identifier">pid</span>&#x000A;82:       <span class="ruby-keyword kw">else</span>&#x000A;83:         <span class="ruby-ivar">@exit_code</span> = <span class="ruby-identifier">code</span>.<span class="ruby-identifier">to_i</span>&#x000A;84:       <span class="ruby-keyword kw">end</span>&#x000A;85:       <span class="ruby-ivar">@exit_code</span>&#x000A;86:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000130'>
-                <a name='M000130'>      </a>
+              <div class='public-instance method' id='method-M000131'>
+                <a name='M000131'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_stderr</span>
                   <span class='arguments'>(*args)</span>
@@ -209,14 +251,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000130-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000131-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000130-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 52</span>&#x000A;52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stderr</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;53:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;54:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;55:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">||=</span> []&#x000A;56:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;57:       <span class="ruby-ivar">@stderr</span>.<span class="ruby-identifier">flatten!</span>&#x000A;58:       <span class="ruby-keyword kw">self</span>&#x000A;59:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000131-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 52</span>&#x000A;52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stderr</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;53:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;54:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;55:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">||=</span> []&#x000A;56:       <span class="ruby-ivar">@stderr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;57:       <span class="ruby-ivar">@stderr</span>.<span class="ruby-identifier">flatten!</span>&#x000A;58:       <span class="ruby-keyword kw">self</span>&#x000A;59:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000131'>
-                <a name='M000131'>      </a>
+              <div class='public-instance method' id='method-M000132'>
+                <a name='M000132'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_stdout</span>
                   <span class='arguments'>(*args)</span>
@@ -224,33 +266,33 @@
                 <div class='description'>
                   <p>
                   Add STDOUT output from the command executed via SSH. This is available to
-                  maintain consistency with the <a href="Rap.html#M000130">add_stderr</a>
+                  maintain consistency with the <a href="Rap.html#M000131">add_stderr</a>
                   method. Otherwise there&#8217;s no need to use this method (treat the <a
                   href="Rap.html">Rye::Rap</a> object like an Array).
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000131-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000132-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000131-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stdout</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;66:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;67:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;68:       <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;69:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">flatten!</span>&#x000A;70:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000132-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_stdout</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;66:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>&#x000A;67:       <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;68:       <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">args</span>&#x000A;69:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">flatten!</span>&#x000A;70:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000133'>
-                <a name='M000133'>      </a>
+              <div class='public-instance method' id='method-M000134'>
+                <a name='M000134'>      </a>
                 <div class='synopsis'>
                   <span class='name'>code</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000133-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000134-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000133-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 87</span>&#x000A;87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">code</span>; <span class="ruby-ivar">@exit_code</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000134-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 87</span>&#x000A;87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">code</span>; <span class="ruby-ivar">@exit_code</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000129'>
-                <a name='M000129'>      </a>
+              <div class='public-instance method' id='method-M000130'>
+                <a name='M000130'>      </a>
                 <div class='synopsis'>
                   <span class='name'>stdout</span>
                   <span class='arguments'>()</span>
@@ -263,14 +305,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000129-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000130-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000129-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stdout</span>&#x000A;48:       <span class="ruby-keyword kw">self</span>&#x000A;49:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000130-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stdout</span>&#x000A;48:       <span class="ruby-keyword kw">self</span>&#x000A;49:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000134'>
-                <a name='M000134'>      </a>
+              <div class='public-instance method' id='method-M000135'>
+                <a name='M000135'>      </a>
                 <div class='synopsis'>
                   <span class='name'>to_s</span>
                   <span class='arguments'>()</span>
@@ -282,10 +324,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000134-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000135-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000134-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 91</span>&#x000A;91:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>&#x000A;92:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;93:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>&#x000A;94:       <span class="ruby-keyword kw">self</span>&#x000A;95:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000135-source'>    <span class="ruby-comment cmt"># File lib/rye/rap.rb, line 91</span>&#x000A;91:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>&#x000A;92:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;93:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>&#x000A;94:       <span class="ruby-keyword kw">self</span>&#x000A;95:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
