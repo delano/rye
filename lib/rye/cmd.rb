@@ -216,7 +216,12 @@ module Rye;
       end
     end
     
-      
+    # A helper for removing a command from Rye::Cmd. 
+    # * +meth+ the method name
+    def Cmd.remove_command(meth)
+      remove_method(meth)
+    end
+    
     #--
     # * Consider a lock-down mode using method_added
     # * Consider Rye.sysinfo.os == :unix
