@@ -33,9 +33,11 @@ module Rye
     def opts; @rye_opts; end
     def safe; @rye_safe; end
     def user; (@rye_opts || {})[:user]; end
-    
+    def nickname; @rye_nickname || host; end
+      
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
+    def nickname=(val); @rye_nickname = val; end
     
     def enable_safe_mode;  @rye_safe = true; end
     def disable_safe_mode; @rye_safe = false; end
@@ -222,7 +224,7 @@ module Rye
         debug "ssh-add stdout: #{ret.stdout}"
         debug "ssh-add stderr: #{ret.stderr}"
       end
-      self #MUST RETURN itself
+      self # MUST RETURN self
     end
     alias :add_key :add_keys
     
@@ -279,8 +281,8 @@ module Rye
     def to_s; '%s@rye_%s' % [user, @rye_host]; end
     
     def inspect
-      %q{#<%s:%s cwd=%s umask=%s env=%s safe=%s opts=%s>} % 
-      [self.class.to_s, self.host, 
+      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s safe=%s opts=%s>} % 
+      [self.class.to_s, self.host, self.nickname,
        @rye_current_working_directory, @rye_current_umask,
        (@rye_current_environment_variables || '').inspect,
        self.safe, self.opts.inspect]
@@ -627,7 +629,7 @@ module Rye
       debug "Executing: %s" % cmd_clean
       
       if @rye_pre_command_hook.is_a?(Proc)
-        @rye_pre_command_hook.call(cmd, args, user, host)  
+        @rye_pre_command_hook.call(cmd, args, user, host, nickname) 
       end
       
       ## NOTE: Do not raise a CommandNotFound exception in this method.
