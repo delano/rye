@@ -67,6 +67,7 @@ module Rye;
     def chown(*args); cmd('chown', args); end
     def unzip(*args); cmd('unzip', args); end
     def bzip2(*args); cmd('bzip2', args); end
+    def which(*args); cmd('which', args); end
     
     def umount(*args); cmd("umount", args); end
     def uptime(*args); cmd("uptime", args); end

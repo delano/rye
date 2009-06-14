@@ -42,6 +42,9 @@ module Rye
       add_keys(@opts[:keys])
     end
     
+    def opts; @opts; end
+    def user; (@opts || {})[:user]; end
+    
     # * +boxes+ one or more boxes. Rye::Box objects will be added directly 
     # to the set. Hostnames will be used to create new instances of Rye::Box 
     # and those will be added to the list. 
@@ -97,7 +100,12 @@ module Rye
       run_command(:cd, key)
       self
     end
-
+    
+    # Are there any boxes in this set?
+    def empty?
+      @boxes.nil? || @boxes.empty?
+    end
+    
     # Catches calls to Rye::Box commands. If +meth+ is the name of an 
     # instance method defined in Rye::Cmd then we call it against all 
     # the boxes in +@boxes+. Otherwise this method raises a
@@ -105,33 +113,32 @@ module Rye
     # exception if this set has no boxes defined. 
     #
     # Returns a Rye::Rap object containing the responses from each Rye::Box. 
-    def method_missing(meth, *args)
+    def method_missing(meth, *args, &block) 
       # Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.
       meth = (Rye.sysinfo.ruby[1] == 8) ? meth.to_s : meth.to_sym
       raise Rye::NoBoxes if @boxes.empty?
-      raise Rye::CommandNotFound, meth.to_s unless Rye::Cmd.instance_methods.member?(meth)
-      run_command(meth, *args)
+      raise Rye::CommandNotFound, meth.to_s unless Rye::Box.instance_methods.member?(meth)
+      run_command(meth, *args, &block)
     end
     
   private
     
     # Determines whether to call the serial or parallel method, then calls it. 
-    def run_command(meth, *args)
+    def run_command(meth, *args, &block)
       runner = @parallel ? :run_command_parallel : :run_command_serial
-      self.send(runner, meth, *args)
+      self.send(runner, meth, *args, &block)
     end
     
     
     # Run the command on all boxes in parallel
-    def run_command_parallel(meth, *args)
-      p @boxes
+    def run_command_parallel(meth, *args, &block)
       debug "P: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
       threads = []
       
       raps = Rye::Rap.new(self)
       (@boxes || []).each do |box|
         threads << Thread.new do
-          Thread.current[:rap] = box.send(meth, *args) # Store the result in the thread
+          Thread.current[:rap] = box.send(meth, *args, &block) # Store the result in the thread
         end
       end
       
@@ -148,11 +155,11 @@ module Rye
     
     
     # Run the command on all boxes in serial
-    def run_command_serial(meth, *args)
+    def run_command_serial(meth, *args, &block)
       debug "S: #{meth} on #{@boxes.size} boxes (#{@boxes.collect {|b| b.host }.join(', ')})"
       raps = Rye::Rap.new(self)
       (@boxes || []).each do |box|
-        raps << box.send(meth, *args)
+        raps << box.send(meth, *args, &block)
       end
       raps
     end

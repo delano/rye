@@ -7,6 +7,14 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
+#### 0.7.5 (2009-06-14) #############################
+
+* FIXED: Rye::Set methods were not accepting or passing blocks. 
+* ADDED: Rye::Set#user and Rye::Set#opts methods
+* ADDED: Rye::Box#nickname
+* CHANGE: Rye::Set method missing now forwards to Rye::Box 
+  methods instead of Rye::Cmd
+
 #### 0.7.4 (2009-06-04) #############################
 
 * FIXED: Bug in Rye::Box#interactive_ssh related to instance variable renaming from 0.7.0.
