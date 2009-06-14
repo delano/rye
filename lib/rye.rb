@@ -63,6 +63,9 @@ module Rye
   class NoHost < RuntimeError; end
   class NotConnected < RuntimeError; end
   class CommandNotFound < RuntimeError; end
+  class NoPty < RuntimeError
+    def message; "Could not obtain pty (i.e. an interactive ssh session)"; end
+  end
   class CommandError < RuntimeError
     attr_reader :rap
     # * +rap+ a Rye::Rap object

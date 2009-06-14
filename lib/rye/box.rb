@@ -33,10 +33,16 @@ module Rye
     def opts; @rye_opts; end
     def safe; @rye_safe; end
     def user; (@rye_opts || {})[:user]; end
+    
+    # A storage area +@rye_stash+
+    def stash; @rye_stash; end
     def nickname; @rye_nickname || host; end
       
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
+    
+    # Returns the storage area +@rye_stash+
+    def stash=(val); @rye_stash = val; end
     def nickname=(val); @rye_nickname = val; end
     
     def enable_safe_mode;  @rye_safe = true; end
@@ -55,6 +61,8 @@ module Rye
 
     def pre_command_hook=(val); @rye_pre_command_hook = val; end
     def post_command_hook=(val); @rye_post_command_hook = val; end
+    # A Hash. The keys are exception classes, the values are Procs to execute
+    def exception_hook=(val); @rye_exception_hook = val; end
 
     # * +host+ The hostname to connect to. The default is localhost.
     # * +opts+ a hash of optional arguments.
@@ -74,6 +82,7 @@ module Rye
     # Net::SSH.start that is not already mentioned above.
     #
     def initialize(host='localhost', opts={})
+      @rye_exception_hook = {}
       @rye_host = host
       
       # These opts are use by Rye::Box and also passed to Net::SSH
@@ -426,7 +435,9 @@ module Rye
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
     def method_missing(meth, *args, &block)
-      raise Rye::CommandNotFound, "#{meth.to_s}"
+      ex = Rye::CommandNotFound.new(meth.to_s)
+      raise ex unless @rye_exception_hook.has_key? ex.class
+      @rye_exception_hook[Rye::CommandNotFound].call ex
     end
     
     # Returns the command an arguments as a String. 
@@ -444,6 +455,27 @@ module Rye
     def pre_command_hook(&block)
       @rye_pre_command_hook = block if block
       @rye_pre_command_hook
+    end
+    
+    # Supply a block to be called whenever there's an Exception. It's called
+    # with 1 argument: the exception class. If the exception block returns 
+    # :retry, the command will be executed again. 
+    #
+    # e.g.
+    #     rbox.exception_hook(CommandNotFound) do |ex|
+    #       STDERR.puts "An error occurred: #{ex.class}"
+    #       choice = Annoy.get_user_input('(S)kip  (R)etry  (A)bort: ')
+    #       if choice == 'R'
+    #         :retry 
+    #       elsif choice == 'S'
+    #         # do nothing
+    #       else
+    #         exit  # !
+    #       end
+    #     end
+    def exception_hook(klass, &block)
+      @rye_exception_hook[klass] = block if block
+      @rye_exception_hook[klass]
     end
     
     # Execute a block in the context of an instance of Rye::Box. 
@@ -624,7 +656,6 @@ module Rye
         cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
-      
       info "COMMAND: #{cmd_clean}"
       debug "Executing: %s" % cmd_clean
       
@@ -641,24 +672,29 @@ module Rye
       # this is good enough for now. 
       ## raise Rye::CommandNotFound unless self.can?(cmd)
       
-      stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
-      
-      rap = Rye::Rap.new(self)
-      rap.add_stdout(stdout || '')
-      rap.add_stderr(stderr || '')
-      rap.add_exit_code(ecode)
-      rap.exit_signal = esignal
-      rap.cmd = cmd
-      
-      if @rye_post_command_hook.is_a?(Proc)
-        @rye_post_command_hook.call(rap)
-      else
+      begin
+        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
+        
+        rap = Rye::Rap.new(self)
+        rap.add_stdout(stdout || '')
+        rap.add_stderr(stderr || '')
+        rap.add_exit_code(ecode)
+        rap.exit_signal = esignal
+        rap.cmd = cmd
+        
         # It seems a convention for various commands to return -1
         # when something only mildly concerning happens. ls even 
         # returns -1 for apparently no reason sometimes. In any
         # case, the real errors are the ones greater than zero
         raise Rye::CommandError.new(rap) if ecode > 0
+        
+      rescue Exception => ex
+        raise ex unless @rye_exception_hook.has_key? ex.class
+        ret = @rye_exception_hook[ex.class].call(ex)
+        retry if ret == :retry
       end
+      
+      @rye_post_command_hook.call(rap) if @rye_post_command_hook.is_a?(Proc)
       
       rap
     end
@@ -724,7 +760,7 @@ module Rye
       
       channel.wait  # block until we get a response
       channel.request_pty do |ch, success|
-        raise "Could not obtain pty (i.e. an interactive ssh session)" if !success
+        raise Rye::NoPty if !success
       end
       
       channel[:exit_code] = 0 if channel[:exit_code] == nil

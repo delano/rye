@@ -12,6 +12,7 @@ TODO
 * FIXED: Rye::Set methods were not accepting or passing blocks. 
 * ADDED: Rye::Set#user and Rye::Set#opts methods
 * ADDED: Rye::Box#nickname
+* ADDED: exception hooks for Rye::Box.
 * CHANGE: Rye::Set method missing now forwards to Rye::Box 
   methods instead of Rye::Cmd
 
