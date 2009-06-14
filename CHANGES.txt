@@ -16,6 +16,7 @@ TODO
 * CHANGE: Rye::Set method missing now forwards to Rye::Box 
   methods instead of Rye::Cmd
 
+
 #### 0.7.4 (2009-06-04) #############################
 
 * FIXED: Bug in Rye::Box#interactive_ssh related to instance variable renaming from 0.7.0.

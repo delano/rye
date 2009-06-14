@@ -53,8 +53,7 @@ module Rye
 
     # The most recent valud for umask (or 0022)
     def current_umask; @rye_current_umask; end
-
-    def ssh; @rye_ssh; end
+    
     def info; @rye_info; end
     def debug; @rye_debug; end
     def error; @rye_error; end
