@@ -194,17 +194,7 @@ module Rye
       disconnect
       connect
     end
-    
-    
-    # Close the SSH session  with +@rye_host+. This is called 
-    # automatically at exit if the connection is open. 
-    def disconnect
-      return unless @rye_ssh && !@rye_ssh.closed?
-      @rye_ssh.loop(0.1) { @rye_ssh.busy? }
-      debug "Closing connection to #{@rye_ssh.host}"
-      @rye_ssh.close
-    end
-    
+
     
     # Open an interactive SSH session. This only works if STDIN.tty?
     # returns true. Otherwise it returns the SSH command that would 
@@ -594,6 +584,22 @@ module Rye
       self
     end
     
+    # Close the SSH session  with +@rye_host+. This is called 
+    # automatically at exit if the connection is open. 
+    def disconnect
+      return unless @rye_ssh && !@rye_ssh.closed?
+      begin
+        Timeout::timeout(3) do
+          @rye_ssh.loop(0.3) { @rye_ssh.busy?; }
+        end
+      rescue Timeout::Error => ex
+        error "Disconnect timeout (was something still running?)"
+      end
+      
+      debug "Closing connection to #{@rye_ssh.host}"
+      @rye_ssh.close
+    end
+    
     
   private
       
@@ -688,9 +694,14 @@ module Rye
         raise Rye::CommandError.new(rap) if ecode > 0
         
       rescue Exception => ex
-        raise ex unless @rye_exception_hook.has_key? ex.class
-        ret = @rye_exception_hook[ex.class].call(ex)
-        retry if ret == :retry
+        choice = nil
+        @rye_exception_hook.each_pair do |klass,act|
+          next unless ex.kind_of? klass
+          choice = @rye_exception_hook[klass].call(ex)
+          break
+        end
+        retry if choice == :retry
+        raise ex if choice.nil?
       end
       
       @rye_post_command_hook.call(rap) if @rye_post_command_hook.is_a?(Proc)
@@ -740,10 +751,18 @@ module Rye
           # Use sudo -K to kill the user's timestamp (ask for a password every time)
           if data =~ /Password:/
             ret = Annoy.get_user_input("Password: ", '*')
+            raise Rye::NoPassword if ret.nil?
             channel.send_data "#{ret}\n"
           else
             channel[:stderr] << data 
           end
+          
+          # If someone tries to open an interactive ssh session
+          # through a regular Rye::Box command, Net::SSH will
+          # return the following error and appear to hang. We
+          # catch it and raise the appropriate exception.
+          raise Rye::NoPty if data =~ /Pseudo-terminal will not/
+          
         end
         channel.on_request("exit-status") do |ch, data|
           # Anything greater than 0 is an error
@@ -753,6 +772,7 @@ module Rye
           # This should be the POSIX SIGNAL that ended the process
           channel[:exit_signal] = data.read_long
         end
+        
       end
       
       channel = @rye_ssh.exec(command, &block)

@@ -11,6 +11,7 @@ require 'net/scp'
 require 'openssl'
 require 'tempfile'
 require 'highline'
+require 'timeout'
 
 require 'storable'
 require 'sysinfo'
@@ -59,14 +60,18 @@ module Rye
   # Accessor for an instance of SystemInfo
   def sysinfo; SYSINFO;  end
   
-  class NoBoxes < RuntimeError; end
-  class NoHost < RuntimeError; end
-  class NotConnected < RuntimeError; end
-  class CommandNotFound < RuntimeError; end
-  class NoPty < RuntimeError
+  class RyeError < RuntimeError; end
+  class NoBoxes < RyeError; end
+  class NoPassword < RyeError
+    def message; "Password prompt did not return a value"; end
+  end
+  class NoHost < RyeError; end
+  class NotConnected < RyeError; end
+  class CommandNotFound < RyeError; end
+  class NoPty < RyeError
     def message; "Could not obtain pty (i.e. an interactive ssh session)"; end
   end
-  class CommandError < RuntimeError
+  class CommandError < RyeError
     attr_reader :rap
     # * +rap+ a Rye::Rap object
     def initialize(rap)
