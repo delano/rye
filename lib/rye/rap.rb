@@ -76,13 +76,12 @@ module Rye;
     # it's just an exit code returned by Net::SSH. 
     # Returns the exit code as an Integer. 
     def add_exit_code(code)
-      code = -1 unless code
+      code = 0 if code.nil?
       if code.is_a?(Process::Status)
         @exit_code, @pid = code.exitstatus.to_i, code.pid
       else
         @exit_code = code.to_i
       end
-      @exit_code
     end
     def code; @exit_code; end
     
@@ -91,7 +90,7 @@ module Rye;
     def to_s
       return self.first if self.size == 1
       return "" if self.size == 0
-      self
+      super
     end
     
     # Output STDOUT content to (remote) +path+ 

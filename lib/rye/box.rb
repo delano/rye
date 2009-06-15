@@ -661,12 +661,6 @@ module Rye
         cmd_clean = [cwd, cmd_clean].join(' && ')
       end
       
-      info "COMMAND: #{cmd_clean}"
-      debug "Executing: %s" % cmd_clean
-      
-      if @rye_pre_command_hook.is_a?(Proc)
-        @rye_pre_command_hook.call(cmd, args, user, host, nickname) 
-      end
       
       ## NOTE: Do not raise a CommandNotFound exception in this method.
       # We want it to be possible to define methods to a single instance
@@ -678,6 +672,13 @@ module Rye
       ## raise Rye::CommandNotFound unless self.can?(cmd)
       
       begin
+        info "COMMAND: #{cmd_clean}"
+        debug "Executing: %s" % cmd_clean
+
+        if @rye_pre_command_hook.is_a?(Proc)
+          @rye_pre_command_hook.call(cmd_clean, user, host, nickname) 
+        end
+        
         stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
         
         rap = Rye::Rap.new(self)
@@ -687,11 +688,15 @@ module Rye
         rap.exit_signal = esignal
         rap.cmd = cmd
         
+        #info "stdout: #{rap.stdout}"
+        #info "stderr: #{rap.stderr}"
+        #info "exit_code: #{rap.exit_code}"
+        
         # It seems a convention for various commands to return -1
         # when something only mildly concerning happens. ls even 
         # returns -1 for apparently no reason sometimes. In any
         # case, the real errors are the ones greater than zero
-        raise Rye::CommandError.new(rap) if ecode > 0
+        raise Rye::CommandError.new(rap) if ecode != 0
         
       rescue Exception => ex
         choice = nil
@@ -700,8 +705,13 @@ module Rye
           choice = @rye_exception_hook[klass].call(ex)
           break
         end
-        retry if choice == :retry
-        raise ex if choice.nil?
+        if choice == :retry
+          retry
+        elsif choice == :skip
+          # do nothing
+        else
+          raise ex
+        end
       end
       
       @rye_post_command_hook.call(rap) if @rye_post_command_hook.is_a?(Proc)
@@ -740,12 +750,13 @@ module Rye
     # http://www.ruby-forum.com/topic/169997
     #
     def net_ssh_exec!(command)
-      
+
       block ||= Proc.new do |channel, type, data|
+        
         channel[:stdout] ||= ""
         channel[:stderr] ||= ""
-        channel[:exit_code] ||= 0
         channel[:stdout] << data if type == :stdout
+        
         if type == :stderr
           # NOTE: Use sudo to test this since it prompts for a passwords. 
           # Use sudo -K to kill the user's timestamp (ask for a password every time)
@@ -756,7 +767,7 @@ module Rye
           else
             channel[:stderr] << data 
           end
-          
+
           # If someone tries to open an interactive ssh session
           # through a regular Rye::Box command, Net::SSH will
           # return the following error and appear to hang. We
@@ -764,27 +775,38 @@ module Rye
           raise Rye::NoPty if data =~ /Pseudo-terminal will not/
           
         end
-        channel.on_request("exit-status") do |ch, data|
-          # Anything greater than 0 is an error
-          channel[:exit_code] = data.read_long
-        end
-        channel.on_request("exit-signal") do |ch, data|
-          # This should be the POSIX SIGNAL that ended the process
-          channel[:exit_signal] = data.read_long
-        end
-        
+
       end
       
       channel = @rye_ssh.exec(command, &block)
+      
+      channel.on_request("exit-status") do |ch, data|
+        # Anything greater than 0 is an error
+        channel[:exit_code] = data.read_long
+      end
+      channel.on_request("exit-signal") do |ch, data|
+        # This should be the POSIX SIGNAL that ended the process
+        channel[:exit_signal] = data.read_long
+      end
       
       channel.wait  # block until we get a response
       channel.request_pty do |ch, success|
         raise Rye::NoPty if !success
       end
       
-      channel[:exit_code] = 0 if channel[:exit_code] == nil
-      channel[:exit_code] &&= channel[:exit_code].to_i
+      ## I'm getting weird behavior with exit codes. Sometimes
+      ## a command which usually returns an exit code will not
+      ## return one the next time it's run. The following crap
+      ## was from the debugging.
+      ##Kernel.sleep 5
+      ###channel.close
+      #channel.eof!
+      ##p [:active, channel.active?]
+      ##p [:closing, channel.closing?]
+      ##p [:eof, channel.eof?]
       
+      channel[:exit_code] ||= 0
+      channel[:exit_code] &&= channel[:exit_code].to_i
       channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
       
       [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]

@@ -7,15 +7,19 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
-#### 0.7.6 (2009-06-14) #############################
+#### 0.7.6 (2009-06-??) #############################
 
 * FIXED: Raise Rye::NoPty exception when Net::SSH returns message 
   "Pseudo-terminal will not be allocated because stdin is not a terminal."
 * FIXED: Rye::Box#disconnect would hang in some instances. Now waits 3 seconds. 
+* FIXED: Bug in net_ssh_exec which was causing it to not return an exit code
 * CHANGE: All exceptions now inherit from Rye::Error (Runtimerror)  
 * CHANGE: A NoPassword exception is raised when a password prompt returns nil.
-
-
+* CHANGE: pre_command_hook block arguments have changed: 
+     NEW: complete command, user, host, nickname
+     OLD: command, args, user, host, nickname
+     
+     
 #### 0.7.5 (2009-06-13) #############################
 
 * FIXED: Rye::Set methods were not accepting or passing blocks. 
