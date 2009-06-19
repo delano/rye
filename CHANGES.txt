@@ -7,7 +7,7 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
-#### 0.7.6 (2009-06-??) #############################
+#### 0.7.6 (2009-06-19) #############################
 
 * FIXED: Raise Rye::NoPty exception when Net::SSH returns message 
   "Pseudo-terminal will not be allocated because stdin is not a terminal."
