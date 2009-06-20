@@ -205,7 +205,8 @@ module Rye
   # NOTE: shell is a bit paranoid so it escapes every argument. This means
   # you can only use literal values. That means no asterisks too. 
   #
-  # Returns a Rye::Rap object containing the 
+  # Returns a Rye::Rap object.
+  #
   def shell(cmd, *args)
     args = args.flatten.compact
     cmd = cmd.to_s if cmd.is_a?(Symbol)
