@@ -92,7 +92,7 @@ module Rye;
     # Always return nil.
     #
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
-    def upload(*files); net_scp_transfer!(:upload, *files); end
+    def file_upload(*files); net_scp_transfer!(:upload, *files); end
 
     # Transfer files from a machine via Net::SCP. 
     # * +files+ is an Array of files to download. The last element must be the 
@@ -105,7 +105,7 @@ module Rye;
     # Return nil or a StringIO object, if specified as the target.
     #
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
-    def download(*files); net_scp_transfer!(:download, *files); end
+    def file_download(*files); net_scp_transfer!(:download, *files); end
     
     # Append +newcontent+ to remote +filepath+. If the file doesn't exist
     # it will be created. If +backup+ is specified, +filepath+ will be 
@@ -113,7 +113,7 @@ module Rye;
     def file_append(filepath, newcontent, backup=false)
       if self.file_exists?(filepath)
         self.cp filepath, "#{filepath}-previous" if backup
-        file_content = self.download filepath
+        file_content = self.file_download filepath
       end
       
       file_content ||= StringIO.new
@@ -124,13 +124,13 @@ module Rye;
         file_content.puts newcontent
       end
       
-      self.upload file_content, filepath
+      self.file_upload file_content, filepath
     end
     
     # Does +path+ from the current working directory?
     def file_exists?(path)
       begin
-        ret = self.ls(path)
+        ret = self.quietly { ls(path) }
       rescue Rye::CommandError => ex
         ret = ex.rap
       end

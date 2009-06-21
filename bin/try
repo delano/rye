@@ -184,17 +184,17 @@ def rbox.rm(*args); cmd('rm', args); end
 rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
 rbox.rm(:r, :f, dir_download)
 
-rbox.upload("#{RYE_HOME}/README.rdoc", 
+rbox.file_upload("#{RYE_HOME}/README.rdoc", 
             "#{RYE_HOME}/LICENSE.txt", dir_upload)
 
 applejack = StringIO.new("Some in-memory content")
-rbox.upload(applejack, "#{dir_upload}/applejack.txt")
+rbox.file_upload(applejack, "#{dir_upload}/applejack.txt")
 
 p rbox.ls(dir_upload)            # => [README.rdoc, LICENSE.txt, applejack.txt]
 p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
 
 filecontent = StringIO.new
-rbox.download("#{dir_upload}/applejack.txt", filecontent)
+rbox.file_download("#{dir_upload}/applejack.txt", filecontent)
 filecontent.rewind           
 p filecontent.read
 

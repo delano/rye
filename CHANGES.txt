@@ -7,12 +7,16 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
-#### 0.7.7 (2009-06-??) #############################
+#### 0.8.0 (2009-06-21) #############################
 
+* FIXED: safely and unsafely (Rye::Box) now return the block return value
 * ADDED: Rye::Set#parallel and Rye::Set#parallel= methods
+* ADDED: Rye::Box#quietly
 * CHANGE: Updated Rye::Set#inspect and Rye::Set#to_s
 * CHANGE: Exception hook now receives: ex, cmd, user, host, nickname
 * CHANGE: Increased Kernel.sleep to 0.03 in Rye::Set.run_command_parallel
+* CHANGE: Renamed Rye::Cmd#upload and Rye::Cmd#download to file_upload and file_download
+* CHANGE: Rye::Cmd#file_exists? now executes quietly (doesn't pollute logging)
 
 
 #### 0.7.6 (2009-06-19) #############################

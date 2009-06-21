@@ -34,19 +34,23 @@ module Rye
     def safe; @rye_safe; end
     def user; (@rye_opts || {})[:user]; end
     
-    # A storage area +@rye_stash+
+    # Returns the current value of the stash +@rye_stash+
     def stash; @rye_stash; end
+    def quiet; @rye_quiet; end
     def nickname; @rye_nickname || host; end
-      
+    
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
     
-    # Returns the storage area +@rye_stash+
+    # Store a value to the stash +@rye_stash+
     def stash=(val); @rye_stash = val; end
     def nickname=(val); @rye_nickname = val; end
     
     def enable_safe_mode;  @rye_safe = true; end
     def disable_safe_mode; @rye_safe = false; end
+    
+    def enable_quiet_mode;  @rye_quiet = true; end
+    def disable_quiet_mode; @rye_quiet = false; end
     
     # The most recent value from Box.cd or Box.[]
     def current_working_directory; @rye_current_working_directory; end
@@ -94,6 +98,7 @@ module Rye
         :debug => nil,
         :error => STDERR,
         :getenv => true,
+        :quiet => false
       }.merge(opts)
       
       # Close the SSH session before Ruby exits. This will do nothing
@@ -105,6 +110,7 @@ module Rye
       @rye_safe, @rye_debug = @rye_opts.delete(:safe), @rye_opts.delete(:debug)
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
+      @rye_quiet = @rye_opts.delete(:quiet)
       
       # Just in case someone sends a true value rather than IO object
       @rye_debug = STDERR if @rye_debug == true
@@ -372,7 +378,7 @@ module Rye
         if self.file_exists?(akey_path)
           # TODO: Make Rye::Cmd.incremental_backup
           self.cp(akey_path, "#{akey_path}-previous")
-          authorized_keys = self.download("#{homedir}/#{akey_path}")
+          authorized_keys = self.file_download("#{homedir}/#{akey_path}")
         end
         authorized_keys ||= StringIO.new
         
@@ -391,7 +397,7 @@ module Rye
         authorized_keys.rewind
         
         self.mkdir(:p, :m, '700', File.dirname(akey_path))
-        self.upload(authorized_keys, "#{homedir}/#{akey_path}")
+        self.file_upload(authorized_keys, "#{homedir}/#{akey_path}")
         self.chmod('0600', akey_path)
         self.chown(:R, this_user.to_s, File.dirname(akey_path))
       end
@@ -490,18 +496,35 @@ module Rye
     def unsafely(*args, &block)
       previous_state = @rye_safe
       disable_safe_mode
-      self.instance_exec *args, &block
+      ret = self.instance_exec *args, &block
       @rye_safe = previous_state
+      ret
     end
     
     # See unsafely (except in reverse)
     def safely(*args, &block)
       previous_state = @rye_safe
       enable_safe_mode
-      self.instance_exec *args, &block
+      ret = self.instance_exec *args, &block
       @rye_safe = previous_state
+      ret
     end
     
+    # Like batch, except it enables quiet mode before executing the block. 
+    # After executing the block, quiet mode is returned back to whichever
+    # state it was previously in. In other words, this method won't enable
+    # quiet mode if it was already disabled.
+    #
+    # In quiet mode, the pre and post command hooks are not called. This 
+    # is used internally when calling commands like +ls+ to check whether
+    # a file path exists (to prevent polluting the logs).
+    def quietly(*args, &block)
+      previous_state = @rye_quiet
+      enable_quiet_mode
+      ret = self.instance_exec *args, &block
+      @rye_quiet = previous_state
+      ret
+    end
     
     # instance_exec for Ruby 1.8 written by Mauricio Fernandez
     # http://eigenclass.org/hiki/instance_exec
@@ -646,21 +669,23 @@ module Rye
       raise Rye::NotConnected, @rye_host unless @rye_ssh && !@rye_ssh.closed?
       
       cmd_clean = Rye.escape(@rye_safe, cmd, args)
-      cmd_clean = prepend_env(cmd_clean)
+      
+      # This following is the command we'll actually execute. cmd_clean
+      # can be used for logging, otherwise the output is confusing.
+      cmd_internal = prepend_env(cmd_clean)
       
       # Add the current working directory before the command if supplied. 
       # The command will otherwise run in the user's home directory.
       if @rye_current_working_directory
         cwd = Rye.escape(@rye_safe, 'cd', @rye_current_working_directory)
-        cmd_clean = [cwd, cmd_clean].join(' && ')
+        cmd_internal = [cwd, cmd_internal].join(' && ')
       end
       
       # ditto (same explanation as cwd)
       if @rye_current_umask
         cwd = Rye.escape(@rye_safe, 'umask', @rye_current_umask)
-        cmd_clean = [cwd, cmd_clean].join(' && ')
+        cmd_internal = [cwd, cmd_internal].join(' && ')
       end
-      
       
       ## NOTE: Do not raise a CommandNotFound exception in this method.
       # We want it to be possible to define methods to a single instance
@@ -673,20 +698,21 @@ module Rye
       
       begin
         info "COMMAND: #{cmd_clean}"
-        debug "Executing: %s" % cmd_clean
+        debug "Executing: #{cmd_internal}"
 
-        if @rye_pre_command_hook.is_a?(Proc)
+        if !@rye_quiet && @rye_pre_command_hook.is_a?(Proc)
           @rye_pre_command_hook.call(cmd_clean, user, host, nickname) 
         end
         
-        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_clean)
-        
         rap = Rye::Rap.new(self)
+        rap.cmd = cmd_clean
+        
+        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_internal)
+        
         rap.add_stdout(stdout || '')
         rap.add_stderr(stderr || '')
         rap.add_exit_code(ecode)
         rap.exit_signal = esignal
-        rap.cmd = cmd
         
         #info "stdout: #{rap.stdout}"
         #info "stderr: #{rap.stderr}"
@@ -699,6 +725,7 @@ module Rye
         raise Rye::CommandError.new(rap) if ecode != 0
         
       rescue Exception => ex
+        return rap if @rye_quiet
         choice = nil
         @rye_exception_hook.each_pair do |klass,act|
           next unless ex.kind_of? klass
@@ -714,7 +741,9 @@ module Rye
         end
       end
       
-      @rye_post_command_hook.call(rap) if @rye_post_command_hook.is_a?(Proc)
+      if !@rye_quiet && @rye_post_command_hook.is_a?(Proc)
+        @rye_post_command_hook.call(rap)
+      end
       
       rap
     end

@@ -1,8 +1,4 @@
 
-# Temporary fix before Highline 1.5.1 is release. This fixes
-# a the issue with Ruby 1.9 that causes the prompts to hang.
-$:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'highline-1.5.1', 'lib')
-
 require 'logger'
 require 'thread'
 require 'base64'
@@ -47,7 +43,7 @@ module Rye
   extend self
 
   unless defined?(SYSINFO)
-    VERSION = 0.7.freeze
+    VERSION = "0.8.0".freeze
     SYSINFO = SysInfo.new.freeze
   end
   

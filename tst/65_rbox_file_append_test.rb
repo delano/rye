@@ -21,7 +21,7 @@ rbox.mkdir("#{tmpdir}/rye-upload")
 # Create a file with one line so we have something to append to.
 initfile = StringIO.new
 initfile.puts "Initial file content (before append)"
-rbox.upload(initfile, "#{tmpdir}/rye-upload/initfile")
+rbox.file_upload(initfile, "#{tmpdir}/rye-upload/initfile")
 
 # Append a single line to the file
 rbox.file_append("#{tmpdir}/rye-upload/initfile", "APPENDED: a single line")
