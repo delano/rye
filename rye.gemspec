@@ -35,7 +35,9 @@
   LICENSE.txt
   README.rdoc
   Rakefile
+  Rudyfile
   bin/rye
+  bin/try
   lib/esc.rb
   lib/rye.rb
   lib/rye/box.rb
