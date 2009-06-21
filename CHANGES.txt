@@ -7,6 +7,14 @@ TODO
 * Add S3 support for Rye::Box.upload / download
 
 
+#### 0.7.7 (2009-06-??) #############################
+
+* ADDED: Rye::Set#parallel and Rye::Set#parallel= methods
+* CHANGE: Updated Rye::Set#inspect and Rye::Set#to_s
+* CHANGE: Exception hook now receives: ex, cmd, user, host, nickname
+* CHANGE: Increased Kernel.sleep to 0.03 in Rye::Set.run_command_parallel
+
+
 #### 0.7.6 (2009-06-19) #############################
 
 * FIXED: Raise Rye::NoPty exception when Net::SSH returns message 

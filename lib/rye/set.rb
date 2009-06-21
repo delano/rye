@@ -8,6 +8,10 @@ module Rye
     attr_reader :boxes
     attr_reader :opts
     
+      # Run commands in parallel? A Boolean value. Default: false.
+    attr_accessor :parallel
+    
+    
     # * +name+ The name of the set of machines
     # * +opts+ a hash of optional arguments 
     #
@@ -83,11 +87,12 @@ module Rye
     end
     
     def to_s
-      "%s: %s" % [self.name, ]
+      "%s:%s" % [self.class.to_s, @name]
     end
     
     def inspect
-      %q{#<%s:%s boxes=%s opts=%s>} % [self.class.to_s, self.name, self.boxes.join(','), self.opts.inspect]
+      a = [self.class.to_s, @name, @parallel, @opts.inspect, @boxes.join(',')]
+      %q{#<%s:%s parallel=%s opts=%s boxes=%s>} % a
     end
     
     # See Rye::Box.[]
@@ -142,12 +147,11 @@ module Rye
         end
       end
       
-      # Should it bubble up the exception for a single box?
-      # socket errors?
+      # Should it bubble up the exception for a single box? socket errors?
       threads.each do |t| 
-        sleep 0.01        # Give the thread some breathing room
-        t.join            # Wait for the thread to finish
-        raps << t[:rap]   # Grab the result
+        Kernel.sleep 0.03     # Give the thread some breathing room
+        t.join                # Wait for the thread to finish
+        raps << t[:rap]       # Grab the result
       end
       
       raps
