@@ -31,13 +31,13 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Jun 13 23:43:29 -0400 2009</span>
+          <span class='datetime'>Sun Jun 21 17:07:16 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1><a href="../classes/Rye.html">Rye</a> - v0.7</h1>
+            <h1><a href="../classes/Rye.html">Rye</a> - v0.8</h1>
             <p>
             Safely run SSH commands on a bunch of machines at the same time (from
             Ruby).
@@ -80,7 +80,7 @@
             You can specify environment variables
             </p>
             <pre>rbox.setenv(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env             # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]</pre>
-            <h2>EXAMPLE 3 &#8212; Accessing Multiple Machines</h2>
+            <h2>EXAMPLE 3a &#8212; Accessing Multiple Machines</h2>
             <pre>rset = Rye::Set.new&#x000A;rbox = Rye::Box.new&#x000A;&#x000A;rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects</pre>
             <p>
             Calling methods on <a href="../classes/Rye/Set.html">Rye::Set</a> objects
@@ -89,8 +89,14 @@
             identical:
             </p>
             <pre>p rset.uptime        # =&gt; [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]&#x000A;p rset['/etc'].ls    # =&gt; [['file1', 'file2', ...], ['life1', 'life2', ...]]</pre>
-            <h2>EXAMPLE 4 &#8212; FILE TRANSFERS</h2>
-            <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.upload(&quot;#{RYE_HOME}/README.rdoc&quot;,&#x000A;            &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)      # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
+            <h2>EXAMPLE 3b &#8212; Accessing Multiple Machines &#8212; In Parallel</h2>
+            <p>
+            By default, Rye:Set connects to each machine sequentially in the order they
+            were added to the set. Commands can also be run in parallel:
+            </p>
+            <pre>rset = Rye::Set.new('set-name', :parallel =&gt; true)&#x000A;  OR&#x000A;rset.parallel = true</pre>
+            <h2>EXAMPLE 4 &#8212; File Transfers</h2>
+            <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.file_upload(&quot;#{RYE_HOME}/README.rdoc&quot;,&#x000A;            &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.file_upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)      # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.file_download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -218,7 +224,7 @@
             <li>Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
             
             </li>
-            <li><a href="../classes/Rye/Box.html#M000131">Rye::Box#instance_exec</a> (for
+            <li><a href="../classes/Rye/Box.html#M000135">Rye::Box#instance_exec</a> (for
             Ruby 1.8) Mauricio Fernandez
             
             </li>

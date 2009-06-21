@@ -89,12 +89,13 @@
               <li><a href="#M000072">digest_md5</a></li>
               <li><a href="#M000073">digest_sha1</a></li>
               <li><a href="#M000074">digest_sha2</a></li>
-              <li><a href="#M000068">download</a></li>
               <li><a href="#M000025">du</a></li>
               <li><a href="#M000041">echo</a></li>
               <li><a href="#M000026">env</a></li>
               <li><a href="#M000069">file_append</a></li>
+              <li><a href="#M000068">file_download</a></li>
               <li><a href="#M000070">file_exists?</a></li>
+              <li><a href="#M000067">file_upload</a></li>
               <li><a href="#M000071">file_verified?</a></li>
               <li><a href="#M000062">getconf</a></li>
               <li><a href="#M000030">git</a></li>
@@ -128,7 +129,6 @@
               <li><a href="#M000056">umount</a></li>
               <li><a href="#M000050">uname</a></li>
               <li><a href="#M000053">unzip</a></li>
-              <li><a href="#M000067">upload</a></li>
               <li><a href="#M000057">uptime</a></li>
               <li><a href="#M000060">useradd</a></li>
               <li><a href="#M000018">wc</a></li>
@@ -513,43 +513,6 @@
                   <pre id='M000074-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 171</span>&#x000A;171:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_sha2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;172:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;173:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA2</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;174:       }&#x000A;175:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000068'>
-                <a name='M000068'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>download</span>
-                  <span class='arguments'>(*files)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Transfer files from a machine via Net::SCP.
-                  </p>
-                  <ul>
-                  <li><tt>files</tt> is an Array of files to download. The last element must be
-                  the
-                  
-                  </li>
-                  </ul>
-                  <p>
-                  local directory to download to. If downloading a single file the last
-                  element can be a file path. The target can also be a StringIO object. The
-                  target directory will be created if it does not exist, but only when
-                  multiple files are being transferred. This method will fail early if there
-                  are obvious problems with the input parameters. An exception is raised and
-                  no files are transferred. Return nil or a StringIO object, if specified as
-                  the target.
-                  </p>
-                  <p>
-                  NOTE: Changes to current working directory with <tt>cd</tt> or +[]+ are
-                  ignored.
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000068-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000068-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 108</span>&#x000A;108:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
               <div class='public-instance method' id='method-M000025'>
                 <a name='M000025'>      </a>
                 <div class='synopsis'>
@@ -607,7 +570,44 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000069-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000069-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 113</span>&#x000A;113:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">newcontent</span>, <span class="ruby-identifier">backup</span>=<span class="ruby-keyword kw">false</span>)&#x000A;114:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">filepath</span>)&#x000A;115:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span> <span class="ruby-identifier">filepath</span>, <span class="ruby-node">&quot;#{filepath}-previous&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">backup</span>&#x000A;116:         <span class="ruby-identifier">file_content</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">download</span> <span class="ruby-identifier">filepath</span>&#x000A;117:       <span class="ruby-keyword kw">end</span>&#x000A;118:       &#x000A;119:       <span class="ruby-identifier">file_content</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;120:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">StringIO</span>)&#x000A;121:         <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">rewind</span>&#x000A;122:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">read</span>&#x000A;123:       <span class="ruby-keyword kw">else</span>&#x000A;124:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>&#x000A;125:       <span class="ruby-keyword kw">end</span>&#x000A;126:       &#x000A;127:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">upload</span> <span class="ruby-identifier">file_content</span>, <span class="ruby-identifier">filepath</span>&#x000A;128:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000069-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 113</span>&#x000A;113:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">newcontent</span>, <span class="ruby-identifier">backup</span>=<span class="ruby-keyword kw">false</span>)&#x000A;114:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">filepath</span>)&#x000A;115:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span> <span class="ruby-identifier">filepath</span>, <span class="ruby-node">&quot;#{filepath}-previous&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">backup</span>&#x000A;116:         <span class="ruby-identifier">file_content</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_download</span> <span class="ruby-identifier">filepath</span>&#x000A;117:       <span class="ruby-keyword kw">end</span>&#x000A;118:       &#x000A;119:       <span class="ruby-identifier">file_content</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;120:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">StringIO</span>)&#x000A;121:         <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">rewind</span>&#x000A;122:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">read</span>&#x000A;123:       <span class="ruby-keyword kw">else</span>&#x000A;124:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>&#x000A;125:       <span class="ruby-keyword kw">end</span>&#x000A;126:       &#x000A;127:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_upload</span> <span class="ruby-identifier">file_content</span>, <span class="ruby-identifier">filepath</span>&#x000A;128:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000068'>
+                <a name='M000068'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>file_download</span>
+                  <span class='arguments'>(*files)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Transfer files from a machine via Net::SCP.
+                  </p>
+                  <ul>
+                  <li><tt>files</tt> is an Array of files to download. The last element must be
+                  the
+                  
+                  </li>
+                  </ul>
+                  <p>
+                  local directory to download to. If downloading a single file the last
+                  element can be a file path. The target can also be a StringIO object. The
+                  target directory will be created if it does not exist, but only when
+                  multiple files are being transferred. This method will fail early if there
+                  are obvious problems with the input parameters. An exception is raised and
+                  no files are transferred. Return nil or a StringIO object, if specified as
+                  the target.
+                  </p>
+                  <p>
+                  NOTE: Changes to current working directory with <tt>cd</tt> or +[]+ are
+                  ignored.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000068-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000068-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 108</span>&#x000A;108:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000070'>
@@ -625,7 +625,42 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000070-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000070-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 131</span>&#x000A;131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;132:       <span class="ruby-keyword kw">begin</span>&#x000A;133:         <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">ls</span>(<span class="ruby-identifier">path</span>)&#x000A;134:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;135:         <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">rap</span>&#x000A;136:       <span class="ruby-keyword kw">end</span>&#x000A;137:       <span class="ruby-comment cmt"># &quot;ls&quot; returns a 0 exit code regardless of success in Linux</span>&#x000A;138:       <span class="ruby-comment cmt"># But on OSX exit code is 1. This is why we look at STDERR. </span>&#x000A;139:       <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">stderr</span>.<span class="ruby-identifier">empty?</span>&#x000A;140:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000070-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 131</span>&#x000A;131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;132:       <span class="ruby-keyword kw">begin</span>&#x000A;133:         <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">ls</span>(<span class="ruby-identifier">path</span>) }&#x000A;134:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;135:         <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">rap</span>&#x000A;136:       <span class="ruby-keyword kw">end</span>&#x000A;137:       <span class="ruby-comment cmt"># &quot;ls&quot; returns a 0 exit code regardless of success in Linux</span>&#x000A;138:       <span class="ruby-comment cmt"># But on OSX exit code is 1. This is why we look at STDERR. </span>&#x000A;139:       <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">stderr</span>.<span class="ruby-identifier">empty?</span>&#x000A;140:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000067'>
+                <a name='M000067'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>file_upload</span>
+                  <span class='arguments'>(*files)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Transfer files to a machine via Net::SCP.
+                  </p>
+                  <ul>
+                  <li><tt>files</tt> is an Array of files to upload. The last element is the
+                  
+                  </li>
+                  </ul>
+                  <p>
+                  directory to upload to. If uploading a single file, the last element can be
+                  a file path. The list of files can also include StringIO objects. The
+                  target directory will be created if it does not exist, but only when
+                  multiple files are being transferred. This method will fail early if there
+                  are obvious problems with the input parameters. An exception is raised and
+                  no files are transferred. Always return nil.
+                  </p>
+                  <p>
+                  NOTE: Changes to current working directory with <tt>cd</tt> or +[]+ are
+                  ignored.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000067-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000067-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 95</span>&#x000A;95:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000071'>
@@ -1072,41 +1107,6 @@
                     [show source]
                   </a>
                   <pre id='M000053-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'unzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000067'>
-                <a name='M000067'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>upload</span>
-                  <span class='arguments'>(*files)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Transfer files to a machine via Net::SCP.
-                  </p>
-                  <ul>
-                  <li><tt>files</tt> is an Array of files to upload. The last element is the
-                  
-                  </li>
-                  </ul>
-                  <p>
-                  directory to upload to. If uploading a single file, the last element can be
-                  a file path. The list of files can also include StringIO objects. The
-                  target directory will be created if it does not exist, but only when
-                  multiple files are being transferred. This method will fail early if there
-                  are obvious problems with the input parameters. An exception is raised and
-                  no files are transferred. Always return nil.
-                  </p>
-                  <p>
-                  NOTE: Changes to current working directory with <tt>cd</tt> or +[]+ are
-                  ignored.
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000067-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000067-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 95</span>&#x000A;95:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000057'>
