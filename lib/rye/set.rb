@@ -91,7 +91,7 @@ module Rye
     end
     
     def inspect
-      a = [self.class.to_s, @name, @parallel, @opts.inspect, @boxes.join(',')]
+      a = [self.class.to_s, @name, @parallel, @opts.inspect, @boxes.inspect]
       %q{#<%s:%s parallel=%s opts=%s boxes=%s>} % a
     end
     

@@ -285,11 +285,11 @@ module Rye
     def to_s; '%s@rye_%s' % [user, @rye_host]; end
     
     def inspect
-      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s safe=%s opts=%s>} % 
+      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s safe=%s opts=%s keys=%s>} % 
       [self.class.to_s, self.host, self.nickname,
        @rye_current_working_directory, @rye_current_umask,
        (@rye_current_environment_variables || '').inspect,
-       self.safe, self.opts.inspect]
+       self.safe, self.opts.inspect, self.keys.inspect]
     end
     
     # Compares itself with the +other+ box. If the hostnames
