@@ -702,7 +702,7 @@ module Rye
         choice = nil
         @rye_exception_hook.each_pair do |klass,act|
           next unless ex.kind_of? klass
-          choice = @rye_exception_hook[klass].call(ex)
+          choice = act.call(ex, cmd_clean, user, host, nickname)
           break
         end
         if choice == :retry
@@ -775,7 +775,7 @@ module Rye
           raise Rye::NoPty if data =~ /Pseudo-terminal will not/
           
         end
-
+        
       end
       
       channel = @rye_ssh.exec(command, &block)
