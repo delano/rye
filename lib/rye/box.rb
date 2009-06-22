@@ -155,28 +155,26 @@ module Rye
     #     rbox['/usr/bin'].pwd  # => /usr/bin  ($ cd /usr/bin && pwd)
     #     rbox.pwd              # => /usr/bin  ($ cd /usr/bin && pwd)
     #
-    def [](key=nil)
-      if key.nil? || key.index('/') == 0
-        @rye_current_working_directory = key
+    def [](fpath=nil)
+      if fpath.nil? || fpath.index('/') == 0
+        @rye_current_working_directory = fpath
       else
         # Append to non-absolute paths
-        newpath = File.join(@rye_current_working_directory, key)
-        @rye_current_working_directory = File.expand_path(newpath)
+        if @rye_current_working_directory
+          newpath = File.join(@rye_current_working_directory, fpath)
+          @rye_current_working_directory = newpath
+        else
+          @rye_current_working_directory = fpath
+        end
       end
+      info "CWD: #{@rye_current_working_directory}"
       self
     end
     # Like [] except it returns an empty Rye::Rap object to mimick
     # a regular command method. Call with nil key (or no arg) to 
     # reset. 
-    def cd(key=nil)
-      if key.nil? || key.index('/') == 0
-        @rye_current_working_directory = key
-      else
-        # Append to non-absolute paths
-        newpath = File.join(@rye_current_working_directory, key)
-        @rye_current_working_directory = File.expand_path(newpath)
-      end
-      ret = Rye::Rap.new(self)
+    def cd(fpath=nil)
+      Rye::Rap.new(self[fpath])
     end
     
     # Change the current umask (sort of -- works the same way as cd)
@@ -237,7 +235,7 @@ module Rye
     # it, execute it directly, parse the output.
     def ostype
       return @rye_ostype if @rye_ostype # simple cache
-      os = self.uname.first rescue nil
+      os = self.quietly { uname.first } rescue nil
       os ||= 'unknown'
       os &&= os.downcase
       @rye_ostype = os
@@ -256,11 +254,11 @@ module Rye
     #
     def getenv
       if @rye_getenv && @rye_getenv.empty? && self.can?(:env)
-        env = self.env rescue []
-        env.each do |nv| 
+        vars = self.quietly { env } rescue []
+        vars.each do |nvpair| 
           # Parse "GLORIA_HOME=/gloria/lives/here" into a name/value
           # pair. The regexp ensures we split only at the 1st = sign
-          n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
+          n, v = nvpair.scan(/\A([\w_-]+?)=(.+)\z/).flatten
           @rye_getenv[n] = v
         end
       end
@@ -307,6 +305,7 @@ module Rye
     # Uses the output of "useradd -D" to determine the default home
     # directory. This returns a GUESS rather than the a user's real
     # home directory. Currently used only by authorize_keys_remote.
+    # Only useful before you've logged in. Otherwise check $HOME
     def guess_user_home(other_user=nil)
       this_user = other_user || opts[:user]
       @rye_guessed_homes ||= {}
@@ -321,7 +320,7 @@ module Rye
       # /etc/default/useradd, HOME=/home OR useradd -D
       # /etc/adduser.config, DHOME=/home OR ??
       user_defaults = {}
-      raw = self.useradd(:D) rescue ["HOME=/home"]
+      raw = self.quietly { useradd(:D) } rescue ["HOME=/home"]
       ostmp = self.ostype
       raw.each do |nv|
 
@@ -697,8 +696,7 @@ module Rye
       ## raise Rye::CommandNotFound unless self.can?(cmd)
       
       begin
-        info "COMMAND: #{cmd_clean}"
-        debug "Executing: #{cmd_internal}"
+        info "COMMAND: #{cmd_internal}"
 
         if !@rye_quiet && @rye_pre_command_hook.is_a?(Proc)
           @rye_pre_command_hook.call(cmd_clean, user, host, nickname) 
@@ -870,15 +868,26 @@ module Rye
 
       # We allow a single file to be downloaded into a StringIO object
       # but only when no target has been specified. 
-      if direction == :download && files.size == 1
-        debug "Created StringIO for download"
-        other = StringIO.new
-      else
-        other = files.pop
-      end
-      
-      if direction == :upload && other.is_a?(StringIO)
-        raise "Cannot upload to a StringIO object"
+      if direction == :download 
+        if files.size == 1
+          debug "Created StringIO for download"
+          target = StringIO.new
+        else
+          target = files.pop   # The last path is the download target.
+        end
+        
+      elsif direction == :upload
+        raise "Cannot upload to a StringIO object" if target.is_a?(StringIO)
+        if files.size == 1
+          target = self.getenv['HOME'] || guess_user_home
+          debug "Assuming upload to #{target}"
+        else
+          target = files.pop
+        end
+        
+        # Expand fileglobs (e.g. path/*.rb becomes [path/1.rb, path/2.rb]).
+        # This should happen after checking files.size to determine the target
+        files = files.collect { |file| Dir.glob file }.flatten unless @rye_safe
       end
               
       # Fail early. We check whether the StringIO object is available to read
@@ -891,21 +900,21 @@ module Rye
         end
       end
       
-      debug "#{direction.to_s.upcase} TO: #{other}"
+      info "#{direction.to_s.upcase} TO: #{target}"
       debug "FILES: " << files.join(', ')
       
       # Make sure the remote directory exists. We can do this only when
-      # there's more than one file because "other" could be a file name
-      if files.size > 1 && !other.is_a?(StringIO)
-        debug "CREATING TARGET DIRECTORY: #{other}"
-        self.mkdir(:p, other) unless self.file_exists?(other)
+      # there's more than one file because "target" could be a file name
+      if files.size > 1 && !target.is_a?(StringIO)
+        debug "CREATING TARGET DIRECTORY: #{target}"
+        self.mkdir(:p, target) unless self.file_exists?(target)
       end
       
       Net::SCP.start(@rye_host, @rye_opts[:user], @rye_opts || {}) do |scp|
         transfers = []
         files.each do |file|
           debug file.to_s
-          transfers << scp.send(direction, file, other)  do |ch, n, s, t|
+          transfers << scp.send(direction, file, target)  do |ch, n, s, t|
             pinfo "#{n}: #{s}/#{t}b\r"  # update line: "file: sent/total"
             @rye_info.flush if @rye_info        # make sure every line is printed
           end
@@ -914,7 +923,7 @@ module Rye
         info $/
       end
       
-      other.is_a?(StringIO) ? other : nil
+      target.is_a?(StringIO) ? target : nil
     end
     
 

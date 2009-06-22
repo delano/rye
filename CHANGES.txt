@@ -6,6 +6,14 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 * Add S3 support for Rye::Box.upload / download
 
+#### 0.8.1 (2009-06-22) #############################
+
+* FIXED: file_upload now handles globs like a champ
+* FIXED: Handling of relative paths in Rye::Box#cd and Rye::Box#[]
+* ADDED: file_upload now assumes uploading to home directory when only 1 arg
+* ADDED: Rudyfile for remote 'clean-machine' tests
+* CHANGE: guess_user_home, ostype, and getenv now run quietly
+
 
 #### 0.8.0 (2009-06-21) #############################
 

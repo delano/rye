@@ -36,6 +36,7 @@ module Rye;
     def du(*args); cmd('du', args); end
     
     def env; cmd "env"; end
+    def rye(*args); cmd "rye", args; end
     def pwd(*args); cmd "pwd", args; end
     def svn(*args); cmd('svn', args); end
     def cvs(*args); cmd('cvs', args); end
@@ -50,6 +51,7 @@ module Rye;
     def grep(*args); cmd('grep', args); end
     def date(*args); cmd('date', args); end
     def ruby(*args); cmd('ruby', args); end
+    def rudy(*args); cmd('rudy', args); end
     def perl(*args); cmd('perl', args); end
     def bash(*args); cmd('bash', args); end
     def echo(*args); cmd('echo', args); end
@@ -77,8 +79,11 @@ module Rye;
     def bunzip2(*args); cmd('bunzip2', args); end
     def getconf(*args); cmd('getconf', args); end
     def history(*args); cmd('history', args); end
+    def rudy_s3(*args); cmd('rudy-s3', args); end
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
+    def rudy_ec2(*args); cmd('rudy-ec2', args); end
+    def rudy_edb(*args); cmd('rudy-sdb', args); end
     def configure(*args); cmd('./configure', args); end
     
     # Transfer files to a machine via Net::SCP. 
