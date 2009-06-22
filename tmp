@@ -1,0 +1,31 @@
+[ANN] Rye 0.8.0 Released (better support for executing SSH commands in parallel)
+
+Rye: Run SSH commands on a bunch of machines at the same time (from Ruby) in a safe and tubular way.
+
+Homepage: http://github.com/delano/rye/
+Installation: gem install rye
+
+Example:
+
+rbox = Rye::Box.new('localhost')
+
+# SSH commands are run as methods on the Rye::Box object
+puts rbox.uptime                              # => 11:02 up 16:01, 3 users
+
+rset = Rye::Set.new('default', :parallel => true)
+rset.add_keys('/private/key/path')    # For passwordless logins
+rset.add_boxes(rbox, '127.0.0.1')    # Add boxes as objects or hostnames
+
+# Running a command on multiple machines
+p rset.uptime  # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
+
+
+Changes:
+* FIXED: safely and unsafely (Rye::Box) now return the block return value
+* ADDED: Rye::Set#parallel and Rye::Set#parallel= methods
+* ADDED: Rye::Box#quietly
+* CHANGE: Updated Rye::Set#inspect and Rye::Set#to_s
+* CHANGE: Exception hook now receives: ex, cmd, user, host, nickname
+* CHANGE: Increased Kernel.sleep to 0.03 in Rye::Set.run_command_parallel
+* CHANGE: Renamed Rye::Cmd#upload and Rye::Cmd#download to file_upload and file_download
+* CHANGE: Rye::Cmd#file_exists? now executes quietly (doesn’t pollute logging)
