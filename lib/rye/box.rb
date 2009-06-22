@@ -190,13 +190,14 @@ module Rye
     # * +newuser+ The username to reconnect as 
     #
     # NOTE: if there is an open connection, it's disconnected
-    # and a new one is opened for the given user. 
+    # but not reconnected because it's possible it wasn't 
+    # connected yet in the first place (if you create the 
+    # instance with default settings for example)
     def switch_user(newuser)
       return if newuser.to_s == self.user.to_s
       @rye_opts ||= {}
       @rye_opts[:user] = newuser
       disconnect
-      connect
     end
 
     
