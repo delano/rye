@@ -788,7 +788,7 @@ module Rye
         if type == :stderr
           # NOTE: Use sudo to test this since it prompts for a passwords. 
           # Use sudo -K to kill the user's timestamp (ask for a password every time)
-          if data =~ /Password:/
+          if data =~ /password:/i
             ret = Annoy.get_user_input("Password: ", '*')
             raise Rye::NoPassword if ret.nil?
             channel.send_data "#{ret}\n"

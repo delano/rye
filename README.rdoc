@@ -70,8 +70,7 @@ By default, Rye:Set connects to each machine sequentially in the order they were
     dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
     dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
     
-    rbox.file_upload("#{RYE_HOME}/README.rdoc", 
-                "#{RYE_HOME}/LICENSE.txt", dir_upload)
+    rbox.file_upload("#{RYE_HOME}/README.rdoc", "#{RYE_HOME}/LICENSE.txt", dir_upload)
 
     applejack = StringIO.new("Some in-memory content")
     rbox.file_upload(applejack, "#{dir_upload}/applejack.txt")
@@ -83,6 +82,27 @@ By default, Rye:Set connects to each machine sequentially in the order they were
     rbox.file_download("#{dir_upload}/applejack.txt", filecontent)
 
     p filecontent.read
+
+== EXAMPLE 5 -- Local processes
+
+For local processes, you can bypass <tt>Rye::Box</tt> and execute commands directly with <tt>Rye.shell</tt>:
+
+    Rye.shell :uptime    # => 11:02  up 16:01, 3 users
+
+
+The first argument must be the command name and the remaining arguments are sent directly as arguments to the command. They're not escaped like with <tt>Rye::Box</tt> so you can use the asterisk, environment variables, pipes, and redirects etc. Also note that you can specify single character switches as symbols and you can separate arguments or put them into a single String.
+
+    Rye.shell :ls, '*'
+    Rye.shell :ls, '-l $HOME'
+    Rye.shell :ls, :l, '$HOME > $TMPDIR/crazy.txt'
+
+The return value is a Rye::Rap object (just like with Rye::Box) so you have access to the exit code and STDERR output:
+
+    ret = Rye.shell :ls, 'nofile'
+    ret.exit_code        # => 1
+    ret.stderr           # => "sh: nofile: No such file or directory"
+    ret.class            # => Rye::Rap
+
 
 
 == About Safe-Mode
