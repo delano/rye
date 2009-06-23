@@ -120,7 +120,7 @@ module Rye;
         self.cp filepath, "#{filepath}-previous" if backup
         file_content = self.file_download filepath
       end
-      
+
       file_content ||= StringIO.new
       if newcontent.is_a?(StringIO)
         newcontent.rewind
@@ -131,6 +131,12 @@ module Rye;
       
       self.file_upload file_content, filepath
     end
+    
+    #--   
+    #def file_modify(filepath, regexp, replace=nil, &block)
+    #  raise "File not found: #{filepath}" unless self.file_exists?(filepath)
+    #end
+    #++
     
     # Does +path+ from the current working directory?
     def file_exists?(path)

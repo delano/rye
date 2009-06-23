@@ -85,13 +85,10 @@ module Rye;
     end
     def code; @exit_code; end
     
-    # Returns the first element if there it's the only
-    # one, otherwise the value of Array#to_s
-    def to_s
-      return self.first if self.size == 1
-      return "" if self.size == 0
-      super
-    end
+    # Returns the first element if there's only the
+    # one, an empty String if there's none. Returns
+    # the value of self.join($/) otherwise. 
+    def to_s; self.join $/; end
     
     # Output STDOUT content to (remote) +path+ 
     # This works like a shell redirect so the file contents are 
