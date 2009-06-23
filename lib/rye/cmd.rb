@@ -204,8 +204,6 @@ module Rye;
     # An optional block can be provided which will be called instead
     # of calling a system command. 
     def Cmd.add_command(meth, path=nil, *hard_args, &block)
-
-      path ||= meth.to_s
       if block
         hard_args.unshift(path) unless path.nil? # Don't lose an argument
         define_method(meth) do |*args|
@@ -214,6 +212,7 @@ module Rye;
           block.call(*local_args)
         end
       else
+        path ||= meth.to_s
         define_method(meth) do |*args|
           local_args = hard_args.clone
           local_args += args

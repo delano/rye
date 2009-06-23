@@ -9,6 +9,7 @@ TODO
 #### 0.8.2 (2009-06-??) #############################
 
 * FIXED: Rye::Box.switch_user will disconnect but not create a new connection.
+* FIXED: Rye::Cmd#add_command hard coded argument handling for blocks
 
 
 #### 0.8.1 (2009-06-22) #############################
