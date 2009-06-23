@@ -112,6 +112,23 @@ module Rye;
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
     def file_download(*files); net_scp_transfer!(:download, *files); end
     
+    # Shorthand for +file_download('remote/path').string+
+    #
+    # Returns a String containing the content of all remote *files*. 
+    def string_download(*files)
+      net_scp_transfer!(:download, *files, StringIO.new).string
+    end
+    alias_method :str_download, :string_download
+    
+    # Shorthand for +file_upload(StringIO.new('file content'), 'remote/path')+
+    #
+    # Uploads the content of the String +str+ to +remote_path+. Returns nil
+    def string_upload(str, remote_path)
+      net_scp_transfer!(:upload, StringIO.new(str), remote_path)
+    end
+    alias_method :str_upload, :string_upload
+      
+    
     # Append +newcontent+ to remote +filepath+. If the file doesn't exist
     # it will be created. If +backup+ is specified, +filepath+ will be 
     # copied to +filepath-previous+ before appending. 

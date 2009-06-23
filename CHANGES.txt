@@ -11,6 +11,7 @@ TODO
 * FIXED: Rye::Box.switch_user will disconnect but not create a new connection.
 * FIXED: Rye::Cmd#add_command hard coded argument handling for blocks
 * CHANGE: Rye::Rap#to_s now returns stdout.join($/)
+* ADDED: Rye::Cmd#string_upload and Rye::Cmd#string_download
 
 
 #### 0.8.1 (2009-06-22) #############################
