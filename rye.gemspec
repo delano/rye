@@ -11,10 +11,11 @@
   # = DEPENDENCIES =
   # Add all gem dependencies
   s.add_dependency 'drydock'
+  s.add_dependency 'sysinfo'
+  s.add_dependency 'storable'
+  
   s.add_dependency 'highline', '>= 1.5.1'
-  s.add_dependency 'sysinfo', '>= 0.5.1'
-  s.add_dependency 'storable', '>= 0.5.1'
-  s.add_dependency 'net-ssh', '>= 2.0.9'
+  s.add_dependency 'net-ssh', '>= 2.0.12'
   s.add_dependency 'net-scp', '>= 1.0.2'
   #s.add_dependency 'net-ssh-gateway'
   #s.add_dependency 'net-ssh-multi'
