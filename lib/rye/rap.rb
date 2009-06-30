@@ -74,11 +74,16 @@ module Rye;
     # For example, when running a command via Rye.shell, this method 
     # is send $? which is Process::Status object. Via Rye::Box.run_command
     # it's just an exit code returned by Net::SSH. 
+    #
+    # In JRuby, if +code+ is a Process::Status object, @pid will be 
+    # set to -1 (JRuby doesn't return the pid).   
+    #
     # Returns the exit code as an Integer. 
     def add_exit_code(code)
       code = 0 if code.nil?
       if code.is_a?(Process::Status)
-        @exit_code, @pid = code.exitstatus.to_i, code.pid
+        @exit_code = code.exitstatus.to_i
+        @pid = Rye.sysinfo.vm == :java ? '-1' : code.pid
       else
         @exit_code = code.to_i
       end

@@ -6,6 +6,11 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.8.3 (2009-06-30) #############################
+
+* FIXED: 
+
+
 #### 0.8.2 (2009-06-23) #############################
 
 * FIXED: Rye::Box.switch_user will disconnect but not create a new connection.
