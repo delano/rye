@@ -6,6 +6,13 @@ local_sandbox = File.join(Rye.sysinfo.tmpdir, 'rye-tryouts')
 
 tryouts "File transfer" do
   
+  setup do
+    Rye::Cmd.add_command :rm
+  end
+  clean do
+    Rye::Cmd.remove_command :rm
+  end
+  
   drill "sandbox should not exist", false do
     File.exists? local_sandbox
   end
@@ -27,7 +34,6 @@ tryouts "File transfer" do
     downloaded_file = File.join(Rye.sysinfo.tmpdir, 'downloaded.file')
     lbox.file_download File.join(local_sandbox, 'README.rdoc'), downloaded_file 
     ret = lbox.file_exists? downloaded_file
-    Rye::Cmd.add_command :rm
     lbox.rm downloaded_file
     ret
   end

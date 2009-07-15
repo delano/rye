@@ -15,7 +15,13 @@ tryouts "Rye::Box" do
     lbox = Rye::Box.new
     initially = lbox.can? :rm
     Rye::Cmd.add_command :rm
-    [initially, lbox.can?(:rm)]
+    ret = [initially, lbox.can?(:rm)]
+  end
+  
+  drill "can remove commands", false do
+    lbox = Rye::Box.new
+    Rye::Cmd.remove_command :rm
+    lbox.can?(:rm)
   end
   
   dream :class, Rye::Rap
