@@ -6,6 +6,15 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
+#### 0.8.5 (2009-07-14) #############################
+
+* CHANGE: Rye::Box#getenv now accepts an option key name
+* CHANGE: When not in safe mode, method missing will execute a 
+  method name as a shell command
+* ADDED: Rye::Box#execute for running arbitrary commands when 
+  not in safe mode
+  
+
 #### 0.8.4 (2009-06-30) #############################
 
 * FIXED: Reference to (still) non-existent net-ssh 2.0.12 is now 2.0.11
