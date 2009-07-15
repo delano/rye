@@ -277,8 +277,7 @@ module Rye
   #     $ SSH_AUTH_SOCK=/tmp/ssh-tGvaOXIXSr/agent.12951; export SSH_AUTH_SOCK;
   #     $ SSH_AGENT_PID=12952; export SSH_AGENT_PID;
   #
-  # NOTE: The OpenSSL library (The C one, not the Ruby one) 
-  # must be installed for this to work.
+  # NOTE: The OpenSSH library must be installed for this to work.
   # 
   def start_sshagent_environment
     return if @@agent_env["SSH_AGENT_PID"]
@@ -322,7 +321,7 @@ module Rye
     }
     
   rescue => ex
-    STDERR.puts "Error initializing the SSH Agent (is OpenSSL installed?):"
+    STDERR.puts "Error initializing the SSH Agent (is OpenSSH installed?):"
     STDERR.puts ex.message
     STDERR.puts ex.backtrace
     exit 1
