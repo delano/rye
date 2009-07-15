@@ -253,7 +253,7 @@ module Rye
     # NOTE: This method should not raise an exception under normal
     # circumstances. 
     #
-    def getenv
+    def getenv(key=nil)
       if @rye_getenv && @rye_getenv.empty? && self.can?(:env)
         vars = self.quietly { env } rescue []
         vars.each do |nvpair| 
@@ -263,7 +263,7 @@ module Rye
           @rye_getenv[n] = v
         end
       end
-      @rye_getenv
+      key.nil? ? @rye_getenv : @rye_getenv[key.to_s]
     end
     
     # Add an environment variable. +n+ and +v+ are the name and value.
