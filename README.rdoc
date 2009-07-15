@@ -121,6 +121,7 @@ Rye permits only a limited number of system commands to be run. This default whi
 
 == Dependencies
 
+* OpenSSH[http://www.openssh.com/]
 * OpenSSL[http://www.openssl.org] (The C library)
 * Ruby Gems:
   * net-ssh
@@ -145,7 +146,7 @@ One of:
 This list will grow. If you find one let me know!
 
 * Rye doesn't read the ~/.ssh/config file yet
-* Rye uses OpenSSL's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
+* Rye uses OpenSSH's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
 
 
 == Thanks
