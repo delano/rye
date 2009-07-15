@@ -48,6 +48,7 @@ module Rye
     
     def enable_safe_mode;  @rye_safe = true; end
     def disable_safe_mode; @rye_safe = false; end
+    def safe?; @rye_safe == true; end
     
     def enable_quiet_mode;  @rye_quiet = true; end
     def disable_quiet_mode; @rye_quiet = false; end
@@ -253,7 +254,7 @@ module Rye
     # NOTE: This method should not raise an exception under normal
     # circumstances. 
     #
-    def getenv
+    def getenv(key=nil)
       if @rye_getenv && @rye_getenv.empty? && self.can?(:env)
         vars = self.quietly { env } rescue []
         vars.each do |nvpair| 
@@ -263,7 +264,7 @@ module Rye
           @rye_getenv[n] = v
         end
       end
-      @rye_getenv
+      key.nil? ? @rye_getenv : @rye_getenv[key.to_s]
     end
     
     # Add an environment variable. +n+ and +v+ are the name and value.
@@ -429,12 +430,22 @@ module Rye
     
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
-    def method_missing(meth, *args, &block)
-      ex = Rye::CommandNotFound.new(meth.to_s)
-      raise ex unless @rye_exception_hook.has_key? ex.class
-      @rye_exception_hook[Rye::CommandNotFound].call ex
+    def method_missing(cmd, *args, &block)
+      if @rye_safe
+        ex = Rye::CommandNotFound.new(cmd.to_s)
+        raise ex unless @rye_exception_hook.has_key? ex.class
+        @rye_exception_hook[Rye::CommandNotFound].call ex
+      else
+        if block.nil?
+          run_command cmd, *args
+        else
+          ex = Rye::CommandNotFound.new(cmd.to_s)
+          raise ex unless @rye_exception_hook.has_key? ex.class
+        end
+      end
     end
-    
+    alias :execute :method_missing
+
     # Returns the command an arguments as a String. 
     def preview_command(*args)
       prep_args(*args).join(' ')
@@ -736,7 +747,7 @@ module Rye
         elsif choice == :skip
           # do nothing
         else
-          raise ex
+          raise ex, ex.message
         end
       end
       

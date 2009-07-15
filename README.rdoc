@@ -1,65 +1,105 @@
 = Rye - v0.8
 
-Safely run SSH commands on a bunch of machines at the same time (from Ruby).
+<strong>Safely run SSH commands on a bunch of machines at the same time (from Ruby).</strong>
 
-== News 
+Inspired by Rush[http://rush.heroku.com] and compatible with Ruby 1.8, 1.9, and JRuby 1.3+!
 
-=== 2009-06-30
-
-Now supports JRuby 1.3+!
 
 == Overview
 
-Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings err on the side of safety. For example, file globs and the "rm" command are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
+Rye is a Ruby abstraction for executing shell commands via SSH. By default, Rye errs on the side of caution by running in "safe-mode" which specifies a default whitelist of commands and aggressively escapes all command arguments. For example, file globs and the "rm" command are not available in safe-mode, so you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
+Rye does not require anything to be installed on the server side (other than an SSH daemon) so it can be run from any machine with Ruby, OpenSSL, and OpenSSH.
 
-== EXAMPLE 1 -- SSH Authorization
-
-Does it annoy you to manually authorize remote SSH accounts? Rye can help!
-
-Enable passwordless logins to HOST1 and HOST2:
-
-    $ rye authorize HOST1 HOST2    
-
-This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
-
-See <tt>rye -h</tt> for more info
     
-    
-== EXAMPLE 2 -- Basic Usage
-    
-    rbox = Rye::Box.new('localhost')
-    rbox.uptime                            # => 11:02  up 16:01, 3 users
-    rbox['/usr/bin'].pwd                   # => /usr/bin
-    
-You can specify environment variables
+== Example 1 -- Execute commands on a remote machine
 
-    rbox.setenv(:RYE, "Forty Creek")
-    rbox.env             # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
+Shell commands are executed by calling methods on a Rye::Box object. 
     
-    
-== EXAMPLE 3a -- Accessing Multiple Machines
+    rbox = Rye::Box.new('hostname')
+    rbox.pwd                               # => "/home/rye"
+    rbox.uname :a                          # => "Darwin rye-stage 9.7.0 ..."
 
+Method arguments are sent directly as arguments to the shell command. Single-character Symbols are assumed to be single-character switches. <em>e.g. <tt>rbox.uname :a</tt> becomes <tt>uname -a</tt>.</em>
+    
+The return value for a command is a modified Array containing the contents of STDOUT split by line. It also gives access to STDERR and the exit code
+
+    ret = rbox.uptime                      # => "11:02  up 16:01, 3 users"
+    ret.stderr                             # => []
+    ret.exit_code                          # => 0
+    ret.stdout                             # => "11:02  up 16:01, 3 users"
+    ret.stdout.class                       # => Array
+    ret.class                              # => Rye::Rap
+    
+== Example 2 -- Paths and environment variables
+
+You can change directories.
+
+    rbox.cd '/tmp'
+    rbox.pwd                               # => '/tmp'
+    rbox['/etc'].ls                        # => ['apache', 'init.d', ...]
+    rbox.pwd                               # => '/etc'
+    rbox.cd                                # => '/home/rye'
+    
+You can specify environment variables.
+
+    rbox.setenv('TIPPLE', "Forty Creek")
+    rbox.getenv 'TIPPLE'                   # => "Forty Creek"    
+    
+
+== Example 3 -- Adding and removing commands
+
+You can add and remove commands to the whitelist.
+
+    rbox.add_command :anything, '/path/2/anything'
+    rbox.anything                       
+    rbox.remove_command :anything
+    rbox.anything                          # => Rye::CommandNotFound exception
+
+== Example 4 -- Disabling Safe Mode
+
+Safe mode can be disabled on one of the following ways.
+
+    rbox = Rye::Box.new 'HOST', :safe => false
+      OR
+    rbox.disable_safe_mode
+  
+When safe-mode is disabled, you can run any command (regardless of what is defined in the whitelist) with any valid arguments (fileglobs, tildas, etc...).
+
+    rbox.kill '-SIGHUP', 1928111
+    rbox.rm 'path/2/*'
+    
+You can also execute any valid shell command.
+
+    rbox.execute 'ps aux | grep ruby > /tmp/ruby-process-list'
+
+See the "About Safe Mode" section below for more information.
+ 
+
+== Example 5a -- Accessing Multiple Machines
+
+Shell commands can be executed on multiple machines using a Rye::Set object. Create a "set" of machines.
+
+    rbox = Rye::Box.new 'HOST1
     rset = Rye::Set.new
-    rbox = Rye::Box.new
+    rset.add_boxes(rbox, 'HOST2')          # Add boxes as hostnames or objects
     
-    rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects
+Then call methods just like with Rye::Box, except now the return value is an Array of Arrays. The order of return values matches the order the machines were added to the set.
     
-Calling methods on Rye::Set objects is very similar to calling them on Rye::Box objects. In fact, it's identical:
-
-    p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
-    p rset['/etc'].ls    # => [['file1', 'file2', ...], ['life1', 'life2', ...]]
+    rset.hostname                          # => [["HOST1"], ["HOST2"]]
+    rset.uname                             # => [["Darwin"], ["Linux"]]
+    rset.
     
-== EXAMPLE 3b -- Accessing Multiple Machines -- In Parallel
+== Example 5b -- Accessing Multiple Machines in Parallel
    
-By default, Rye:Set connects to each machine sequentially in the order they were added to the set. Commands can also be run in parallel:
+By default, Rye:Set connects to each machine sequentially in the order they were added to the set. Commands can also be run in parallel.
 
    rset = Rye::Set.new('set-name', :parallel => true)
      OR
    rset.parallel = true
    
    
-== EXAMPLE 4 -- File Transfers
+== Example 6 -- File Transfers
 
     rbox = Rye::Box.new("localhost", :info => true)
 
@@ -79,7 +119,7 @@ By default, Rye:Set connects to each machine sequentially in the order they were
 
     p filecontent.read
 
-== EXAMPLE 5 -- Local processes
+== Example 7 -- Local processes
 
 For local processes, you can bypass <tt>Rye::Box</tt> and execute commands directly with <tt>Rye.shell</tt>:
 
@@ -99,6 +139,18 @@ The return value is a Rye::Rap object (just like with Rye::Box) so you have acce
     ret.stderr           # => "sh: nofile: No such file or directory"
     ret.class            # => Rye::Rap
 
+
+== Example 8 -- SSH Authorization
+
+Does it annoy you to manually authorize remote SSH accounts? Rye can help!
+
+Enable passwordless logins to HOST1 and HOST2:
+
+    $ rye authorize HOST1 HOST2    
+
+This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
+
+See <tt>rye -h</tt> for more info
 
 
 == About Safe-Mode
@@ -134,11 +186,16 @@ Rye permits only a limited number of system commands to be run. This default whi
 
 == Installation
 
-One of:
+Via Rubygems, one of:
 
-* <tt>$ sudo gem install rye</tt>
-* <tt>$ sudo gem install delano-rye --source http://gems.github.com/</tt>
-* <tt>$ git clone git://github.com/delano/rye.git</tt>
+    $ gem install rye
+    $ gem install delano-rye --source http://gems.github.com/
+
+or via download:
+
+* rye-latest.tar.gz[http://github.com/delano/rye/tarball/latest]
+* rye-latest.zip[http://github.com/delano/rye/zipball/latest]
+
 
 
 == Known Issues
@@ -147,13 +204,14 @@ This list will grow. If you find one let me know!
 
 * Rye doesn't read the ~/.ssh/config file yet
 * Rye uses OpenSSH's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
+* No support for STDIN. 
 
 
 == Thanks
 
 * Kalin Harvey (http://rely.ca)
 * Rush[http://github.com/adamwiggins/rush] and Capistrano[http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb] for the inspiration.
-* Mike Cline for giving the okay to use the Rye name.
+* Mike Cline for giving the okay to use the Rye name. 
 
 
 == More Info
@@ -162,6 +220,9 @@ This list will grow. If you find one let me know!
 * Rdocs[http://delano.github.com/rye]
 * Inspiration[http://www.youtube.com/watch?v=_StUVh6ENuw]
 
+== Related Projects
+
+* Rush[http://github.com/adamwiggins/rush]
 
 == Credits
 
