@@ -30,7 +30,8 @@ The return value for a command is a modified Array containing the contents of ST
     ret.stdout                             # => "11:02  up 16:01, 3 users"
     ret.stdout.class                       # => Array
     ret.class                              # => Rye::Rap
-    
+
+
 == Example 2 -- Paths and environment variables
 
 You can change directories.
@@ -55,6 +56,7 @@ You can add and remove commands to the whitelist.
     rbox.anything                       
     rbox.remove_command :anything
     rbox.anything                          # => Rye::CommandNotFound exception
+
 
 == Example 4 -- Disabling Safe Mode
 
@@ -92,32 +94,30 @@ Then call methods just like with Rye::Box, except now the return value is an Arr
     
 == Example 5b -- Accessing Multiple Machines in Parallel
    
-By default, Rye:Set connects to each machine sequentially in the order they were added to the set. Commands can also be run in parallel.
+By default, Rye::Set connects to each machine sequentially in the order they were added to the set. Commands can also be run in parallel.
 
-   rset = Rye::Set.new('set-name', :parallel => true)
-     OR
-   rset.parallel = true
+    rset = Rye::Set.new "SETNAME", :parallel => true
+      OR
+    rset.parallel = true
    
    
 == Example 6 -- File Transfers
 
-    rbox = Rye::Box.new("localhost", :info => true)
+    rbox = Rye::Box.new "localhost"
 
-    dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
-    dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
-    
-    rbox.file_upload("#{RYE_HOME}/README.rdoc", "#{RYE_HOME}/LICENSE.txt", dir_upload)
+    rbox.file_upload "README.rdoc", "/tmp" 
 
-    applejack = StringIO.new("Some in-memory content")
-    rbox.file_upload(applejack, "#{dir_upload}/applejack.txt")
+    applejack = StringIO.new "Some in-memory content"
+    rbox.file_upload applejack, "/tmp/applejack.txt"
 
-    p rbox.ls(dir_upload)      # => [README.rdoc, LICENSE.txt, applejack.txt]
-    p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
+    rbox.ls "/tmp/"                 # => [README.rdoc, applejack.txt]
+    rbox.cat "/tmp/applejack.txt"   # => "Some in-memory content"
 
     filecontent = StringIO.new
-    rbox.file_download("#{dir_upload}/applejack.txt", filecontent)
+    rbox.file_download "/tmp/applejack.txt", filecontent
 
-    p filecontent.read
+    filecontent.read                # => "Some in-memory content"
+
 
 == Example 7 -- Local processes
 
@@ -150,7 +150,7 @@ Enable passwordless logins to HOST1 and HOST2:
 
 This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
 
-See <tt>rye -h</tt> for more info
+See <tt>rye -h</tt> for more info.
 
 
 == About Safe-Mode
@@ -197,14 +197,13 @@ or via download:
 * rye-latest.zip[http://github.com/delano/rye/zipball/latest]
 
 
-
 == Known Issues
-
-This list will grow. If you find one let me know!
 
 * Rye doesn't read the ~/.ssh/config file yet
 * Rye uses OpenSSH's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
 * No support for STDIN. 
+
+If you find one let me know!
 
 
 == Thanks
@@ -220,15 +219,18 @@ This list will grow. If you find one let me know!
 * Rdocs[http://delano.github.com/rye]
 * Inspiration[http://www.youtube.com/watch?v=_StUVh6ENuw]
 
+
 == Related Projects
 
 * Rush[http://github.com/adamwiggins/rush]
+
 
 == Credits
 
 * Delano (@solutious.com)
 * Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
 * Rye::Box#instance_exec (for Ruby 1.8) Mauricio Fernandez
+
 
 == License
 
