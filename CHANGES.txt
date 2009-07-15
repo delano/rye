@@ -208,7 +208,7 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 * ADDED: hostname command to Rye::Cmd
 * ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true 
 * ADDED: Rye::Box.interactive_ssh for opening an SSH session to the given box.
-* CHANGE: Using OpenSSL's ssh-agent but also let's Net::SSH handle the ssh keys. 
+* CHANGE: Using OpenSSH's ssh-agent but also let's Net::SSH handle the ssh keys. 
 
 
 #### 0.4.1 (2009-04-06) #############################

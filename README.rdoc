@@ -2,19 +2,15 @@
 
 Safely run SSH commands on a bunch of machines at the same time (from Ruby).
 
-Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings are less powerful (for safety). For example, file globs and the "rm" command are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
+== News 
 
+=== 2009-06-30
 
-== Installation
+Now supports JRuby 1.3+!
 
-One of:
+== Overview
 
-    $ sudo gem install rye
-    $ sudo gem install delano-rye --source http://gems.github.com/
-    $ git clone git://github.com/delano/rye.git
-
-
-See bin/try for examples!
+Rye is similar to Rush[http://rush.heroku.com] but everything happens over SSH (no HTTP daemon) and the default settings err on the side of safety. For example, file globs and the "rm" command are disabled so unless otherwise specified, you can't do this: <tt>rbox.rm('-rf', '/etc/**/*')</tt>.
 
 
 == EXAMPLE 1 -- SSH Authorization
@@ -135,6 +131,15 @@ Rye permits only a limited number of system commands to be run. This default whi
   * storable
 
 
+== Installation
+
+One of:
+
+* <tt>$ sudo gem install rye</tt>
+* <tt>$ sudo gem install delano-rye --source http://gems.github.com/</tt>
+* <tt>$ git clone git://github.com/delano/rye.git</tt>
+
+
 == Known Issues
 
 This list will grow. If you find one let me know!
@@ -145,21 +150,21 @@ This list will grow. If you find one let me know!
 
 == Thanks
 
-* Solutious Incorporated (http://solutious.com) for all the orange juice.
 * Kalin Harvey (http://rely.ca)
-* Rush[http://github.com/adamwiggins/rush]
-* Capistrano[http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb]
+* Rush[http://github.com/adamwiggins/rush] and Capistrano[http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb] for the inspiration.
+* Mike Cline for giving the okay to use the Rye name.
 
 
 == More Info
 
-* GitHub[http://github.com/delano/rye]
+* Codes[http://github.com/delano/rye]
 * Rdocs[http://delano.github.com/rye]
 * Inspiration[http://www.youtube.com/watch?v=_StUVh6ENuw]
 
+
 == Credits
 
-* Delano Mandelbaum (delano@solutious.com)
+* Delano (@solutious.com)
 * Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
 * Rye::Box#instance_exec (for Ruby 1.8) Mauricio Fernandez
 
