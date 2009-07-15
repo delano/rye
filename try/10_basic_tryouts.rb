@@ -1,8 +1,6 @@
 
-
+group "Basics"
 library :rye, 'lib'
-
-group "Basic"
 
 tryouts "Rye::Box" do
   

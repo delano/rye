@@ -495,6 +495,13 @@ module Rye
     # OR
     #     rbox.batch(&block)
     #
+    # The batch can also accept arguments.
+    #
+    #     rbox.batch('path/2/file') do |file|
+    #       ls :l file
+    #     end
+    #
+    # Returns the return value of the block. 
     #
     def batch(*args, &block)
       self.instance_exec *args, &block
