@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2009-06-30 22:03:11 -0400</span>
+          <span class='datetime'>2009-07-15 16:43:35 -0400</span>
         </div>
       </div>
       <div id='content'>
@@ -39,65 +39,99 @@
           <div id='description'>
             <h1><a href="../classes/Rye.html">Rye</a> - v0.8</h1>
             <p>
-            Safely run SSH commands on a bunch of machines at the same time (from
-            Ruby).
+            <strong>Safely run SSH commands on a bunch of machines at the same time
+            (from Ruby).</strong>
             </p>
             <p>
-            <a href="../classes/Rye.html">Rye</a> is similar to <a
-            href="http://rush.heroku.com">Rush</a> but everything happens over SSH (no
-            HTTP daemon) and the default settings are less powerful (for safety). For
-            example, file globs and the &#8220;rm&#8221; command are disabled so unless
-            otherwise specified, you can&#8217;t do this: <tt>rbox.rm('-rf',
-            '/etc/*<b>/</b>')</tt>.
+            Inspired by <a href="http://rush.heroku.com">Rush</a> and compatible with
+            Ruby 1.8, 1.9, and JRuby 1.3+!
             </p>
-            <h2>Installation</h2>
+            <h2>Overview</h2>
             <p>
-            One of:
-            </p>
-            <pre>$ sudo gem install rye&#x000A;$ sudo gem install delano-rye --source http://gems.github.com/&#x000A;$ git clone git://github.com/delano/rye.git</pre>
-            <p>
-            See <a href="bin/try.html">bin/try</a> for examples!
-            </p>
-            <h2>EXAMPLE 1 &#8212; SSH Authorization</h2>
-            <p>
-            Does it annoy you to manually authorize remote SSH accounts? <a
-            href="../classes/Rye.html">Rye</a> can help!
+            <a href="../classes/Rye.html">Rye</a> is a Ruby abstraction for executing
+            shell commands via SSH. By default, <a href="../classes/Rye.html">Rye</a>
+            errs on the side of caution by running in &#8220;safe-mode&#8221; which
+            specifies a default whitelist of commands and aggressively escapes all
+            command arguments. For example, file globs and the &#8220;rm&#8221; command
+            are not available in safe-mode, so you can&#8217;t do this:
+            <tt>rbox.rm('-rf', '/etc/*<b>/</b>')</tt>.
             </p>
             <p>
-            Enable passwordless logins to HOST1 and HOST2:
+            <a href="../classes/Rye.html">Rye</a> does not require anything to be
+            installed on the server side (other than an SSH daemon) so it can be run
+            from any machine with Ruby, OpenSSL, and OpenSSH.
             </p>
-            <pre>$ rye authorize HOST1 HOST2</pre>
+            <h2>Example 1 &#8212; Execute commands on a remote machine</h2>
             <p>
-            This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt>
-            and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
+            Shell commands are executed by calling methods on a <a
+            href="../classes/Rye/Box.html">Rye::Box</a> object.
+            </p>
+            <pre>rbox = Rye::Box.new('hostname')&#x000A;rbox.pwd                               # =&gt; &quot;/home/rye&quot;&#x000A;rbox.uname :a                          # =&gt; &quot;Darwin rye-stage 9.7.0 ...&quot;</pre>
+            <p>
+            Method arguments are sent directly as arguments to the shell command.
+            Single-character Symbols are assumed to be single-character switches.
+            <em>e.g. <tt>rbox.uname :a</tt> becomes <tt>uname -a</tt>.</em>
             </p>
             <p>
-            See <tt>rye -h</tt> for more info
+            The return value for a command is a modified Array containing the contents
+            of STDOUT split by line. It also gives access to STDERR and the exit code
             </p>
-            <h2>EXAMPLE 2 &#8212; Basic Usage</h2>
-            <pre>rbox = Rye::Box.new('localhost')&#x000A;rbox.uptime                            # =&gt; 11:02  up 16:01, 3 users&#x000A;rbox['/usr/bin'].pwd                   # =&gt; /usr/bin</pre>
+            <pre>ret = rbox.uptime                      # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stderr                             # =&gt; []&#x000A;ret.exit_code                          # =&gt; 0&#x000A;ret.stdout                             # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stdout.class                       # =&gt; Array&#x000A;ret.class                              # =&gt; Rye::Rap</pre>
+            <h2>Example 2 &#8212; Paths and environment variables</h2>
             <p>
-            You can specify environment variables
+            You can change directories.
             </p>
-            <pre>rbox.setenv(:RYE, &quot;Forty Creek&quot;)&#x000A;rbox.env             # =&gt; ['HOME=/home/rye', 'RYE=Forty Creek', ...]</pre>
-            <h2>EXAMPLE 3a &#8212; Accessing Multiple Machines</h2>
-            <pre>rset = Rye::Set.new&#x000A;rbox = Rye::Box.new&#x000A;&#x000A;rset.add_boxes(rbox, 'localhost')      # Add boxes as hostnames or objects</pre>
+            <pre>rbox.cd '/tmp'&#x000A;rbox.pwd                               # =&gt; '/tmp'&#x000A;rbox['/etc'].ls                        # =&gt; ['apache', 'init.d', ...]&#x000A;rbox.pwd                               # =&gt; '/etc'&#x000A;rbox.cd                                # =&gt; '/home/rye'</pre>
             <p>
-            Calling methods on <a href="../classes/Rye/Set.html">Rye::Set</a> objects
-            is very similar to calling them on <a
-            href="../classes/Rye/Box.html">Rye::Box</a> objects. In fact, it&#8217;s
-            identical:
+            You can specify environment variables.
             </p>
-            <pre>p rset.uptime        # =&gt; [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]&#x000A;p rset['/etc'].ls    # =&gt; [['file1', 'file2', ...], ['life1', 'life2', ...]]</pre>
-            <h2>EXAMPLE 3b &#8212; Accessing Multiple Machines &#8212; In Parallel</h2>
+            <pre>rbox.setenv('TIPPLE', &quot;Forty Creek&quot;)&#x000A;rbox.getenv 'TIPPLE'                   # =&gt; &quot;Forty Creek&quot;</pre>
+            <h2>Example 3 &#8212; Adding and removing commands</h2>
+            <p>
+            You can add and remove commands to the whitelist.
+            </p>
+            <pre>rbox.add_command :anything, '/path/2/anything'&#x000A;rbox.anything&#x000A;rbox.remove_command :anything&#x000A;rbox.anything                          # =&gt; Rye::CommandNotFound exception</pre>
+            <h2>Example 4 &#8212; Disabling Safe Mode</h2>
+            <p>
+            Safe mode can be disabled on one of the following ways.
+            </p>
+            <pre>rbox = Rye::Box.new 'HOST', :safe =&gt; false&#x000A;  OR&#x000A;rbox.disable_safe_mode</pre>
+            <p>
+            When safe-mode is disabled, you can run any command (regardless of what is
+            defined in the whitelist) with any valid arguments (fileglobs, tildas,
+            etc...).
+            </p>
+            <pre>rbox.kill '-SIGHUP', 1928111&#x000A;rbox.rm 'path/2/*'</pre>
+            <p>
+            You can also execute any valid shell command.
+            </p>
+            <pre>rbox.execute 'ps aux | grep ruby &gt; /tmp/ruby-process-list'</pre>
+            <p>
+            See the &#8220;About Safe Mode&#8221; section below for more information.
+            </p>
+            <h2>Example 5a &#8212; Accessing Multiple Machines</h2>
+            <p>
+            Shell commands can be executed on multiple machines using a <a
+            href="../classes/Rye/Set.html">Rye::Set</a> object. Create a
+            &#8220;set&#8221; of machines.
+            </p>
+            <pre>rbox = Rye::Box.new 'HOST1&#x000A;rset = Rye::Set.new&#x000A;rset.add_boxes(rbox, 'HOST2')          # Add boxes as hostnames or objects</pre>
+            <p>
+            Then call methods just like with <a
+            href="../classes/Rye/Box.html">Rye::Box</a>, except now the return value is
+            an Array of Arrays. The order of return values matches the order the
+            machines were added to the set.
+            </p>
+            <pre>rset.hostname                          # =&gt; [[&quot;HOST1&quot;], [&quot;HOST2&quot;]]&#x000A;rset.uname                             # =&gt; [[&quot;Darwin&quot;], [&quot;Linux&quot;]]&#x000A;rset.</pre>
+            <h2>Example 5b &#8212; Accessing Multiple Machines in Parallel</h2>
             <p>
             By default, Rye:Set connects to each machine sequentially in the order they
-            were added to the set. Commands can also be run in parallel:
+            were added to the set. Commands can also be run in parallel.
             </p>
             <pre>rset = Rye::Set.new('set-name', :parallel =&gt; true)&#x000A;  OR&#x000A;rset.parallel = true</pre>
-            <h2>EXAMPLE 4 &#8212; File Transfers</h2>
+            <h2>Example 6 &#8212; File Transfers</h2>
             <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.file_upload(&quot;#{RYE_HOME}/README.rdoc&quot;, &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.file_upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)      # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.file_download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
-            <h2>EXAMPLE 5 &#8212; Local processes</h2>
+            <h2>Example 7 &#8212; Local processes</h2>
             <p>
             For local processes, you can bypass <tt>Rye::Box</tt> and execute commands
             directly with <tt><a href="../classes/Rye.html#M000011">Rye.shell</a></tt>:
@@ -118,6 +152,22 @@
             access to the exit code and STDERR output:
             </p>
             <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_code        # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
+            <h2>Example 8 &#8212; SSH Authorization</h2>
+            <p>
+            Does it annoy you to manually authorize remote SSH accounts? <a
+            href="../classes/Rye.html">Rye</a> can help!
+            </p>
+            <p>
+            Enable passwordless logins to HOST1 and HOST2:
+            </p>
+            <pre>$ rye authorize HOST1 HOST2</pre>
+            <p>
+            This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt>
+            and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
+            </p>
+            <p>
+            See <tt>rye -h</tt> for more info
+            </p>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -161,6 +211,9 @@
             </p>
             <h2>Dependencies</h2>
             <ul>
+            <li><a href="http://www.openssh.com/">OpenSSH</a>
+            
+            </li>
             <li><a href="http://www.openssl.org">OpenSSL</a> (The C library)
             
             </li>
@@ -188,6 +241,22 @@
             </ul>
             </li>
             </ul>
+            <h2>Installation</h2>
+            <p>
+            Via Rubygems, one of:
+            </p>
+            <pre>$ gem install rye&#x000A;$ gem install delano-rye --source http://gems.github.com/</pre>
+            <p>
+            or via download:
+            </p>
+            <ul>
+            <li><a href="http://github.com/delano/rye/tarball/latest">rye-latest.tar.gz</a>
+            
+            </li>
+            <li><a href="http://github.com/delano/rye/zipball/latest">rye-latest.zip</a>
+            
+            </li>
+            </ul>
             <h2>Known Issues</h2>
             <p>
             This list will grow. If you find one let me know!
@@ -197,7 +266,7 @@
             file yet
             
             </li>
-            <li><a href="../classes/Rye.html">Rye</a> uses OpenSSL&#8217;s ssh-agent (if it
+            <li><a href="../classes/Rye.html">Rye</a> uses OpenSSH&#8217;s ssh-agent (if it
             exists). <a href="../classes/Rye.html">Rye</a> starts it up as a child
             process and shuts it down using at_exit. If you have code in an at_exit
             that rely&#8217;s on <a href="../classes/Rye.html">Rye</a>, make sure your
@@ -207,27 +276,28 @@
             executed after Drydock executes a command.
             
             </li>
+            <li>No support for STDIN.
+            
+            </li>
             </ul>
             <h2>Thanks</h2>
             <ul>
-            <li>Solutious Incorporated (<a href="http://solutious.com">solutious.com</a>)
-            for all the orange juice.
-            
-            </li>
             <li>Kalin Harvey (<a href="http://rely.ca">rely.ca</a>)
             
             </li>
-            <li><a href="http://github.com/adamwiggins/rush">Rush</a>
+            <li><a href="http://github.com/adamwiggins/rush">Rush</a> and <a
+            href="http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb">Capistrano</a>
+            for the inspiration.
             
             </li>
-            <li><a
-            href="http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb">Capistrano</a>
+            <li>Mike Cline for giving the okay to use the <a
+            href="../classes/Rye.html">Rye</a> name.
             
             </li>
             </ul>
             <h2>More Info</h2>
             <ul>
-            <li><a href="http://github.com/delano/rye">GitHub</a>
+            <li><a href="http://github.com/delano/rye">Codes</a>
             
             </li>
             <li><a href="http://delano.github.com/rye">Rdocs</a>
@@ -237,15 +307,21 @@
             
             </li>
             </ul>
+            <h2>Related Projects</h2>
+            <ul>
+            <li><a href="http://github.com/adamwiggins/rush">Rush</a>
+            
+            </li>
+            </ul>
             <h2>Credits</h2>
             <ul>
-            <li>Delano Mandelbaum (delano@solutious.com)
+            <li>Delano (@solutious.com)
             
             </li>
             <li>Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
             
             </li>
-            <li><a href="../classes/Rye/Box.html#M000144">Rye::Box#instance_exec</a> (for
+            <li><a href="../classes/Rye/Box.html#M000146">Rye::Box#instance_exec</a> (for
             Ruby 1.8) Mauricio Fernandez
             
             </li>
