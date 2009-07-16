@@ -117,7 +117,6 @@ Then call methods just like with Rye::Box, except now the return value is an Arr
     
     rset.hostname                          # => [["HOST1"], ["HOST2"]]
     rset.uname                             # => [["Darwin"], ["Linux"]]
-    rset.
     
 == Example 5b -- Accessing Multiple Machines in Parallel
    
