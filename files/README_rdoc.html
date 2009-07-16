@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2009-07-15 16:43:35 -0400</span>
+          <span class='datetime'>2009-07-15 18:21:49 -0400</span>
         </div>
       </div>
       <div id='content'>
@@ -125,12 +125,13 @@
             <pre>rset.hostname                          # =&gt; [[&quot;HOST1&quot;], [&quot;HOST2&quot;]]&#x000A;rset.uname                             # =&gt; [[&quot;Darwin&quot;], [&quot;Linux&quot;]]&#x000A;rset.</pre>
             <h2>Example 5b &#8212; Accessing Multiple Machines in Parallel</h2>
             <p>
-            By default, Rye:Set connects to each machine sequentially in the order they
-            were added to the set. Commands can also be run in parallel.
+            By default, <a href="../classes/Rye/Set.html">Rye::Set</a> connects to each
+            machine sequentially in the order they were added to the set. Commands can
+            also be run in parallel.
             </p>
-            <pre>rset = Rye::Set.new('set-name', :parallel =&gt; true)&#x000A;  OR&#x000A;rset.parallel = true</pre>
+            <pre>rset = Rye::Set.new &quot;SETNAME&quot;, :parallel =&gt; true&#x000A;  OR&#x000A;rset.parallel = true</pre>
             <h2>Example 6 &#8212; File Transfers</h2>
-            <pre>rbox = Rye::Box.new(&quot;localhost&quot;, :info =&gt; true)&#x000A;&#x000A;dir_upload = &quot;#{Rye.sysinfo.tmpdir}/rye-upload/&quot;&#x000A;dir_download = &quot;#{Rye.sysinfo.tmpdir}/rye-download/&quot;&#x000A;&#x000A;rbox.file_upload(&quot;#{RYE_HOME}/README.rdoc&quot;, &quot;#{RYE_HOME}/LICENSE.txt&quot;, dir_upload)&#x000A;&#x000A;applejack = StringIO.new(&quot;Some in-memory content&quot;)&#x000A;rbox.file_upload(applejack, &quot;#{dir_upload}/applejack.txt&quot;)&#x000A;&#x000A;p rbox.ls(dir_upload)      # =&gt; [README.rdoc, LICENSE.txt, applejack.txt]&#x000A;p rbox.cat(&quot;#{dir_upload}/applejack.txt&quot;)   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.file_download(&quot;#{dir_upload}/applejack.txt&quot;, filecontent)&#x000A;&#x000A;p filecontent.read</pre>
+            <pre>rbox = Rye::Box.new &quot;localhost&quot;&#x000A;&#x000A;rbox.file_upload &quot;README.rdoc&quot;, &quot;/tmp&quot;&#x000A;&#x000A;applejack = StringIO.new &quot;Some in-memory content&quot;&#x000A;rbox.file_upload applejack, &quot;/tmp/applejack.txt&quot;&#x000A;&#x000A;rbox.ls &quot;/tmp/&quot;                 # =&gt; [README.rdoc, applejack.txt]&#x000A;rbox.cat &quot;/tmp/applejack.txt&quot;   # =&gt; &quot;Some in-memory content&quot;&#x000A;&#x000A;filecontent = StringIO.new&#x000A;rbox.file_download &quot;/tmp/applejack.txt&quot;, filecontent&#x000A;&#x000A;filecontent.read                # =&gt; &quot;Some in-memory content&quot;</pre>
             <h2>Example 7 &#8212; Local processes</h2>
             <p>
             For local processes, you can bypass <tt>Rye::Box</tt> and execute commands
@@ -166,7 +167,7 @@
             and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
             </p>
             <p>
-            See <tt>rye -h</tt> for more info
+            See <tt>rye -h</tt> for more info.
             </p>
             <h2>About Safe-Mode</h2>
             <p>
@@ -258,9 +259,6 @@
             </li>
             </ul>
             <h2>Known Issues</h2>
-            <p>
-            This list will grow. If you find one let me know!
-            </p>
             <ul>
             <li><a href="../classes/Rye.html">Rye</a> doesn&#8217;t read the ~/.ssh/config
             file yet
@@ -280,6 +278,9 @@
             
             </li>
             </ul>
+            <p>
+            If you find one let me know!
+            </p>
             <h2>Thanks</h2>
             <ul>
             <li>Kalin Harvey (<a href="http://rely.ca">rely.ca</a>)
