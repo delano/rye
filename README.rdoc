@@ -11,7 +11,34 @@ Rye is a Ruby abstraction for executing shell commands via SSH. By default, Rye 
 
 Rye does not require anything to be installed on the server side (other than an SSH daemon) so it can be run from any machine with Ruby, OpenSSL, and OpenSSH.
 
-    
+=== SSH keys
+
+You need SSH keys to use Rye. After installing Rye, you can check if you have any by running:
+
+    $ rye
+
+If you get the message <i>"The agent has no identities"</i> you will need to generate a keypair.
+
+    $ ssh-keygen
+
+
+=== Passwordless SSH authorization
+
+The easiest way to work with Rye is to authorize your remote accounts for passwordless logins (otherwise you'll be prompted for a password for every connection). Rye comes with an executable called <tt>rye</tt> to help with this.
+
+Enable passwordless logins to remote HOST1 and HOST2:
+
+    $ rye authorize HOST1 HOST2    
+
+This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
+
+Enable passwordless logins to the local machine:
+
+    $ rye authorize-local
+
+See <tt>rye -h</tt> for more info.
+
+
 == Example 1 -- Execute commands on a remote machine
 
 Shell commands are executed by calling methods on a Rye::Box object. 
@@ -140,18 +167,6 @@ The return value is a Rye::Rap object (just like with Rye::Box) so you have acce
     ret.class            # => Rye::Rap
 
 
-== Example 8 -- SSH Authorization
-
-Does it annoy you to manually authorize remote SSH accounts? Rye can help!
-
-Enable passwordless logins to HOST1 and HOST2:
-
-    $ rye authorize HOST1 HOST2    
-
-This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt> and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s). 
-
-See <tt>rye -h</tt> for more info.
-
 
 == About Safe-Mode
 
@@ -197,11 +212,13 @@ or via download:
 * rye-latest.zip[http://github.com/delano/rye/zipball/latest]
 
 
+
 == Known Issues
 
 * Rye doesn't read the ~/.ssh/config file yet
 * Rye uses OpenSSH's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
-* No support for STDIN. 
+* No support for STDIN for commands.
+* Limited support for interactive shells. 
 
 If you find one let me know!
 
