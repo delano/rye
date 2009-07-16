@@ -1,6 +1,6 @@
 = Rye - v0.8
 
-<strong>Safely run SSH commands on a bunch of machines at the same time (from Ruby).</strong>
+<b>Safely run SSH commands on a bunch of machines at the same time (from Ruby)</b>.
 
 Inspired by Rush[http://rush.heroku.com] and compatible with Ruby 1.8, 1.9, and JRuby 1.3+!
 
