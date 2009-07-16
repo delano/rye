@@ -24,7 +24,7 @@ If you get the message <i>"The agent has no identities"</i> you will need to gen
 
 === Passwordless SSH authorization
 
-The easiest way to work with Rye is to authorize your remote accounts for passwordless logins (otherwise you'll be prompted for a password for every connection). Rye comes with an executable called <tt>rye</tt> to help with this.
+The easiest way to work with Rye is to authorize your remote accounts for passwordless logins (otherwise you'll be prompted for a password for every connection). 
 
 Enable passwordless logins to remote HOST1 and HOST2:
 
@@ -109,15 +109,14 @@ See the "About Safe Mode" section below for more information.
 
 Shell commands can be executed on multiple machines using a Rye::Set object. Create a "set" of machines.
 
-    rbox = Rye::Box.new 'HOST1
+    rbox = Rye::Box.new 'HOST1'
     rset = Rye::Set.new
-    rset.add_boxes(rbox, 'HOST2')          # Add boxes as hostnames or objects
+    rset.add_boxes rbox, 'HOST2'           # Add boxes as hostnames or objects
     
 Then call methods just like with Rye::Box, except now the return value is an Array of Arrays. The order of return values matches the order the machines were added to the set.
     
     rset.hostname                          # => [["HOST1"], ["HOST2"]]
     rset.uname                             # => [["Darwin"], ["Linux"]]
-    rset.
     
 == Example 5b -- Accessing Multiple Machines in Parallel
    
