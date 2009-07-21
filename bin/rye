@@ -9,7 +9,7 @@
 #
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-#%w{net-ssh sysinfo drydock}.each { |dir| $:.unshift File.join(File.dirname(__FILE__), '..', '..', dir, 'lib') }
+%w{net-ssh net-scp sysinfo drydock}.each { |dir| $:.unshift File.join(File.dirname(__FILE__), '..', '..', dir, 'lib') }
 
 require 'stringio'
 require 'yaml'
@@ -92,7 +92,7 @@ command_alias :hostkeys, :hostkey
 about "Display your private keys"
 command :keys do |obj|
   Rye.keys.each do |key|
-    puts key.join(' ')
+    puts key
   end
 end
 
@@ -112,7 +112,7 @@ command_alias :pubkeys, :pubkey
 
 
 default :keys
-debug :off
+debug :on
 
 # We call Drydock specifically otherwise it will run at_exit. Rye also
 # uses at_exit for shutting down the ssh-agent. Ruby executes at_exit
