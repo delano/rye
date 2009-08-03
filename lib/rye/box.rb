@@ -104,7 +104,6 @@ module Rye
       
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
-      p Rye.sysinfo.os
       at_exit { self.disconnect }
       
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
