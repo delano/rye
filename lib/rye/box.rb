@@ -633,7 +633,7 @@ module Rye
         Timeout::timeout(3) do
           @rye_ssh.loop(0.3) { @rye_ssh.busy?; }
         end
-      rescue Timeout::Error => ex
+      rescue SystemCallError, Timeout::Error => ex
         error "Disconnect timeout (was something still running?)"
       end
       
