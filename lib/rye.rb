@@ -134,11 +134,12 @@ module Rye
   def keys
     # 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)
     # 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)
-    keystr = Rye.shell("ssh-add", '-l')
-    return nil unless keystr
-    keystr.collect do |key|
-      key.split(/\s+/)
-    end
+    #keystr = Rye.shell("ssh-add", '-l')
+    #return nil unless keystr
+    #keystr.collect do |key|
+    #  key.split(/\s+/)
+    #end
+    Dir.glob(File.join(Rye.sysinfo.home, '.ssh', 'id_*sa'))
   end
   
   def remote_host_keys(*hostnames)
@@ -314,19 +315,19 @@ module Rye
   
   Rye.reload
   
-  begin
-    @@mutex.synchronize {                   # One thread only
-      start_sshagent_environment            # Run this now
-      at_exit { end_sshagent_environment }  # Run this before Ruby exits
-    }
-    
-  rescue => ex
-    STDERR.puts "Error initializing the SSH Agent (is OpenSSH installed?):"
-    STDERR.puts ex.message
-    STDERR.puts ex.backtrace
-    exit 1
+  unless Rye.sysinfo.os == :win32
+    begin
+      @@mutex.synchronize {                   # One thread only
+        start_sshagent_environment            # Run this now
+        at_exit { end_sshagent_environment }  # Run this before Ruby exits
+      }
+    rescue => ex
+      STDERR.puts "Error initializing the SSH Agent (is OpenSSH installed?):"
+      STDERR.puts ex.message
+      STDERR.puts ex.backtrace
+      exit 1
+    end
   end
-  
 end
 
 

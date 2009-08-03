@@ -104,6 +104,7 @@ module Rye
       
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
+      p Rye.sysinfo.os
       at_exit { self.disconnect }
       
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
@@ -383,8 +384,8 @@ module Rye
         end
         authorized_keys ||= StringIO.new
         
-        Rye.keys.each do |key|
-          path = key[2]
+        Rye.keys.each do |path|
+          
           info "# Adding public key for #{path}"
           k = Rye::Key.from_file(path).public_key.to_ssh2
           authorized_keys.puts k
@@ -415,8 +416,7 @@ module Rye
     # authorize_keys_remote except run with local shell commands. 
     def authorize_keys_local
       added_keys = []
-      Rye.keys.each do |key|
-        path = key[2]
+      Rye.keys.each do |path|
         debug "# Public key for #{path}"
         k = Rye::Key.from_file(path).public_key.to_ssh2
         Rye.shell(:mkdir, :p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
