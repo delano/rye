@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2009-07-15 18:21:49 -0400</span>
+          <span class='datetime'>2009-07-16 12:19:29 -0400</span>
         </div>
       </div>
       <div id='content'>
@@ -39,8 +39,8 @@
           <div id='description'>
             <h1><a href="../classes/Rye.html">Rye</a> - v0.8</h1>
             <p>
-            <strong>Safely run SSH commands on a bunch of machines at the same time
-            (from Ruby).</strong>
+            <b>Safely run SSH commands on a bunch of machines at the same time (from
+            Ruby)</b>.
             </p>
             <p>
             Inspired by <a href="http://rush.heroku.com">Rush</a> and compatible with
@@ -60,6 +60,39 @@
             <a href="../classes/Rye.html">Rye</a> does not require anything to be
             installed on the server side (other than an SSH daemon) so it can be run
             from any machine with Ruby, OpenSSL, and OpenSSH.
+            </p>
+            <h3>SSH keys</h3>
+            <p>
+            You need SSH keys to use <a href="../classes/Rye.html">Rye</a>. After
+            installing <a href="../classes/Rye.html">Rye</a>, you can check if you have
+            any by running:
+            </p>
+            <pre>$ rye</pre>
+            <p>
+            If you get the message <em>&#8220;The agent has no identities&#8220;</em>
+            you will need to generate a keypair.
+            </p>
+            <pre>$ ssh-keygen</pre>
+            <h3>Passwordless SSH authorization</h3>
+            <p>
+            The easiest way to work with <a href="../classes/Rye.html">Rye</a> is to
+            authorize your remote accounts for passwordless logins (otherwise
+            you&#8217;ll be prompted for a password for every connection).
+            </p>
+            <p>
+            Enable passwordless logins to remote HOST1 and HOST2:
+            </p>
+            <pre>$ rye authorize HOST1 HOST2</pre>
+            <p>
+            This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt>
+            and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
+            </p>
+            <p>
+            Enable passwordless logins to the local machine:
+            </p>
+            <pre>$ rye authorize-local</pre>
+            <p>
+            See <tt>rye -h</tt> for more info.
             </p>
             <h2>Example 1 &#8212; Execute commands on a remote machine</h2>
             <p>
@@ -115,14 +148,14 @@
             href="../classes/Rye/Set.html">Rye::Set</a> object. Create a
             &#8220;set&#8221; of machines.
             </p>
-            <pre>rbox = Rye::Box.new 'HOST1&#x000A;rset = Rye::Set.new&#x000A;rset.add_boxes(rbox, 'HOST2')          # Add boxes as hostnames or objects</pre>
+            <pre>rbox = Rye::Box.new 'HOST1'&#x000A;rset = Rye::Set.new&#x000A;rset.add_boxes rbox, 'HOST2'           # Add boxes as hostnames or objects</pre>
             <p>
             Then call methods just like with <a
             href="../classes/Rye/Box.html">Rye::Box</a>, except now the return value is
             an Array of Arrays. The order of return values matches the order the
             machines were added to the set.
             </p>
-            <pre>rset.hostname                          # =&gt; [[&quot;HOST1&quot;], [&quot;HOST2&quot;]]&#x000A;rset.uname                             # =&gt; [[&quot;Darwin&quot;], [&quot;Linux&quot;]]&#x000A;rset.</pre>
+            <pre>rset.hostname                          # =&gt; [[&quot;HOST1&quot;], [&quot;HOST2&quot;]]&#x000A;rset.uname                             # =&gt; [[&quot;Darwin&quot;], [&quot;Linux&quot;]]</pre>
             <h2>Example 5b &#8212; Accessing Multiple Machines in Parallel</h2>
             <p>
             By default, <a href="../classes/Rye/Set.html">Rye::Set</a> connects to each
@@ -153,22 +186,6 @@
             access to the exit code and STDERR output:
             </p>
             <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_code        # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
-            <h2>Example 8 &#8212; SSH Authorization</h2>
-            <p>
-            Does it annoy you to manually authorize remote SSH accounts? <a
-            href="../classes/Rye.html">Rye</a> can help!
-            </p>
-            <p>
-            Enable passwordless logins to HOST1 and HOST2:
-            </p>
-            <pre>$ rye authorize HOST1 HOST2</pre>
-            <p>
-            This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt>
-            and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
-            </p>
-            <p>
-            See <tt>rye -h</tt> for more info.
-            </p>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -274,7 +291,10 @@
             executed after Drydock executes a command.
             
             </li>
-            <li>No support for STDIN.
+            <li>No support for STDIN for commands.
+            
+            </li>
+            <li>Limited support for interactive shells.
             
             </li>
             </ul>
