@@ -6,10 +6,10 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.8.6 (2009-08-??) #############################
+#### 0.8.6 (2009-08-04) #############################
 
 * FIXED: SystemCallError / "Broken Pipe" error when disconnecting in JRuby 1.3
-
+* FIXED: CommandNotFound: nil error in Windows
 
 #### 0.8.5 (2009-07-14) #############################
 
@@ -24,12 +24,10 @@ TODO
 
 * FIXED: Reference to (still) non-existent net-ssh 2.0.12 is now 2.0.11
 
-
 #### 0.8.3 (2009-06-30) #############################
 
 * ADDED: JRuby 1.3 support
 * ADDED: Tryouts (i.e. better testing)
-
 
 #### 0.8.2 (2009-06-23) #############################
 
