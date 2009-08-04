@@ -166,15 +166,15 @@ module Rye
   #
   def prepare_command(cmd, *args)
     args &&= [args].flatten.compact
-    cmd = Rye.which(cmd)
-    raise CommandNotFound.new(cmd || 'nil') unless cmd
+    found_cmd = Rye.which(cmd)
+    raise CommandNotFound.new(cmd || '[unknown]') unless found_cmd
     # Symbols to switches. :l -> -l, :help -> --help
     args.collect! do |a|
       a = "-#{a}" if a.is_a?(Symbol) && a.to_s.size == 1
       a = "--#{a}" if a.is_a?(Symbol)
       a
     end
-    Rye.escape(@safe, cmd, *args)
+    Rye.escape(@safe, found_cmd, *args)
   end
   
   # An all ruby implementation of unix "which" command. 

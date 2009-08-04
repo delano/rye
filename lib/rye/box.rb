@@ -120,6 +120,7 @@ module Rye
       
       @rye_opts[:logger] = Logger.new(@rye_debug) if @rye_debug # Enable Net::SSH debugging
       @rye_opts[:paranoid] = true unless @rye_safe == false # See Net::SSH.start
+      @rye_opts[:keys] = [@rye_opts[:keys]].flatten.compact
       
       # Add the given private keys to the keychain that will be used for @rye_host
       add_keys(@rye_opts[:keys])
@@ -127,7 +128,7 @@ module Rye
       # We don't want Net::SSH to handle the keypairs. This may change
       # but for we're letting ssh-agent do it. 
       # TODO: Check if this should ot should not be enabled. 
-      @rye_opts.delete(:keys)
+      #@rye_opts.delete(:keys)
       
       # From: capistrano/lib/capistrano/cli.rb
       STDOUT.sync = true # so that Net::SSH prompts show up
@@ -220,9 +221,14 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Box
     def add_keys(*additional_keys)
+      if Rye.sysinfo.os == :win32
+        @rye_opts[:keys] ||= []
+        @rye_opts[:keys] += additional_keys.flatten
+        return @rye_opts[:keys]
+      end
       additional_keys = [additional_keys].flatten.compact || []
       return if additional_keys.empty?
-      ret = Rye.add_keys(additional_keys)
+      ret = Rye.add_keys(additional_keys) 
       if ret.is_a?(Rye::Rap)
         debug "ssh-add exit_code: #{ret.exit_code}" 
         debug "ssh-add stdout: #{ret.stdout}"

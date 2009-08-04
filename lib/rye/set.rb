@@ -42,7 +42,9 @@ module Rye
       @safe = @opts.delete(:safe)
       @debug = @opts.delete(:debug)
       @error = @opts.delete(:error)
-
+      
+      @opts[:keys] = [@opts[:keys]].flatten.compact
+      
       add_keys(@opts[:keys])
     end
     
@@ -67,6 +69,11 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Rye::Set
     def add_key(*additional_keys)
+      if Rye.sysinfo.os == :win32
+        @opts[:keys] ||= []
+        @opts[:keys] += additional_keys.flatten
+        return @opts[:keys]
+      end
       additional_keys = [additional_keys].flatten.compact || []
       Rye.add_keys(additional_keys)
       self

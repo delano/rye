@@ -36,6 +36,20 @@ after do
 
 end
 
+option :u, :user, String, "User name to connect as"
+option :i, :identity, String, "Private key"
+argv :host
+command :ssh do |obj|
+  raise "No host supplied" if obj.argv.empty?
+  opts = { :debug => true }
+  opts[:user] = obj.option.user || Rye.sysinfo.user
+  opts[:keys] = [obj.option.identity] || []
+  obj.argv.each do |host|
+    rbox = Rye::Box.new host, opts
+    p rbox.connect
+  end
+end
+
 about "Add your public keys to one or more remote machines"
 usage "rye authorize [-u username] host"
 option :u, :user, String, "Username"
