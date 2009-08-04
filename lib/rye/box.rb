@@ -595,7 +595,7 @@ module Rye
       debug "Opening connection to #{@rye_host} as #{@rye_opts[:user]}"
       highline = HighLine.new # Used for password prompt
       retried = 0
-      
+      @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
         @rye_ssh = Net::SSH.start(@rye_host, @rye_opts[:user], @rye_opts || {}) 
       rescue Net::SSH::HostKeyMismatch => ex
