@@ -944,8 +944,8 @@ module Rye
           debug file.to_s
           prev = ""
           transfers << scp.send(direction, file, target, :recursive => recursive)  do |ch, n, s, t|
-            line = "%-50s %6d/%-6dbytes" % [n, s, t]
-            spaces = (prev.size > line.size) ? ' '*prev.size : ''
+            line = "%-50s %6d/%-6d bytes" % [n, s, t]
+            spaces = (prev.size > line.size) ? ' '*(prev.size - line.size) : ''
             pinfo "%s %s \r" % [line, spaces] # update line: "file: sent/total"
             @rye_info.flush if @rye_info        # make sure every line is printed
             prev = line

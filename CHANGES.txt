@@ -6,7 +6,7 @@ TODO
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
 
 
-#### 0.8.7 (2009-08-??) #############################
+#### 0.8.7 (2009-08-11) #############################
 
 * FIXED: Rye::Box info level output is cleaner 
 * FIXED: file_upload / download now expanding local tildas when safemode is disabled
