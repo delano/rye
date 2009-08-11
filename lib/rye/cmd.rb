@@ -25,11 +25,11 @@ module Rye;
     
     # NOTE: See Rye::Box for the implementation of cd
     #def cd(*args); cmd('cd', args); end
+    #def rm(*args); cmd('rm', args); end
     def wc(*args); cmd('wc', args); end
     def cp(*args); cmd("cp", args); end
     def mv(*args); cmd("mv", args); end
     def ls(*args); cmd('ls', args); end
-    #def rm(*args); cmd('rm', args); end
     def ps(*args); cmd('ps', args); end
     def sh(*args); cmd('sh', args); end
     def df(*args); cmd('df', args); end
@@ -47,6 +47,7 @@ module Rye;
     def tar(*args); cmd('tar', args); end
     
     #def kill(*args); cmd('kill', args); end
+    def rake(*args); cmd('sudo', args); end
     def sudo(*args); cmd('sudo', args); end
     def grep(*args); cmd('grep', args); end
     def date(*args); cmd('date', args); end
@@ -83,7 +84,7 @@ module Rye;
     def printenv(*args); cmd('printenv', args); end
     def hostname(*args); cmd('hostname', args); end
     def rudy_ec2(*args); cmd('rudy-ec2', args); end
-    def rudy_edb(*args); cmd('rudy-sdb', args); end
+    def rudy_sdb(*args); cmd('rudy-sdb', args); end
     def configure(*args); cmd('./configure', args); end
     
     # Transfer files to a machine via Net::SCP. 
