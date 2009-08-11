@@ -912,7 +912,10 @@ module Rye
         
         # Expand fileglobs (e.g. path/*.rb becomes [path/1.rb, path/2.rb]).
         # This should happen after checking files.size to determine the target
-        files = files.collect { |file| Dir.glob file }.flatten unless @rye_safe
+        unless @rye_safe
+          files.collect! { |file| Dir.glob File.expand_path(file) }
+          files.flatten! 
+        end
       end
               
       # Fail early. We check whether the StringIO object is available to read
@@ -928,7 +931,7 @@ module Rye
       info "#{direction.to_s} to: #{target}"
       debug "FILES: " << files.join(', ')
       
-      # Make sure the remote directory exists. We can do this only when
+      # Make sure the target directory exists. We can do this only when
       # there's more than one file because "target" could be a file name
       if files.size > 1 && !target.is_a?(StringIO)
         debug "CREATING TARGET DIRECTORY: #{target}"

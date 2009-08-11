@@ -4,12 +4,12 @@ TODO
 
 * Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
-* file_upload / download, is not expanding local tildas (even in unsafe mode)
 
 
 #### 0.8.7 (2009-08-??) #############################
 
 * FIXED: Rye::Box info level output is cleaner 
+* FIXED: file_upload / download now expanding local tildas when safemode is disabled
 * ADDED: dir_upload and dir_download
 
 
