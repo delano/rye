@@ -802,11 +802,11 @@ module Rye
     #
     def net_ssh_exec!(command)
 
-      block ||= Proc.new do |channel, type, data|
+      block ||= Proc.new do |channel, type, data, tt|
         
         channel[:stdout] ||= ""
         channel[:stderr] ||= ""
-        channel[:stdout] << data if type == :stdout
+        
         
         if type == :stderr
           # NOTE: Use sudo to test this since it prompts for a passwords. 
@@ -824,7 +824,15 @@ module Rye
           # return the following error and appear to hang. We
           # catch it and raise the appropriate exception.
           raise Rye::NoPty if data =~ /Pseudo-terminal will not/
-          
+        elsif type == :stdout
+          if data =~ /Select gem to uninstall/i
+            puts data
+            ret = Annoy.get_user_input('')
+            raise "No input given" if ret.nil?
+            channel.send_data "#{ret}\n"
+          else
+            channel[:stdout] << data
+          end
         end
         
       end

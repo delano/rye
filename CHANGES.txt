@@ -10,6 +10,7 @@ TODO
 
 * FIXED: Rye::Box info level output is cleaner 
 * FIXED: file_upload / download now expanding local tildas when safemode is disabled
+* ADDED: Interactive handling for removing gems
 * ADDED: dir_upload and dir_download
 
 
