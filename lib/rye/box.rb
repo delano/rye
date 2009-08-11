@@ -940,6 +940,7 @@ module Rye
       
       Net::SCP.start(@rye_host, @rye_opts[:user], @rye_opts || {}) do |scp|
         transfers = []
+        prev = ""
         files.each do |file|
           debug file.to_s
           prev = ""
@@ -952,6 +953,7 @@ module Rye
           end
         end
         transfers.each { |t| t.wait }   # Run file transfers in parallel
+        pinfo (' '*prev.size) << "\r"
         info $/
       end
       
