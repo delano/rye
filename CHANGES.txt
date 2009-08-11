@@ -1,10 +1,5 @@
 RYE, CHANGES
 
-TODO
-
-* Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
-* Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
-
 
 #### 0.8.7 (2009-08-11) #############################
 
@@ -285,3 +280,8 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 
 Initial public release
 
+
+#### TODO ###########################################
+
+* Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
+* Fingerprints: ssh-keygen -l -f id_rsa_repos.pub
