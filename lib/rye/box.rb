@@ -169,7 +169,7 @@ module Rye
           @rye_current_working_directory = fpath
         end
       end
-      info "CWD: #{@rye_current_working_directory}"
+      debug "CWD: #{@rye_current_working_directory}"
       self
     end
     # Like [] except it returns an empty Rye::Rap object to mimick
@@ -720,7 +720,7 @@ module Rye
       ## raise Rye::CommandNotFound unless self.can?(cmd)
       
       begin
-        info "COMMAND: #{cmd_internal}"
+        debug "COMMAND: #{cmd_internal}"
 
         if !@rye_quiet && @rye_pre_command_hook.is_a?(Proc)
           @rye_pre_command_hook.call(cmd_clean, user, host, nickname) 
@@ -865,6 +865,7 @@ module Rye
     
     
     # * +direction+ is one of :upload, :download
+    # * +recursive+ should be true for directories and false for files. 
     # * +files+ is an Array of file paths, the content is direction specific.
     # For downloads, +files+ is a list of files to download. The last element
     # must be the local directory to download to. If downloading a single file
@@ -878,14 +879,14 @@ module Rye
     # parameters. An exception is raised and no files are transferred. 
     # Uploads always return nil. Downloads return nil or a StringIO object if
     # one is specified for the target. 
-    def net_scp_transfer!(direction, *files)
-      direction ||= ''
+    def net_scp_transfer!(direction, recursive, *files)
+      
       unless [:upload, :download].member?(direction.to_sym)
         raise "Must be one of: upload, download" 
       end
       
       if @rye_current_working_directory
-        info "CWD (#{@rye_current_working_directory})"
+        debug "CWD (#{@rye_current_working_directory})"
       end
       
       files = [files].flatten.compact || []
@@ -924,7 +925,7 @@ module Rye
         end
       end
       
-      info "#{direction.to_s.upcase} TO: #{target}"
+      info "#{direction.to_s} to: #{target}"
       debug "FILES: " << files.join(', ')
       
       # Make sure the remote directory exists. We can do this only when
@@ -938,9 +939,13 @@ module Rye
         transfers = []
         files.each do |file|
           debug file.to_s
-          transfers << scp.send(direction, file, target)  do |ch, n, s, t|
-            pinfo "#{n}: #{s}/#{t}b\r"  # update line: "file: sent/total"
+          prev = ""
+          transfers << scp.send(direction, file, target, :recursive => recursive)  do |ch, n, s, t|
+            line = "%-50s %6d/%-6dbytes" % [n, s, t]
+            spaces = (prev.size > line.size) ? ' '*prev.size : ''
+            pinfo "%s %s \r" % [line, spaces] # update line: "file: sent/total"
             @rye_info.flush if @rye_info        # make sure every line is printed
+            prev = line
           end
         end
         transfers.each { |t| t.wait }   # Run file transfers in parallel

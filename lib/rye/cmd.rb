@@ -87,7 +87,7 @@ module Rye;
     def configure(*args); cmd('./configure', args); end
     
     # Transfer files to a machine via Net::SCP. 
-    # * +files+ is an Array of files to upload. The last element is the 
+    # * +paths+ is an Array of files to upload. The last element is the 
     # directory to upload to. If uploading a single file, the last element
     # can be a file path. The list of files can also include StringIO objects.
     # The target directory will be created if it does not exist, but only 
@@ -97,10 +97,10 @@ module Rye;
     # Always return nil.
     #
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
-    def file_upload(*files); net_scp_transfer!(:upload, *files); end
+    def file_upload(*paths); net_scp_transfer!(:upload, false, *paths); end
 
     # Transfer files from a machine via Net::SCP. 
-    # * +files+ is an Array of files to download. The last element must be the 
+    # * +paths+ is an Array of files to download. The last element must be the 
     # local directory to download to. If downloading a single file the last 
     # element can be a file path. The target can also be a StringIO object.
     # The target directory will be created if it does not exist, but only 
@@ -110,13 +110,25 @@ module Rye;
     # Return nil or a StringIO object, if specified as the target.
     #
     # NOTE: Changes to current working directory with +cd+ or +[]+ are ignored.
-    def file_download(*files); net_scp_transfer!(:download, *files); end
+    def file_download(*paths); net_scp_transfer!(:download, false, *paths); end
+    
+    # Same as file_upload except directories are processed recursively. If
+    # any supplied paths are directories you need to use this method and not 
+    # file_upload. 
+    def dir_upload(*paths); net_scp_transfer!(:upload, true, *paths); end
+    alias_method :directory_upload, :dir_upload
+    
+    # Same as file_download except directories are processed recursively. If
+    # any supplied paths are directories you need to use this method and not 
+    # file_download. 
+    def dir_download(*paths); net_scp_transfer!(:download, true, *paths); end
+    alias_method :directory_download, :dir_download
     
     # Shorthand for +file_download('remote/path').string+
     #
-    # Returns a String containing the content of all remote *files*. 
-    def string_download(*files)
-      net_scp_transfer!(:download, *files).string
+    # Returns a String containing the content of all remote *paths*. 
+    def string_download(*paths)
+      net_scp_transfer!(:download, *paths).string
     end
     alias_method :str_download, :string_download
     
