@@ -11,7 +11,7 @@ module Rye;
   #
   #     require 'rye'
   #     module Rye::Box::Cmd
-  #       def special(*args); cmd("/your/special/command", args); end
+  #       def special(*args); __allow("/your/special/command", args); end
   #     end
   #
   #     rbox = Rye::Box.new('somehost')
@@ -19,73 +19,69 @@ module Rye;
   #
   module Cmd
     
-    #--
-    # TODO: Clean this trite mess up!
-    #++
-    
     # NOTE: See Rye::Box for the implementation of cd
-    #def cd(*args); cmd('cd', args); end
-    #def rm(*args); cmd('rm', args); end
-    def wc(*args); cmd('wc', args); end
-    def cp(*args); cmd("cp", args); end
-    def mv(*args); cmd("mv", args); end
-    def ls(*args); cmd('ls', args); end
-    def ps(*args); cmd('ps', args); end
-    def sh(*args); cmd('sh', args); end
-    def df(*args); cmd('df', args); end
-    def du(*args); cmd('du', args); end
+    #def cd(*args); __allow('cd', args); end
+    #def rm(*args); __allow('rm', args); end
+    def wc(*args); __allow('wc', args); end
+    def cp(*args); __allow("cp", args); end
+    def mv(*args); __allow("mv", args); end
+    def ls(*args); __allow('ls', args); end
+    def ps(*args); __allow('ps', args); end
+    def sh(*args); __allow('sh', args); end
+    def df(*args); __allow('df', args); end
+    def du(*args); __allow('du', args); end
     
-    def env; cmd "env"; end
-    def rye(*args); cmd "rye", args; end
-    def pwd(*args); cmd "pwd", args; end
-    def svn(*args); cmd('svn', args); end
-    def cvs(*args); cmd('cvs', args); end
-    def git(*args); cmd('git', args); end
-    def sed(*args); cmd('sed', args); end
-    def awk(*args); cmd('awk', args); end
-    def cat(*args); cmd('cat', args); end
-    def tar(*args); cmd('tar', args); end
+    def env; __allow "env"; end
+    def rye(*args); __allow "rye", args; end
+    def pwd(*args); __allow "pwd", args; end
+    def svn(*args); __allow('svn', args); end
+    def cvs(*args); __allow('cvs', args); end
+    def git(*args); __allow('git', args); end
+    def sed(*args); __allow('sed', args); end
+    def awk(*args); __allow('awk', args); end
+    def cat(*args); __allow('cat', args); end
+    def tar(*args); __allow('tar', args); end
     
-    #def kill(*args); cmd('kill', args); end
-    def rake(*args); cmd('sudo', args); end
-    def sudo(*args); cmd('sudo', args); end
-    def grep(*args); cmd('grep', args); end
-    def date(*args); cmd('date', args); end
-    def ruby(*args); cmd('ruby', args); end
-    def rudy(*args); cmd('rudy', args); end
-    def perl(*args); cmd('perl', args); end
-    def bash(*args); cmd('bash', args); end
-    def echo(*args); cmd('echo', args); end
-    def test(*args); cmd('test', args); end
-    def mkfs(*args); cmd('mkfs', args); end
-    def gzip(*args); cmd('gzip', args); end
-    def make(*args); cmd('make', args); end
+    #def kill(*args); __allow('kill', args); end
+    def rake(*args); __allow('sudo', args); end
+    def sudo(*args); __allow('sudo', args); end
+    def grep(*args); __allow('grep', args); end
+    def date(*args); __allow('date', args); end
+    def ruby(*args); __allow('ruby', args); end
+    def rudy(*args); __allow('rudy', args); end
+    def perl(*args); __allow('perl', args); end
+    def bash(*args); __allow('bash', args); end
+    def echo(*args); __allow('echo', args); end
+    def test(*args); __allow('test', args); end
+    def mkfs(*args); __allow('mkfs', args); end
+    def gzip(*args); __allow('gzip', args); end
+    def make(*args); __allow('make', args); end
     
-    def mount(*args); cmd("mount", args); end
-    def sleep(*args); cmd("sleep", args); end
-    def mkdir(*args); cmd('mkdir', args); end
-    def touch(*args); cmd('touch', args); end
-    def uname(*args); cmd('uname', args); end
-    def chmod(*args); cmd('chmod', args); end
-    def chown(*args); cmd('chown', args); end
-    def unzip(*args); cmd('unzip', args); end
-    def bzip2(*args); cmd('bzip2', args); end
-    def which(*args); cmd('which', args); end
+    def mount(*args); __allow("mount", args); end
+    def sleep(*args); __allow("sleep", args); end
+    def mkdir(*args); __allow('mkdir', args); end
+    def touch(*args); __allow('touch', args); end
+    def uname(*args); __allow('uname', args); end
+    def chmod(*args); __allow('chmod', args); end
+    def chown(*args); __allow('chown', args); end
+    def unzip(*args); __allow('unzip', args); end
+    def bzip2(*args); __allow('bzip2', args); end
+    def which(*args); __allow('which', args); end
     
-    def umount(*args); cmd("umount", args); end
-    def uptime(*args); cmd("uptime", args); end
-    def python(*args); cmd('python', args); end
-    def gunzip(*args); cmd('gunzip', args); end
-    def useradd(*args); cmd('useradd', args); end
-    def bunzip2(*args); cmd('bunzip2', args); end
-    def getconf(*args); cmd('getconf', args); end
-    def history(*args); cmd('history', args); end
-    def rudy_s3(*args); cmd('rudy-s3', args); end
-    def printenv(*args); cmd('printenv', args); end
-    def hostname(*args); cmd('hostname', args); end
-    def rudy_ec2(*args); cmd('rudy-ec2', args); end
-    def rudy_sdb(*args); cmd('rudy-sdb', args); end
-    def configure(*args); cmd('./configure', args); end
+    def umount(*args); __allow("umount", args); end
+    def uptime(*args); __allow("uptime", args); end
+    def python(*args); __allow('python', args); end
+    def gunzip(*args); __allow('gunzip', args); end
+    def useradd(*args); __allow('useradd', args); end
+    def bunzip2(*args); __allow('bunzip2', args); end
+    def getconf(*args); __allow('getconf', args); end
+    def history(*args); __allow('history', args); end
+    def rudy_s3(*args); __allow('rudy-s3', args); end
+    def printenv(*args); __allow('printenv', args); end
+    def hostname(*args); __allow('hostname', args); end
+    def rudy_ec2(*args); __allow('rudy-ec2', args); end
+    def rudy_sdb(*args); __allow('rudy-sdb', args); end
+    def configure(*args); __allow('./configure', args); end
     
     # Transfer files to a machine via Net::SCP. 
     # * +paths+ is an Array of files to upload. The last element is the 
@@ -252,7 +248,7 @@ module Rye;
         define_method(meth) do |*args|
           local_args = hard_args.clone
           local_args += args
-          cmd(path, *local_args)
+          __allow(path, *local_args)
         end        
       end
     end

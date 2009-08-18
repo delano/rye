@@ -14,7 +14,7 @@ require "rye"
 tmpdir = Rye.sysinfo.tmpdir
 
 rbox = Rye::Box.new("localhost", :info => false)
-def rbox.rm(*args); cmd('rm', args); end
+def rbox.rm(*args); __allow('rm', args); end
 rbox.rm(:r, :f, "#{tmpdir}/rye-upload") # Silently delete test dir
 rbox.mkdir("#{tmpdir}/rye-upload")
 

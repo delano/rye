@@ -1,6 +1,11 @@
 RYE, CHANGES
 
 
+#### 0.8.8 (2009-08-??) #############################
+
+* CHANGE: Renamed Rye::Box#cmd -> Rye::Box#__allow
+
+
 #### 0.8.7 (2009-08-11) #############################
 
 * FIXED: Rye::Box info level output is cleaner 

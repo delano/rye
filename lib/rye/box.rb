@@ -769,7 +769,7 @@ module Rye
       
       rap
     end
-    alias :cmd :run_command
+    alias :__allow :run_command
     
     # Takes a list of arguments appropriate for run_command or
     # preview_command and returns: [cmd, args]. 
