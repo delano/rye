@@ -3,7 +3,10 @@ RYE, CHANGES
 
 #### 0.8.8 (2009-08-??) #############################
 
+* FIXED: Rye::Box#guess_user_home for Windows SSH support
 * CHANGE: Renamed Rye::Box#cmd -> Rye::Box#__allow
+* ADDED: New whitelist commands: wget, curl, dir
+* ADDED: Rye::Box#file_write
 
 
 #### 0.8.7 (2009-08-11) #############################

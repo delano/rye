@@ -62,7 +62,9 @@ module Rye
     def info; @rye_info; end
     def debug; @rye_debug; end
     def error; @rye_error; end
-
+    
+    def ostype=(val); @rye_ostype = val; end 
+    def impltype=(val); @rye_impltype = val; end 
     def pre_command_hook=(val); @rye_pre_command_hook = val; end
     def post_command_hook=(val); @rye_post_command_hook = val; end
     # A Hash. The keys are exception classes, the values are Procs to execute
@@ -111,6 +113,7 @@ module Rye
       @rye_safe, @rye_debug = @rye_opts.delete(:safe), @rye_opts.delete(:debug)
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
+      @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
       @rye_quiet = @rye_opts.delete(:quiet)
       
       # Just in case someone sends a true value rather than IO object
@@ -249,6 +252,10 @@ module Rye
       @rye_ostype = os
     end
     
+    def impltype
+      @rye_impltype
+    end
+    
     # Returns the hash containing the parsed output of "env" on the 
     # remote machine. If the initialize option +:getenv+ was set to 
     # false, this will return an empty hash. 
@@ -328,21 +335,24 @@ module Rye
       # /etc/default/useradd, HOME=/home OR useradd -D
       # /etc/adduser.config, DHOME=/home OR ??
       user_defaults = {}
-      raw = self.quietly { useradd(:D) } rescue ["HOME=/home"]
       ostmp = self.ostype
-      raw.each do |nv|
-
-        if ostmp == "sunos"
-          #nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|
-          #  n = 'HOME' if n == 'basedir'
-          #  user_defaults[n.upcase] = v.strip
-          #end
-          # In Solaris, useradd -D says the default home path is /home
-          # but that directory is not writable. See: http://bit.ly/IJDD0
-          user_defaults['HOME'] = '/export/home'
-        elsif ostmp == "darwin"
-          user_defaults['HOME'] = '/Users'
-        else
+      ostmp &&= ostype.to_s
+      
+      if ostmp == "sunos"
+        #nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|
+        #  n = 'HOME' if n == 'basedir'
+        #  user_defaults[n.upcase] = v.strip
+        #end
+        # In Solaris, useradd -D says the default home path is /home
+        # but that directory is not writable. See: http://bit.ly/IJDD0
+        user_defaults['HOME'] = '/export/home'
+      elsif ostmp == "darwin"
+        user_defaults['HOME'] = '/Users'
+      elsif ostmp == "win32"
+        user_defaults['HOME'] = 'C:/Documents and Settings'
+      else
+        raw = self.quietly { useradd(:D) } rescue ["HOME=/home"]
+        raw.each do |nv|
           n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
           user_defaults[n] = v
         end
