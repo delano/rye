@@ -56,6 +56,8 @@ module Rye;
     def mkfs(*args); __allow('mkfs', args); end
     def gzip(*args); __allow('gzip', args); end
     def make(*args); __allow('make', args); end
+    def wget(*args); __allow('wget', args); end
+    def curl(*args); __allow('curl', args); end
     
     def mount(*args); __allow("mount", args); end
     def sleep(*args); __allow("sleep", args); end
@@ -82,6 +84,12 @@ module Rye;
     def rudy_ec2(*args); __allow('rudy-ec2', args); end
     def rudy_sdb(*args); __allow('rudy-sdb', args); end
     def configure(*args); __allow('./configure', args); end
+    
+    #--
+    # WINDOWS
+    #++
+    def dir(*args); __allow('cmd', args); end
+    
     
     # Transfer files to a machine via Net::SCP. 
     # * +paths+ is an Array of files to upload. The last element is the 
@@ -147,15 +155,28 @@ module Rye;
         file_content = self.file_download filepath
       end
 
-      file_content ||= StringIO.new
+      content ||= StringIO.new
       if newcontent.is_a?(StringIO)
         newcontent.rewind
-        file_content.puts newcontent.read
+        content.puts newcontent.read
       else
-        file_content.puts newcontent
+        content.puts newcontent
       end
       
-      self.file_upload file_content, filepath
+      self.file_upload content, filepath
+    end
+    
+    # Write +newcontent+ to remote +filepath+. If the file exists
+    # it will be overwritten. If +backup+ is specified, +filepath+
+    # will be copied to +filepath-previous+ before appending.
+    def file_write(filepath, newcontent, backup=false)
+      if self.file_exists?(filepath)
+        self.cp filepath, "#{filepath}-previous" if backup
+      end
+      
+      content = StringIO.new
+      content.puts newcontent
+      self.file_upload content, filepath
     end
     
     #--   
