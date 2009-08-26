@@ -1,7 +1,7 @@
 RYE, CHANGES
 
 
-#### 0.8.8 (2009-08-??) #############################
+#### 0.8.8 (2009-08-25) #############################
 
 * FIXED: Rye::Box#guess_user_home for Windows SSH support
 * CHANGE: Renamed Rye::Box#cmd -> Rye::Box#__allow
