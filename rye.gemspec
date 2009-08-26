@@ -13,6 +13,7 @@
   s.add_dependency 'drydock'
   s.add_dependency 'sysinfo'
   s.add_dependency 'storable'
+  s.add_dependency 'sysinfo', '>= 0.7.0'
   
   s.add_dependency 'highline', '>= 1.5.1'
   s.add_dependency 'net-ssh', '>= 2.0.11'

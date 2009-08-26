@@ -224,7 +224,7 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Box
     def add_keys(*additional_keys)
-      if Rye.sysinfo.os == :win32
+      if Rye.sysinfo.os == :windows
         @rye_opts[:keys] ||= []
         @rye_opts[:keys] += additional_keys.flatten
         return @rye_opts[:keys]
@@ -348,7 +348,7 @@ module Rye
         user_defaults['HOME'] = '/export/home'
       elsif ostmp == "darwin"
         user_defaults['HOME'] = '/Users'
-      elsif ostmp == "win32"
+      elsif ostmp == "windows"
         user_defaults['HOME'] = 'C:/Documents and Settings'
       else
         raw = self.quietly { useradd(:D) } rescue ["HOME=/home"]

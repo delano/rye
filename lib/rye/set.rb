@@ -69,7 +69,7 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Rye::Set
     def add_key(*additional_keys)
-      if Rye.sysinfo.os == :win32
+      if Rye.sysinfo.os == :windows
         @opts[:keys] ||= []
         @opts[:keys] += additional_keys.flatten
         return @opts[:keys]

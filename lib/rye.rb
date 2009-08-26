@@ -315,7 +315,7 @@ module Rye
   
   Rye.reload
   
-  unless Rye.sysinfo.os == :win32
+  unless Rye.sysinfo.os == :windows
     begin
       @@mutex.synchronize {                   # One thread only
         start_sshagent_environment            # Run this now
