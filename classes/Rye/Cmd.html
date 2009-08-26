@@ -56,104 +56,108 @@
             safety, <a href="../Rye.html">Rye</a> only permits this whitelist of
             commands by default. However, you&#8217;re free to add methods with mixins.
             </p>
-            <pre>require 'rye'&#x000A;module Rye::Box::Cmd&#x000A;  def special(*args); cmd(&quot;/your/special/command&quot;, args); end&#x000A;end&#x000A;&#x000A;rbox = Rye::Box.new('somehost')&#x000A;rbox.special        # =&gt; &quot;special on somehost&quot;</pre>
+            <pre>require 'rye'&#x000A;module Rye::Box::Cmd&#x000A;  def special(*args); __allow(&quot;/your/special/command&quot;, args); end&#x000A;end&#x000A;&#x000A;rbox = Rye::Box.new('somehost')&#x000A;rbox.special        # =&gt; &quot;special on somehost&quot;</pre>
           </div>
           <div id='method-list'>
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000096">add_command</a></li>
-              <li><a href="#M000095">can?</a></li>
-              <li><a href="#M000097">remove_command</a></li>
+              <li><a href="#M000100">add_command</a></li>
+              <li><a href="#M000099">can?</a></li>
+              <li><a href="#M000101">remove_command</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
               <li><a href="#M000033">awk</a></li>
               <li><a href="#M000043">bash</a></li>
-              <li><a href="#M000064">bunzip2</a></li>
-              <li><a href="#M000057">bzip2</a></li>
-              <li><a href="#M000089">can</a></li>
-              <li><a href="#M000092">can?</a></li>
+              <li><a href="#M000066">bunzip2</a></li>
+              <li><a href="#M000059">bzip2</a></li>
+              <li><a href="#M000093">can</a></li>
+              <li><a href="#M000096">can?</a></li>
               <li><a href="#M000034">cat</a></li>
-              <li><a href="#M000054">chmod</a></li>
-              <li><a href="#M000055">chown</a></li>
-              <li><a href="#M000094">cmd?</a></li>
-              <li><a href="#M000091">cmds</a></li>
-              <li><a href="#M000093">command?</a></li>
-              <li><a href="#M000090">commands</a></li>
-              <li><a href="#M000072">configure</a></li>
+              <li><a href="#M000056">chmod</a></li>
+              <li><a href="#M000057">chown</a></li>
+              <li><a href="#M000098">cmd?</a></li>
+              <li><a href="#M000095">cmds</a></li>
+              <li><a href="#M000097">command?</a></li>
+              <li><a href="#M000094">commands</a></li>
+              <li><a href="#M000074">configure</a></li>
               <li><a href="#M000019">cp</a></li>
+              <li><a href="#M000050">curl</a></li>
               <li><a href="#M000030">cvs</a></li>
               <li><a href="#M000039">date</a></li>
               <li><a href="#M000024">df</a></li>
-              <li><a href="#M000086">digest_md5</a></li>
-              <li><a href="#M000087">digest_sha1</a></li>
-              <li><a href="#M000088">digest_sha2</a></li>
-              <li><a href="#M000077">dir_download</a></li>
-              <li><a href="#M000075">dir_upload</a></li>
-              <li><a href="#M000078">directory_download</a></li>
-              <li><a href="#M000076">directory_upload</a></li>
+              <li><a href="#M000090">digest_md5</a></li>
+              <li><a href="#M000091">digest_sha1</a></li>
+              <li><a href="#M000092">digest_sha2</a></li>
+              <li><a href="#M000075">dir</a></li>
+              <li><a href="#M000080">dir_download</a></li>
+              <li><a href="#M000078">dir_upload</a></li>
+              <li><a href="#M000081">directory_download</a></li>
+              <li><a href="#M000079">directory_upload</a></li>
               <li><a href="#M000025">du</a></li>
               <li><a href="#M000044">echo</a></li>
               <li><a href="#M000026">env</a></li>
-              <li><a href="#M000083">file_append</a></li>
-              <li><a href="#M000074">file_download</a></li>
-              <li><a href="#M000084">file_exists?</a></li>
-              <li><a href="#M000073">file_upload</a></li>
-              <li><a href="#M000085">file_verified?</a></li>
-              <li><a href="#M000065">getconf</a></li>
+              <li><a href="#M000086">file_append</a></li>
+              <li><a href="#M000077">file_download</a></li>
+              <li><a href="#M000088">file_exists?</a></li>
+              <li><a href="#M000076">file_upload</a></li>
+              <li><a href="#M000089">file_verified?</a></li>
+              <li><a href="#M000087">file_write</a></li>
+              <li><a href="#M000067">getconf</a></li>
               <li><a href="#M000031">git</a></li>
               <li><a href="#M000038">grep</a></li>
-              <li><a href="#M000062">gunzip</a></li>
+              <li><a href="#M000064">gunzip</a></li>
               <li><a href="#M000047">gzip</a></li>
-              <li><a href="#M000066">history</a></li>
-              <li><a href="#M000069">hostname</a></li>
+              <li><a href="#M000068">history</a></li>
+              <li><a href="#M000071">hostname</a></li>
               <li><a href="#M000021">ls</a></li>
               <li><a href="#M000048">make</a></li>
-              <li><a href="#M000051">mkdir</a></li>
+              <li><a href="#M000053">mkdir</a></li>
               <li><a href="#M000046">mkfs</a></li>
-              <li><a href="#M000049">mount</a></li>
+              <li><a href="#M000051">mount</a></li>
               <li><a href="#M000020">mv</a></li>
               <li><a href="#M000042">perl</a></li>
-              <li><a href="#M000068">printenv</a></li>
+              <li><a href="#M000070">printenv</a></li>
               <li><a href="#M000022">ps</a></li>
               <li><a href="#M000028">pwd</a></li>
-              <li><a href="#M000061">python</a></li>
+              <li><a href="#M000063">python</a></li>
               <li><a href="#M000036">rake</a></li>
               <li><a href="#M000040">ruby</a></li>
               <li><a href="#M000041">rudy</a></li>
-              <li><a href="#M000070">rudy_ec2</a></li>
-              <li><a href="#M000067">rudy_s3</a></li>
-              <li><a href="#M000071">rudy_sdb</a></li>
+              <li><a href="#M000072">rudy_ec2</a></li>
+              <li><a href="#M000069">rudy_s3</a></li>
+              <li><a href="#M000073">rudy_sdb</a></li>
               <li><a href="#M000027">rye</a></li>
               <li><a href="#M000016">rye9000</a></li>
               <li><a href="#M000032">sed</a></li>
               <li><a href="#M000023">sh</a></li>
-              <li><a href="#M000050">sleep</a></li>
+              <li><a href="#M000052">sleep</a></li>
               <li><a href="#M000017">somescript</a></li>
-              <li><a href="#M000080">str_download</a></li>
-              <li><a href="#M000082">str_upload</a></li>
-              <li><a href="#M000079">string_download</a></li>
-              <li><a href="#M000081">string_upload</a></li>
+              <li><a href="#M000083">str_download</a></li>
+              <li><a href="#M000085">str_upload</a></li>
+              <li><a href="#M000082">string_download</a></li>
+              <li><a href="#M000084">string_upload</a></li>
               <li><a href="#M000037">sudo</a></li>
               <li><a href="#M000029">svn</a></li>
               <li><a href="#M000035">tar</a></li>
               <li><a href="#M000045">test</a></li>
-              <li><a href="#M000052">touch</a></li>
-              <li><a href="#M000059">umount</a></li>
-              <li><a href="#M000053">uname</a></li>
-              <li><a href="#M000056">unzip</a></li>
-              <li><a href="#M000060">uptime</a></li>
-              <li><a href="#M000063">useradd</a></li>
+              <li><a href="#M000054">touch</a></li>
+              <li><a href="#M000061">umount</a></li>
+              <li><a href="#M000055">uname</a></li>
+              <li><a href="#M000058">unzip</a></li>
+              <li><a href="#M000062">uptime</a></li>
+              <li><a href="#M000065">useradd</a></li>
               <li><a href="#M000018">wc</a></li>
-              <li><a href="#M000058">which</a></li>
+              <li><a href="#M000049">wget</a></li>
+              <li><a href="#M000060">which</a></li>
             </ol>
           </div>
           <div id='section'>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000096'>
-                <a name='M000096'>      </a>
+              <div class='public-class method' id='method-M000100'>
+                <a name='M000100'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_command</span>
                   <span class='arguments'>(meth, path=nil, *hard_args, &amp;block)</span>
@@ -180,27 +184,27 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000096-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000100-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000096-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 242</span>&#x000A;242:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">add_command</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">hard_args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;243:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>&#x000A;244:         <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment cmt"># Don't lose an argument</span>&#x000A;245:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">meth</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>&#x000A;246:           <span class="ruby-identifier">local_args</span> = <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">clone</span>&#x000A;247:           <span class="ruby-identifier">local_args</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>&#x000A;248:           <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">local_args</span>)&#x000A;249:         <span class="ruby-keyword kw">end</span>&#x000A;250:       <span class="ruby-keyword kw">else</span>&#x000A;251:         <span class="ruby-identifier">path</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span>&#x000A;252:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">meth</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>&#x000A;253:           <span class="ruby-identifier">local_args</span> = <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">clone</span>&#x000A;254:           <span class="ruby-identifier">local_args</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>&#x000A;255:           <span class="ruby-identifier">cmd</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">local_args</span>)&#x000A;256:         <span class="ruby-keyword kw">end</span>        &#x000A;257:       <span class="ruby-keyword kw">end</span>&#x000A;258:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000100-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 259</span>&#x000A;259:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">add_command</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">hard_args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;260:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>&#x000A;261:         <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment cmt"># Don't lose an argument</span>&#x000A;262:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">meth</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>&#x000A;263:           <span class="ruby-identifier">local_args</span> = <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">clone</span>&#x000A;264:           <span class="ruby-identifier">local_args</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>&#x000A;265:           <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">local_args</span>)&#x000A;266:         <span class="ruby-keyword kw">end</span>&#x000A;267:       <span class="ruby-keyword kw">else</span>&#x000A;268:         <span class="ruby-identifier">path</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span>&#x000A;269:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">meth</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>&#x000A;270:           <span class="ruby-identifier">local_args</span> = <span class="ruby-identifier">hard_args</span>.<span class="ruby-identifier">clone</span>&#x000A;271:           <span class="ruby-identifier">local_args</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>&#x000A;272:           <span class="ruby-identifier">__allow</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">local_args</span>)&#x000A;273:         <span class="ruby-keyword kw">end</span>        &#x000A;274:       <span class="ruby-keyword kw">end</span>&#x000A;275:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000095'>
-                <a name='M000095'>      </a>
+              <div class='public-class method' id='method-M000099'>
+                <a name='M000099'>      </a>
                 <div class='synopsis'>
                   <span class='name'>can?</span>
                   <span class='arguments'>(meth)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000095-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000099-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000095-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 231</span>&#x000A;231:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">can?</span>(<span class="ruby-identifier">meth</span>)&#x000A;232:       <span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">meth</span>)&#x000A;233:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000099-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 248</span>&#x000A;248:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">can?</span>(<span class="ruby-identifier">meth</span>)&#x000A;249:       <span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">meth</span>)&#x000A;250:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000097'>
-                <a name='M000097'>      </a>
+              <div class='public-class method' id='method-M000101'>
+                <a name='M000101'>      </a>
                 <div class='synopsis'>
                   <span class='name'>remove_command</span>
                   <span class='arguments'>(meth)</span>
@@ -216,10 +220,10 @@
                   </ul>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000097-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000101-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000097-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 262</span>&#x000A;262:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">remove_command</span>(<span class="ruby-identifier">meth</span>)&#x000A;263:       <span class="ruby-identifier">remove_method</span>(<span class="ruby-identifier">meth</span>)&#x000A;264:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000101-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 279</span>&#x000A;279:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">remove_command</span>(<span class="ruby-identifier">meth</span>)&#x000A;280:       <span class="ruby-identifier">remove_method</span>(<span class="ruby-identifier">meth</span>)&#x000A;281:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
@@ -233,7 +237,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000033-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000033-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 45</span>&#x000A;45:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">awk</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'awk'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000033-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 41</span>&#x000A;41:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">awk</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'awk'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000043'>
@@ -246,37 +250,37 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000043-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000043-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 57</span>&#x000A;57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bash</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'bash'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000043-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bash</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'bash'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000064'>
-                <a name='M000064'>      </a>
+              <div class='public-instance method' id='method-M000066'>
+                <a name='M000066'>      </a>
                 <div class='synopsis'>
                   <span class='name'>bunzip2</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000064-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000066-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000064-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 80</span>&#x000A;80:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bunzip2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'bunzip2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000066-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bunzip2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'bunzip2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000057'>
-                <a name='M000057'>      </a>
+              <div class='public-instance method' id='method-M000059'>
+                <a name='M000059'>      </a>
                 <div class='synopsis'>
                   <span class='name'>bzip2</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000057-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000059-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000057-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 72</span>&#x000A;72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bzip2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'bzip2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000059-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 70</span>&#x000A;70:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bzip2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'bzip2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000089'>
-                <a name='M000089'>      </a>
+              <div class='public-instance method' id='method-M000093'>
+                <a name='M000093'>      </a>
                 <div class='synopsis'>
                   <span class='name'>can</span>
                   <span class='arguments'>()</span>
@@ -287,23 +291,23 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000089-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000093-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000089-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 219</span>&#x000A;219:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">can</span>&#x000A;220:       <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">instance_methods</span>&#x000A;221:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000093-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 236</span>&#x000A;236:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">can</span>&#x000A;237:       <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Cmd</span>.<span class="ruby-identifier">instance_methods</span>&#x000A;238:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000092'>
-                <a name='M000092'>      </a>
+              <div class='public-instance method' id='method-M000096'>
+                <a name='M000096'>      </a>
                 <div class='synopsis'>
                   <span class='name'>can?</span>
                   <span class='arguments'>(meth)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000092-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000096-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000092-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 225</span>&#x000A;225:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">can?</span>(<span class="ruby-identifier">meth</span>)&#x000A;226:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">can</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-constant">RUBY_VERSION</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/1.9/</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span>)&#x000A;227:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000096-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 242</span>&#x000A;242:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">can?</span>(<span class="ruby-identifier">meth</span>)&#x000A;243:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">can</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-constant">RUBY_VERSION</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/1.9/</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span>)&#x000A;244:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000034'>
@@ -316,94 +320,94 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000034-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000034-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 46</span>&#x000A;46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'cat'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000034-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 42</span>&#x000A;42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'cat'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000054'>
-                <a name='M000054'>      </a>
+              <div class='public-instance method' id='method-M000056'>
+                <a name='M000056'>      </a>
                 <div class='synopsis'>
                   <span class='name'>chmod</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000054-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000056-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000054-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 69</span>&#x000A;69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'chmod'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000056-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 67</span>&#x000A;67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'chmod'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000055'>
-                <a name='M000055'>      </a>
+              <div class='public-instance method' id='method-M000057'>
+                <a name='M000057'>      </a>
                 <div class='synopsis'>
                   <span class='name'>chown</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000055-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000057-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000055-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 70</span>&#x000A;70:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chown</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'chown'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000057-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chown</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'chown'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000094'>
-                <a name='M000094'>      </a>
+              <div class='public-instance method' id='method-M000098'>
+                <a name='M000098'>      </a>
                 <div class='synopsis'>
                   <span class='name'>cmd?</span>
                   <span class='arguments'>(meth)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000092">can?</a>
+                  Alias for <a href="Cmd.html#M000096">can?</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000091'>
-                <a name='M000091'>      </a>
+              <div class='public-instance method' id='method-M000095'>
+                <a name='M000095'>      </a>
                 <div class='synopsis'>
                   <span class='name'>cmds</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000089">can</a>
+                  Alias for <a href="Cmd.html#M000093">can</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000093'>
-                <a name='M000093'>      </a>
+              <div class='public-instance method' id='method-M000097'>
+                <a name='M000097'>      </a>
                 <div class='synopsis'>
                   <span class='name'>command?</span>
                   <span class='arguments'>(meth)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000092">can?</a>
+                  Alias for <a href="Cmd.html#M000096">can?</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000090'>
-                <a name='M000090'>      </a>
+              <div class='public-instance method' id='method-M000094'>
+                <a name='M000094'>      </a>
                 <div class='synopsis'>
                   <span class='name'>commands</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000089">can</a>
+                  Alias for <a href="Cmd.html#M000093">can</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000072'>
-                <a name='M000072'>      </a>
+              <div class='public-instance method' id='method-M000074'>
+                <a name='M000074'>      </a>
                 <div class='synopsis'>
                   <span class='name'>configure</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000072-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000074-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000072-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 88</span>&#x000A;88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configure</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'./configure'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000074-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 86</span>&#x000A;86:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configure</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'./configure'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000019'>
@@ -416,7 +420,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000019-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 30</span>&#x000A;30:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;cp&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000019-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 26</span>&#x000A;26:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;cp&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000050'>
+                <a name='M000050'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>curl</span>
+                  <span class='arguments'>(*args)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000050-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000050-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 60</span>&#x000A;60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">curl</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'curl'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000030'>
@@ -429,7 +446,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000030-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 42</span>&#x000A;42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cvs</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'cvs'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000030-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 38</span>&#x000A;38:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cvs</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'cvs'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000039'>
@@ -442,7 +459,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000039-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000039-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'date'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000039-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 49</span>&#x000A;49:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'date'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000024'>
@@ -455,11 +472,11 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000024-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 35</span>&#x000A;35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">df</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'df'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000024-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 31</span>&#x000A;31:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">df</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'df'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000086'>
-                <a name='M000086'>      </a>
+              <div class='public-instance method' id='method-M000090'>
+                <a name='M000090'>      </a>
                 <div class='synopsis'>
                   <span class='name'>digest_md5</span>
                   <span class='arguments'>(*files)</span>
@@ -475,14 +492,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000086-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000090-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000086-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 196</span>&#x000A;196:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_md5</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;197:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;198:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;199:       }&#x000A;200:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000090-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 213</span>&#x000A;213:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_md5</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;214:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;215:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;216:       }&#x000A;217:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000087'>
-                <a name='M000087'>      </a>
+              <div class='public-instance method' id='method-M000091'>
+                <a name='M000091'>      </a>
                 <div class='synopsis'>
                   <span class='name'>digest_sha1</span>
                   <span class='arguments'>(*files)</span>
@@ -498,14 +515,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000087-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000091-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000087-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 204</span>&#x000A;204:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_sha1</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;205:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;206:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;207:       }&#x000A;208:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000091-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 221</span>&#x000A;221:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_sha1</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;222:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;223:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;224:       }&#x000A;225:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000088'>
-                <a name='M000088'>      </a>
+              <div class='public-instance method' id='method-M000092'>
+                <a name='M000092'>      </a>
                 <div class='synopsis'>
                   <span class='name'>digest_sha2</span>
                   <span class='arguments'>(*files)</span>
@@ -521,73 +538,86 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000088-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000092-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000088-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 212</span>&#x000A;212:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_sha2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;213:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;214:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA2</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;215:       }&#x000A;216:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000092-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 229</span>&#x000A;229:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest_sha2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)&#x000A;230:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> &#x000A;231:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA2</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;232:       }&#x000A;233:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000077'>
-                <a name='M000077'>      </a>
+              <div class='public-instance method' id='method-M000075'>
+                <a name='M000075'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>dir</span>
+                  <span class='arguments'>(*args)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000075-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000075-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 91</span>&#x000A;91:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dir</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'cmd'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000080'>
+                <a name='M000080'>      </a>
                 <div class='synopsis'>
                   <span class='name'>dir_download</span>
                   <span class='arguments'>(*paths)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Same as <a href="Cmd.html#M000074">file_download</a> except directories are
+                  Same as <a href="Cmd.html#M000077">file_download</a> except directories are
                   processed recursively. If any supplied paths are directories you need to
                   use this method and not file_download.
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000077-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000080-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000077-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 125</span>&#x000A;125:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dir_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000080-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 129</span>&#x000A;129:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dir_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000075'>
-                <a name='M000075'>      </a>
+              <div class='public-instance method' id='method-M000078'>
+                <a name='M000078'>      </a>
                 <div class='synopsis'>
                   <span class='name'>dir_upload</span>
                   <span class='arguments'>(*paths)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Same as <a href="Cmd.html#M000073">file_upload</a> except directories are
+                  Same as <a href="Cmd.html#M000076">file_upload</a> except directories are
                   processed recursively. If any supplied paths are directories you need to
                   use this method and not file_upload.
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000075-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000078-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000075-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 119</span>&#x000A;119:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dir_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000078-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 123</span>&#x000A;123:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dir_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000078'>
-                <a name='M000078'>      </a>
+              <div class='public-instance method' id='method-M000081'>
+                <a name='M000081'>      </a>
                 <div class='synopsis'>
                   <span class='name'>directory_download</span>
                   <span class='arguments'>(*paths)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000077">dir_download</a>
+                  Alias for <a href="Cmd.html#M000080">dir_download</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000076'>
-                <a name='M000076'>      </a>
+              <div class='public-instance method' id='method-M000079'>
+                <a name='M000079'>      </a>
                 <div class='synopsis'>
                   <span class='name'>directory_upload</span>
                   <span class='arguments'>(*paths)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000075">dir_upload</a>
+                  Alias for <a href="Cmd.html#M000078">dir_upload</a>
                   </p>
                 </div>
               </div>
@@ -601,7 +631,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000025-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 36</span>&#x000A;36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">du</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'du'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000025-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 32</span>&#x000A;32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">du</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'du'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000044'>
@@ -614,7 +644,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000044-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000044-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 58</span>&#x000A;58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">echo</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'echo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000044-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 54</span>&#x000A;54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">echo</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'echo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000026'>
@@ -627,11 +657,11 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000026-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 38</span>&#x000A;38:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">env</span>; <span class="ruby-identifier">cmd</span> <span class="ruby-value str">&quot;env&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000026-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 34</span>&#x000A;34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">env</span>; <span class="ruby-identifier">__allow</span> <span class="ruby-value str">&quot;env&quot;</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000083'>
-                <a name='M000083'>      </a>
+              <div class='public-instance method' id='method-M000086'>
+                <a name='M000086'>      </a>
                 <div class='synopsis'>
                   <span class='name'>file_append</span>
                   <span class='arguments'>(filepath, newcontent, backup=false)</span>
@@ -645,14 +675,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000083-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000086-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000083-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 148</span>&#x000A;148:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">newcontent</span>, <span class="ruby-identifier">backup</span>=<span class="ruby-keyword kw">false</span>)&#x000A;149:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">filepath</span>)&#x000A;150:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span> <span class="ruby-identifier">filepath</span>, <span class="ruby-node">&quot;#{filepath}-previous&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">backup</span>&#x000A;151:         <span class="ruby-identifier">file_content</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_download</span> <span class="ruby-identifier">filepath</span>&#x000A;152:       <span class="ruby-keyword kw">end</span>&#x000A;153: &#x000A;154:       <span class="ruby-identifier">file_content</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;155:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">StringIO</span>)&#x000A;156:         <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">rewind</span>&#x000A;157:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">read</span>&#x000A;158:       <span class="ruby-keyword kw">else</span>&#x000A;159:         <span class="ruby-identifier">file_content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>&#x000A;160:       <span class="ruby-keyword kw">end</span>&#x000A;161:       &#x000A;162:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_upload</span> <span class="ruby-identifier">file_content</span>, <span class="ruby-identifier">filepath</span>&#x000A;163:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000086-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 152</span>&#x000A;152:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_append</span>(<span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">newcontent</span>, <span class="ruby-identifier">backup</span>=<span class="ruby-keyword kw">false</span>)&#x000A;153:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">filepath</span>)&#x000A;154:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span> <span class="ruby-identifier">filepath</span>, <span class="ruby-node">&quot;#{filepath}-previous&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">backup</span>&#x000A;155:         <span class="ruby-identifier">file_content</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_download</span> <span class="ruby-identifier">filepath</span>&#x000A;156:       <span class="ruby-keyword kw">end</span>&#x000A;157: &#x000A;158:       <span class="ruby-identifier">content</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;159:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">StringIO</span>)&#x000A;160:         <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">rewind</span>&#x000A;161:         <span class="ruby-identifier">content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>.<span class="ruby-identifier">read</span>&#x000A;162:       <span class="ruby-keyword kw">else</span>&#x000A;163:         <span class="ruby-identifier">content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>&#x000A;164:       <span class="ruby-keyword kw">end</span>&#x000A;165:       &#x000A;166:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_upload</span> <span class="ruby-identifier">content</span>, <span class="ruby-identifier">filepath</span>&#x000A;167:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000074'>
-                <a name='M000074'>      </a>
+              <div class='public-instance method' id='method-M000077'>
+                <a name='M000077'>      </a>
                 <div class='synopsis'>
                   <span class='name'>file_download</span>
                   <span class='arguments'>(*paths)</span>
@@ -682,14 +712,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000074-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000077-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000074-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 114</span>&#x000A;114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000077-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 118</span>&#x000A;118:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000084'>
-                <a name='M000084'>      </a>
+              <div class='public-instance method' id='method-M000088'>
+                <a name='M000088'>      </a>
                 <div class='synopsis'>
                   <span class='name'>file_exists?</span>
                   <span class='arguments'>(path)</span>
@@ -700,14 +730,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000084-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000088-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000084-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 172</span>&#x000A;172:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;173:       <span class="ruby-keyword kw">begin</span>&#x000A;174:         <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">ls</span>(<span class="ruby-identifier">path</span>) }&#x000A;175:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;176:         <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">rap</span>&#x000A;177:       <span class="ruby-keyword kw">end</span>&#x000A;178:       <span class="ruby-comment cmt"># &quot;ls&quot; returns a 0 exit code regardless of success in Linux</span>&#x000A;179:       <span class="ruby-comment cmt"># But on OSX exit code is 1. This is why we look at STDERR. </span>&#x000A;180:       <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">stderr</span>.<span class="ruby-identifier">empty?</span>&#x000A;181:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000088-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 189</span>&#x000A;189:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;190:       <span class="ruby-keyword kw">begin</span>&#x000A;191:         <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">ls</span>(<span class="ruby-identifier">path</span>) }&#x000A;192:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;193:         <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">rap</span>&#x000A;194:       <span class="ruby-keyword kw">end</span>&#x000A;195:       <span class="ruby-comment cmt"># &quot;ls&quot; returns a 0 exit code regardless of success in Linux</span>&#x000A;196:       <span class="ruby-comment cmt"># But on OSX exit code is 1. This is why we look at STDERR. </span>&#x000A;197:       <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">stderr</span>.<span class="ruby-identifier">empty?</span>&#x000A;198:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000073'>
-                <a name='M000073'>      </a>
+              <div class='public-instance method' id='method-M000076'>
+                <a name='M000076'>      </a>
                 <div class='synopsis'>
                   <span class='name'>file_upload</span>
                   <span class='arguments'>(*paths)</span>
@@ -735,14 +765,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000073-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000076-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000073-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 101</span>&#x000A;101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000076-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 105</span>&#x000A;105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000085'>
-                <a name='M000085'>      </a>
+              <div class='public-instance method' id='method-M000089'>
+                <a name='M000089'>      </a>
                 <div class='synopsis'>
                   <span class='name'>file_verified?</span>
                   <span class='arguments'>(path, expected_digest, digest_type=:md5)</span>
@@ -755,23 +785,43 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000085-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000089-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000085-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 186</span>&#x000A;186:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_verified?</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">expected_digest</span>, <span class="ruby-identifier">digest_type</span>=<span class="ruby-identifier">:md5</span>)&#x000A;187:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;188:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown disgest type: #{digest_type}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">can?</span>(<span class="ruby-node">&quot;digest_#{digest_type}&quot;</span>)&#x000A;189:       <span class="ruby-identifier">digest</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;digest_#{digest_type}&quot;</span>, <span class="ruby-identifier">path</span>).<span class="ruby-identifier">first</span>&#x000A;190:       <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{digest_type} (#{path}) = #{digest}&quot;</span>&#x000A;191:       <span class="ruby-identifier">digest</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">expected_digest</span>.<span class="ruby-identifier">to_s</span>&#x000A;192:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000089-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 203</span>&#x000A;203:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_verified?</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">expected_digest</span>, <span class="ruby-identifier">digest_type</span>=<span class="ruby-identifier">:md5</span>)&#x000A;204:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">path</span>)&#x000A;205:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown disgest type: #{digest_type}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">can?</span>(<span class="ruby-node">&quot;digest_#{digest_type}&quot;</span>)&#x000A;206:       <span class="ruby-identifier">digest</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;digest_#{digest_type}&quot;</span>, <span class="ruby-identifier">path</span>).<span class="ruby-identifier">first</span>&#x000A;207:       <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{digest_type} (#{path}) = #{digest}&quot;</span>&#x000A;208:       <span class="ruby-identifier">digest</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">expected_digest</span>.<span class="ruby-identifier">to_s</span>&#x000A;209:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000065'>
-                <a name='M000065'>      </a>
+              <div class='public-instance method' id='method-M000087'>
+                <a name='M000087'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>file_write</span>
+                  <span class='arguments'>(filepath, newcontent, backup=false)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Write <tt>newcontent</tt> to remote <tt>filepath</tt>. If the file exists
+                  it will be overwritten. If <tt>backup</tt> is specified, <tt>filepath</tt>
+                  will be copied to <tt>filepath-previous</tt> before appending.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000087-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000087-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 172</span>&#x000A;172:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_write</span>(<span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">newcontent</span>, <span class="ruby-identifier">backup</span>=<span class="ruby-keyword kw">false</span>)&#x000A;173:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">filepath</span>)&#x000A;174:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span> <span class="ruby-identifier">filepath</span>, <span class="ruby-node">&quot;#{filepath}-previous&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">backup</span>&#x000A;175:       <span class="ruby-keyword kw">end</span>&#x000A;176:       &#x000A;177:       <span class="ruby-identifier">content</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;178:       <span class="ruby-identifier">content</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">newcontent</span>&#x000A;179:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_upload</span> <span class="ruby-identifier">content</span>, <span class="ruby-identifier">filepath</span>&#x000A;180:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000067'>
+                <a name='M000067'>      </a>
                 <div class='synopsis'>
                   <span class='name'>getconf</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000065-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000067-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000065-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 81</span>&#x000A;81:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getconf</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'getconf'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000067-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 79</span>&#x000A;79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getconf</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'getconf'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000031'>
@@ -784,7 +834,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000031-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 43</span>&#x000A;43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">git</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'git'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000031-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 39</span>&#x000A;39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">git</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'git'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000038'>
@@ -797,20 +847,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000038-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000038-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 52</span>&#x000A;52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grep</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'grep'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000038-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 48</span>&#x000A;48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grep</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'grep'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000062'>
-                <a name='M000062'>      </a>
+              <div class='public-instance method' id='method-M000064'>
+                <a name='M000064'>      </a>
                 <div class='synopsis'>
                   <span class='name'>gunzip</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000062-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000064-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000062-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 78</span>&#x000A;78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gunzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'gunzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000064-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 76</span>&#x000A;76:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gunzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'gunzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000047'>
@@ -823,33 +873,33 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000047-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000047-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 61</span>&#x000A;61:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'gzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000047-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 57</span>&#x000A;57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'gzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000066'>
-                <a name='M000066'>      </a>
+              <div class='public-instance method' id='method-M000068'>
+                <a name='M000068'>      </a>
                 <div class='synopsis'>
                   <span class='name'>history</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000066-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000068-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000066-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 82</span>&#x000A;82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'history'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000068-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 80</span>&#x000A;80:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'history'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000069'>
-                <a name='M000069'>      </a>
+              <div class='public-instance method' id='method-M000071'>
+                <a name='M000071'>      </a>
                 <div class='synopsis'>
                   <span class='name'>hostname</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000069-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000071-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000069-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 85</span>&#x000A;85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hostname</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'hostname'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000071-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 83</span>&#x000A;83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hostname</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'hostname'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000021'>
@@ -862,7 +912,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000021-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 32</span>&#x000A;32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ls</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'ls'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000021-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 28</span>&#x000A;28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ls</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'ls'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000048'>
@@ -875,20 +925,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000048-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000048-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 62</span>&#x000A;62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'make'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000048-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 58</span>&#x000A;58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'make'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000051'>
-                <a name='M000051'>      </a>
+              <div class='public-instance method' id='method-M000053'>
+                <a name='M000053'>      </a>
                 <div class='synopsis'>
                   <span class='name'>mkdir</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000051-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000053-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000051-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 66</span>&#x000A;66:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'mkdir'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000053-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 64</span>&#x000A;64:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'mkdir'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000046'>
@@ -901,20 +951,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000046-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000046-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 60</span>&#x000A;60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkfs</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'mkfs'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000046-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 56</span>&#x000A;56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkfs</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'mkfs'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000049'>
-                <a name='M000049'>      </a>
+              <div class='public-instance method' id='method-M000051'>
+                <a name='M000051'>      </a>
                 <div class='synopsis'>
                   <span class='name'>mount</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000049-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000051-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000049-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 64</span>&#x000A;64:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;mount&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000051-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 62</span>&#x000A;62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;mount&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000020'>
@@ -927,7 +977,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000020-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 31</span>&#x000A;31:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mv</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;mv&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000020-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 27</span>&#x000A;27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mv</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;mv&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000042'>
@@ -940,20 +990,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000042-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000042-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 56</span>&#x000A;56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">perl</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'perl'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000042-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 52</span>&#x000A;52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">perl</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'perl'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000068'>
-                <a name='M000068'>      </a>
+              <div class='public-instance method' id='method-M000070'>
+                <a name='M000070'>      </a>
                 <div class='synopsis'>
                   <span class='name'>printenv</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000068-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000070-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000068-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 84</span>&#x000A;84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">printenv</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'printenv'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000070-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 82</span>&#x000A;82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">printenv</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'printenv'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000022'>
@@ -966,7 +1016,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000022-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 33</span>&#x000A;33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ps</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'ps'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000022-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 29</span>&#x000A;29:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ps</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'ps'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000028'>
@@ -979,20 +1029,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000028-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 40</span>&#x000A;40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pwd</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span> <span class="ruby-value str">&quot;pwd&quot;</span>, <span class="ruby-identifier">args</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000028-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 36</span>&#x000A;36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pwd</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span> <span class="ruby-value str">&quot;pwd&quot;</span>, <span class="ruby-identifier">args</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000061'>
-                <a name='M000061'>      </a>
+              <div class='public-instance method' id='method-M000063'>
+                <a name='M000063'>      </a>
                 <div class='synopsis'>
                   <span class='name'>python</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000061-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000063-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000061-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 77</span>&#x000A;77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">python</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'python'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000063-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">python</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'python'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000036'>
@@ -1003,14 +1053,14 @@
                 </div>
                 <div class='description'>
                   <p>
-                  def kill(*args); cmd(&#8216;kill&#8217;, args); end
+                  def kill(*args); __allow(&#8216;kill&#8217;, args); end
                   </p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000036-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000036-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 50</span>&#x000A;50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rake</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'sudo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000036-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 46</span>&#x000A;46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rake</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'sudo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000040'>
@@ -1023,7 +1073,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000040-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 54</span>&#x000A;54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ruby</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'ruby'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000040-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 50</span>&#x000A;50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ruby</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'ruby'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000041'>
@@ -1036,46 +1086,46 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000041-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000041-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 55</span>&#x000A;55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'rudy'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000041-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 51</span>&#x000A;51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'rudy'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000070'>
-                <a name='M000070'>      </a>
+              <div class='public-instance method' id='method-M000072'>
+                <a name='M000072'>      </a>
                 <div class='synopsis'>
                   <span class='name'>rudy_ec2</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000070-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000072-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000070-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 86</span>&#x000A;86:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_ec2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'rudy-ec2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000072-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 84</span>&#x000A;84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_ec2</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'rudy-ec2'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000067'>
-                <a name='M000067'>      </a>
+              <div class='public-instance method' id='method-M000069'>
+                <a name='M000069'>      </a>
                 <div class='synopsis'>
                   <span class='name'>rudy_s3</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000067-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000069-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000067-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 83</span>&#x000A;83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_s3</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'rudy-s3'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000069-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 81</span>&#x000A;81:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_s3</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'rudy-s3'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000071'>
-                <a name='M000071'>      </a>
+              <div class='public-instance method' id='method-M000073'>
+                <a name='M000073'>      </a>
                 <div class='synopsis'>
                   <span class='name'>rudy_sdb</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000071-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000073-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000071-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 87</span>&#x000A;87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_sdb</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'rudy-sdb'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000073-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 85</span>&#x000A;85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rudy_sdb</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'rudy-sdb'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000027'>
@@ -1088,7 +1138,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000027-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 39</span>&#x000A;39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rye</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span> <span class="ruby-value str">&quot;rye&quot;</span>, <span class="ruby-identifier">args</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000027-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 35</span>&#x000A;35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rye</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span> <span class="ruby-value str">&quot;rye&quot;</span>, <span class="ruby-identifier">args</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000016'>
@@ -1114,7 +1164,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000032-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000032-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 44</span>&#x000A;44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sed</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'sed'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000032-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 40</span>&#x000A;40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sed</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'sed'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000023'>
@@ -1127,20 +1177,20 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000023-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 34</span>&#x000A;34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sh</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'sh'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000023-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 30</span>&#x000A;30:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sh</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'sh'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000050'>
-                <a name='M000050'>      </a>
+              <div class='public-instance method' id='method-M000052'>
+                <a name='M000052'>      </a>
                 <div class='synopsis'>
                   <span class='name'>sleep</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000050-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000052-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000050-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;sleep&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000052-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 63</span>&#x000A;63:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;sleep&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000017'>
@@ -1156,32 +1206,32 @@
                   <pre id='M000017-source'>    <span class="ruby-comment cmt"># File bin/try, line 93</span>&#x000A;93:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">somescript</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;94:     <span class="ruby-identifier">run_command</span>(<span class="ruby-value str">&quot;/path/to/my/script&quot;</span>, <span class="ruby-identifier">args</span>)&#x000A;95:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000080'>
-                <a name='M000080'>      </a>
+              <div class='public-instance method' id='method-M000083'>
+                <a name='M000083'>      </a>
                 <div class='synopsis'>
                   <span class='name'>str_download</span>
                   <span class='arguments'>(*paths)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000079">string_download</a>
+                  Alias for <a href="Cmd.html#M000082">string_download</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000082'>
-                <a name='M000082'>      </a>
+              <div class='public-instance method' id='method-M000085'>
+                <a name='M000085'>      </a>
                 <div class='synopsis'>
                   <span class='name'>str_upload</span>
                   <span class='arguments'>(str, remote_path)</span>
                 </div>
                 <div class='description'>
                   <p>
-                  Alias for <a href="Cmd.html#M000081">string_upload</a>
+                  Alias for <a href="Cmd.html#M000084">string_upload</a>
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000079'>
-                <a name='M000079'>      </a>
+              <div class='public-instance method' id='method-M000082'>
+                <a name='M000082'>      </a>
                 <div class='synopsis'>
                   <span class='name'>string_download</span>
                   <span class='arguments'>(*paths)</span>
@@ -1189,21 +1239,21 @@
                 <div class='description'>
                   <p>
                   Shorthand for +<a
-                  href="Cmd.html#M000074">file_download</a>(&#8216;remote/path&#8217;).string+
+                  href="Cmd.html#M000077">file_download</a>(&#8216;remote/path&#8217;).string+
                   </p>
                   <p>
                   Returns a String containing the content of all remote <b>paths</b>.
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000079-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000082-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000079-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 131</span>&#x000A;131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">string_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>)&#x000A;132:       <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>).<span class="ruby-identifier">string</span>&#x000A;133:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000082-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 135</span>&#x000A;135:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">string_download</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>)&#x000A;136:       <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:download</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>).<span class="ruby-identifier">string</span>&#x000A;137:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000081'>
-                <a name='M000081'>      </a>
+              <div class='public-instance method' id='method-M000084'>
+                <a name='M000084'>      </a>
                 <div class='synopsis'>
                   <span class='name'>string_upload</span>
                   <span class='arguments'>(str, remote_path)</span>
@@ -1211,7 +1261,7 @@
                 <div class='description'>
                   <p>
                   Shorthand for +<a
-                  href="Cmd.html#M000073">file_upload</a>(StringIO.new(&#8216;file
+                  href="Cmd.html#M000076">file_upload</a>(StringIO.new(&#8216;file
                   content&#8217;), &#8216;remote/path&#8217;)+
                   </p>
                   <p>
@@ -1220,10 +1270,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000081-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000084-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000081-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 139</span>&#x000A;139:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">string_upload</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">remote_path</span>)&#x000A;140:       <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>), <span class="ruby-identifier">remote_path</span>)&#x000A;141:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000084-source'>     <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 143</span>&#x000A;143:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">string_upload</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">remote_path</span>)&#x000A;144:       <span class="ruby-identifier">net_scp_transfer!</span>(<span class="ruby-identifier">:upload</span>, <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>), <span class="ruby-identifier">remote_path</span>)&#x000A;145:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000037'>
@@ -1236,7 +1286,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000037-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000037-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 51</span>&#x000A;51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sudo</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'sudo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000037-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sudo</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'sudo'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000029'>
@@ -1249,7 +1299,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000029-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 41</span>&#x000A;41:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">svn</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'svn'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000029-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 37</span>&#x000A;37:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">svn</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'svn'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000035'>
@@ -1262,7 +1312,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000035-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000035-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tar</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'tar'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000035-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 43</span>&#x000A;43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tar</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'tar'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000045'>
@@ -1275,85 +1325,85 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000045-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000045-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 59</span>&#x000A;59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'test'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000045-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 55</span>&#x000A;55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'test'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000052'>
-                <a name='M000052'>      </a>
+              <div class='public-instance method' id='method-M000054'>
+                <a name='M000054'>      </a>
                 <div class='synopsis'>
                   <span class='name'>touch</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000052-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000054-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000052-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 67</span>&#x000A;67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">touch</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'touch'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000054-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">touch</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'touch'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000059'>
-                <a name='M000059'>      </a>
+              <div class='public-instance method' id='method-M000061'>
+                <a name='M000061'>      </a>
                 <div class='synopsis'>
                   <span class='name'>umount</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000059-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000061-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000059-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 75</span>&#x000A;75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">umount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;umount&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000061-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 73</span>&#x000A;73:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">umount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;umount&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000053'>
-                <a name='M000053'>      </a>
+              <div class='public-instance method' id='method-M000055'>
+                <a name='M000055'>      </a>
                 <div class='synopsis'>
                   <span class='name'>uname</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000053-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000055-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000053-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uname</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'uname'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000055-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 66</span>&#x000A;66:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uname</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'uname'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000056'>
-                <a name='M000056'>      </a>
+              <div class='public-instance method' id='method-M000058'>
+                <a name='M000058'>      </a>
                 <div class='synopsis'>
                   <span class='name'>unzip</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000056-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000058-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000056-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 71</span>&#x000A;71:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'unzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000058-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 69</span>&#x000A;69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'unzip'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000060'>
-                <a name='M000060'>      </a>
+              <div class='public-instance method' id='method-M000062'>
+                <a name='M000062'>      </a>
                 <div class='synopsis'>
                   <span class='name'>uptime</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000060-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000062-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000060-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 76</span>&#x000A;76:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uptime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">&quot;uptime&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000062-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 74</span>&#x000A;74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uptime</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">&quot;uptime&quot;</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000063'>
-                <a name='M000063'>      </a>
+              <div class='public-instance method' id='method-M000065'>
+                <a name='M000065'>      </a>
                 <div class='synopsis'>
                   <span class='name'>useradd</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000063-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000065-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000063-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 79</span>&#x000A;79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">useradd</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'useradd'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000065-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 77</span>&#x000A;77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">useradd</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'useradd'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='public-instance method' id='method-M000018'>
@@ -1365,28 +1415,41 @@
                 <div class='description'>
                   <pre>NOTE: See Rye::Box for the implementation of cd</pre>
                   <p>
-                  def cd(*args); cmd(&#8216;cd&#8217;, args); end def rm(*args);
-                  cmd(&#8216;rm&#8217;, args); end
+                  def cd(*args); __allow(&#8216;cd&#8217;, args); end def rm(*args);
+                  __allow(&#8216;rm&#8217;, args); end
                   </p>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 29</span>&#x000A;29:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wc</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'wc'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000018-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 25</span>&#x000A;25:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wc</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'wc'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000058'>
-                <a name='M000058'>      </a>
+              <div class='public-instance method' id='method-M000049'>
+                <a name='M000049'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>wget</span>
+                  <span class='arguments'>(*args)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000049-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000049-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 59</span>&#x000A;59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wget</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'wget'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000060'>
+                <a name='M000060'>      </a>
                 <div class='synopsis'>
                   <span class='name'>which</span>
                   <span class='arguments'>(*args)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000058-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000060-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000058-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 73</span>&#x000A;73:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">which</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">cmd</span>(<span class="ruby-value str">'which'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000060-source'>    <span class="ruby-comment cmt"># File lib/rye/cmd.rb, line 71</span>&#x000A;71:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">which</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-identifier">__allow</span>(<span class="ruby-value str">'which'</span>, <span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>
