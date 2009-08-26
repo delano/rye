@@ -184,6 +184,7 @@ module Rye
   # Returns the absolute path if found in PATH otherwise nil.
   def which(executable)
     return unless executable.is_a?(String)
+    return executable if Rye.sysinfo.os == :windows
     #return executable if File.exists?(executable) # SHOULD WORK, MUST TEST
     shortname = File.basename(executable)
     dir = Rye.sysinfo.paths.select do |path|    # dir contains all of the 

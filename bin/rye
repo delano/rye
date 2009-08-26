@@ -79,10 +79,11 @@ command :authorize_local do |obj|
   user = Rye.sysinfo.user
 
   puts "Authorizing #{user}@localhost"
-  rbox = Rye::Box.new('localhost')
+  rbox = Rye::Box.new('localhost', :debug => false)
   puts "Added public keys for: ", rbox.authorize_keys_local
-  puts "Now try: " << "ssh #{user}@localhost"
-  
+  unless Rye.sysinfo.os == :windows
+    puts "Now try: " << "ssh #{user}@localhost"
+  end
 end
 command_alias :local_authorize, :local_authorise
 

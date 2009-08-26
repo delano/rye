@@ -425,19 +425,30 @@ module Rye
       rap.add_exit_code(0)
       rap
     end
-    
+    require 'fileutils'
     # Authorize the current user to login to the local machine via
     # SSH without a password. This is the same functionality as
     # authorize_keys_remote except run with local shell commands. 
     def authorize_keys_local
       added_keys = []
+      ssh_dir = File.join(Rye.sysinfo.home, '.ssh')
       Rye.keys.each do |path|
         debug "# Public key for #{path}"
         k = Rye::Key.from_file(path).public_key.to_ssh2
-        Rye.shell(:mkdir, :p, :m, '700', '$HOME/.ssh') # Silently create dir if it doesn't exist
-        Rye.shell(:echo, "'#{k}' >> $HOME/.ssh/authorized_keys")
-        Rye.shell(:echo, "'#{k}' >> $HOME/.ssh/authorized_keys2")
-        Rye.shell(:chmod, '-R', '0600', '$HOME/.ssh/authorized_keys*')
+        FileUtils.mkdir ssh_dir unless File.exists? ssh_dir
+        
+        authkeys_file = File.join(ssh_dir, 'authorized_keys')
+        
+        debug "Writing to #{authkeys_file}"
+        File.open(authkeys_file, 'a')       {|f| f.write("#{$/}#{k}") }
+        File.open("#{authkeys_file}2", 'a') {|f| f.write("#{$/}#{k}") }
+        
+        unless Rye.sysinfo.os == :windows
+          Rye.shell(:chmod, '700', ssh_dir)
+          Rye.shell(:chmod, '0600', authkeys_file)
+          Rye.shell(:chmod, '0600', "#{authkeys_file}2")
+        end
+        
         added_keys << path
       end
       added_keys
