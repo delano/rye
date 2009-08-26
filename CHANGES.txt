@@ -1,6 +1,11 @@
 RYE, CHANGES
 
 
+#### 0.8.9 (2009-08-26) #############################
+
+* FIXED: authorize-local for Windows
+
+
 #### 0.8.8 (2009-08-25) #############################
 
 * FIXED: Rye::Box#guess_user_home for Windows SSH support
