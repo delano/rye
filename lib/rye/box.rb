@@ -679,7 +679,7 @@ module Rye
     end
     
     
-  private
+  # private
       
     def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end
     def error(msg="unknown error msg"); @rye_error.puts msg if @rye_error; end
