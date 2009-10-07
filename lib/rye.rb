@@ -41,20 +41,21 @@ require 'esc'
 #++
 module Rye
   extend self
-
-  unless defined?(SYSINFO)
-    VERSION = "0.8.9".freeze
-    SYSINFO = SysInfo.new.freeze
-  end
   
+  VERSION = "0.8.9".freeze unless defined?(VERSION)
+  
+  @@sysinfo = nil
   @@agent_env = Hash.new  # holds ssh-agent env vars
   @@mutex = Mutex.new     # for synchronizing threads
   
   # Accessor for an instance of SystemInfo
-  def Rye.sysinfo; SYSINFO; end
+  def Rye.sysinfo
+    @@sysinfo = SysInfo.new if @@sysinfo.nil?
+    @@sysinfo
+  end
   
   # Accessor for an instance of SystemInfo
-  def sysinfo; SYSINFO;  end
+  def sysinfo; Rye.sysinfo end
   
   class RyeError < RuntimeError; end
   class NoBoxes < RyeError; end
