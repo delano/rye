@@ -656,7 +656,7 @@ module Rye
     def disconnect
       return unless @rye_ssh && !@rye_ssh.closed?
       begin
-        Timeout::timeout(3) do
+        Timeout::timeout(10) do
           @rye_ssh.loop(0.3) { @rye_ssh.busy?; }
         end
       rescue SystemCallError, Timeout::Error => ex

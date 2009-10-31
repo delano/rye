@@ -1,7 +1,12 @@
 RYE, CHANGES
 
+* TODO: file_append overwrites file
 
-#### 0.8.10 (2009-10-??) #############################
+#### 0.8.11 (2009-10-30) #############################
+
+* CHANGE: Increased timeout on disconnect
+
+#### 0.8.10 (2009-10-07) #############################
 
 * CHANGE: Improved startup time. 
 

@@ -155,7 +155,7 @@ module Rye;
         file_content = self.file_download filepath
       end
 
-      content ||= StringIO.new
+      content = StringIO.new
       if newcontent.is_a?(StringIO)
         newcontent.rewind
         content.puts newcontent.read
