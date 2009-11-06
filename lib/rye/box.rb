@@ -32,7 +32,7 @@ module Rye
     def host; @rye_host; end
     def opts; @rye_opts; end
     def safe; @rye_safe; end
-    def user; (@rye_opts || {})[:user]; end
+    def user; @rye_user; end
     
     # Returns the current value of the stash +@rye_stash+
     def stash; @rye_stash; end
@@ -70,13 +70,14 @@ module Rye
     # A Hash. The keys are exception classes, the values are Procs to execute
     def exception_hook=(val); @rye_exception_hook = val; end
 
-    # * +host+ The hostname to connect to. The default is localhost.
+    # * +host+ The hostname to connect to. Default: localhost.
+    # * +user+ The username to connect as. Default: SSH config file or current shell user.
     # * +opts+ a hash of optional arguments.
     #
     # The +opts+ hash excepts the following keys:
     #
-    # * :user => the username to connect as. Default: the current user. 
     # * :safe => should Rye be safe? Default: true
+    # * :port => remote server ssh port. Default: SSH config file or 22
     # * :keys => one or more private key file paths (passwordless login)
     # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
@@ -88,14 +89,20 @@ module Rye
     # Net::SSH.start that is not already mentioned above.
     #
     def initialize(host='localhost', opts={})
+      ssh_opts = ssh_config_options(host)
       @rye_exception_hook = {}
       @rye_host = host
       
+      if opts[:user]
+        @rye_user = opts[:user]
+      else
+        @rye_user = ssh_opts[:user] || Rye.sysinfo.user
+      end
+
       # These opts are use by Rye::Box and also passed to Net::SSH
       @rye_opts = {
-        :user => Rye.sysinfo.user, 
         :safe => true,
-        :port => 22,
+        :port => ssh_opts[:port],
         :keys => [],
         :info => nil,
         :debug => nil,
@@ -141,6 +148,10 @@ module Rye
 
     end
     
+    # Parse SSH config files for use with Net::SSH
+    def ssh_config_options(host)
+      return Net::SSH::Config.for(host)
+    end
     
     # Change the current working directory (sort of). 
     #
@@ -201,7 +212,7 @@ module Rye
     def switch_user(newuser)
       return if newuser.to_s == self.user.to_s
       @rye_opts ||= {}
-      @rye_opts[:user] = newuser
+      @rye_user = newuser
       disconnect
     end
 
@@ -215,7 +226,7 @@ module Rye
     def interactive_ssh(run=true)
       debug "interactive_ssh with keys: #{Rye.keys.inspect}"
       run = false unless STDIN.tty?      
-      cmd = Rye.prepare_command("ssh", "#{@rye_opts[:user]}@#{@rye_host}")
+      cmd = Rye.prepare_command("ssh", "#{@rye_user}@#{@rye_host}")
       return cmd unless run
       system(cmd)
     end
@@ -613,12 +624,12 @@ module Rye
       raise Rye::NoHost unless @rye_host
       return if @rye_ssh && !reconnect
       disconnect if @rye_ssh 
-      debug "Opening connection to #{@rye_host} as #{@rye_opts[:user]}"
+      debug "Opening connection to #{@rye_host} as #{@rye_user}"
       highline = HighLine.new # Used for password prompt
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
-        @rye_ssh = Net::SSH.start(@rye_host, @rye_opts[:user], @rye_opts || {}) 
+        @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell
@@ -632,7 +643,7 @@ module Rye
         print "\a" if retried == 0 && @rye_info # Ring the bell once
         retried += 1
         if STDIN.tty? && retried <= 3
-          STDERR.puts "Passwordless login failed for #{@rye_opts[:user]}"
+          STDERR.puts "Passwordless login failed for #{@rye_user}"
           @rye_opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }
           @rye_opts[:auth_methods] ||= []
           @rye_opts[:auth_methods] << 'password'
@@ -967,7 +978,7 @@ module Rye
         self.mkdir(:p, target) unless self.file_exists?(target)
       end
       
-      Net::SCP.start(@rye_host, @rye_opts[:user], @rye_opts || {}) do |scp|
+      Net::SCP.start(@rye_host, @rye_user, @rye_opts || {}) do |scp|
         transfers = []
         prev = ""
         files.each do |file|

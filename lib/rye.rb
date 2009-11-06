@@ -42,7 +42,7 @@ require 'esc'
 module Rye
   extend self
   
-  VERSION = "0.8.11".freeze unless defined?(VERSION)
+  VERSION = "0.8.12".freeze unless defined?(VERSION)
   
   @@sysinfo = nil
   @@agent_env = Hash.new  # holds ssh-agent env vars
@@ -94,7 +94,7 @@ module Rye
   end
   
   # Looks for private keys in +path+ and returns and Array of paths
-  # to the files it fines. Raises an Exception if path does not exist.
+  # to the files it finds. Raises an Exception if path does not exist.
   # If path is a file rather than a directory, it will check whether
   # that single file is a private key.
   def find_private_keys(path)
