@@ -9,6 +9,10 @@ RYE, CHANGES
 * ADDED: Use SSH config file by default [Justin Case]
 
 
+#### 0.8.12 (2009-11-06) #############################
+
+* ADDED: Use SSH config file by default
+
 #### 0.8.11 (2009-10-30) #############################
 
 * CHANGE: Increased timeout on disconnect
