@@ -127,8 +127,7 @@ module Rye
   end
   
   # Returns an Array of info about the currently available
-  # SSH keys, as provided by the SSH Agent. See
-  # Rye.start_sshagent_environment
+  # SSH keys, as provided by the SSH Agent.
   #
   # Returns: [[bits, finger-print, file-path], ...]
   #
@@ -262,74 +261,8 @@ module Rye
   
   private 
   
-  # Start the SSH Agent locally. This is important
-  # primarily because Rye relies on it for SSH key
-  # management. If the agent doesn't start then 
-  # passwordless logins won't work. 
-  #
-  # This method starts an instances of ssh-agent
-  # and sets the appropriate environment so all
-  # local commands run by Rye will have access be aware
-  # of this instance of the agent too. 
-  #
-  # The equivalent commands on the shell are:
-  # 
-  #     $ ssh-agent -s
-  #     SSH_AUTH_SOCK=/tmp/ssh-tGvaOXIXSr/agent.12951; export SSH_AUTH_SOCK;
-  #     SSH_AGENT_PID=12952; export SSH_AGENT_PID;
-  #     $ SSH_AUTH_SOCK=/tmp/ssh-tGvaOXIXSr/agent.12951; export SSH_AUTH_SOCK;
-  #     $ SSH_AGENT_PID=12952; export SSH_AGENT_PID;
-  #
-  # NOTE: The OpenSSH library must be installed for this to work.
-  # 
-  def start_sshagent_environment
-    return if @@agent_env["SSH_AGENT_PID"]
-    lines = Rye.shell("ssh-agent", '-s') || []
-    lines.each do |line|
-      next unless line.index("echo").nil?
-      line = line.slice(0..(line.index(';')-1))
-      key, value = line.chomp.split( /=/ )
-      @@agent_env[key] = value
-    end
-    ENV["SSH_AUTH_SOCK"] = @@agent_env["SSH_AUTH_SOCK"]
-    ENV["SSH_AGENT_PID"] = @@agent_env["SSH_AGENT_PID"]
-    
-    Rye.shell("ssh-add") # Add the user's default keys
-    nil
-  end
-  
-  # Kill the local instance of the SSH Agent we started.
-  #
-  # Calls this command via the local shell:
-  #
-  #     $ ssh-agent -k
-  #
-  # which uses the SSH_AUTH_SOCK and SSH_AGENT_PID environment variables 
-  # to determine which ssh-agent to kill. 
-  #
-  def end_sshagent_environment
-    pid = @@agent_env["SSH_AGENT_PID"]
-    Rye.shell("ssh-agent", '-k') || []
-    #Rye.shell("kill", ['-9', pid]) if pid
-    @@agent_env.clear
-    nil
-  end
-  
   Rye.reload
   
-  unless Rye.sysinfo.os == :windows
-    begin
-      @@mutex.synchronize {                   # One thread only
-        start_sshagent_environment            # Run this now
-        at_exit { end_sshagent_environment }  # Run this before Ruby exits
-      }
-    rescue => ex
-      STDERR.puts "Error initializing the SSH Agent (is OpenSSH installed?):"
-      STDERR.puts ex.message
-      STDERR.puts ex.backtrace
-      exit 1
-    end
-  end
 end
 
 
