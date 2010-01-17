@@ -1,11 +1,11 @@
 RYE, CHANGES
 
-* TODO: file_append overwrites file
 
 #### 0.8.12 (2010-01-16) #############################
 
 * FIXED: Removed dependency on ssh-agent. Also fixes starting
   many instances of said executable. 
+* FIXED: file_append was overwriting when supplied a String (!)
 
 
 #### 0.8.11 (2009-10-30) #############################

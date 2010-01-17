@@ -150,12 +150,13 @@ module Rye;
     # it will be created. If +backup+ is specified, +filepath+ will be 
     # copied to +filepath-previous+ before appending. 
     def file_append(filepath, newcontent, backup=false)
+      content = StringIO.new
+      
       if self.file_exists?(filepath)
         self.cp filepath, "#{filepath}-previous" if backup
-        file_content = self.file_download filepath
+        content = self.file_download filepath
       end
-
-      content = StringIO.new
+      
       if newcontent.is_a?(StringIO)
         newcontent.rewind
         content.puts newcontent.read
