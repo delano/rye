@@ -94,7 +94,7 @@ module Rye
   end
   
   # Looks for private keys in +path+ and returns and Array of paths
-  # to the files it fines. Raises an Exception if path does not exist.
+  # to the files it finds. Raises an Exception if path does not exist.
   # If path is a file rather than a directory, it will check whether
   # that single file is a private key.
   def find_private_keys(path)
