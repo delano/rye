@@ -4569,6 +4569,14 @@
         	} else {
         		search_box.removeClassName('untouched');
         	}
+        	
+        	search_box.insert({
+        	  after: new Element('span', { 'class': 'clear_button' }).update('x').observe('click', function(e) {
+        	    e.stopPropagation()
+          	  search_box.setValue('')
+          	  search_box.focus()
+          	})
+          })
         });
         
         function searchInIndex(query) {

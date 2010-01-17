@@ -138,7 +138,7 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000128'>
+              <div class='method public-class' id='method-M000128'>
                 <a name='M000128'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
@@ -199,7 +199,7 @@
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000144'>
+              <div class='method public-instance' id='method-M000144'>
                 <a name='M000144'>      </a>
                 <div class='synopsis'>
                   <span class='name'>==</span>
@@ -218,7 +218,7 @@
                   <pre id='M000144-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 310</span>&#x000A;310:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)&#x000A;311:       <span class="ruby-ivar">@rye_host</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">host</span>&#x000A;312:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000129'>
+              <div class='method public-instance' id='method-M000129'>
                 <a name='M000129'>      </a>
                 <div class='synopsis'>
                   <span class='name'>[]</span>
@@ -251,7 +251,7 @@
                   <pre id='M000129-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 163</span>&#x000A;163:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">fpath</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;164:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'/'</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>&#x000A;165:         <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">fpath</span>&#x000A;166:       <span class="ruby-keyword kw">else</span>&#x000A;167:         <span class="ruby-comment cmt"># Append to non-absolute paths</span>&#x000A;168:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_current_working_directory</span>&#x000A;169:           <span class="ruby-identifier">newpath</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@rye_current_working_directory</span>, <span class="ruby-identifier">fpath</span>)&#x000A;170:           <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">newpath</span>&#x000A;171:         <span class="ruby-keyword kw">else</span>&#x000A;172:           <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">fpath</span>&#x000A;173:         <span class="ruby-keyword kw">end</span>&#x000A;174:       <span class="ruby-keyword kw">end</span>&#x000A;175:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;CWD: #{@rye_current_working_directory}&quot;</span>&#x000A;176:       <span class="ruby-keyword kw">self</span>&#x000A;177:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000140'>
+              <div class='method public-instance' id='method-M000140'>
                 <a name='M000140'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_env</span>
@@ -263,7 +263,7 @@
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000135'>
+              <div class='method public-instance' id='method-M000135'>
                 <a name='M000135'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_key</span>
@@ -275,7 +275,7 @@
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000134'>
+              <div class='method public-instance' id='method-M000134'>
                 <a name='M000134'>      </a>
                 <div class='synopsis'>
                   <span class='name'>add_keys</span>
@@ -301,7 +301,7 @@
                   <pre id='M000134-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 226</span>&#x000A;226:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_keys</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">additional_keys</span>)&#x000A;227:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">os</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:windows</span>&#x000A;228:         <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:keys</span>] <span class="ruby-operator">||=</span> []&#x000A;229:         <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:keys</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">additional_keys</span>.<span class="ruby-identifier">flatten</span>&#x000A;230:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:keys</span>]&#x000A;231:       <span class="ruby-keyword kw">end</span>&#x000A;232:       <span class="ruby-identifier">additional_keys</span> = [<span class="ruby-identifier">additional_keys</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []&#x000A;233:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">additional_keys</span>.<span class="ruby-identifier">empty?</span>&#x000A;234:       <span class="ruby-identifier">ret</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-identifier">additional_keys</span>) &#x000A;235:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>)&#x000A;236:         <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;ssh-add exit_code: #{ret.exit_code}&quot;</span> &#x000A;237:         <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;ssh-add stdout: #{ret.stdout}&quot;</span>&#x000A;238:         <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;ssh-add stderr: #{ret.stderr}&quot;</span>&#x000A;239:       <span class="ruby-keyword kw">end</span>&#x000A;240:       <span class="ruby-keyword kw">self</span> <span class="ruby-comment cmt"># MUST RETURN self</span>&#x000A;241:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000148'>
+              <div class='method public-instance' id='method-M000148'>
                 <a name='M000148'>      </a>
                 <div class='synopsis'>
                   <span class='name'>authorize_keys_local</span>
@@ -322,7 +322,7 @@
                   <pre id='M000148-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 432</span>&#x000A;432:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authorize_keys_local</span>&#x000A;433:       <span class="ruby-identifier">added_keys</span> = []&#x000A;434:       <span class="ruby-identifier">ssh_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">home</span>, <span class="ruby-value str">'.ssh'</span>)&#x000A;435:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>&#x000A;436:         <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;# Public key for #{path}&quot;</span>&#x000A;437:         <span class="ruby-identifier">k</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_ssh2</span>&#x000A;438:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir</span> <span class="ruby-identifier">ssh_dir</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-identifier">ssh_dir</span>&#x000A;439:         &#x000A;440:         <span class="ruby-identifier">authkeys_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">ssh_dir</span>, <span class="ruby-value str">'authorized_keys'</span>)&#x000A;441:         &#x000A;442:         <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Writing to #{authkeys_file}&quot;</span>&#x000A;443:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">authkeys_file</span>, <span class="ruby-value str">'a'</span>)       {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-node">&quot;#{$/}#{k}&quot;</span>) }&#x000A;444:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{authkeys_file}2&quot;</span>, <span class="ruby-value str">'a'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-node">&quot;#{$/}#{k}&quot;</span>) }&#x000A;445:         &#x000A;446:         <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">os</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:windows</span>&#x000A;447:           <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-identifier">:chmod</span>, <span class="ruby-value str">'700'</span>, <span class="ruby-identifier">ssh_dir</span>)&#x000A;448:           <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-identifier">:chmod</span>, <span class="ruby-value str">'0600'</span>, <span class="ruby-identifier">authkeys_file</span>)&#x000A;449:           <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-identifier">:chmod</span>, <span class="ruby-value str">'0600'</span>, <span class="ruby-node">&quot;#{authkeys_file}2&quot;</span>)&#x000A;450:         <span class="ruby-keyword kw">end</span>&#x000A;451:         &#x000A;452:         <span class="ruby-identifier">added_keys</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>&#x000A;453:       <span class="ruby-keyword kw">end</span>&#x000A;454:       <span class="ruby-identifier">added_keys</span>&#x000A;455:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000147'>
+              <div class='method public-instance' id='method-M000147'>
                 <a name='M000147'>      </a>
                 <div class='synopsis'>
                   <span class='name'>authorize_keys_remote</span>
@@ -349,7 +349,7 @@
                   <pre id='M000147-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 373</span>&#x000A;373:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authorize_keys_remote</span>(<span class="ruby-identifier">other_user</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;374:       <span class="ruby-identifier">this_user</span> = <span class="ruby-identifier">other_user</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:user</span>]&#x000A;375:       <span class="ruby-identifier">added_keys</span> = []&#x000A;376:       <span class="ruby-identifier">rap</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)&#x000A;377:       &#x000A;378:       <span class="ruby-identifier">prevdir</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_working_directory</span>&#x000A;379:       &#x000A;380:       <span class="ruby-comment cmt"># The homedir path is important b/c this is where we're going to </span>&#x000A;381:       <span class="ruby-comment cmt"># look for the .ssh directory. That's where auth love is stored.</span>&#x000A;382:       <span class="ruby-identifier">homedir</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">guess_user_home</span>(<span class="ruby-identifier">this_user</span>)&#x000A;383:       &#x000A;384:       <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">homedir</span>)&#x000A;385:         <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_exit_code</span>(<span class="ruby-value">1</span>)&#x000A;386:         <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_stderr</span>(<span class="ruby-node">&quot;Path does not exist: #{homedir}&quot;</span>)&#x000A;387:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rap</span>)&#x000A;388:       <span class="ruby-keyword kw">end</span>&#x000A;389:       &#x000A;390:       <span class="ruby-comment cmt"># Let's go into the user's home directory that we now know exists.</span>&#x000A;391:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cd</span> <span class="ruby-identifier">homedir</span>&#x000A;392:       &#x000A;393:       <span class="ruby-identifier">files</span> = [<span class="ruby-value str">'.ssh/authorized_keys'</span>, <span class="ruby-value str">'.ssh/authorized_keys2'</span>]&#x000A;394:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">akey_path</span><span class="ruby-operator">|</span>&#x000A;395:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_exists?</span>(<span class="ruby-identifier">akey_path</span>)&#x000A;396:           <span class="ruby-comment cmt"># TODO: Make Rye::Cmd.incremental_backup</span>&#x000A;397:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">akey_path</span>, <span class="ruby-node">&quot;#{akey_path}-previous&quot;</span>)&#x000A;398:           <span class="ruby-identifier">authorized_keys</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_download</span>(<span class="ruby-node">&quot;#{homedir}/#{akey_path}&quot;</span>)&#x000A;399:         <span class="ruby-keyword kw">end</span>&#x000A;400:         <span class="ruby-identifier">authorized_keys</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>&#x000A;401:         &#x000A;402:         <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>&#x000A;403:           &#x000A;404:           <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;# Adding public key for #{path}&quot;</span>&#x000A;405:           <span class="ruby-identifier">k</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_ssh2</span>&#x000A;406:           <span class="ruby-identifier">authorized_keys</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">k</span>&#x000A;407:         <span class="ruby-keyword kw">end</span>&#x000A;408:         &#x000A;409:         <span class="ruby-comment cmt"># Remove duplicate authorized keys</span>&#x000A;410:         <span class="ruby-identifier">authorized_keys</span>.<span class="ruby-identifier">rewind</span>&#x000A;411:         <span class="ruby-identifier">uniqlines</span> = <span class="ruby-identifier">authorized_keys</span>.<span class="ruby-identifier">readlines</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">join</span>&#x000A;412:         <span class="ruby-identifier">authorized_keys</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uniqlines</span>)&#x000A;413:         <span class="ruby-comment cmt"># We need to rewind so that all of the StringIO object is uploaded</span>&#x000A;414:         <span class="ruby-identifier">authorized_keys</span>.<span class="ruby-identifier">rewind</span>&#x000A;415:         &#x000A;416:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">:p</span>, <span class="ruby-identifier">:m</span>, <span class="ruby-value str">'700'</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">akey_path</span>))&#x000A;417:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_upload</span>(<span class="ruby-identifier">authorized_keys</span>, <span class="ruby-node">&quot;#{homedir}/#{akey_path}&quot;</span>)&#x000A;418:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">chmod</span>(<span class="ruby-value str">'0600'</span>, <span class="ruby-identifier">akey_path</span>)&#x000A;419:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">chown</span>(<span class="ruby-identifier">:R</span>, <span class="ruby-identifier">this_user</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">akey_path</span>))&#x000A;420:       <span class="ruby-keyword kw">end</span>&#x000A;421:       &#x000A;422:       <span class="ruby-comment cmt"># And let's return to the directory we came from.</span>&#x000A;423:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cd</span> <span class="ruby-identifier">prevdir</span>&#x000A;424:       &#x000A;425:       <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_exit_code</span>(<span class="ruby-value">0</span>)&#x000A;426:       <span class="ruby-identifier">rap</span>&#x000A;427:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000154'>
+              <div class='method public-instance' id='method-M000154'>
                 <a name='M000154'>      </a>
                 <div class='synopsis'>
                   <span class='name'>batch</span>
@@ -380,7 +380,7 @@
                   <pre id='M000154-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 532</span>&#x000A;532:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">batch</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;533:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">instance_exec</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>&#x000A;534:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000130'>
+              <div class='method public-instance' id='method-M000130'>
                 <a name='M000130'>      </a>
                 <div class='synopsis'>
                   <span class='name'>cd</span>
@@ -399,7 +399,7 @@
                   <pre id='M000130-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 181</span>&#x000A;181:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cd</span>(<span class="ruby-identifier">fpath</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;182:       <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">fpath</span>])&#x000A;183:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000160'>
+              <div class='method public-instance' id='method-M000160'>
                 <a name='M000160'>      </a>
                 <div class='synopsis'>
                   <span class='name'>connect</span>
@@ -429,7 +429,7 @@
                   <pre id='M000160-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 612</span>&#x000A;612:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">reconnect</span>=<span class="ruby-keyword kw">true</span>)&#x000A;613:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">NoHost</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_host</span>&#x000A;614:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_ssh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reconnect</span>&#x000A;615:       <span class="ruby-identifier">disconnect</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_ssh</span> &#x000A;616:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Opening connection to #{@rye_host} as #{@rye_opts[:user]}&quot;</span>&#x000A;617:       <span class="ruby-identifier">highline</span> = <span class="ruby-constant">HighLine</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment cmt"># Used for password prompt</span>&#x000A;618:       <span class="ruby-identifier">retried</span> = <span class="ruby-value">0</span>&#x000A;619:       <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:keys</span>].<span class="ruby-identifier">compact!</span>  <span class="ruby-comment cmt"># A quick fix in Windows. TODO: Why is there a nil?</span>&#x000A;620:       <span class="ruby-keyword kw">begin</span>&#x000A;621:         <span class="ruby-ivar">@rye_ssh</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span>.<span class="ruby-identifier">start</span>(<span class="ruby-ivar">@rye_host</span>, <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:user</span>], <span class="ruby-ivar">@rye_opts</span> <span class="ruby-operator">||</span> {}) &#x000A;622:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">HostKeyMismatch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;623:         <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>&#x000A;624:         <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\a&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_info</span> <span class="ruby-comment cmt"># Ring the bell</span>&#x000A;625:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">highline</span>.<span class="ruby-identifier">ask</span>(<span class="ruby-value str">&quot;Continue? &quot;</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/\Ay|yes|sure|ya\z/i</span>)&#x000A;626:           <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:paranoid</span>] = <span class="ruby-keyword kw">false</span>&#x000A;627:           <span class="ruby-keyword kw">retry</span>&#x000A;628:         <span class="ruby-keyword kw">else</span>&#x000A;629:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">HostKeyMismatch</span>&#x000A;630:         <span class="ruby-keyword kw">end</span>&#x000A;631:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">AuthenticationFailed</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;632:         <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\a&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">retried</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@rye_info</span> <span class="ruby-comment cmt"># Ring the bell once</span>&#x000A;633:         <span class="ruby-identifier">retried</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>&#x000A;634:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">tty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">retried</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">3</span>&#x000A;635:           <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Passwordless login failed for #{@rye_opts[:user]}&quot;</span>&#x000A;636:           <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:password</span>] = <span class="ruby-identifier">highline</span>.<span class="ruby-identifier">ask</span>(<span class="ruby-value str">&quot;Password: &quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">q</span><span class="ruby-operator">|</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">echo</span> = <span class="ruby-value str">''</span> }&#x000A;637:           <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:auth_methods</span>] <span class="ruby-operator">||=</span> []&#x000A;638:           <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:auth_methods</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'password'</span>&#x000A;639:           <span class="ruby-keyword kw">retry</span>&#x000A;640:         <span class="ruby-keyword kw">else</span>&#x000A;641:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">AuthenticationFailed</span>&#x000A;642:         <span class="ruby-keyword kw">end</span>&#x000A;643:       <span class="ruby-keyword kw">end</span>&#x000A;644:       &#x000A;645:       <span class="ruby-comment cmt"># We add :auth_methods (a Net::SSH joint) to force asking for a</span>&#x000A;646:       <span class="ruby-comment cmt"># password if the initial (key-based) authentication fails. We</span>&#x000A;647:       <span class="ruby-comment cmt"># need to delete the key from @rye_opts otherwise it lingers until</span>&#x000A;648:       <span class="ruby-comment cmt"># the next connection (if we switch_user is called for example).</span>&#x000A;649:       <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:auth_methods</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:auth_methods</span>)&#x000A;650:       &#x000A;651:       <span class="ruby-keyword kw">self</span>&#x000A;652:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000119'>
+              <div class='method public-instance' id='method-M000119'>
                 <a name='M000119'>      </a>
                 <div class='synopsis'>
                   <span class='name'>current_umask</span>
@@ -447,7 +447,7 @@
                   <pre id='M000119-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 60</span>&#x000A;60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_umask</span>; <span class="ruby-ivar">@rye_current_umask</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000118'>
+              <div class='method public-instance' id='method-M000118'>
                 <a name='M000118'>      </a>
                 <div class='synopsis'>
                   <span class='name'>current_working_directory</span>
@@ -466,7 +466,7 @@
                   <pre id='M000118-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 57</span>&#x000A;57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_working_directory</span>; <span class="ruby-ivar">@rye_current_working_directory</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000121'>
+              <div class='method public-instance' id='method-M000121'>
                 <a name='M000121'>      </a>
                 <div class='synopsis'>
                   <span class='name'>debug</span>
@@ -479,7 +479,7 @@
                   <pre id='M000121-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 63</span>&#x000A;63:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug</span>; <span class="ruby-ivar">@rye_debug</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000117'>
+              <div class='method public-instance' id='method-M000117'>
                 <a name='M000117'>      </a>
                 <div class='synopsis'>
                   <span class='name'>disable_quiet_mode</span>
@@ -492,7 +492,7 @@
                   <pre id='M000117-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 54</span>&#x000A;54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disable_quiet_mode</span>; <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-keyword kw">false</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000114'>
+              <div class='method public-instance' id='method-M000114'>
                 <a name='M000114'>      </a>
                 <div class='synopsis'>
                   <span class='name'>disable_safe_mode</span>
@@ -505,7 +505,7 @@
                   <pre id='M000114-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 50</span>&#x000A;50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disable_safe_mode</span>; <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-keyword kw">false</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000161'>
+              <div class='method public-instance' id='method-M000161'>
                 <a name='M000161'>      </a>
                 <div class='synopsis'>
                   <span class='name'>disconnect</span>
@@ -521,10 +521,10 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000161-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000161-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 656</span>&#x000A;656:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disconnect</span>&#x000A;657:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_ssh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">closed?</span>&#x000A;658:       <span class="ruby-keyword kw">begin</span>&#x000A;659:         <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-value">3</span>) <span class="ruby-keyword kw">do</span>&#x000A;660:           <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">loop</span>(<span class="ruby-value">0</span><span class="ruby-value">.3</span>) { <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">busy?</span>; }&#x000A;661:         <span class="ruby-keyword kw">end</span>&#x000A;662:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SystemCallError</span>, <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;663:         <span class="ruby-identifier">error</span> <span class="ruby-value str">&quot;Disconnect timeout (was something still running?)&quot;</span>&#x000A;664:       <span class="ruby-keyword kw">end</span>&#x000A;665:       &#x000A;666:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Closing connection to #{@rye_ssh.host}&quot;</span>&#x000A;667:       <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">close</span>&#x000A;668:     <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000161-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 656</span>&#x000A;656:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disconnect</span>&#x000A;657:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_ssh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">closed?</span>&#x000A;658:       <span class="ruby-keyword kw">begin</span>&#x000A;659:         <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-value">10</span>) <span class="ruby-keyword kw">do</span>&#x000A;660:           <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">loop</span>(<span class="ruby-value">0</span><span class="ruby-value">.3</span>) { <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">busy?</span>; }&#x000A;661:         <span class="ruby-keyword kw">end</span>&#x000A;662:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SystemCallError</span>, <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>&#x000A;663:         <span class="ruby-identifier">error</span> <span class="ruby-value str">&quot;Disconnect timeout (was something still running?)&quot;</span>&#x000A;664:       <span class="ruby-keyword kw">end</span>&#x000A;665:       &#x000A;666:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Closing connection to #{@rye_ssh.host}&quot;</span>&#x000A;667:       <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">close</span>&#x000A;668:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000116'>
+              <div class='method public-instance' id='method-M000116'>
                 <a name='M000116'>      </a>
                 <div class='synopsis'>
                   <span class='name'>enable_quiet_mode</span>
@@ -537,7 +537,7 @@
                   <pre id='M000116-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 53</span>&#x000A;53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enable_quiet_mode</span>;  <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-keyword kw">true</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000113'>
+              <div class='method public-instance' id='method-M000113'>
                 <a name='M000113'>      </a>
                 <div class='synopsis'>
                   <span class='name'>enable_safe_mode</span>
@@ -550,7 +550,7 @@
                   <pre id='M000113-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 49</span>&#x000A;49:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enable_safe_mode</span>;  <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-keyword kw">true</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000122'>
+              <div class='method public-instance' id='method-M000122'>
                 <a name='M000122'>      </a>
                 <div class='synopsis'>
                   <span class='name'>error</span>
@@ -563,7 +563,7 @@
                   <pre id='M000122-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 64</span>&#x000A;64:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">error</span>; <span class="ruby-ivar">@rye_error</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000153'>
+              <div class='method public-instance' id='method-M000153'>
                 <a name='M000153'>      </a>
                 <div class='synopsis'>
                   <span class='name'>exception_hook</span>
@@ -587,7 +587,7 @@
                   <pre id='M000153-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 508</span>&#x000A;508:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exception_hook</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;509:       <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-identifier">klass</span>] = <span class="ruby-identifier">block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>&#x000A;510:       <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-identifier">klass</span>]&#x000A;511:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000127'>
+              <div class='method public-instance' id='method-M000127'>
                 <a name='M000127'>      </a>
                 <div class='synopsis'>
                   <span class='name'>exception_hook=</span>
@@ -605,7 +605,7 @@
                   <pre id='M000127-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 71</span>&#x000A;71:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exception_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_exception_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000150'>
+              <div class='method public-instance' id='method-M000150'>
                 <a name='M000150'>      </a>
                 <div class='synopsis'>
                   <span class='name'>execute</span>
@@ -617,7 +617,7 @@
                   </p>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000138'>
+              <div class='method public-instance' id='method-M000138'>
                 <a name='M000138'>      </a>
                 <div class='synopsis'>
                   <span class='name'>getenv</span>
@@ -642,7 +642,7 @@
                   <pre id='M000138-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 270</span>&#x000A;270:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getenv</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;271:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_getenv</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@rye_getenv</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">can?</span>(<span class="ruby-identifier">:env</span>)&#x000A;272:         <span class="ruby-identifier">vars</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">env</span> } <span class="ruby-keyword kw">rescue</span> []&#x000A;273:         <span class="ruby-identifier">vars</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nvpair</span><span class="ruby-operator">|</span> &#x000A;274:           <span class="ruby-comment cmt"># Parse &quot;GLORIA_HOME=/gloria/lives/here&quot; into a name/value</span>&#x000A;275:           <span class="ruby-comment cmt"># pair. The regexp ensures we split only at the 1st = sign</span>&#x000A;276:           <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">nvpair</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\A([\w_-]+?)=(.+)\z/</span>).<span class="ruby-identifier">flatten</span>&#x000A;277:           <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>&#x000A;278:         <span class="ruby-keyword kw">end</span>&#x000A;279:       <span class="ruby-keyword kw">end</span>&#x000A;280:       <span class="ruby-identifier">key</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-ivar">@rye_getenv</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>]&#x000A;281:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000146'>
+              <div class='method public-instance' id='method-M000146'>
                 <a name='M000146'>      </a>
                 <div class='synopsis'>
                   <span class='name'>guess_user_home</span>
@@ -663,7 +663,7 @@
                   <pre id='M000146-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 324</span>&#x000A;324:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">guess_user_home</span>(<span class="ruby-identifier">other_user</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;325:       <span class="ruby-identifier">this_user</span> = <span class="ruby-identifier">other_user</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:user</span>]&#x000A;326:       <span class="ruby-ivar">@rye_guessed_homes</span> <span class="ruby-operator">||=</span> {}&#x000A;327:       &#x000A;328:       <span class="ruby-comment cmt"># A simple cache. </span>&#x000A;329:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@rye_guessed_homes</span>[<span class="ruby-identifier">this_user</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_guessed_homes</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">this_user</span>)&#x000A;330:       &#x000A;331:       <span class="ruby-comment cmt"># Some junk to determine where user home directories are by default.</span>&#x000A;332:       <span class="ruby-comment cmt"># We're relying on the command &quot;useradd -D&quot; so this may not work on</span>&#x000A;333:       <span class="ruby-comment cmt"># different Linuxen and definitely won't work on Windows.</span>&#x000A;334:       <span class="ruby-comment cmt"># This code will be abstracted out once I find a decent home for it.</span>&#x000A;335:       <span class="ruby-comment cmt"># /etc/default/useradd, HOME=/home OR useradd -D</span>&#x000A;336:       <span class="ruby-comment cmt"># /etc/adduser.config, DHOME=/home OR ??</span>&#x000A;337:       <span class="ruby-identifier">user_defaults</span> = {}&#x000A;338:       <span class="ruby-identifier">ostmp</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">ostype</span>&#x000A;339:       <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">ostype</span>.<span class="ruby-identifier">to_s</span>&#x000A;340:       &#x000A;341:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;sunos&quot;</span>&#x000A;342:         <span class="ruby-comment cmt">#nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|</span>&#x000A;343:         <span class="ruby-comment cmt">#  n = 'HOME' if n == 'basedir'</span>&#x000A;344:         <span class="ruby-comment cmt">#  user_defaults[n.upcase] = v.strip</span>&#x000A;345:         <span class="ruby-comment cmt">#end</span>&#x000A;346:         <span class="ruby-comment cmt"># In Solaris, useradd -D says the default home path is /home</span>&#x000A;347:         <span class="ruby-comment cmt"># but that directory is not writable. See: http://bit.ly/IJDD0</span>&#x000A;348:         <span class="ruby-identifier">user_defaults</span>[<span class="ruby-value str">'HOME'</span>] = <span class="ruby-value str">'/export/home'</span>&#x000A;349:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;darwin&quot;</span>&#x000A;350:         <span class="ruby-identifier">user_defaults</span>[<span class="ruby-value str">'HOME'</span>] = <span class="ruby-value str">'/Users'</span>&#x000A;351:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;windows&quot;</span>&#x000A;352:         <span class="ruby-identifier">user_defaults</span>[<span class="ruby-value str">'HOME'</span>] = <span class="ruby-value str">'C:/Documents and Settings'</span>&#x000A;353:       <span class="ruby-keyword kw">else</span>&#x000A;354:         <span class="ruby-identifier">raw</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">useradd</span>(<span class="ruby-identifier">:D</span>) } <span class="ruby-keyword kw">rescue</span> [<span class="ruby-value str">&quot;HOME=/home&quot;</span>]&#x000A;355:         <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nv</span><span class="ruby-operator">|</span>&#x000A;356:           <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">nv</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\A([\w_-]+?)=(.+)\z/</span>).<span class="ruby-identifier">flatten</span>&#x000A;357:           <span class="ruby-identifier">user_defaults</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>&#x000A;358:         <span class="ruby-keyword kw">end</span>&#x000A;359:       <span class="ruby-keyword kw">end</span>&#x000A;360:       &#x000A;361:       <span class="ruby-ivar">@rye_guessed_homes</span>[<span class="ruby-identifier">this_user</span>] = <span class="ruby-node">&quot;#{user_defaults['HOME']}/#{this_user}&quot;</span>&#x000A;362:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000102'>
+              <div class='method public-instance' id='method-M000102'>
                 <a name='M000102'>      </a>
                 <div class='synopsis'>
                   <span class='name'>host</span>
@@ -676,7 +676,7 @@
                   <pre id='M000102-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 32</span>&#x000A;32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">host</span>; <span class="ruby-ivar">@rye_host</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000109'>
+              <div class='method public-instance' id='method-M000109'>
                 <a name='M000109'>      </a>
                 <div class='synopsis'>
                   <span class='name'>host=</span>
@@ -689,7 +689,7 @@
                   <pre id='M000109-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 42</span>&#x000A;42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">host=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_host</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000145'>
+              <div class='method public-instance' id='method-M000145'>
                 <a name='M000145'>      </a>
                 <div class='synopsis'>
                   <span class='name'>host_key</span>
@@ -707,7 +707,7 @@
                   <pre id='M000145-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 315</span>&#x000A;315:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">host_key</span>&#x000A;316:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;No host&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_host</span>&#x000A;317:       <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">remote_host_keys</span>(<span class="ruby-ivar">@rye_host</span>)&#x000A;318:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000137'>
+              <div class='method public-instance' id='method-M000137'>
                 <a name='M000137'>      </a>
                 <div class='synopsis'>
                   <span class='name'>impltype</span>
@@ -720,7 +720,7 @@
                   <pre id='M000137-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 255</span>&#x000A;255:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">impltype</span>&#x000A;256:       <span class="ruby-ivar">@rye_impltype</span>&#x000A;257:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000124'>
+              <div class='method public-instance' id='method-M000124'>
                 <a name='M000124'>      </a>
                 <div class='synopsis'>
                   <span class='name'>impltype=</span>
@@ -733,7 +733,7 @@
                   <pre id='M000124-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 67</span>&#x000A;67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">impltype=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_impltype</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000120'>
+              <div class='method public-instance' id='method-M000120'>
                 <a name='M000120'>      </a>
                 <div class='synopsis'>
                   <span class='name'>info</span>
@@ -746,7 +746,7 @@
                   <pre id='M000120-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 62</span>&#x000A;62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">info</span>; <span class="ruby-ivar">@rye_info</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000143'>
+              <div class='method public-instance' id='method-M000143'>
                 <a name='M000143'>      </a>
                 <div class='synopsis'>
                   <span class='name'>inspect</span>
@@ -759,7 +759,7 @@
                   <pre id='M000143-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 300</span>&#x000A;300:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>&#x000A;301:       <span class="ruby-value str">%q{#&lt;%s:%s name=%s cwd=%s umask=%s env=%s safe=%s opts=%s keys=%s&gt;}</span> <span class="ruby-operator">%</span> &#x000A;302:       [<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">host</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">nickname</span>,&#x000A;303:        <span class="ruby-ivar">@rye_current_working_directory</span>, <span class="ruby-ivar">@rye_current_umask</span>,&#x000A;304:        (<span class="ruby-ivar">@rye_current_environment_variables</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>).<span class="ruby-identifier">inspect</span>,&#x000A;305:        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">safe</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">opts</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">inspect</span>]&#x000A;306:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000158'>
+              <div class='method public-instance' id='method-M000158'>
                 <a name='M000158'>      </a>
                 <div class='synopsis'>
                   <span class='name'>instance_exec</span>
@@ -772,7 +772,7 @@
                   <pre id='M000158-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 578</span>&#x000A;578:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">instance_exec</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># !&gt; method redefined; discarding old instance_exec</span>&#x000A;579:         <span class="ruby-identifier">mname</span> = <span class="ruby-node">&quot;__instance_exec_#{Thread.current.object_id.abs}_#{object_id.abs}&quot;</span>&#x000A;580:         <span class="ruby-constant">InstanceExecHelper</span>.<span class="ruby-identifier">module_eval</span>{ <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">mname</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }&#x000A;581:         <span class="ruby-keyword kw">begin</span>&#x000A;582:           <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">mname</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;583:         <span class="ruby-keyword kw">ensure</span>&#x000A;584:           <span class="ruby-constant">InstanceExecHelper</span>.<span class="ruby-identifier">module_eval</span>{ <span class="ruby-identifier">undef_method</span>(<span class="ruby-identifier">mname</span>) } <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>&#x000A;585:         <span class="ruby-keyword kw">end</span>&#x000A;586:         <span class="ruby-identifier">ret</span>&#x000A;587:       <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000133'>
+              <div class='method public-instance' id='method-M000133'>
                 <a name='M000133'>      </a>
                 <div class='synopsis'>
                   <span class='name'>interactive_ssh</span>
@@ -800,7 +800,7 @@
                   <pre id='M000133-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 215</span>&#x000A;215:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">interactive_ssh</span>(<span class="ruby-identifier">run</span>=<span class="ruby-keyword kw">true</span>)&#x000A;216:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;interactive_ssh with keys: #{Rye.keys.inspect}&quot;</span>&#x000A;217:       <span class="ruby-identifier">run</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">tty?</span>      &#x000A;218:       <span class="ruby-identifier">cmd</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">prepare_command</span>(<span class="ruby-value str">&quot;ssh&quot;</span>, <span class="ruby-node">&quot;#{@rye_opts[:user]}@#{@rye_host}&quot;</span>)&#x000A;219:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">cmd</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">run</span>&#x000A;220:       <span class="ruby-identifier">system</span>(<span class="ruby-identifier">cmd</span>)&#x000A;221:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000141'>
+              <div class='method public-instance' id='method-M000141'>
                 <a name='M000141'>      </a>
                 <div class='synopsis'>
                   <span class='name'>keys</span>
@@ -818,7 +818,7 @@
                   <pre id='M000141-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 295</span>&#x000A;295:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">keys</span>; <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000149'>
+              <div class='method public-instance' id='method-M000149'>
                 <a name='M000149'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
@@ -837,7 +837,7 @@
                   <pre id='M000149-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 459</span>&#x000A;459:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;460:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_safe</span>&#x000A;461:         <span class="ruby-identifier">ex</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span>)&#x000A;462:         <span class="ruby-identifier">raise</span> <span class="ruby-identifier">ex</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_exception_hook</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">class</span>&#x000A;463:         <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>].<span class="ruby-identifier">call</span> <span class="ruby-identifier">ex</span>&#x000A;464:       <span class="ruby-keyword kw">else</span>&#x000A;465:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">nil?</span>&#x000A;466:           <span class="ruby-identifier">run_command</span> <span class="ruby-identifier">cmd</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>&#x000A;467:         <span class="ruby-keyword kw">else</span>&#x000A;468:           <span class="ruby-identifier">ex</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span>)&#x000A;469:           <span class="ruby-identifier">raise</span> <span class="ruby-identifier">ex</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rye_exception_hook</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">class</span>&#x000A;470:         <span class="ruby-keyword kw">end</span>&#x000A;471:       <span class="ruby-keyword kw">end</span>&#x000A;472:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000108'>
+              <div class='method public-instance' id='method-M000108'>
                 <a name='M000108'>      </a>
                 <div class='synopsis'>
                   <span class='name'>nickname</span>
@@ -850,7 +850,7 @@
                   <pre id='M000108-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 40</span>&#x000A;40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nickname</span>; <span class="ruby-ivar">@rye_nickname</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">host</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000112'>
+              <div class='method public-instance' id='method-M000112'>
                 <a name='M000112'>      </a>
                 <div class='synopsis'>
                   <span class='name'>nickname=</span>
@@ -863,7 +863,7 @@
                   <pre id='M000112-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 47</span>&#x000A;47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nickname=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_nickname</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000103'>
+              <div class='method public-instance' id='method-M000103'>
                 <a name='M000103'>      </a>
                 <div class='synopsis'>
                   <span class='name'>opts</span>
@@ -876,7 +876,7 @@
                   <pre id='M000103-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 33</span>&#x000A;33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opts</span>; <span class="ruby-ivar">@rye_opts</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000110'>
+              <div class='method public-instance' id='method-M000110'>
                 <a name='M000110'>      </a>
                 <div class='synopsis'>
                   <span class='name'>opts=</span>
@@ -889,7 +889,7 @@
                   <pre id='M000110-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 43</span>&#x000A;43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opts=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_opts</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000136'>
+              <div class='method public-instance' id='method-M000136'>
                 <a name='M000136'>      </a>
                 <div class='synopsis'>
                   <span class='name'>ostype</span>
@@ -908,7 +908,7 @@
                   <pre id='M000136-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 247</span>&#x000A;247:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ostype</span>&#x000A;248:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@rye_ostype</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rye_ostype</span> <span class="ruby-comment cmt"># simple cache</span>&#x000A;249:       <span class="ruby-identifier">os</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">uname</span>.<span class="ruby-identifier">first</span> } <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>&#x000A;250:       <span class="ruby-identifier">os</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">'unknown'</span>&#x000A;251:       <span class="ruby-identifier">os</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">os</span>.<span class="ruby-identifier">downcase</span>&#x000A;252:       <span class="ruby-ivar">@rye_ostype</span> = <span class="ruby-identifier">os</span>&#x000A;253:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000123'>
+              <div class='method public-instance' id='method-M000123'>
                 <a name='M000123'>      </a>
                 <div class='synopsis'>
                   <span class='name'>ostype=</span>
@@ -921,7 +921,7 @@
                   <pre id='M000123-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 66</span>&#x000A;66:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ostype=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_ostype</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000159'>
+              <div class='method public-instance' id='method-M000159'>
                 <a name='M000159'>      </a>
                 <div class='synopsis'>
                   <span class='name'>post_command_hook</span>
@@ -946,7 +946,7 @@
                   <pre id='M000159-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 597</span>&#x000A;597:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">post_command_hook</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;598:       <span class="ruby-ivar">@rye_post_command_hook</span> = <span class="ruby-identifier">block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>&#x000A;599:       <span class="ruby-ivar">@rye_post_command_hook</span>&#x000A;600:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000126'>
+              <div class='method public-instance' id='method-M000126'>
                 <a name='M000126'>      </a>
                 <div class='synopsis'>
                   <span class='name'>post_command_hook=</span>
@@ -959,7 +959,7 @@
                   <pre id='M000126-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 69</span>&#x000A;69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">post_command_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_post_command_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000152'>
+              <div class='method public-instance' id='method-M000152'>
                 <a name='M000152'>      </a>
                 <div class='synopsis'>
                   <span class='name'>pre_command_hook</span>
@@ -980,7 +980,7 @@
                   <pre id='M000152-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 487</span>&#x000A;487:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pre_command_hook</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;488:       <span class="ruby-ivar">@rye_pre_command_hook</span> = <span class="ruby-identifier">block</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>&#x000A;489:       <span class="ruby-ivar">@rye_pre_command_hook</span>&#x000A;490:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000125'>
+              <div class='method public-instance' id='method-M000125'>
                 <a name='M000125'>      </a>
                 <div class='synopsis'>
                   <span class='name'>pre_command_hook=</span>
@@ -993,7 +993,7 @@
                   <pre id='M000125-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 68</span>&#x000A;68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pre_command_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_pre_command_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000151'>
+              <div class='method public-instance' id='method-M000151'>
                 <a name='M000151'>      </a>
                 <div class='synopsis'>
                   <span class='name'>preview_command</span>
@@ -1011,7 +1011,7 @@
                   <pre id='M000151-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 476</span>&#x000A;476:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">preview_command</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;477:       <span class="ruby-identifier">prep_args</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>).<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)&#x000A;478:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000107'>
+              <div class='method public-instance' id='method-M000107'>
                 <a name='M000107'>      </a>
                 <div class='synopsis'>
                   <span class='name'>quiet</span>
@@ -1024,7 +1024,7 @@
                   <pre id='M000107-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 39</span>&#x000A;39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">quiet</span>; <span class="ruby-ivar">@rye_quiet</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000157'>
+              <div class='method public-instance' id='method-M000157'>
                 <a name='M000157'>      </a>
                 <div class='synopsis'>
                   <span class='name'>quietly</span>
@@ -1050,7 +1050,7 @@
                   <pre id='M000157-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 565</span>&#x000A;565:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">quietly</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;566:       <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_quiet</span>&#x000A;567:       <span class="ruby-identifier">enable_quiet_mode</span>&#x000A;568:       <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">instance_exec</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>&#x000A;569:       <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-identifier">previous_state</span>&#x000A;570:       <span class="ruby-identifier">ret</span>&#x000A;571:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000104'>
+              <div class='method public-instance' id='method-M000104'>
                 <a name='M000104'>      </a>
                 <div class='synopsis'>
                   <span class='name'>safe</span>
@@ -1063,7 +1063,7 @@
                   <pre id='M000104-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 34</span>&#x000A;34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">safe</span>; <span class="ruby-ivar">@rye_safe</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000115'>
+              <div class='method public-instance' id='method-M000115'>
                 <a name='M000115'>      </a>
                 <div class='synopsis'>
                   <span class='name'>safe?</span>
@@ -1076,7 +1076,7 @@
                   <pre id='M000115-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 51</span>&#x000A;51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">safe?</span>; <span class="ruby-ivar">@rye_safe</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000156'>
+              <div class='method public-instance' id='method-M000156'>
                 <a name='M000156'>      </a>
                 <div class='synopsis'>
                   <span class='name'>safely</span>
@@ -1094,7 +1094,7 @@
                   <pre id='M000156-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 549</span>&#x000A;549:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">safely</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;550:       <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_safe</span>&#x000A;551:       <span class="ruby-identifier">enable_safe_mode</span>&#x000A;552:       <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">instance_exec</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>&#x000A;553:       <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-identifier">previous_state</span>&#x000A;554:       <span class="ruby-identifier">ret</span>&#x000A;555:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000139'>
+              <div class='method public-instance' id='method-M000139'>
                 <a name='M000139'>      </a>
                 <div class='synopsis'>
                   <span class='name'>setenv</span>
@@ -1113,7 +1113,7 @@
                   <pre id='M000139-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 285</span>&#x000A;285:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setenv</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)&#x000A;286:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Adding env: #{n}=#{v}&quot;</span>&#x000A;287:       <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;prev value: #{@rye_getenv[n]}&quot;</span>&#x000A;288:       <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>&#x000A;289:       (<span class="ruby-ivar">@rye_current_environment_variables</span> <span class="ruby-operator">||=</span> {})[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>&#x000A;290:       <span class="ruby-keyword kw">self</span>&#x000A;291:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000106'>
+              <div class='method public-instance' id='method-M000106'>
                 <a name='M000106'>      </a>
                 <div class='synopsis'>
                   <span class='name'>stash</span>
@@ -1131,7 +1131,7 @@
                   <pre id='M000106-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 38</span>&#x000A;38:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stash</span>; <span class="ruby-ivar">@rye_stash</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000111'>
+              <div class='method public-instance' id='method-M000111'>
                 <a name='M000111'>      </a>
                 <div class='synopsis'>
                   <span class='name'>stash=</span>
@@ -1149,7 +1149,7 @@
                   <pre id='M000111-source'>    <span class="ruby-comment cmt"># File lib/rye/box.rb, line 46</span>&#x000A;46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stash=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_stash</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000132'>
+              <div class='method public-instance' id='method-M000132'>
                 <a name='M000132'>      </a>
                 <div class='synopsis'>
                   <span class='name'>switch_user</span>
@@ -1179,7 +1179,7 @@
                   <pre id='M000132-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 201</span>&#x000A;201:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">switch_user</span>(<span class="ruby-identifier">newuser</span>)&#x000A;202:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newuser</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">to_s</span>&#x000A;203:       <span class="ruby-ivar">@rye_opts</span> <span class="ruby-operator">||=</span> {}&#x000A;204:       <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">newuser</span>&#x000A;205:       <span class="ruby-identifier">disconnect</span>&#x000A;206:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000142'>
+              <div class='method public-instance' id='method-M000142'>
                 <a name='M000142'>      </a>
                 <div class='synopsis'>
                   <span class='name'>to_s</span>
@@ -1197,7 +1197,7 @@
                   <pre id='M000142-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 298</span>&#x000A;298:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>; <span class="ruby-value str">'%s@rye_%s'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">user</span>, <span class="ruby-ivar">@rye_host</span>]; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000131'>
+              <div class='method public-instance' id='method-M000131'>
                 <a name='M000131'>      </a>
                 <div class='synopsis'>
                   <span class='name'>umask=</span>
@@ -1216,7 +1216,7 @@
                   <pre id='M000131-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 187</span>&#x000A;187:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">umask=</span>(<span class="ruby-identifier">val</span>=<span class="ruby-value str">'0022'</span>)&#x000A;188:       <span class="ruby-ivar">@rye_current_umask</span> = <span class="ruby-identifier">val</span>&#x000A;189:       <span class="ruby-keyword kw">self</span>&#x000A;190:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000155'>
+              <div class='method public-instance' id='method-M000155'>
                 <a name='M000155'>      </a>
                 <div class='synopsis'>
                   <span class='name'>unsafely</span>
@@ -1237,7 +1237,7 @@
                   <pre id='M000155-source'>     <span class="ruby-comment cmt"># File lib/rye/box.rb, line 540</span>&#x000A;540:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unsafely</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;541:       <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_safe</span>&#x000A;542:       <span class="ruby-identifier">disable_safe_mode</span>&#x000A;543:       <span class="ruby-identifier">ret</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">instance_exec</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>&#x000A;544:       <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-identifier">previous_state</span>&#x000A;545:       <span class="ruby-identifier">ret</span>&#x000A;546:     <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000105'>
+              <div class='method public-instance' id='method-M000105'>
                 <a name='M000105'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user</span>
