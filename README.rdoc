@@ -227,6 +227,7 @@ If you find one let me know!
 * Kalin Harvey (http://rely.ca)
 * Rush[http://github.com/adamwiggins/rush] and Capistrano[http://github.com/jamis/capistrano/blob/master/lib/capistrano/shell.rb] for the inspiration.
 * Mike Cline for giving the okay to use the Rye name. 
+* Justin Case (http://github.com/justincase/) for fixes
 
 
 == More Info
