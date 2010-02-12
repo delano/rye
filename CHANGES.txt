@@ -1,5 +1,10 @@
 RYE, CHANGES
 
+TODO: Fix "rye authorize" for remote root user
+
+#### 0.8.13 (2010-02-12) #############################
+
+* CHANGE: Remove hanna dependency
 
 #### 0.8.12 (2010-01-16) #############################
 
