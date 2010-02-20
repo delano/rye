@@ -4,7 +4,7 @@ TODO: Fix "rye authorize" for remote root user
 
 #### 0.8.13 (2010-02-12) #############################
 
-* CHANGE: Remove hanna dependency
+* CHANGE: Remove hanna dependency [Diego Elio 'Flameeyes' Pettenò]
 
 #### 0.8.12 (2010-01-16) #############################
 
