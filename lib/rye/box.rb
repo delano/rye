@@ -362,7 +362,8 @@ module Rye
       elsif ostmp == "windows"
         user_defaults['HOME'] = 'C:/Documents and Settings'
       else
-        raw = self.quietly { useradd(:D) } rescue ["HOME=/home"]
+        raw = self.quietly { useradd(:D) } rescue []
+        raw = ["HOME=/home"] if raw.nil? || raw.empty?
         raw.each do |nv|
           n, v = nv.scan(/\A([\w_-]+?)=(.+)\z/).flatten
           user_defaults[n] = v
@@ -390,7 +391,8 @@ module Rye
       
       # The homedir path is important b/c this is where we're going to 
       # look for the .ssh directory. That's where auth love is stored.
-      homedir = self.guess_user_home(this_user)
+      homedir = self.quietly { pwd }.first
+      homedir ||= self.guess_user_home(this_user)
       
       unless self.file_exists?(homedir)
         rap.add_exit_code(1)
