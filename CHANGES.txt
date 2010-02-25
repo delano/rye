@@ -1,8 +1,6 @@
 RYE, CHANGES
 
-TODO: Fix "rye authorize" for remote root user
-
-#### 0.8.14 (2010-02-??) #############################
+#### 0.8.14 (2010-02-25) #############################
 
 * FIXED: rye authorize command now logs in to grab the actual homedir.
 * CHANGED: Support user@host syntax for rye authorize command
