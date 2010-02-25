@@ -51,24 +51,22 @@ command :ssh do |obj|
 end
 
 about "Add your public keys to one or more remote machines"
-usage "rye authorize [-u username] host"
-option :u, :user, String, "Username"
+usage "rye authorize [username@]host"
 argv :hostname
 command :authorize do |obj|
   raise "You must specify a host" unless obj.argv.hostname
-  user = Rye.sysinfo.user
-  
-  opts = { :debug => nil, :auth_methods => %w(publickey hostbased) }
-  opts[:user] = obj.option.user if obj.option.user
-  opts[:user] ||= user
-  
   obj.argv.each do |hostname|
-    
-    puts "Authorizing #{opts[:user]}@#{hostname}"
-    rbox = Rye::Box.new(hostname, opts)
-    puts "Added public keys for: ", rbox.authorize_keys_remote
-    puts "Now try: " << "ssh #{opts[:user]}@#{hostname}"
-    
+    if hostname.index('@')
+      user, host = *hostname.split('@')
+    else
+      user, host = user = Rye.sysinfo.user, hostname
+    end
+    opts = { :debug => nil, :user => user, :auth_methods => %w(publickey hostbased) }
+    puts "Authorizing #{user}@#{host}"
+    rbox = Rye::Box.new(host, opts)
+    rbox.authorize_keys_remote
+    puts "Added public keys for: ", Rye.keys
+    puts "Now try: " << "ssh #{user}@#{host}"
   end
   
 end

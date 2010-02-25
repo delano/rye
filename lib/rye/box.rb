@@ -403,7 +403,7 @@ module Rye
       # Let's go into the user's home directory that we now know exists.
       self.cd homedir
       
-      files = ['.ssh/authorized_keys', '.ssh/authorized_keys2']
+      files = ['.ssh/authorized_keys', '.ssh/authorized_keys2', '.ssh/identity']
       files.each do |akey_path|
         if self.file_exists?(akey_path)
           # TODO: Make Rye::Cmd.incremental_backup
