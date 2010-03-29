@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.8.15 (2010-03-29) #############################
+
+* FIXED: "rake" was mapped to "sudo". Closes GH-8 [mjmsmith]
+
 #### 0.8.14 (2010-02-25) #############################
 
 * FIXED: rye authorize command now logs in to grab the actual homedir.

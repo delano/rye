@@ -43,7 +43,7 @@ module Rye;
     def tar(*args); __allow('tar', args); end
     
     #def kill(*args); __allow('kill', args); end
-    def rake(*args); __allow('sudo', args); end
+    def rake(*args); __allow('rake', args); end
     def sudo(*args); __allow('sudo', args); end
     def grep(*args); __allow('grep', args); end
     def date(*args); __allow('date', args); end
