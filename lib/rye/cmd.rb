@@ -30,6 +30,7 @@ module Rye;
     def sh(*args); __allow('sh', args); end
     def df(*args); __allow('df', args); end
     def du(*args); __allow('du', args); end
+    def hg(*args); __allow('hg', args); end
     
     def env; __allow "env"; end
     def rye(*args); __allow "rye", args; end
