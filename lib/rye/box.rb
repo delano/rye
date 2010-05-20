@@ -986,6 +986,7 @@ module Rye
         files.each do |file|
           debug file.to_s
           prev = ""
+          STDOUT.puts "transfering #{file}" unless @rye_quiet
           transfers << scp.send(direction, file, target, :recursive => recursive)  do |ch, n, s, t|
             line = "%-50s %6d/%-6d bytes" % [n, s, t]
             spaces = (prev.size > line.size) ? ' '*(prev.size - line.size) : ''
