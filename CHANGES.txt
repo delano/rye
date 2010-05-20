@@ -5,10 +5,12 @@ RYE, CHANGES
 * FIXED: authorize_keys_remote was using incorrect home directory
 * CHANGE: More descriptive output for file transfers
 
+
 #### 0.8.16 (2010-05-19) #############################
 
 * ADDED: Updated whitelist: hg, ab, siege, stella, ln, su
 * CHANGE: file transfers now print the file path to STDOUT unless in quiet mode
+
 
 #### 0.8.15 (2010-03-29) #############################
 
