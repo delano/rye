@@ -30,6 +30,9 @@ module Rye;
     def sh(*args); __allow('sh', args); end
     def df(*args); __allow('df', args); end
     def du(*args); __allow('du', args); end
+    def su(*args); __allow('su', args); end
+    def ln(*args); __allow('ln', args); end
+    def ab(*args); __allow('ab', args); end
     def hg(*args); __allow('hg', args); end
     
     def env; __allow "env"; end
@@ -70,8 +73,10 @@ module Rye;
     def unzip(*args); __allow('unzip', args); end
     def bzip2(*args); __allow('bzip2', args); end
     def which(*args); __allow('which', args); end
+    def siege(*args); __allow("siege", args); end
     
     def umount(*args); __allow("umount", args); end
+    def stella(*args); __allow('stella', args); end
     def uptime(*args); __allow("uptime", args); end
     def python(*args); __allow('python', args); end
     def gunzip(*args); __allow('gunzip', args); end
