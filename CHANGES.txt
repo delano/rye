@@ -1,8 +1,9 @@
 RYE, CHANGES
 
-#### 0.8.16 (2010-??-??) #############################
+#### 0.8.16 (2010-05-19) #############################
 
-* ADDED: "hg" command to the whitelist.
+* ADDED: Updated whitelist: hg, ab, siege, stella, ln, su
+* CHANGE: file transfers now print the file path to STDOUT unless in quiet mode
 
 #### 0.8.15 (2010-03-29) #############################
 

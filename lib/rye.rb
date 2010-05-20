@@ -42,7 +42,7 @@ require 'esc'
 module Rye
   extend self
   
-  VERSION = "0.8.15".freeze unless defined?(VERSION)
+  VERSION = "0.8.16".freeze unless defined?(VERSION)
   
   @@sysinfo = nil
   @@agent_env = Hash.new  # holds ssh-agent env vars
