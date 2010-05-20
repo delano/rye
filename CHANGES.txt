@@ -1,5 +1,10 @@
 RYE, CHANGES
 
+#### 0.8.17 (2010-05-19) #############################
+
+* FIXED: authorize_keys_remote was using incorrect home directory
+* CHANGE: More descriptive output for file transfers
+
 #### 0.8.16 (2010-05-19) #############################
 
 * ADDED: Updated whitelist: hg, ab, siege, stella, ln, su

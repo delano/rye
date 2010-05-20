@@ -383,16 +383,20 @@ module Rye
     # of Rye::Box in a multithreaded situation. 
     #
     def authorize_keys_remote(other_user=nil)
-      this_user = other_user || opts[:user]
+      if other_user.nil?
+        this_user = opts[:user]
+        homedir = self.quietly { pwd }.first
+      else
+        this_user = other_user 
+        # The homedir path is important b/c this is where we're going to 
+        # look for the .ssh directory. That's where auth love is stored.
+        homedir = self.guess_user_home(this_user)
+      end
+      
       added_keys = []
       rap = Rye::Rap.new(self)
       
       prevdir = self.current_working_directory
-      
-      # The homedir path is important b/c this is where we're going to 
-      # look for the .ssh directory. That's where auth love is stored.
-      homedir = self.quietly { pwd }.first
-      homedir ||= self.guess_user_home(this_user)
       
       unless self.file_exists?(homedir)
         rap.add_exit_code(1)
@@ -986,7 +990,11 @@ module Rye
         files.each do |file|
           debug file.to_s
           prev = ""
-          STDOUT.puts "transfering #{file}" unless @rye_quiet
+          unless @rye_quiet
+            tmp_file = file.is_a?(StringIO) ? '<string>' : file
+            tmp_target = target.is_a?(StringIO) ? '<string>' : target
+            STDOUT.puts "[#{direction}] #{tmp_file} #{tmp_target}" 
+          end
           transfers << scp.send(direction, file, target, :recursive => recursive)  do |ch, n, s, t|
             line = "%-50s %6d/%-6d bytes" % [n, s, t]
             spaces = (prev.size > line.size) ? ' '*(prev.size - line.size) : ''
