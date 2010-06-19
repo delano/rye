@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.8.18 (2010-06-19) #############################
+
+* FIXED: Authentication would never succeed if the first password attempt failed.
+
 #### 0.8.17 (2010-05-19) #############################
 
 * FIXED: authorize_keys_remote was using incorrect home directory
