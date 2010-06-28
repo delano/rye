@@ -50,6 +50,7 @@ module Rye
     
     def opts; @opts; end
     def user; (@opts || {})[:user]; end
+    def root?; user.to_s == "root" end
     
     # * +boxes+ one or more boxes. Rye::Box objects will be added directly 
     # to the set. Hostnames will be used to create new instances of Rye::Box 

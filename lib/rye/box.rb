@@ -33,6 +33,11 @@ module Rye
     def opts; @rye_opts; end
     def safe; @rye_safe; end
     def user; @rye_user; end
+    def root?; user.to_s == "root" end
+    
+    def enable_sudo; @rye_sudo = true; end
+    def disable_sudo; @rye_sudo = false; end
+    def sudo?; @rye_sudo == true end
     
     # Returns the current value of the stash +@rye_stash+
     def stash; @rye_stash; end
@@ -84,6 +89,7 @@ module Rye
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
     # * :getenv => pre-fetch +host+ environment variables? (default: true)
     # * :password => the user's password (ignored if there's a valid private key)
+    # * :sudo => Run all commands via sudo (default: false)
     #
     # NOTE: +opts+ can also contain any parameter supported by 
     # Net::SSH.start that is not already mentioned above.
@@ -121,7 +127,7 @@ module Rye
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
-      @rye_quiet = @rye_opts.delete(:quiet)
+      @rye_quiet, @rye_sudo = @rye_opts.delete(:quiet), @rye_opts.delete(:sudo)
       
       # Just in case someone sends a true value rather than IO object
       @rye_debug = STDERR if @rye_debug == true
@@ -430,10 +436,16 @@ module Rye
         # We need to rewind so that all of the StringIO object is uploaded
         authorized_keys.rewind
         
-        self.mkdir(:p, :m, '700', File.dirname(akey_path))
-        self.file_upload(authorized_keys, "#{homedir}/#{akey_path}")
-        self.chmod('0600', akey_path)
-        self.chown(:R, this_user.to_s, File.dirname(akey_path))
+        full_path = "#{homedir}/#{akey_path}"
+        temp_path = "/tmp/rye-#{user}-#{File.basename(akey_path)}"
+        
+        sudo do
+          mkdir :p, :m, '700', File.dirname(akey_path)
+          file_upload authorized_keys, temp_path
+          mv temp_path, full_path
+          chmod '0600', akey_path
+          chown :R, this_user.to_s, File.dirname(akey_path)
+        end
       end
       
       # And let's return to the directory we came from.
@@ -585,6 +597,24 @@ module Rye
       ret = self.instance_exec *args, &block
       @rye_quiet = previous_state
       ret
+    end
+    
+    # Like batch, except it enables sudo mode before executing the block.
+    # If the user is already root, this has no effect. Otherwise all 
+    # commands executed in the block will run via sudo. 
+    #
+    # If no block is specified then sudo is called just like a regular
+    # command.
+    def sudo(*args, &block)
+      if block.nil?
+        __allow('sudo', args);
+      else
+        previous_state = @rye_sudo
+        enable_sudo
+        ret = self.instance_exec *args, &block
+        @rye_sudo = previous_state
+        ret  
+      end
     end
     
     # instance_exec for Ruby 1.8 written by Mauricio Fernandez
@@ -816,7 +846,7 @@ module Rye
     def prep_args(*args)
       args = args.flatten.compact
       args = args.first.to_s.split(/\s+/) if args.size == 1
-      cmd = args.shift
+      cmd = sudo? ? :sudo : args.shift
       
       # Symbols to switches. :l -> -l, :help -> --help
       args.collect! do |a|

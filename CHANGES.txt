@@ -1,5 +1,11 @@
 RYE, CHANGES
 
+#### 0.8.19 (2010-06-28) #############################
+
+* ADDED: Rye::Box#root?
+* ADDED: Better sudo handling. 
+
+
 #### 0.8.18 (2010-06-19) #############################
 
 * FIXED: Authentication would never succeed if the first password attempt failed.

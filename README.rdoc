@@ -166,7 +166,6 @@ The return value is a Rye::Rap object (just like with Rye::Box) so you have acce
     ret.class            # => Rye::Rap
 
 
-
 == About Safe-Mode
 
 In safe-mode:
