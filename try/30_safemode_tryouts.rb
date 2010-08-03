@@ -1,78 +1,86 @@
-group "Safe Mode"
-library :rye, 'lib'
+require 'rye'
 
-tryouts "Basics" do
-  drill "enabled by default" do
-    Rye::Box.new.safe?
-  end  
-  drill "can be diabled when created", false do
-    r = Rye::Box.new 'localhost', :safe => false
-    r.safe?
-  end
-  drill "can be disabled on the fly", false do
-    r = Rye::Box.new
-    r.disable_safe_mode
-    r.safe?
-  end
-end
+## enabled by default
+Rye::Box.new.safe?
+#=> true
 
-tryouts "Safe Mode Enabled" do
-  dream :exception, Rye::CommandNotFound
-  drill "cannot execute arbitrary commands" do
-    r = Rye::Box.new 'localhost'
-    r.execute '/bin/ls'
-  end
-  
-  dream :exception, Rye::CommandNotFound
-  drill "cannot remove files" do
-    r = Rye::Box.new 'localhost'
-    file = "/tmp/tryouts-#{rand.to_s}"
-    r.touch file
-    stash :file_exists, r.file_exists?(file)
-    r.rm file
-  end
-  
-  dream :exception, Rye::CommandError
-  drill "can use file globs" do
-    r = Rye::Box.new 'localhost'
-    r.ls '/bin/**'
-  end
-  
-  dream :exception, Rye::CommandError
-  drill "can use a tilda" do
-    r = Rye::Box.new 'localhost'
-    r.ls '~'
-  end
-end
+## can be diabled when created
+r = Rye::Box.new 'localhost', :safe => false
+r.safe?
+#=> false
 
-tryouts "Safe Mode Disabled" do
-  dream :empty?, false
-  drill "can execute arbitrary commands" do
-    r = Rye::Box.new 'localhost', :safe => false
-    r.execute '/bin/ls'
-  end
-  
-  drill "can remove files", false do
-    r = Rye::Box.new 'localhost', :safe => false
-    file = "/tmp/tryouts-#{rand.to_s}"
-    r.touch file
-    stash :file_exists, r.file_exists?(file)
-    r.rm file
-    r.file_exists? file
-  end
-  
-  dream :empty?, false
-  drill "can use file globs" do
-    r = Rye::Box.new 'localhost', :safe => false
-    r.ls '/bin/**'
-  end
-  
-  dream :empty?, false
-  drill "can use a tilda" do
-    r = Rye::Box.new 'localhost', :safe => false
-    r.ls '~'
-  end
+## can be disabled on the fly
+r = Rye::Box.new
+r.disable_safe_mode
+r.safe?
+#=> false
+
+## cannot execute arbitrary commands" do
+begin
+  r = Rye::Box.new 'localhost'
+  r.execute '/bin/ls'
+rescue Rye::CommandNotFound
+  :success
 end
+#=> :success
+  
+## cannot remove files
+begin
+  r = Rye::Box.new 'localhost'
+  file = "/tmp/tryouts-#{rand.to_s}"
+  r.touch file
+  #p [:file_exists, r.file_exists?(file)]
+  r.rm file
+rescue Rye::CommandNotFound
+  :success
+end
+#=> :success
+
+## can use file globs
+begin
+  r = Rye::Box.new 'localhost'
+  r.ls '/bin/**'
+rescue Rye::CommandError
+  :success
+end
+#=> :success
+  
+## can use a tilda
+begin
+  r = Rye::Box.new 'localhost'
+  r.ls '~'
+  rescue Rye::CommandError
+    :success
+  end
+#=> :success
+
+## can execute arbitrary commands
+r = Rye::Box.new 'localhost', :safe => false
+ret = r.execute '/bin/ls'
+ret.empty?
+#=> false
+
+## can remove files
+r = Rye::Box.new 'localhost', :safe => false
+file = "/tmp/tryouts-#{rand.to_s}"
+r.touch file
+#p [:file_exists, r.file_exists?(file)]
+r.rm file
+r.file_exists? file
+#=> false
+
+## can use file globs
+r = Rye::Box.new 'localhost', :safe => false
+ret = r.ls '/bin/**'
+ret.empty?
+#=> false
+
+## can use a tilda" do
+r = Rye::Box.new 'localhost', :safe => false
+ret = r.ls '~'
+ret.empty?
+#=> false
+
 
 
 

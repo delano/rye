@@ -1,55 +1,44 @@
-
-group "Basics"
-library :rye, 'lib'
-
-tryouts "Rye::Box" do
-  
-  drill "a Rye::Box instance defaults to localhost", 'localhost' do
-    lbox = Rye::Box.new
-    lbox.host
-  end
-  
-  drill "can add commands", [false, true] do
-    lbox = Rye::Box.new
-    initially = lbox.can? :rm
-    Rye::Cmd.add_command :rm
-    ret = [initially, lbox.can?(:rm)]
-  end
-  
-  drill "can remove commands", false do
-    lbox = Rye::Box.new
-    Rye::Cmd.remove_command :rm
-    lbox.can?(:rm)
-  end
-  
-  dream :class, Rye::Rap
-  drill "returns a Rye::Rap object" do
-    Rye::Box.new.uptime
-  end
-  
-  dream `echo canadian`.chomp
-  drill "returns the same stuff as backticks" do
-    Rye::Box.new.echo("canadian").first
-  end
-  
-  drill "starts in the home directory", ENV['HOME'] do
-    lbox = Rye::Box.new.pwd.first
-  end
-  
-end
+require 'rye'
 
 
-tryouts "Environment variables" do
-  
-  drill "can get remote environment variables", true do
-    lbox = Rye::Box.new
-    File.exists? lbox.getenv['HOME']
-  end
-  
-  drill "can set an environment variable", 'whiskey' do
-    lbox = Rye::Box.new
-    lbox.setenv( 'TIPPLE', 'whiskey')
-    lbox.getenv[ 'TIPPLE' ]
-  end
-  
-end
+## a Rye::Box instance defaults to localhost
+lbox = Rye::Box.new
+lbox.host
+#=> 'localhost'
+
+## can add commands
+lbox = Rye::Box.new
+initially = lbox.can? :rm
+Rye::Cmd.add_command :rm
+ret = [initially, lbox.can?(:rm)]
+#=> [false, true]
+
+## can remove commands
+lbox = Rye::Box.new
+Rye::Cmd.remove_command :rm
+lbox.can?(:rm)
+#=> false
+
+## returns a Rye::Rap object
+box = Rye::Box.new
+box.uptime.class
+#=> Rye::Rap
+
+## returns the same stuff as backticks
+Rye::Box.new.echo("canadian").first
+#=> `echo canadian`.chomp
+
+## starts in the home directory
+lbox = Rye::Box.new.pwd.first
+#=> ENV['HOME']
+
+## can get remote environment variables
+lbox = Rye::Box.new
+File.exists? lbox.getenv['HOME']
+#=> true
+
+## can set an environment variable
+lbox = Rye::Box.new
+lbox.setenv( 'TIPPLE', 'whiskey')
+lbox.getenv[ 'TIPPLE' ]
+#=> 'whiskey'
