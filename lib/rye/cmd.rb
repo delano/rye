@@ -220,11 +220,10 @@ module Rye;
       ret
     end
     
-    #--   
-    #def file_modify(filepath, regexp, replace=nil, &block)
-    #  raise "File not found: #{filepath}" unless self.file_exists?(filepath)
-    #end
-    #++
+    def file_modify(filepath, regexp, replace=nil)
+      raise "File not found: #{filepath}" unless file_exists?(filepath)
+      sed :i, "s/#{regexp}/#{replace}/", filepath
+    end
     
     # Does +path+ from the current working directory?
     def file_exists?(path)

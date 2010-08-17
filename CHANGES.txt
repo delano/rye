@@ -2,7 +2,7 @@ RYE, CHANGES
 
 #### 0.8.20 (2010-08-17) #############################
 
-* ADDED: string_append, template_write, template_upload
+* ADDED: string_append, template_write, template_upload, file_modify
 
 #### 0.8.19 (2010-06-28) #############################
 
