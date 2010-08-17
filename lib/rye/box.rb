@@ -1043,8 +1043,6 @@ module Rye
           end
         end
         transfers.each { |t| t.wait }   # Run file transfers in parallel
-        pinfo (' '*prev.size) << "\r"
-        info $/
       end
       
       target.is_a?(StringIO) ? target : nil

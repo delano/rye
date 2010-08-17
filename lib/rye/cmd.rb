@@ -34,6 +34,7 @@ module Rye;
     def ln(*args); __allow('ln', args); end
     def ab(*args); __allow('ab', args); end
     def hg(*args); __allow('hg', args); end
+    def xz(*args); __allow('xz', args); end
     
     def env; __allow "env"; end
     def rye(*args); __allow "rye", args; end
@@ -45,6 +46,7 @@ module Rye;
     def awk(*args); __allow('awk', args); end
     def cat(*args); __allow('cat', args); end
     def tar(*args); __allow('tar', args); end
+    def try(*args); __allow('tar', args); end
     
     #def kill(*args); __allow('kill', args); end
     def rake(*args); __allow('rake', args); end
@@ -61,6 +63,8 @@ module Rye;
     def make(*args); __allow('make', args); end
     def wget(*args); __allow('wget', args); end
     def curl(*args); __allow('curl', args); end
+    def dpkg(*args); __allow('dpkg', args); end
+    def unxz(*args); __allow('unxz', args); end
     
     def mount(*args); __allow("mount", args); end
     def sleep(*args); __allow("sleep", args); end
@@ -73,6 +77,7 @@ module Rye;
     def bzip2(*args); __allow('bzip2', args); end
     def which(*args); __allow('which', args); end
     def siege(*args); __allow("siege", args); end
+    def stella(*args); __allow("stella", args); end
     
     def umount(*args); __allow("umount", args); end
     def stella(*args); __allow('stella', args); end
@@ -84,8 +89,10 @@ module Rye;
     def getconf(*args); __allow('getconf', args); end
     def history(*args); __allow('history', args); end
     def rudy_s3(*args); __allow('rudy-s3', args); end
+    def aptitude(*args); __allow('aptitude', args); end
     def printenv(*args); __allow('printenv', args); end
     def hostname(*args); __allow('hostname', args); end
+    def ldconfig(*args); __allow('ldconfig', args); end
     def rudy_ec2(*args); __allow('rudy-ec2', args); end
     def rudy_sdb(*args); __allow('rudy-sdb', args); end
     def configure(*args); __allow('./configure', args); end
@@ -216,13 +223,19 @@ module Rye;
       end
       paths << remote_path
       ret = self.file_upload *paths
-      templates.each { |template| template.delete }
+      templates.each { |template| 
+        tmp_path = File.join(remote_path, File.basename(template.path))
+        if file_exists?(tmp_path)
+          mv tmp_path, File.join(remote_path, template.basename)
+        end
+        template.delete 
+      }
       ret
     end
     
     def file_modify(filepath, regexp, replace=nil)
       raise "File not found: #{filepath}" unless file_exists?(filepath)
-      sed :i, "s/#{regexp}/#{replace}/", filepath
+      sed :i, :r, "s/#{regexp}/#{replace}/", filepath
     end
     
     # Does +path+ from the current working directory?

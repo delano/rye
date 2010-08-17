@@ -267,9 +267,11 @@ module Rye
       @src, @template = src, ERB.new(src)
     end
     def path
-      @tf = Tempfile.new basename
-      @tf.write @result
-      @tf.close
+      if @tf.nil?
+        @tf = Tempfile.new basename
+        @tf.write @result
+        @tf.close
+      end
       @tf.path
     end
     def delete
