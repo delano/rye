@@ -260,10 +260,23 @@ module Rye
   end
   
   class Tpl
-    attr_reader :src
-    def initialize(src)
+    attr_reader :src, :result, :basename
+    def initialize(src, basename='rye-template')
+      @basename = basename
       src = src.to_s
       @src, @template = src, ERB.new(src)
+    end
+    def path
+      @tf = Tempfile.new basename
+      @tf.write @result
+      @tf.close
+      @tf.path
+    end
+    def delete
+      File.delete(@tf.path) if File.exists?(@tf.path)
+    end
+    def result!(binding)
+      @result = result(binding)
     end
     def result(binding)
       @template.result(binding)

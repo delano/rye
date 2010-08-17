@@ -193,17 +193,31 @@ module Rye;
       self.file_upload content, filepath
     end
     
+    
+    def template_write(filepath, template)
+      template_upload template, filepath
+    end
+    
     # Parse a template and upload that as a file to remote_path.
-    def template_write(template, remote_path)
-      if StringIO === template
-        template.rewind
-        template = template.read
-      elsif String === template && File.exists?(template)
-        template = File.read(template) 
+    def template_upload(*paths)
+      remote_path = paths.pop
+      templates = []
+      paths.collect! do |path|      
+        if StringIO === path
+          path.rewind
+          template = Rye::Tpl.new(path.read, "inline-template")
+        elsif String === template && File.exists?(template)
+          template = Rye::Tpl.new(File.read(path), File.basename(path))
+        else
+          template = Rye::Tpl.new(path, "inline-template")
+        end
+        template.result!(binding)
+        templates << template
+        template.path
       end
-      template = Rye::Tpl.new(template)
-      content = StringIO.new template.result(binding)
-      ret = self.file_upload content, remote_path
+      paths << remote_path
+      ret = self.file_upload *paths
+      templates.each { |template| template.delete }
       ret
     end
     

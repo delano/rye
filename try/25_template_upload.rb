@@ -15,13 +15,13 @@ File.exists? @local_sandbox
 @lbox.file_exists? @local_sandbox
 #=> true
 
-## upload template
-@lbox.template_write "<%= uname :a %>", @rendered
+## write template
+@lbox.template_write @rendered, "<%= uname :a %>"
 @lbox.file_exists? @rendered
 #=> true
 
-## upload template with vars
-@lbox.template_write "<%= uname :a %>", @rendered
+## upload multiple templates
+@lbox.template_upload "Templ1", @local_sandbox
 @lbox.file_exists? @rendered
 #=> true
 

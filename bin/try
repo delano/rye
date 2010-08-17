@@ -220,7 +220,7 @@ rbox.rm(:r, :f, dir_download)
 template = StringIO.new("Can we use templates? <%= 'Yes!' %>")
 rbox.mkdir dir_upload
 
-rbox.template_write(template, "#{dir_upload}/template.txt")
+rbox.template_write("#{dir_upload}/template.txt", template)
 
 p rbox.ls(dir_upload)                      # => [template.txt]
 p rbox.cat("#{dir_upload}/template.txt")   # => "Can we use templates? Yes!"
