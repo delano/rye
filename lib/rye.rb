@@ -259,6 +259,18 @@ module Rye
      str
   end
   
+  class Tpl
+    attr_reader :src
+    def initialize(src)
+      src = src.to_s
+      @src, @template = src, ERB.new(src)
+    end
+    def result(binding)
+      @template.result(binding)
+    end
+    def to_s() src end
+  end
+  
   private 
   
   Rye.reload

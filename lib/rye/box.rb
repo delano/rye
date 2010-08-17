@@ -35,6 +35,9 @@ module Rye
     def user; @rye_user; end
     def root?; user.to_s == "root" end
     
+    def templates; @rye_templates; end
+    def templates?; !@rye_templates.nil?; end 
+    
     def enable_sudo; @rye_sudo = true; end
     def disable_sudo; @rye_sudo = false; end
     def sudo?; @rye_sudo == true end
@@ -89,6 +92,7 @@ module Rye
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
     # * :getenv => pre-fetch +host+ environment variables? (default: true)
     # * :password => the user's password (ignored if there's a valid private key)
+    # * :templates => the template engine to use for uploaded files. One of: :erb (default)
     # * :sudo => Run all commands via sudo (default: false)
     #
     # NOTE: +opts+ can also contain any parameter supported by 
@@ -114,6 +118,7 @@ module Rye
         :debug => nil,
         :error => STDERR,
         :getenv => true,
+        :templates => :erb,
         :quiet => false
       }.merge(opts)
       
@@ -128,6 +133,11 @@ module Rye
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
       @rye_quiet, @rye_sudo = @rye_opts.delete(:quiet), @rye_opts.delete(:sudo)
+      @rye_templates = @rye_opts.delete(:templates)
+      
+      unless @rye_templates.nil?
+        require @rye_templates.to_s   # should be :erb
+      end
       
       # Just in case someone sends a true value rather than IO object
       @rye_debug = STDERR if @rye_debug == true
@@ -573,6 +583,7 @@ module Rye
       @rye_safe = previous_state
       ret
     end
+    alias_method :wildly, :unsafely
     
     # See unsafely (except in reverse)
     def safely(*args, &block)
@@ -978,6 +989,7 @@ module Rye
         end
         
       elsif direction == :upload
+#        p :UPLOAD, @rye_templates
         raise "Cannot upload to a StringIO object" if target.is_a?(StringIO)
         if files.size == 1
           target = self.getenv['HOME'] || guess_user_home
@@ -989,7 +1001,9 @@ module Rye
         # Expand fileglobs (e.g. path/*.rb becomes [path/1.rb, path/2.rb]).
         # This should happen after checking files.size to determine the target
         unless @rye_safe
-          files.collect! { |file| Dir.glob File.expand_path(file) }
+          files.collect! { |file| 
+            file.is_a?(StringIO) ? file : Dir.glob(File.expand_path(file)) 
+          }
           files.flatten! 
         end
       end
@@ -1004,7 +1018,6 @@ module Rye
         end
       end
       
-      info "#{direction.to_s} to: #{target}"
       debug "FILES: " << files.join(', ')
       
       # Make sure the target directory exists. We can do this only when
@@ -1020,15 +1033,11 @@ module Rye
         files.each do |file|
           debug file.to_s
           prev = ""
-          unless @rye_quiet
-            tmp_file = file.is_a?(StringIO) ? '<string>' : file
-            tmp_target = target.is_a?(StringIO) ? '<string>' : target
-            STDOUT.puts "[#{direction}] #{tmp_file} #{tmp_target}" 
-          end
+          line = nil
           transfers << scp.send(direction, file, target, :recursive => recursive)  do |ch, n, s, t|
             line = "%-50s %6d/%-6d bytes" % [n, s, t]
             spaces = (prev.size > line.size) ? ' '*(prev.size - line.size) : ''
-            pinfo "%s %s \r" % [line, spaces] # update line: "file: sent/total"
+            pinfo "[%s] %s %s %s" % [direction, line, spaces, s == t ? "\n" : "\r"]   # update line: "file: sent/total"
             @rye_info.flush if @rye_info        # make sure every line is printed
             prev = line
           end

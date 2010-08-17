@@ -94,8 +94,7 @@ module Rye;
     # WINDOWS
     #++
     def dir(*args); __allow('cmd', args); end
-    
-    
+        
     # Transfer files to a machine via Net::SCP. 
     # * +paths+ is an Array of files to upload. The last element is the 
     # directory to upload to. If uploading a single file, the last element
@@ -149,11 +148,20 @@ module Rye;
       net_scp_transfer!(:upload, StringIO.new(str), remote_path)
     end
     alias_method :str_upload, :string_upload
-      
     
+    # Shorthand for +file_append('remote/path', StringIO.new('file content'))+
+    #
+    # Appends the content of the String +str+ to +remote_path+. Returns nil
+    def string_append(filepath, newcontent, backup=false)
+      file_append(remote_path, StringIO.new(str), backup)
+    end
+    alias_method :str_upload, :string_upload
+        
     # Append +newcontent+ to remote +filepath+. If the file doesn't exist
     # it will be created. If +backup+ is specified, +filepath+ will be 
     # copied to +filepath-previous+ before appending. 
+    #
+    # NOTE: Not recommended for large files. It downloads the contents.
     def file_append(filepath, newcontent, backup=false)
       content = StringIO.new
       
@@ -183,6 +191,20 @@ module Rye;
       content = StringIO.new
       content.puts newcontent
       self.file_upload content, filepath
+    end
+    
+    # Parse a template and upload that as a file to remote_path.
+    def template_write(template, remote_path)
+      if StringIO === template
+        template.rewind
+        template = template.read
+      elsif String === template && File.exists?(template)
+        template = File.read(template) 
+      end
+      template = Rye::Tpl.new(template)
+      content = StringIO.new template.result(binding)
+      ret = self.file_upload content, remote_path
+      ret
     end
     
     #--   

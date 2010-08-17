@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+# encoding: UTF-8
 
 # Rye -- A working example
 #
@@ -82,7 +83,7 @@ rbox = Rye::Box.new('localhost')
 rbox.add_keys('/private/key/path')   # Specify additional private keys
 
 # There's currently no rye900 command
-p rbox.commands.member?('rye9000')   # => false
+p rbox.command?('rye9000')   # => false
 
 # But we can add our own commands to the Rye::Cmd class. They 
 # automatically become available to all Rye::Box objects.
@@ -97,7 +98,7 @@ end
 
 # We can now run rye9000 (with arguments)
 p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
-p rbox.commands.member?('rye9000')   # => true
+p rbox.command?('rye9000')           # => true
 
 
 puts %Q(
@@ -172,10 +173,10 @@ puts %Q(
 #   EXAMPLE 6 -- FILE TRANSFERS
 #)
 
-dir_upload = "#{Rye.sysinfo.tmpdir}/rye-upload/"
-dir_download = "#{Rye.sysinfo.tmpdir}/rye-download/"
+dir_upload = "#{Rye.sysinfo.tmpdir}rye-upload"
+dir_download = "#{Rye.sysinfo.tmpdir}rye-download"
 
-rbox = Rye::Box.new("localhost", :info => false)
+rbox = Rye::Box.new("localhost", :info => STDOUT)
 
 # Rye ships without an rm method (for safety!). Here 
 # we add the rm method only to this instance of rbox.
@@ -201,7 +202,33 @@ p filecontent.read
 
 puts %Q(
 # ------------------------------------------------------------------
-#   EXAMPLE 7 -- LOCAL PROCESSES
+#   EXAMPLE 7 -- FILE TRANSFERS w/ VARIABLE INTERPOLATION
+#)
+
+dir_upload = "#{Rye.sysinfo.tmpdir}rye-upload"
+dir_download = "#{Rye.sysinfo.tmpdir}rye-download"
+
+rbox = Rye::Box.new("localhost", :info => STDOUT)
+
+# Rye ships without an rm method (for safety!). Here 
+# we add the rm method only to this instance of rbox.
+def rbox.rm(*args); __allow('rm', args); end
+
+rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
+rbox.rm(:r, :f, dir_download)
+
+template = StringIO.new("Can we use templates? <%= 'Yes!' %>")
+rbox.mkdir dir_upload
+
+rbox.template_write(template, "#{dir_upload}/template.txt")
+
+p rbox.ls(dir_upload)                      # => [template.txt]
+p rbox.cat("#{dir_upload}/template.txt")   # => "Can we use templates? Yes!"
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 8 -- LOCAL PROCESSES
 #)
 
 p Rye.shell :uptime
