@@ -206,10 +206,9 @@ module Rye;
         if StringIO === path
           path.rewind
           template = Rye::Tpl.new(path.read, "inline-template")
-        elsif String === template && File.exists?(template)
+        elsif String === path
+          raise "No such file: #{Dir.pwd}/#{path}" unless File.exists?(path)
           template = Rye::Tpl.new(File.read(path), File.basename(path))
-        else
-          template = Rye::Tpl.new(path, "inline-template")
         end
         template.result!(binding)
         templates << template
