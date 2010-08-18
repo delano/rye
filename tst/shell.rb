@@ -3,7 +3,7 @@ require 'net/ssh'
 #
 # For channel requests, see SSH_MSG_CHANNEL_REQUEST messages
 # in http://www.snailbook.com/docs/connection.txt
-DEBUG = false
+DEBUG = true
 
 module Rye
   class Box
@@ -14,9 +14,31 @@ module Rye
 
     def start_session_state(channel)
       debug :start_session, channel[:handler]
-      #channel.send_data("stty -echo\n")
-      #channel[:state] = :ignore_response
-      channel[:state] = :await_response
+      channel.send_data("unset PS1; stty -echo\n")
+      channel[:state] = :ignore_response
+    end
+    
+    def ignore_response_state(channel)
+      debug :ignore_response, channel[:handler]
+      @ignore_response_counter ||= 0
+      if channel[:buffer].available > 0
+        @await_response_counter = 0
+        channel[:buffer].read
+        channel[:state] = :process
+      elsif @ignore_response_counter > 2
+        @await_response_counter = 0
+        channel[:state] = :process
+      end
+      @ignore_response_counter += 1
+    end
+    
+    def process_state(channel)
+      debug :process, channel[:handler]
+      if channel[:block]
+        channel[:state] = :run_block
+      else
+        channel[:state] = :await_input
+      end
     end
     
     def send_data_state(channel)
@@ -84,26 +106,13 @@ module Rye
       channel.eof!
     end
     
-    def ignore_response_state(channel)
-      debug :ignore_response, channel[:handler]
-      @ignore_response_counter ||= 0
-      if channel[:buffer].available > 0
-        @await_response_counter = 0
-        channel[:buffer].read
-        channel[:state] = :await_input
-      elsif @ignore_response_counter > 2
-        @await_response_counter = 0
-        channel[:state] = :await_input
-      end
-      @ignore_response_counter += 1
-    end
-    
+
     def await_response_state(channel)
       debug :await_response, channel[:handler]
       @await_response_counter ||= 0
       if channel[:buffer].available > 0
         channel[:state] = :read_input
-      elsif @await_response_counter > 10
+      elsif @await_response_counter > 20
         @await_response_counter = 0
         channel[:state] = :await_input
       end
@@ -111,37 +120,49 @@ module Rye
     end
     
     def run_block_state(channel)
-      instance_eval &channel[:block]
+      debug :run_block, channel[:handler]
+      channel[:state] = nil
+      blk = channel[:block]
       channel[:block] = nil
-      channel[:state] = :await_response
+      instance_eval &blk
+      channel[:state] = :exit
     end
 
     def command(name,*args, &blk)
+      debug :command, channel[:handler]
       return if @channel.eof?
-      channel[:block] = blk
       cmd = "%s %s" % [name, args.join(' ')]
-      channel.send_data("#{cmd}\n")
-      #channel.wait
-      channel[:state] = :await_response
+      debug :command, "Running: #{cmd}"
+      if self.pty && channel[:buffer].available
+        prompt = channel[:buffer].read 
+      end
+        channel.send_data("#{cmd}\n")
+        channel.connection.loop do 
+          break if channel[:buffer].available > 0
+          p :loop
+          channel.active?
+        end
+        ret = channel[:buffer].read
+        ret
       
-      #@channel[:buffer]
-      #   channel.exec "ls -l /home" do |ch, success|
-      #     if success
-      #       puts "command has begun executing..."
-      #       # this is a good place to hang callbacks like #on_data...
-      #     else
-      #       puts "alas! the command could not be invoked!"
-      #     end
-      #   end
     end
-
+    
+    def wait_for_command_state(channel)
+      debug :wait_for_command, channel[:handler]
+    end
+    
     def ls(*args) command(:ls, *args) end
+    def cat(*args) command(:cat, *args) end
+      def echo(*args) command(:echo, *args) end
+    def sudo(*args) command(:sudo, *args) end
     def date(*args) command(:date, *args) end
+    def uname(*args) command(:uname, *args) end
+    def chroot(*args) command(:chroot, *args) end
     def bash(*args, &blk) command(:bash, *args, &blk) end
     def exit(*args, &blk) command(:exit, *args, &blk) end
       
     attr_reader :session, :channel
-    attr_accessor :running
+    attr_accessor :running, :pty
     
     def connect(host, user, opts={})
       opts = {
@@ -155,51 +176,23 @@ module Rye
   
     def run(shell, &blk)
       
-      #@session.process(0.1, &busy_proc)
-      
-      #result = nil
-      #@channel = @session.open_channel do |ch|
-      #  ch.exec("irb") do |c, success|
-      #    ch.on_data { |c, data| puts data }
-      #    ch.on_extended_data { |c, type, data| puts data }
-      #    ch.on_close { |c| c.close }
-      #  end
-      #end
-      
+      puts "Running #{shell}"
       @channel = @session.open_channel do |channel|
-        channel.request_pty do |ch,success|
-          if success
-            
-          else
-            raise "pty request denied"
+        #if blk.nil?
+          channel.request_pty do |ch,success|
+            self.pty = success
+            raise "pty request denied" unless success
           end
-        end
+        #end
         channel.exec shell, &prep_channel
       end
       
+      channel[:block] = blk
       
-      @channel[:stack] ||= []
-      #@channel[:stack] << "require 'gibbler'"
-      #@channel[:stack] << "{}.gibbler"
-
-      #trap("INT") { 
-      #  p [:INT, @session.closed?, @channel.eof?]
-      #  #if channel[:state] == :await_input
-      #  @channel.eof!
-      #  @session.close unless @session.closed?
-      #}
-      #trap("INT") { 
-        #@channel.eof! unless @channel.eof?
-        #@session.close unless @session.closed?
-      #  @channel[:state] = :exit
-      #}
-
-      @session.loop(0.1) do
+      @session.loop(0.5) do
         break if !@channel.active?
         !@channel.eof?   # otherwise keep returning true
       end
-      
-      #puts @channel[:stderr], @channel[:exit_status]
       
     end
     
@@ -247,7 +240,7 @@ module Rye
           channel[:handler] = :on_process
           print channel[:stderr].read if channel[:stderr].available > 0
           begin
-            send("#{channel[:state]}_state", channel)
+            send("#{channel[:state]}_state", channel) unless channel[:state].nil?
           rescue Interrupt
             debug :await_input_interrupt
             channel[:state] = :exit
@@ -261,11 +254,17 @@ end
 begin
   puts $$
   rbox = Rye::Box.new
-  rbox.connect 'localhost', 'delano', :keys => []
-  rbox.run 'bash'
-  
-  #p rbox.channel[:exit], rbox.channel[:exit_signal]
-
+  rbox.connect 'ec2-184-72-169-231.compute-1.amazonaws.com', 'ubuntu', :verbose => :fatal, :keys => ['~/.ssh/key-us-east-1b-build-arch']
+  #rbox.run 'bash'
+  rbox.run 'bash' do
+    puts command("date")
+    p cat("/etc/issue")
+    command("SUDO_PS1=''")
+    puts sudo( 'chroot', '/mnt/archlinux-x86_64')
+    command("unset PS1;")
+    p cat("/etc/issue")
+  end
+  puts rbox.channel[:stderr] if rbox.channel[:stderr]
 end
 
 
