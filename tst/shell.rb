@@ -14,45 +14,41 @@ module Rye
 
     def start_session_state(channel)
       debug :start_session, channel[:handler]
-      channel.send_data("stty -echo\n")
-      channel[:state] = :ignore_response
+      #channel.send_data("stty -echo\n")
+      #channel[:state] = :ignore_response
+      channel[:state] = :await_response
     end
     
     def send_data_state(channel)
       debug :send_data, channel[:handler]
-      if channel[:stack].empty?
-        channel[:state] = :await_input
-      else
+      #if channel[:stack].empty?
+      #  channel[:state] = :await_input
+      #else
         cmd = channel[:stack].shift
-        return if cmd.nil?
         #return if cmd.strip.empty?
         debug :send_data, "calling #{cmd.inspect}"
         channel[:state] = :await_response
         channel.send_data("#{cmd}\n") unless channel.eof?
         #channel.exec("#{cmd}\n", &prep_channel) 
-      end
+      #end
     end
     
     def await_input_state(channel)
       debug :await_input, channel[:handler]
       
-      begin
         if channel[:buffer].available > 0
           channel[:state] = :read_input
         else
           ret = STDIN.gets
           if ret.nil?
             channel.eof!
+            channel[:state] = :exit
           else
             channel[:stack] << ret.chomp
             channel[:state] = :send_data
           end
         end
-      rescue Interrupt
-        debug :await_input, :interrupt
-        channel.eof!
-      end
-      
+        
     end
     
     def check_interactive_state(channel)
@@ -62,7 +58,6 @@ module Rye
     
     def read_input_state(channel)
       debug :read_input, channel[:handler]
-      
       if channel[:buffer].available > 0
         print channel[:buffer].read
         
@@ -76,8 +71,12 @@ module Rye
       else 
         channel[:state] = :await_response
       end
-
-      debug :read_input_end, "#{channel.object_id}, #{channel[:state]}"
+    end
+    
+    def exit_state(channel)
+      debug :exit_state, channel[:exit_status]
+      puts
+      channel.eof!
     end
     
     def handle_error_state(channel)
@@ -92,7 +91,7 @@ module Rye
         @await_response_counter = 0
         channel[:buffer].read
         channel[:state] = :await_input
-      elsif @ignore_response_counter > 10
+      elsif @ignore_response_counter > 2
         @await_response_counter = 0
         channel[:state] = :await_input
       end
@@ -118,7 +117,7 @@ module Rye
     end
 
     def command(name,*args, &blk)
-      
+      return if @channel.eof?
       channel[:block] = blk
       cmd = "%s %s" % [name, args.join(' ')]
       channel.send_data("#{cmd}\n")
@@ -189,10 +188,18 @@ module Rye
       #  @channel.eof!
       #  @session.close unless @session.closed?
       #}
+      #trap("INT") { 
+        #@channel.eof! unless @channel.eof?
+        #@session.close unless @session.closed?
+      #  @channel[:state] = :exit
+      #}
+
+      @session.loop(0.1) do
+        break if !@channel.active?
+        !@channel.eof?   # otherwise keep returning true
+      end
       
-      @session.loop(0.1)
-      
-      #puts @channel[:stderr], @channel[:exit]
+      #puts @channel[:stderr], @channel[:exit_status]
       
     end
     
@@ -239,7 +246,12 @@ module Rye
         channel.on_process                { 
           channel[:handler] = :on_process
           print channel[:stderr].read if channel[:stderr].available > 0
-          send("#{channel[:state]}_state", channel)
+          begin
+            send("#{channel[:state]}_state", channel)
+          rescue Interrupt
+            debug :await_input_interrupt
+            channel[:state] = :exit
+          end
         }
       end
     end
@@ -249,9 +261,19 @@ end
 begin
   puts $$
   rbox = Rye::Box.new
-  rbox.connect 'localhost', 'josh'
-  rbox.run 'sh'
+  rbox.connect 'localhost', 'delano', :keys => []
+  rbox.run 'bash'
   
   #p rbox.channel[:exit], rbox.channel[:exit_signal]
 
 end
+
+
+__END__
+http://tldp.org/LDP/abs/html/intandnonint.html
+case $- in
+*i*)    # interactive shell
+;;
+*)      # non-interactive shell
+;;
+# (Courtesy of "UNIX F.A.Q.," 1993)
