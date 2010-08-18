@@ -77,8 +77,8 @@ module Rye;
     def bzip2(*args); __allow('bzip2', args); end
     def which(*args); __allow('which', args); end
     def siege(*args); __allow("siege", args); end
-    def stella(*args); __allow("stella", args); end
     
+    def stella(*args); __allow("stella", args); end
     def umount(*args); __allow("umount", args); end
     def stella(*args); __allow('stella', args); end
     def uptime(*args); __allow("uptime", args); end
