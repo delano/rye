@@ -58,7 +58,8 @@ module Rye;
     def perl(*args); __allow('perl', args); end
     def bash(*args, &blk)
       self.rye_shell = true
-      __allow('bash', args, &blk)
+      setenv('PS1', "(rye) \\h:\\w \\u\\$\ ")
+      ret = __allow('bash', args, &blk)
     end
     def echo(*args); __allow('echo', args); end
     def test(*args); __allow('test', args); end
@@ -88,11 +89,14 @@ module Rye;
     def uptime(*args); __allow("uptime", args); end
     def python(*args); __allow('python', args); end
     def gunzip(*args); __allow('gunzip', args); end
+    def whoami(*args); __allow('whoami', args); end
+
     def useradd(*args); __allow('useradd', args); end
     def bunzip2(*args); __allow('bunzip2', args); end
     def getconf(*args); __allow('getconf', args); end
     def history(*args); __allow('history', args); end
     def rudy_s3(*args); __allow('rudy-s3', args); end
+
     def aptitude(*args); __allow('aptitude', args); end
     def printenv(*args); __allow('printenv', args); end
     def hostname(*args); __allow('hostname', args); end

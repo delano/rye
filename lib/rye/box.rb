@@ -842,7 +842,10 @@ module Rye
           # do nothing
         elsif choice == :interactive && !@rye_shell
           @rye_shell = true
-          run_command('bash')
+          previous_state = @rye_sudo
+          disable_sudo
+          bash
+          @rye_sudo = previous_state
           @rye_shell = false
         else
           raise ex, ex.message
