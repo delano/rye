@@ -78,6 +78,7 @@ module Rye
     def ostype=(val); @rye_ostype = val; end 
     def impltype=(val); @rye_impltype = val; end 
     def pre_command_hook=(val); @rye_pre_command_hook = val; end
+    def stdout_hook=(val); @rye_stdout_hook = val; end
     def post_command_hook=(val); @rye_post_command_hook = val; end
     # A Hash. The keys are exception classes, the values are Procs to execute
     def exception_hook=(val); @rye_exception_hook = val; end
@@ -541,6 +542,18 @@ module Rye
     def pre_command_hook(&block)
       @rye_pre_command_hook = block if block
       @rye_pre_command_hook
+    end
+    
+    # Supply a block to be called every time a command receives STDOUT data.
+    # 
+    # e.g.
+    #     rbox.stdout_hook do |content|
+    #       ...
+    #     end
+    def stdout_hook(&block)
+      p 1
+      @rye_stdout_hook = block if block
+      @rye_stdout_hook
     end
     
     # Supply a block to be called whenever there's an Exception. It's called
@@ -1061,6 +1074,7 @@ module Rye
         }
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
+          @rye_stdout_hook.call(data) if @rye_stdout_hook.kind_of?(Proc)
           if rye_pty && data =~ /\Apassword/i
             channel[:prompt] = data
             channel[:state] = :await_input
@@ -1070,7 +1084,12 @@ module Rye
         }
         channel.on_extended_data          { |ch, type, data| 
           channel[:handler] = ":on_extended_data"
-          channel[:stderr].append(data)
+          if rye_pty && data =~ /\Apassword/i
+            channel[:prompt] = data
+            channel[:state] = :await_input
+          else
+            channel[:stderr].append(data)
+          end
         }
         channel.on_request("exit-status") { |ch, data| 
           channel[:handler] = ":on_request (exit-status)"
