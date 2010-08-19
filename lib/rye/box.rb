@@ -1,7 +1,8 @@
 require 'annoy'
+require 'readline'
 
 module Rye
-  DEBUG = false unless defined?(Rye::DEBUG)
+  DEBUG = true unless defined?(Rye::DEBUG)
   
   # = Rye::Box
   #
@@ -551,7 +552,6 @@ module Rye
     #       ...
     #     end
     def stdout_hook(&block)
-      p 1
       @rye_stdout_hook = block if block
       @rye_stdout_hook
     end
@@ -742,15 +742,19 @@ module Rye
     def disconnect
       return unless @rye_ssh && !@rye_ssh.closed?
       begin
-        Timeout::timeout(10) do
-          @rye_ssh.loop(0.3) { @rye_ssh.busy?; }
+        if @rye_ssh.busy?;
+          info "Is something still running? (ctrl-C to exit)"
+          Timeout::timeout(10) do
+            @rye_ssh.loop(0.3) { @rye_ssh.busy?; }
+          end
         end
+        debug "Closing connection to #{@rye_ssh.host}"
+        @rye_ssh.close
       rescue SystemCallError, Timeout::Error => ex
-        error "Disconnect timeout (was something still running?)"
+        error "Disconnect timeout"
+      rescue Interrupt
+        debug "Exiting..."
       end
-      
-      debug "Closing connection to #{@rye_ssh.host}"
-      @rye_ssh.close
     end
     
     
@@ -876,7 +880,8 @@ module Rye
           bash
           @rye_sudo = previous_state
           @rye_shell = false
-        else
+        elsif !ex.is_a?(Interrupt)
+          p [11, ex.class]
           raise ex, ex.message
         end
       end
@@ -917,7 +922,7 @@ module Rye
                               :pixels_wide => 640,
                               :pixels_high => 480,
                               :modes       => {} }
-                              
+      
       channel = @rye_ssh.open_channel do |channel|
         if self.rye_shell && blk.nil?
           channel.request_pty(pty_opts) do |ch,success|
@@ -929,6 +934,9 @@ module Rye
         channel[:state] = :start_session
         channel[:block] = blk
       end
+      
+      @rye_channels ||= []
+      @rye_channels << channel
       
       @rye_ssh.loop(0.1) do
         break if channel.nil? || !channel.active?
@@ -1106,7 +1114,7 @@ module Rye
           begin
             send("state_#{channel[:state]}", channel) unless channel[:state].nil?
           rescue Interrupt
-            debug :await_input_interrupt
+            debug :on_process_interrupt
             channel[:state] = :exit
           end
         }
