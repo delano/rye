@@ -787,7 +787,7 @@ module Rye
       # The command will otherwise run in the user's home directory.
       if @rye_current_working_directory
         cwd = Rye.escape(@rye_safe, 'cd', @rye_current_working_directory)
-        cmd_internal = [cwd, cmd_internal].join(' && ')
+        cmd_internal = '(%s; %s)' % [cwd, cmd_internal]
       end
       
       # ditto (same explanation as cwd)
@@ -821,6 +821,8 @@ module Rye
         rap.add_stderr(stderr || '')
         rap.add_exit_status(ecode)
         rap.exit_signal = esignal
+        
+        debug "RESULT: %s " % [rap.inspect]
         
         # It seems a convention for various commands to return -1
         # when something only mildly concerning happens. ls even 
@@ -880,7 +882,7 @@ module Rye
     end
     
     def net_ssh_exec!(cmd, &blk)
-      debug ":command #{cmd} (blk: #{!blk.nil?})"
+      debug ":net_ssh_exec #{cmd} (blk: #{!blk.nil?}; pty: #{@rye_pty}; shell: #{@rye_shell})"
       
       pty_opts =   { :term => "xterm",
                               :chars_wide  => 80,
@@ -918,6 +920,7 @@ module Rye
       debug :start_session
       channel[:state] = :run_block if channel[:block] 
       channel[:state] = :await_response if @rye_pty
+      channel[:state] = nil
     end
     
     def state_await_response(channel)
@@ -1007,17 +1010,17 @@ module Rye
       end
     end
     
-    # TODO: implement callback
-    def state_handle_error(channel)
-      debug :handle_error
-      channel[:state] = nil
-      if rye_shell && (!channel.eof? || !channel.closing?)
-        puts
-        channel.send_data("exit\n")
-      else
-        channel.eof!
-      end
-    end
+    # TODO: implement callback in create_channel Proc
+    ##def state_handle_error(channel)
+    ##  debug :handle_error
+    ##  channel[:state] = nil
+    ##  if rye_shell && (!channel.eof? || !channel.closing?)
+    ##    puts
+    ##    channel.send_data("exit\n")
+    ##  else
+    ##    channel.eof!
+    ##  end
+    ##end
     
 
     def state_run_block(channel)
@@ -1049,7 +1052,6 @@ module Rye
         channel.on_extended_data          { |ch, type, data| 
           channel[:handler] = ":on_extended_data"
           channel[:stderr].append(data)
-          channel[:state] = :handle_error 
         }
         channel.on_request("exit-status") { |ch, data| 
           channel[:handler] = ":on_request (exit-status)"

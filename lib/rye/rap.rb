@@ -32,7 +32,7 @@ module Rye;
     # * +args+ anything that can sent to Array#new
     def initialize(obj, *args)
       @obj = obj
-      @exit_status = 0
+      @exit_status = -1
       @stderr = []
       super *args
     end
