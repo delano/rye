@@ -237,11 +237,21 @@ module Rye
     end
 
     
-    # Open an interactive SSH session. This only works if STDIN.tty?
-    # returns true. Otherwise it returns the SSH command that would 
-    # have been run. This requires the SSH command-line executable (ssh).
-    # * +run+ when set to false, it will return the SSH command as a String
-    # and not open an SSH session.
+    # If STDIN.tty? is true (i.e. if we're connected to a terminal
+    # with a human at the helm), this will open an SSH connection
+    # via the regular SSH command (via a call to system). This 
+    # requires the SSH command-line executable (ssh).
+    #
+    # If STDIN.tty? is false or +run+ is false, this will return 
+    # the SSH command (a String) that would have been run. 
+    # 
+    # NOTE: As of Rye 0.9 you can run interactive sessions with
+    # rye by calling any shell method without arguments. 
+    #
+    # e.g.
+    #
+    #     rbox = Rye::Box.new 'somemachine'
+    #     rbox.bash
     #
     # TODO: refactor to use net_ssh_exec! in 0.9
     def interactive_ssh(run=true)
