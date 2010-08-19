@@ -6,13 +6,11 @@
   s.description = s.summary
   s.author = "Delano Mandelbaum"
   s.email = "delano@solutious.com"
-  s.homepage = "http://solutious.com/"
+  s.homepage = "http://github.com/delano/rye/"
   
   # = DEPENDENCIES =
   # Add all gem dependencies
-  s.add_dependency 'drydock'
-  s.add_dependency 'sysinfo'
-  s.add_dependency 'storable'
+  s.add_dependency 'annoy'
   s.add_dependency 'sysinfo', '>= 0.7.0'
   
   s.add_dependency 'highline', '>= 1.5.1'
@@ -38,7 +36,6 @@
   README.rdoc
   Rakefile
   Rudyfile
-  bin/rye
   bin/try
   lib/esc.rb
   lib/rye.rb
