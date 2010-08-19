@@ -237,8 +237,10 @@ p Rye.shell :ls, '*'
 p Rye.shell :ls, '-l $HOME'
 p Rye.shell :ls, :l, '$HOME > crazy.txt'
 
+Rye.shell :rm, 'crazy.txt'
+
 ret = Rye.shell :ls, 'nofile'
-p ret.exit_status                      # => 1
+p ret.exit_status                    # => 1
 p ret.stderr                         # => "sh: nofile: No such file or directory"
 p ret.class                          # => Rye::Rap
 

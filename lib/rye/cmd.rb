@@ -272,8 +272,6 @@ module Rye;
     def file_exists?(path)
       begin
         ret = self.quietly { ls(path) }
-        p ret
-        p ret.stderr.empty?
       rescue Rye::Err => ex
         ret = ex.rap
       end

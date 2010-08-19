@@ -409,110 +409,6 @@ module Rye
       @rye_guessed_homes[this_user] = "#{user_defaults['HOME']}/#{this_user}"
     end
     
-    # Copy the local public keys (as specified by Rye.keys) to 
-    # this box into ~/.ssh/authorized_keys and ~/.ssh/authorized_keys2. 
-    # Returns a Rye::Rap object. The private keys files used to generate 
-    # the public keys are contained in stdout.
-    # Raises a Rye::ComandError if the home directory doesn't exit. 
-    # NOTE: authorize_keys_remote disables safe-mode for this box while it runs
-    # which will hit you funky style if your using a single instance
-    # of Rye::Box in a multithreaded situation. 
-    #
-    def authorize_keys_remote(other_user=nil)
-      if other_user.nil?
-        this_user = opts[:user]
-        homedir = self.quietly { pwd }.first
-      else
-        this_user = other_user 
-        # The homedir path is important b/c this is where we're going to 
-        # look for the .ssh directory. That's where auth love is stored.
-        homedir = self.guess_user_home(this_user)
-      end
-      
-      added_keys = []
-      rap = Rye::Rap.new(self)
-      
-      prevdir = self.current_working_directory
-      
-      unless self.file_exists?(homedir)
-        rap.add_exit_status(1)
-        rap.add_stderr("Path does not exist: #{homedir}")
-        raise Rye::Err.new(rap)
-      end
-      
-      # Let's go into the user's home directory that we now know exists.
-      self.cd homedir
-      
-      files = ['.ssh/authorized_keys', '.ssh/authorized_keys2', '.ssh/identity']
-      files.each do |akey_path|
-        if self.file_exists?(akey_path)
-          # TODO: Make Rye::Cmd.incremental_backup
-          self.cp(akey_path, "#{akey_path}-previous")
-          authorized_keys = self.file_download("#{homedir}/#{akey_path}")
-        end
-        authorized_keys ||= StringIO.new
-        
-        Rye.keys.each do |path|
-          
-          info "# Adding public key for #{path}"
-          k = Rye::Key.from_file(path).public_key.to_ssh2
-          authorized_keys.puts k
-        end
-        
-        # Remove duplicate authorized keys
-        authorized_keys.rewind
-        uniqlines = authorized_keys.readlines.uniq.join
-        authorized_keys = StringIO.new(uniqlines)
-        # We need to rewind so that all of the StringIO object is uploaded
-        authorized_keys.rewind
-        
-        full_path = "#{homedir}/#{akey_path}"
-        temp_path = "/tmp/rye-#{user}-#{File.basename(akey_path)}"
-        
-        sudo do
-          mkdir :p, :m, '700', File.dirname(akey_path)
-          file_upload authorized_keys, temp_path
-          mv temp_path, full_path
-          chmod '0600', akey_path
-          chown :R, this_user.to_s, File.dirname(akey_path)
-        end
-      end
-      
-      # And let's return to the directory we came from.
-      self.cd prevdir
-      
-      rap.add_exit_status(0)
-      rap
-    end
-    require 'fileutils'
-    # Authorize the current user to login to the local machine via
-    # SSH without a password. This is the same functionality as
-    # authorize_keys_remote except run with local shell commands. 
-    def authorize_keys_local
-      added_keys = []
-      ssh_dir = File.join(Rye.sysinfo.home, '.ssh')
-      Rye.keys.each do |path|
-        debug "# Public key for #{path}"
-        k = Rye::Key.from_file(path).public_key.to_ssh2
-        FileUtils.mkdir ssh_dir unless File.exists? ssh_dir
-        
-        authkeys_file = File.join(ssh_dir, 'authorized_keys')
-        
-        debug "Writing to #{authkeys_file}"
-        File.open(authkeys_file, 'a')       {|f| f.write("#{$/}#{k}") }
-        File.open("#{authkeys_file}2", 'a') {|f| f.write("#{$/}#{k}") }
-        
-        unless Rye.sysinfo.os == :windows
-          Rye.shell(:chmod, '700', ssh_dir)
-          Rye.shell(:chmod, '0600', authkeys_file)
-          Rye.shell(:chmod, '0600', "#{authkeys_file}2")
-        end
-        
-        added_keys << path
-      end
-      added_keys
-    end
-    
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
     def method_missing(cmd, *args, &block)
@@ -1097,7 +993,7 @@ module Rye
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
           @rye_stdout_hook.call(data) if @rye_stdout_hook.kind_of?(Proc)
-          if rye_pty && data =~ /\Apassword/i
+          if rye_pty && data =~ /password/i
             channel[:prompt] = data
             channel[:state] = :await_input
           else

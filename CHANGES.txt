@@ -1,5 +1,15 @@
 RYE, CHANGES
 
+
+#### 0.9.0 (2010-08-19) #############################
+
+* ADDED: Interactive and non-interactive shell support (via Net::SSH)
+* ADDED: Basic readline support for interactive mode
+* ADDED: New hook for printing STDOUT as it is returned
+* CHANGE: Removed bin/rye
+* CHANGE: Removed authorize_keys_remote and authorize_keys_local
+
+
 #### 0.8.20 (2010-08-17) #############################
 
 * ADDED: string_append, template_write, template_upload, file_modify
