@@ -1,7 +1,8 @@
 require 'rye'
 
 
-#rbox = Rye::Box.new 'localhost', :user => 'delano'
+rbox = Rye::Box.new 'localhost', :user => 'delano'
+
 #rbox.bash do 
 #  ls(:l, '/etc2') rescue nil
 #  puts ls :l, '/etc'
@@ -11,4 +12,4 @@ require 'rye'
 
 #rbox.irb :I, '/Users/delano/Projects/private/www.blamestella.com/lib', :r, 'blamestella' 
 
-#rbox.sh
+rbox.sh

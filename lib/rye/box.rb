@@ -2,7 +2,7 @@ require 'annoy'
 require 'readline'
 
 module Rye
-  DEBUG = true unless defined?(Rye::DEBUG)
+  DEBUG = false unless defined?(Rye::DEBUG)
   
   # = Rye::Box
   #
@@ -140,6 +140,9 @@ module Rye
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
       @rye_quiet, @rye_sudo = @rye_opts.delete(:quiet), @rye_opts.delete(:sudo)
       @rye_templates = @rye_opts.delete(:templates)
+      
+      # Store the state of the terminal 
+      @rye_stty_save = `stty -g`.chomp rescue nil
       
       unless @rye_templates.nil?
         require @rye_templates.to_s   # should be :erb
@@ -881,7 +884,6 @@ module Rye
           @rye_sudo = previous_state
           @rye_shell = false
         elsif !ex.is_a?(Interrupt)
-          p [11, ex.class]
           raise ex, ex.message
         end
       end
@@ -973,8 +975,12 @@ module Rye
     def state_read_response(channel)
       debug :read_response
       if channel[:stdout].available > 0 || channel[:stderr].available > 0
-        print channel[:stdout].read if channel[:stdout].available > 0
-        print channel[:stderr].read if channel[:stderr].available > 0
+        
+        stdout = channel[:stdout].read if channel[:stdout].available > 0
+        stderr = channel[:stderr].read if channel[:stderr].available > 0
+        
+        print stdout if stdout
+        print stderr if stderr
         
         if channel[:stack].empty?
           channel[:state] = :await_input
@@ -986,6 +992,7 @@ module Rye
       else
         channel[:state] = :await_response
       end
+      
     end
 
     def state_send_data(channel)
@@ -1002,23 +1009,30 @@ module Rye
           channel[:state] = :read_response
         else
           ret = nil
-          if channel[:prompt]
-            if (channel[:prompt] =~ /pass/i)
-              ret = Annoy.get_user_input("#{channel[:prompt]} ", echo='*', period=30)
-            else
-              print channel[:prompt]
-            end
+          if channel[:prompt] && (channel[:prompt] =~ /pass/i)
+            ret = Annoy.get_user_input("#{channel[:prompt]} ", echo='*', period=30)
             channel[:prompt] = nil
           end
-          ret = STDIN.gets unless ret
-          if ret.nil?
+          begin
+            list = self.commands.sort
+
+            comp = proc { |s| list.grep( /^#{Regexp.escape(s)}/ ) }
+
+            Readline.completion_append_character = " "
+            Readline.completion_proc = comp
+            
+            ret = Readline.readline(channel[:prompt] || '', true)
+            if ret.nil?
+              channel[:state] = :exit
+            else
+              channel[:stack] << ret.chomp
+              channel[:state] = :send_data
+            end
+          rescue Interrupt => e
             channel[:state] = :exit
-          else
-            channel[:stack] << ret.chomp
-            channel[:state] = :send_data
           end
+          channel[:prompt] = nil
         end
-       
     end
     
     def state_ignore_response(channel)
