@@ -75,7 +75,7 @@ module Rye
       @rap = rap
     end
     def message
-      "%s (cmd: %s; code: %s)" % [@rap.stderr.join($/), @rap.cmd, @rap.exit_status]
+      "%s (cmd: %s; status: %s)" % [@rap.stderr.join($/), @rap.cmd, @rap.exit_status]
     end
     def stderr; @rap.stderr if @rap; end
     def stdout; @rap.stdout if @rap; end

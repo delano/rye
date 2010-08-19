@@ -1,4 +1,4 @@
-
+require 'annoy'
 
 module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
@@ -948,16 +948,10 @@ module Rye
 
     def state_send_data(channel)
       debug :send_data
-      #if channel[:stack].empty?
-      #  channel[:state] = :await_input
-      #else
-        cmd = channel[:stack].shift
-        #return if cmd.strip.empty?
-        debug "sending #{cmd.inspect}"
-        channel[:state] = :await_response
-        channel.send_data("#{cmd}\n") unless channel.eof?
-        #channel.exec("#{cmd}\n", &create_channel) 
-      #end
+      cmd = channel[:stack].shift
+      debug "sending #{cmd.inspect}"
+      channel[:state] = :await_response
+      channel.send_data("#{cmd}\n") unless channel.eof?
     end
     
     def state_await_input(channel)
@@ -965,11 +959,16 @@ module Rye
         if channel[:stdout].available > 0
           channel[:state] = :read_input
         else
+          ret = nil
           if channel[:prompt]
-            puts channel[:prompt]
+            if (channel[:prompt] =~ /pass/i)
+              ret = Annoy.get_user_input("#{channel[:prompt]} ", echo='*', period=30)
+            else
+              print channel[:prompt]
+            end
             channel[:prompt] = nil
           end
-          ret = STDIN.gets
+          ret = STDIN.gets unless ret
           if ret.nil?
             channel[:state] = :exit
           else
