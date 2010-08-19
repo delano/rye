@@ -938,7 +938,7 @@ module Rye
       @await_response_counter ||= 0
       if channel[:stdout].available > 0
         channel[:state] = :read_input
-      elsif @await_response_counter > 10
+      elsif @await_response_counter > 50
         @await_response_counter = 0
         channel[:state] = :await_input
       end
