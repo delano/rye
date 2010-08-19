@@ -840,6 +840,10 @@ module Rye
           retry
         elsif choice == :skip
           # do nothing
+        elsif choice == :interactive && !@rye_shell
+          @rye_shell = true
+          run_command('bash')
+          @rye_shell = false
         else
           raise ex, ex.message
         end
