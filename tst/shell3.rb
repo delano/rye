@@ -3,7 +3,7 @@ require 'net/ssh'
 #
 # For channel requests, see SSH_MSG_CHANNEL_REQUEST messages
 # in http://www.snailbook.com/docs/connection.txt
-DEBUG = false
+DEBUG = true
 
 module Rye
   class Box
@@ -17,6 +17,35 @@ module Rye
       #channel.send_data("stty -echo\n")
       #channel[:state] = :ignore_response
       channel[:state] = :await_response
+    end
+    
+    def await_response_state(channel)
+      debug :await_response, channel[:handler]
+      @await_response_counter ||= 0
+      if channel[:buffer].available > 0
+        channel[:state] = :read_input
+      elsif @await_response_counter > 10
+        @await_response_counter = 0
+        channel[:state] = :await_input
+      end
+      @await_response_counter += 1
+    end
+    
+    def read_input_state(channel)
+      debug :read_input, channel[:handler]
+      if channel[:buffer].available > 0
+        print channel[:buffer].read
+        
+        if channel[:stack].empty?
+          channel[:state] = :await_input
+        elsif channel[:buffer].available > 0
+          channel[:state] = :read_input
+        else
+          channel[:state] = :send_data
+        end
+      else 
+        channel[:state] = :await_response
+      end
     end
     
     def send_data_state(channel)
@@ -56,23 +85,6 @@ module Rye
       channel.send_data("x")
     end
     
-    def read_input_state(channel)
-      debug :read_input, channel[:handler]
-      if channel[:buffer].available > 0
-        print channel[:buffer].read
-        
-        if channel[:stack].empty?
-          channel[:state] = :await_input
-        elsif channel[:buffer].available > 0
-          channel[:state] = :read_input
-        else
-          channel[:state] = :send_data
-        end
-      else 
-        channel[:state] = :await_response
-      end
-    end
-    
     def exit_state(channel)
       debug :exit_state, channel[:exit_status]
       puts
@@ -98,18 +110,7 @@ module Rye
       @ignore_response_counter += 1
     end
     
-    def await_response_state(channel)
-      debug :await_response, channel[:handler]
-      @await_response_counter ||= 0
-      if channel[:buffer].available > 0
-        channel[:state] = :read_input
-      elsif @await_response_counter > 10
-        @await_response_counter = 0
-        channel[:state] = :await_input
-      end
-      @await_response_counter += 1
-    end
-    
+
     def run_block_state(channel)
       instance_eval &channel[:block]
       channel[:block] = nil

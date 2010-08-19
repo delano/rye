@@ -3,7 +3,7 @@ require 'net/ssh'
 #
 # For channel requests, see SSH_MSG_CHANNEL_REQUEST messages
 # in http://www.snailbook.com/docs/connection.txt
-DEBUG = true
+DEBUG = false
 
 module Rye
   class Box
@@ -14,25 +14,6 @@ module Rye
 
     def start_session_state(channel)
       debug :start_session, channel[:handler]
-      channel[:state] = :ignore_response
-    end
-    
-    def ignore_response_state(channel)
-      debug :ignore_response, channel[:handler]
-      @ignore_response_counter ||= 0
-      if channel[:stdout].available > 0
-        @await_response_counter = 0
-        channel[:stdout].read
-        channel[:state] = :process
-      elsif @ignore_response_counter > 2
-        @await_response_counter = 0
-        channel[:state] = :process
-      end
-      @ignore_response_counter += 1
-    end
-    
-    def process_state(channel)
-      debug :process, channel[:handler]
       if channel[:block]
         channel[:state] = :run_block
       else
@@ -40,6 +21,35 @@ module Rye
       end
     end
     
+    def await_response_state(channel)
+      debug :await_response, channel[:handler]
+      @await_response_counter ||= 0
+      if channel[:stdout].available > 0
+        channel[:state] = :read_input
+      elsif @await_response_counter > 10
+        @await_response_counter = 0
+        channel[:state] = :await_input
+      end
+      @await_response_counter += 1
+    end
+    
+    def read_input_state(channel)
+      debug :read_input, channel[:handler]
+      if channel[:stdout].available > 0
+        print channel[:stdout].read
+        
+        if channel[:stack].empty?
+          channel[:state] = :await_input
+        elsif channel[:stdout].available > 0
+          channel[:state] = :read_input
+        else
+          channel[:state] = :send_data
+        end
+      else 
+        channel[:state] = :await_response
+      end
+    end
+
     def send_data_state(channel)
       debug :send_data, channel[:handler]
       #if channel[:stack].empty?
@@ -49,8 +59,8 @@ module Rye
         #return if cmd.strip.empty?
         debug :send_data, "calling #{cmd.inspect}"
         channel[:state] = :await_response
-        #channel.send_data("#{cmd}\n") unless channel.eof?
-        channel.exec("#{cmd}\n", &prep_channel) 
+        channel.send_data("#{cmd}\n") unless channel.eof?
+        #channel.exec("#{cmd}\n", &prep_channel) 
       #end
     end
     
@@ -72,28 +82,28 @@ module Rye
         
     end
     
+    def ignore_response_state(channel)
+      debug :ignore_response, channel[:handler]
+      @ignore_response_counter ||= 0
+      if channel[:stdout].available > 0
+        @await_response_counter = 0
+        channel[:stdout].read
+        channel[:state] = :process
+      elsif @ignore_response_counter > 2
+        @await_response_counter = 0
+        channel[:state] = :process
+      end
+      @ignore_response_counter += 1
+    end
+    
+    
+    
     def check_interactive_state(channel)
       debug :read_input, channel[:handler]
       channel.send_data("x")
     end
     
-    def read_input_state(channel)
-      debug :read_input, channel[:handler]
-      if channel[:stdout].available > 0
-        print channel[:stdout].read
-        
-        if channel[:stack].empty?
-          channel[:state] = :await_input
-        elsif channel[:stdout].available > 0
-          channel[:state] = :read_input
-        else
-          channel[:state] = :send_data
-        end
-      else 
-        channel[:state] = :await_response
-      end
-    end
-    
+
     def exit_state(channel)
       debug :exit_state, channel[:exit_status]
       puts
@@ -106,18 +116,6 @@ module Rye
     end
     
 
-    def await_response_state(channel)
-      debug :await_response, channel[:handler]
-      @await_response_counter ||= 0
-      if channel[:stdout].available > 0
-        channel[:state] = :read_input
-      elsif @await_response_counter > 20
-        @await_response_counter = 0
-        channel[:state] = :await_input
-      end
-      @await_response_counter += 1
-    end
-    
     def run_block_state(channel)
       debug :run_block, channel[:handler]
       channel[:state] = nil
@@ -188,7 +186,7 @@ module Rye
       end
       
       
-      @session.loop(0.5) do
+      @session.loop(0.1) do
         break if @channel.nil? || !@channel.active?
         !@channel.eof?   # otherwise keep returning true
       end
