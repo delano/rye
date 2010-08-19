@@ -1,9 +1,10 @@
 require 'net/ssh'
+require 'annoy'
 
 #
 # For channel requests, see SSH_MSG_CHANNEL_REQUEST messages
 # in http://www.snailbook.com/docs/connection.txt
-DEBUG = false
+DEBUG = true
 
 module Rye
   class Box
@@ -126,17 +127,30 @@ module Rye
     end
 
     def command(name,*args, &blk)
-      debug :command, "(#{@channel[:handler]})"
-      return if @channel.eof?
+      #debug :command, "(#{channel[:handler]})"
+      #if channel.eof?
+      #  p [:channel_eof]
+      #end
       cmd = "%s %s" % [name, args.join(' ')]
       debug :command, "Running: #{cmd}"
-      channel = @session.open_channel do |ch|
-        ch.exec(cmd, &prep_channel)
+      
+      channel = @session.open_channel do |channel|
+        channel.request_pty do |ch,success|
+          self.pty = success
+          raise "pty request denied" unless success
+        end
+        channel.exec(cmd, &prep_channel)
       end
+      
       channel.wait
-      stderr = channel[:stderr].read #if channel[:stderr].available
-      p [:stderr, stderr] unless stderr.nil? || stderr.empty?
-      p [:status, channel[:exit_status] ]
+      #channel.wait
+      #ret = channel[:stdout].read
+      #p ret
+      #stderr = channel[:stderr].read #if channel[:stderr].available
+      #p [:stderr, stderr] unless stderr.nil? || stderr.empty?
+      ##p [ret, channel[:exit_status]]
+      #ret
+      p channel[:exit_status]
       channel[:stdout].read
     end
     
@@ -146,7 +160,7 @@ module Rye
     
     def ls(*args) command(:ls, *args) end
     def cat(*args) command(:cat, *args) end
-      def echo(*args) command(:echo, *args) end
+    def echo(*args) command(:echo, *args) end
     def sudo(*args) command(:sudo, *args) end
     def date(*args) command(:date, *args) end
     def uname(*args) command(:uname, *args) end
@@ -169,28 +183,43 @@ module Rye
   
     def run(shell=nil, &blk)
       
-      puts "Running #{shell}"
       if shell.nil?
         instance_eval &blk
       else
-        @channel = @session.open_channel do |channel|
-          channel.request_pty do |ch,success|
-            self.pty = success
-            raise "pty request denied" unless success
-          end
-          channel[:block] = blk
+      
+      pty_opts =   { :term => "xterm",
+                              :chars_wide  => 80,
+                              :chars_high  => 24,
+                              :pixels_wide => 640,
+                              :pixels_high => 480,
+                              :modes       => {} }
+                              
+      @channel = @session.open_channel do |channel|
+        channel.request_pty(pty_opts) do |ch,success|
+          self.pty = success
+          raise "pty request denied" unless success
+        end
+        channel[:block] = blk
+        if shell.nil?
+          ##channel.send_channel_request "shell" do |ch, success|
+          ##  raise "Could not open shell" unless success
+          #  #instance_eval &blk
+          ##end
+          #command("uptime")
+          #command("date")
+          #p channel.closing?
+        else
+          puts "Running #{shell}"
           channel.exec shell, &prep_channel
           channel[:state] = :start_session
         end
-        
       end
-      
       
       @session.loop(0.1) do
         break if @channel.nil? || !@channel.active?
         !@channel.eof?   # otherwise keep returning true
       end
-      
+    end
     end
     
     def stop
@@ -214,16 +243,24 @@ module Rye
         }
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
-          channel[:stdout].append(data) 
+          if self.pty && data =~ /\Apassword/i
+            STDOUT.print "#{data} "
+            STDOUT.flush
+            ret = STDIN.gets
+            channel.send_data ret
+          else
+            channel[:stdout].append(data) 
+          end
         }
         channel.on_extended_data          { |ch, type, data| 
           channel[:handler] = ":on_extended_data"
           channel[:stderr].append(data)
+          p 2
           channel[:state] = :handle_error 
         }
         channel.on_request("exit-status") { |ch, data| 
           channel[:handler] = ":on_request (exit-status)"
-          channel[:exit] = data.read_long 
+          channel[:exit_status] = data.read_long 
         }
         channel.on_request("exit-signal") do |ch, data|
           channel[:handler] = ":on_request (exit-signal)"
@@ -245,24 +282,6 @@ module Rye
   end
 end
 
-def simple_channel_proc
-  Proc.new do |channel, success|
-    p channel.eof?
-    abort "could not execute command" unless success
-  
-    channel.on_data do |ch, data|
-      puts "got stdout: #{data}"
-    end
-  
-    channel.on_extended_data do |ch, type, data|
-      puts "got stderr: #{data}"
-    end
-  
-    channel.on_close do |ch|
-      puts "channel is closing!"
-    end
-  end
-end
 
 begin
   puts $$
@@ -271,15 +290,18 @@ begin
   
   rbox.run 'bash'
   #rbox.run do
-  #  puts command("date")
-  #  #puts command("date")
-  #  #p cat("/etc/issue")
-  #  #command("SUDO_PS1=''")
-  #  #puts sudo( 'chroot', '/mnt/archlinux-x86_64')
-  #  #command("unset PS1;")
-  #  puts cat("date")
+    #puts command("date")
+    #puts command("SUDO_PS1=POOP\n")
+    #puts command("echo $GLORIA_HOME; echo $?")
+    #puts command("sudo whoami")
+    
+    #puts command("date")
+    #puts command("SUDO_PS1='POOP'")
+    #puts command("echo $SUDO_PS1")
+    ##puts sudo( 'chroot', '/mnt/archlinux-x86_64')
+    #command("unset PS1;")
   #end
-  puts rbox.channel[:stderr] if rbox.channel[:stderr]
+  #puts rbox.channel[:stderr] if rbox.channel[:stderr]
 end
 
 
