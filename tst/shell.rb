@@ -4,7 +4,7 @@ require 'annoy'
 #
 # For channel requests, see SSH_MSG_CHANNEL_REQUEST messages
 # in http://www.snailbook.com/docs/connection.txt
-DEBUG = true
+DEBUG = false
 
 module Rye
   class Box
@@ -67,10 +67,13 @@ module Rye
     
     def await_input_state(channel)
       debug :await_input, channel[:handler]
-      
         if channel[:stdout].available > 0
           channel[:state] = :read_input
         else
+          if channel[:prompt]
+            puts channel[:prompt]
+            channel[:prompt] = nil
+          end
           ret = STDIN.gets
           if ret.nil?
             channel.eof!
@@ -80,7 +83,7 @@ module Rye
             channel[:state] = :send_data
           end
         end
-        
+       
     end
     
     def ignore_response_state(channel)
@@ -140,9 +143,16 @@ module Rye
           raise "pty request denied" unless success
         end
         channel.exec(cmd, &prep_channel)
+        channel[:state] = :start_session
       end
       
-      channel.wait
+      @session.loop(0.1) do
+        break if channel.nil? || !channel.active?
+        !channel.eof?   # otherwise keep returning true
+      end
+      
+      #channel.wait
+      
       #channel.wait
       #ret = channel[:stdout].read
       #p ret
@@ -150,7 +160,7 @@ module Rye
       #p [:stderr, stderr] unless stderr.nil? || stderr.empty?
       ##p [ret, channel[:exit_status]]
       #ret
-      p channel[:exit_status]
+      #p channel[:exit_status]
       channel[:stdout].read
     end
     
@@ -229,9 +239,6 @@ module Rye
     end
     
     private
-    def busy_proc
-      Proc.new { |s| !s.busy? }
-    end
     
     def prep_channel()
       Proc.new do |channel,success|
@@ -244,10 +251,8 @@ module Rye
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
           if self.pty && data =~ /\Apassword/i
-            STDOUT.print "#{data} "
-            STDOUT.flush
-            ret = STDIN.gets
-            channel.send_data ret
+            channel[:prompt] = data
+            channel[:state] = :await_input
           else
             channel[:stdout].append(data) 
           end
@@ -255,7 +260,6 @@ module Rye
         channel.on_extended_data          { |ch, type, data| 
           channel[:handler] = ":on_extended_data"
           channel[:stderr].append(data)
-          p 2
           channel[:state] = :handle_error 
         }
         channel.on_request("exit-status") { |ch, data| 
@@ -288,19 +292,21 @@ begin
   rbox = Rye::Box.new
   rbox.connect 'localhost', 'delano', :verbose => :fatal, :keys => []
   
-  rbox.run 'bash'
-  #rbox.run do
-    #puts command("date")
-    #puts command("SUDO_PS1=POOP\n")
+  #rbox.run 'bash'
+  rbox.run do
+    puts command("date")
+    puts command("SUDO_PS1=POOP\n")
     #puts command("echo $GLORIA_HOME; echo $?")
     #puts command("sudo whoami")
+    #puts command("sudo -k")
     
-    #puts command("date")
+    command("cpan")
+    puts command("uptime")
     #puts command("SUDO_PS1='POOP'")
     #puts command("echo $SUDO_PS1")
     ##puts sudo( 'chroot', '/mnt/archlinux-x86_64')
     #command("unset PS1;")
-  #end
+  end
   #puts rbox.channel[:stderr] if rbox.channel[:stderr]
 end
 
