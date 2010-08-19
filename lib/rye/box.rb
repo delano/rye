@@ -29,6 +29,8 @@ module Rye
   class Box 
     include Rye::Cmd
     
+    attr_accessor :rye_pty
+    
     def host; @rye_host; end
     def opts; @rye_opts; end
     def safe; @rye_safe; end
@@ -67,9 +69,9 @@ module Rye
     # The most recent valud for umask (or 0022)
     def current_umask; @rye_current_umask; end
     
-    def info; @rye_info; end
-    def debug; @rye_debug; end
-    def error; @rye_error; end
+    def info?; !@rye_info.nil?; end
+    def debug?; !@rye_debug.nil?; end
+    def error?; !@rye_error.nil?; end
     
     def ostype=(val); @rye_ostype = val; end 
     def impltype=(val); @rye_impltype = val; end 
@@ -260,7 +262,7 @@ module Rye
       return if additional_keys.empty?
       ret = Rye.add_keys(additional_keys) 
       if ret.is_a?(Rye::Rap)
-        debug "ssh-add exit_code: #{ret.exit_code}" 
+        debug "ssh-add exit_status: #{ret.exit_status}" 
         debug "ssh-add stdout: #{ret.stdout}"
         debug "ssh-add stderr: #{ret.stderr}"
       end
@@ -415,9 +417,9 @@ module Rye
       prevdir = self.current_working_directory
       
       unless self.file_exists?(homedir)
-        rap.add_exit_code(1)
+        rap.add_exit_status(1)
         rap.add_stderr("Path does not exist: #{homedir}")
-        raise Rye::CommandError.new(rap)
+        raise Rye::Err.new(rap)
       end
       
       # Let's go into the user's home directory that we now know exists.
@@ -461,7 +463,7 @@ module Rye
       # And let's return to the directory we came from.
       self.cd prevdir
       
-      rap.add_exit_code(0)
+      rap.add_exit_status(0)
       rap
     end
     require 'fileutils'
@@ -812,18 +814,14 @@ module Rye
         
         rap.add_stdout(stdout || '')
         rap.add_stderr(stderr || '')
-        rap.add_exit_code(ecode)
+        rap.add_exit_status(ecode)
         rap.exit_signal = esignal
-        
-        #info "stdout: #{rap.stdout}"
-        #info "stderr: #{rap.stderr}"
-        #info "exit_code: #{rap.exit_code}"
         
         # It seems a convention for various commands to return -1
         # when something only mildly concerning happens. ls even 
         # returns -1 for apparently no reason sometimes. In any
         # case, the real errors are the ones greater than zero
-        raise Rye::CommandError.new(rap) if ecode != 0
+        raise Rye::Err.new(rap) if ecode != 0
         
       rescue Exception => ex
         return rap if @rye_quiet
@@ -869,86 +867,193 @@ module Rye
       [cmd, args]
     end
     
-    # Executes +command+ via SSH
-    # Returns an Array with 4 elements: [stdout, stderr, exit code, exit signal]
-    # NOTE: This method needs to be replaced to fully support interactive 
-    # commands. This implementation is weird because it's getting just STDOUT and
-    # STDERR responses (check value of "type"). on_data and on_extended_data method
-    # hooks are not used. See the following threads for implementation ideas:
-    #
-    # http://www.ruby-forum.com/topic/141814
-    # http://www.ruby-forum.com/topic/169997
-    #
-    def net_ssh_exec!(command)
+    def net_ssh_exec!(cmd, &blk)
+      debug ":command #{cmd}"
+      
+      pty_opts =   { :term => "xterm",
+                              :chars_wide  => 80,
+                              :chars_high  => 24,
+                              :pixels_wide => 640,
+                              :pixels_high => 480,
+                              :modes       => {} }
+                              
+      channel = @rye_ssh.open_channel do |channel|
+        channel.request_pty(pty_opts) do |ch,success|
+          self.rye_pty = success
+          raise Rye::NoPty if !success
+        end
+        channel.exec(cmd, &prep_channel)
+        channel[:state] = :start_session
+      end
+      
+      @rye_ssh.loop(0.1) do
+        break if channel.nil? || !channel.active?
+        !channel.eof?   # otherwise keep returning true
+      end
+      
+      [channel[:stdout].read, channel[:stdout].read, channel[:exit_status], channel[:exit_signal]]
+    end
+    
+    
+    def state_wait_for_command(channel)
+      debug :wait_for_command
+    end
 
-      block ||= Proc.new do |channel, type, data, tt|
+    def state_start_session(channel)
+      debug :start_session
+      if channel[:block]
+        channel[:state] = :run_block
+      else
+        channel[:state] = :await_response
+      end
+    end
+    
+    def state_await_response(channel)
+      debug :await_response
+      @await_response_counter ||= 0
+      if channel[:stdout].available > 0
+        channel[:state] = :read_input
+      elsif @await_response_counter > 10
+        @await_response_counter = 0
+        channel[:state] = :await_input
+      end
+      @await_response_counter += 1
+    end
+    
+    def state_read_input(channel)
+      debug :read_input
+      if channel[:stdout].available > 0
+        print channel[:stdout].read
         
-        channel[:stdout] ||= ""
-        channel[:stderr] ||= ""
-        
-        
-        if type == :stderr
-          # NOTE: Use sudo to test this since it prompts for a passwords. 
-          # Use sudo -K to kill the user's timestamp (ask for a password every time)
-          if data =~ /password:/i
-            ret = Annoy.get_user_input("Password: ", '*')
-            raise Rye::NoPassword if ret.nil?
-            channel.send_data "#{ret}\n"
-          else
-            channel[:stderr] << data 
+        if channel[:stack].empty?
+          channel[:state] = :await_input
+        elsif channel[:stdout].available > 0
+          channel[:state] = :read_input
+        else
+          channel[:state] = :send_data
+        end
+      else 
+        channel[:state] = :await_response
+      end
+    end
+
+    def state_send_data(channel)
+      debug :send_data
+      #if channel[:stack].empty?
+      #  channel[:state] = :await_input
+      #else
+        cmd = channel[:stack].shift
+        #return if cmd.strip.empty?
+        debug "sending #{cmd.inspect}"
+        channel[:state] = :await_response
+        channel.send_data("#{cmd}\n") unless channel.eof?
+        #channel.exec("#{cmd}\n", &prep_channel) 
+      #end
+    end
+    
+    def state_await_input(channel)
+      debug :await_input
+        if channel[:stdout].available > 0
+          channel[:state] = :read_input
+        else
+          if channel[:prompt]
+            puts channel[:prompt]
+            channel[:prompt] = nil
           end
-
-          # If someone tries to open an interactive ssh session
-          # through a regular Rye::Box command, Net::SSH will
-          # return the following error and appear to hang. We
-          # catch it and raise the appropriate exception.
-          raise Rye::NoPty if data =~ /Pseudo-terminal will not/
-        elsif type == :stdout
-          if data =~ /Select gem to uninstall/i
-            puts data
-            ret = Annoy.get_user_input('')
-            raise "No input given" if ret.nil?
-            channel.send_data "#{ret}\n"
+          ret = STDIN.gets
+          if ret.nil?
+            channel.eof!
+            channel[:state] = :exit
           else
-            channel[:stdout] << data
+            channel[:stack] << ret.chomp
+            channel[:state] = :send_data
           end
         end
-        
-      end
-      
-      channel = @rye_ssh.exec(command, &block)
-      
-      channel.on_request("exit-status") do |ch, data|
-        # Anything greater than 0 is an error
-        channel[:exit_code] = data.read_long
-      end
-      channel.on_request("exit-signal") do |ch, data|
-        # This should be the POSIX SIGNAL that ended the process
-        channel[:exit_signal] = data.read_long
-      end
-      
-      channel.wait  # block until we get a response
-      channel.request_pty do |ch, success|
-        raise Rye::NoPty if !success
-      end
-      
-      ## I'm getting weird behavior with exit codes. Sometimes
-      ## a command which usually returns an exit code will not
-      ## return one the next time it's run. The following crap
-      ## was from the debugging.
-      ##Kernel.sleep 5
-      ###channel.close
-      #channel.eof!
-      ##p [:active, channel.active?]
-      ##p [:closing, channel.closing?]
-      ##p [:eof, channel.eof?]
-      
-      channel[:exit_code] ||= 0
-      channel[:exit_code] &&= channel[:exit_code].to_i
-      channel[:stderr].gsub!(/bash: line \d+:\s+/, '') if channel[:stderr]
-      
-      [channel[:stdout], channel[:stderr], channel[:exit_code], channel[:exit_signal]]
+       
     end
+    
+    def state_ignore_response(channel)
+      debug :ignore_response
+      @ignore_response_counter ||= 0
+      if channel[:stdout].available > 0
+        @await_response_counter = 0
+        channel[:stdout].read
+        channel[:state] = :process
+      elsif @ignore_response_counter > 2
+        @await_response_counter = 0
+        channel[:state] = :process
+      end
+      @ignore_response_counter += 1
+    end
+    
+    def state_exit(channel)
+      debug :exit_state
+      channel[:state] = nil
+      puts
+      channel.eof!
+      p channel.eof?
+    end
+    
+    def state_handle_error(channel)
+      debug :handle_error
+      channel[:state] = nil
+      channel.eof!
+    end
+    
+
+    def state_run_block(channel)
+      debug :run_block
+      channel[:state] = nil
+      blk = channel[:block]
+      channel[:block] = nil
+      instance_eval &blk
+      channel[:state] = :exit
+    end
+    
+    def prep_channel()
+      Proc.new do |channel,success|
+        channel[:stdout  ] = Net::SSH::Buffer.new
+        channel[:stderr  ] = Net::SSH::Buffer.new
+        channel[:stack] ||= []
+        channel.on_close                  { |ch|  
+          channel[:handler] = ":on_close"
+        }
+        channel.on_data                   { |ch, data| 
+          channel[:handler] = ":on_data"
+          if rye_pty && data =~ /\Apassword/i
+            channel[:prompt] = data
+            channel[:state] = :await_input
+          else
+            channel[:stdout].append(data) 
+          end
+        }
+        channel.on_extended_data          { |ch, type, data| 
+          channel[:handler] = ":on_extended_data"
+          channel[:stderr].append(data)
+          channel[:state] = :handle_error 
+        }
+        channel.on_request("exit-status") { |ch, data| 
+          channel[:handler] = ":on_request (exit-status)"
+          channel[:exit_status] = data.read_long 
+        }
+        channel.on_request("exit-signal") do |ch, data|
+          channel[:handler] = ":on_request (exit-signal)"
+          # This should be the POSIX SIGNAL that ended the process
+          channel[:exit_signal] = data.read_long
+        end
+        channel.on_process                { 
+          channel[:handler] = :on_process
+          print channel[:stderr].read if channel[:stderr].available > 0
+          begin
+            send("state_#{channel[:state]}", channel) unless channel[:state].nil?
+          rescue Interrupt
+            debug :await_input_interrupt
+            channel[:state] = :exit
+          end
+        }
+      end
+    end
+    
     
     
     # * +direction+ is one of :upload, :download

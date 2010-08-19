@@ -100,14 +100,6 @@ module Rye
       @ignore_response_counter += 1
     end
     
-    
-    
-    def check_interactive_state(channel)
-      debug :read_input, channel[:handler]
-      channel.send_data("x")
-    end
-    
-
     def exit_state(channel)
       debug :exit_state, channel[:exit_status]
       puts
@@ -137,8 +129,15 @@ module Rye
       cmd = "%s %s" % [name, args.join(' ')]
       debug :command, "Running: #{cmd}"
       
+      pty_opts =   { :term => "xterm",
+                              :chars_wide  => 80,
+                              :chars_high  => 24,
+                              :pixels_wide => 640,
+                              :pixels_high => 480,
+                              :modes       => {} }
+                              
       channel = @session.open_channel do |channel|
-        channel.request_pty do |ch,success|
+        channel.request_pty(pty_opts) do |ch,success|
           self.pty = success
           raise "pty request denied" unless success
         end
@@ -151,16 +150,6 @@ module Rye
         !channel.eof?   # otherwise keep returning true
       end
       
-      #channel.wait
-      
-      #channel.wait
-      #ret = channel[:stdout].read
-      #p ret
-      #stderr = channel[:stderr].read #if channel[:stderr].available
-      #p [:stderr, stderr] unless stderr.nil? || stderr.empty?
-      ##p [ret, channel[:exit_status]]
-      #ret
-      #p channel[:exit_status]
       channel[:stdout].read
     end
     
@@ -196,40 +185,10 @@ module Rye
       if shell.nil?
         instance_eval &blk
       else
-      
-      pty_opts =   { :term => "xterm",
-                              :chars_wide  => 80,
-                              :chars_high  => 24,
-                              :pixels_wide => 640,
-                              :pixels_high => 480,
-                              :modes       => {} }
-                              
-      @channel = @session.open_channel do |channel|
-        channel.request_pty(pty_opts) do |ch,success|
-          self.pty = success
-          raise "pty request denied" unless success
-        end
-        channel[:block] = blk
-        if shell.nil?
-          ##channel.send_channel_request "shell" do |ch, success|
-          ##  raise "Could not open shell" unless success
-          #  #instance_eval &blk
-          ##end
-          #command("uptime")
-          #command("date")
-          #p channel.closing?
-        else
-          puts "Running #{shell}"
-          channel.exec shell, &prep_channel
-          channel[:state] = :start_session
-        end
+        command(shell)
       end
-      
-      @session.loop(0.1) do
-        break if @channel.nil? || !@channel.active?
-        !@channel.eof?   # otherwise keep returning true
-      end
-    end
+
+          
     end
     
     def stop
@@ -292,21 +251,21 @@ begin
   rbox = Rye::Box.new
   rbox.connect 'localhost', 'delano', :verbose => :fatal, :keys => []
   
-  #rbox.run 'bash'
-  rbox.run do
-    puts command("date")
-    puts command("SUDO_PS1=POOP\n")
-    #puts command("echo $GLORIA_HOME; echo $?")
-    #puts command("sudo whoami")
-    #puts command("sudo -k")
-    
-    command("cpan")
-    puts command("uptime")
-    #puts command("SUDO_PS1='POOP'")
-    #puts command("echo $SUDO_PS1")
-    ##puts sudo( 'chroot', '/mnt/archlinux-x86_64')
-    #command("unset PS1;")
-  end
+  rbox.run 'bash'
+  #rbox.run do
+  #  puts command("date")
+  #  puts command("SUDO_PS1=POOP\n")
+  #  #puts command("echo $GLORIA_HOME; echo $?")
+  #  #puts command("sudo whoami")
+  #  #puts command("sudo -k")
+  #  
+  #  command("cpan")
+  #  puts command("uptime")
+  #  #puts command("SUDO_PS1='POOP'")
+  #  #puts command("echo $SUDO_PS1")
+  #  ##puts sudo( 'chroot', '/mnt/archlinux-x86_64')
+  #  #command("unset PS1;")
+  #end
   #puts rbox.channel[:stderr] if rbox.channel[:stderr]
 end
 

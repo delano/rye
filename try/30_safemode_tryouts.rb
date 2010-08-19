@@ -40,7 +40,7 @@ end
 begin
   r = Rye::Box.new 'localhost'
   r.ls '/bin/**'
-rescue Rye::CommandError
+rescue Rye::Err
   :success
 end
 #=> :success
@@ -49,7 +49,7 @@ end
 begin
   r = Rye::Box.new 'localhost'
   r.ls '~'
-  rescue Rye::CommandError
+  rescue Rye::Err
     :success
   end
 #=> :success

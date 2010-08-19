@@ -37,6 +37,7 @@ module Rye;
     def xz(*args); __allow('xz', args); end
     
     def env; __allow "env"; end
+    def irb(*args); __allow "irb", args; end
     def rye(*args); __allow "rye", args; end
     def pwd(*args); __allow "pwd", args; end
     def svn(*args); __allow('svn', args); end
@@ -242,7 +243,7 @@ module Rye;
     def file_exists?(path)
       begin
         ret = self.quietly { ls(path) }
-      rescue Rye::CommandError => ex
+      rescue Rye::Err => ex
         ret = ex.rap
       end
       # "ls" returns a 0 exit code regardless of success in Linux

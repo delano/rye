@@ -62,8 +62,8 @@ rbox_wild = Rye::Box.new('localhost', :safe => false)
 # arguments are thoroughly escaped. This prevents access to
 # environment variables and file globs (among other things).
 p rbox_safe.echo('$HOME')                                    # => "$HOME"
-p rbox_safe['/etc'].ls('host*')  rescue Rye::CommandError    # Doesn't exist
-p rbox_safe.ls('-l | wc -l')     rescue Rye::CommandError    # => '|' is not a valid ls arg
+p rbox_safe['/etc'].ls('host*')  rescue Rye::Err    # Doesn't exist
+p rbox_safe.ls('-l | wc -l')     rescue Rye::Err    # => '|' is not a valid ls arg
 
 # Here's the same commands with safe-mode disabled:
 p rbox_wild.echo('$HOME')                   # => "/home/rye"
@@ -147,12 +147,12 @@ puts %Q(
 rbox = Rye::Box.new('localhost', :safe => false) # Note: safe mode is off
 
 # Rye follows the standard convention of taking exception to a non-zero 
-# exit code by raising a Rye::CommandError. In this case, rye9000.test
+# exit code by raising a Rye::Err. In this case, rye9000.test
 # is not found by the ls command.
 begin
   rbox.ls('rye.test')
-rescue Rye::CommandError => ex
-  puts ex.exit_code                  # => 1
+rescue Rye::Err => ex
+  puts ex.exit_status                  # => 1
   puts ex.stderr                     # => ls: rye.test: No such file or directory
 end
 
@@ -165,7 +165,7 @@ puts rbox.uname('-a 1>&2').stdout    # =>
 puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
 
 # There were no actual errors so the exit code should be 0.
-puts rbox.uname('-a 1>&2').exit_code # => 0
+puts rbox.uname('-a 1>&2').exit_status # => 0
 
 
 puts %Q(
@@ -238,7 +238,7 @@ p Rye.shell :ls, '-l $HOME'
 p Rye.shell :ls, :l, '$HOME > crazy.txt'
 
 ret = Rye.shell :ls, 'nofile'
-p ret.exit_code                      # => 1
+p ret.exit_status                      # => 1
 p ret.stderr                         # => "sh: nofile: No such file or directory"
 p ret.class                          # => Rye::Rap
 

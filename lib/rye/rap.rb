@@ -20,7 +20,7 @@ module Rye;
     
      # An array containing any STDERR output 
     attr_reader :stderr
-    attr_reader :exit_code
+    attr_reader :exit_status
       # Only populated when calling via Rye::Shell 
     attr_reader :pid 
     attr_accessor :exit_signal
@@ -32,7 +32,7 @@ module Rye;
     # * +args+ anything that can sent to Array#new
     def initialize(obj, *args)
       @obj = obj
-      @exit_code = 0
+      @exit_status = 0
       @stderr = []
       super *args
     end
@@ -79,16 +79,16 @@ module Rye;
     # set to -1 (JRuby doesn't return the pid).   
     #
     # Returns the exit code as an Integer. 
-    def add_exit_code(code)
+    def add_exit_status(code)
       code = 0 if code.nil?
       if code.is_a?(Process::Status)
-        @exit_code = code.exitstatus.to_i
+        @exit_status = code.exitstatus.to_i
         @pid = Rye.sysinfo.vm == :java ? '-1' : code.pid
       else
-        @exit_code = code.to_i
+        @exit_status = code.to_i
       end
     end
-    def code; @exit_code; end
+    def code; @exit_status; end
     
     # Returns the first element if there's only the
     # one, an empty String if there's none. Returns

@@ -68,18 +68,18 @@ module Rye
   class NoPty < RyeError
     def message; "Could not obtain pty (i.e. an interactive ssh session)"; end
   end
-  class CommandError < RyeError
+  class Err < RyeError
     attr_reader :rap
     # * +rap+ a Rye::Rap object
     def initialize(rap)
       @rap = rap
     end
     def message
-      "%s (code: %s)" % [@rap.stderr.join($/), @rap.exit_code]
+      "%s (code: %s)" % [@rap.stderr.join($/), @rap.exit_status]
     end
     def stderr; @rap.stderr if @rap; end
     def stdout; @rap.stdout if @rap; end
-    def exit_code; @rap.exit_code if @rap; end
+    def exit_status; @rap.exit_status if @rap; end
   end
   
   # Reload Rye dynamically. Useful with irb. 
@@ -223,7 +223,7 @@ module Rye
     rap = Rye::Rap.new(self)
     rap.add_stdout(stdout || '')
     rap.add_stderr(stderr || '')
-    rap.add_exit_code($?)
+    rap.add_exit_status($?)
     rap
   end
   

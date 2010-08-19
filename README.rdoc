@@ -53,7 +53,7 @@ The return value for a command is a modified Array containing the contents of ST
 
     ret = rbox.uptime                      # => "11:02  up 16:01, 3 users"
     ret.stderr                             # => []
-    ret.exit_code                          # => 0
+    ret.exit_status                          # => 0
     ret.stdout                             # => "11:02  up 16:01, 3 users"
     ret.stdout.class                       # => Array
     ret.class                              # => Rye::Rap
@@ -161,7 +161,7 @@ The first argument must be the command name and the remaining arguments are sent
 The return value is a Rye::Rap object (just like with Rye::Box) so you have access to the exit code and STDERR output:
 
     ret = Rye.shell :ls, 'nofile'
-    ret.exit_code        # => 1
+    ret.exit_status        # => 1
     ret.stderr           # => "sh: nofile: No such file or directory"
     ret.class            # => Rye::Rap
 
