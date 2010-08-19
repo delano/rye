@@ -927,10 +927,10 @@ module Rye
     end
 
     def state_start_session(channel)
-      debug :start_session
+      debug "#{:start_session} [blk: #{!channel[:block].nil?}] [pty: #{@rye_pty}] [shell: #{@rye_shell}]"
+      channel[:state] = nil
       channel[:state] = :run_block if channel[:block] 
       channel[:state] = :await_response if @rye_pty
-      channel[:state] = nil
     end
     
     def state_await_response(channel)

@@ -19,6 +19,33 @@ module Rye;
   #
   module Cmd
     
+    def __shell(cmd, *args, &blk)
+      self.rye_shell = true
+      ret = run_command cmd, *args, &blk
+      self.rye_shell = false
+      ret
+    end
+    private :__shell
+    
+    # When called without a block this will open an 
+    # interactive shell session. 
+    def bash(*args, &blk)
+      setenv('PS1', "(rye) \\h:\\w \\u\\$\ ")
+      __shell 'bash', *args, &blk
+    end
+    
+    # When called without a block this will open an 
+    # interactive shell session.
+    def irb(*args, &blk)
+      __shell 'irb', *args, &blk
+    end
+    
+    # When called without a block this will open an 
+    # interactive shell session.
+    def sh(*args, &blk)
+      __shell 'sh', *args, &blk
+    end
+    
     # NOTE: See Rye::Box for the implementation of cd
     #def cd(*args); __allow('cd', args); end
     #def rm(*args); __allow('rm', args); end
@@ -27,7 +54,6 @@ module Rye;
     def mv(*args); __allow("mv", args); end
     def ls(*args); __allow('ls', args); end
     def ps(*args); __allow('ps', args); end
-    def sh(*args); __allow('sh', args); end
     def df(*args); __allow('df', args); end
     def du(*args); __allow('du', args); end
     def su(*args); __allow('su', args); end
@@ -37,7 +63,6 @@ module Rye;
     def xz(*args); __allow('xz', args); end
     
     def env; __allow "env"; end
-    def irb(*args); __allow "irb", args; end
     def rye(*args); __allow "rye", args; end
     def pwd(*args); __allow "pwd", args; end
     def svn(*args); __allow('svn', args); end
@@ -56,11 +81,7 @@ module Rye;
     def ruby(*args); __allow('ruby', args); end
     def rudy(*args); __allow('rudy', args); end
     def perl(*args); __allow('perl', args); end
-    def bash(*args, &blk)
-      self.rye_shell = true
-      setenv('PS1', "(rye) \\h:\\w \\u\\$\ ")
-      ret = __allow('bash', args, &blk)
-    end
+
     def echo(*args); __allow('echo', args); end
     def test(*args); __allow('test', args); end
     def mkfs(*args); __allow('mkfs', args); end
