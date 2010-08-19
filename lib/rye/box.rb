@@ -825,20 +825,24 @@ module Rye
         rap = Rye::Rap.new(self)
         rap.cmd = cmd_clean
         
-        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_internal, &blk)
+        channel = net_ssh_exec!(cmd_internal, &blk)
         
-        rap.add_stdout(stdout || '')
-        rap.add_stderr(stderr || '')
-        rap.add_exit_status(ecode)
-        rap.exit_signal = esignal
+        if channel[:exception]
+          rap = channel[:exception].rap
+        else
+          rap.add_stdout(channel[:stdout].read || '')
+          rap.add_stderr(channel[:stderr].read || '')
+          rap.add_exit_status(channel[:exit_status])
+          rap.exit_signal = channel[:exit_signal]
+        end
         
         debug "RESULT: %s " % [rap.inspect]
         
         # It seems a convention for various commands to return -1
-        # when something only mildly concerning happens. ls even 
-        # returns -1 for apparently no reason sometimes. In any
-        # case, the real errors are the ones greater than zero
-        raise Rye::Err.new(rap) if ecode != 0
+        # when something only mildly concerning happens. (ls even 
+        # returns -1 for apparently no reason sometimes). Anyway,
+        # the real errors are the ones that are greater than zero.
+        raise Rye::Err.new(rap) if rap.exit_status != 0
         
       rescue Exception => ex
         return rap if @rye_quiet
@@ -892,7 +896,7 @@ module Rye
     end
     
     def net_ssh_exec!(cmd, &blk)
-      debug ":net_ssh_exec #{cmd} (blk: #{!blk.nil?}; pty: #{@rye_pty}; shell: #{@rye_shell})"
+      debug ":net_ssh_exec #{cmd} (has blk: #{!blk.nil?}; pty: #{@rye_pty}; shell: #{@rye_shell})"
       
       pty_opts =   { :term => "xterm",
                               :chars_wide  => 80,
@@ -918,7 +922,7 @@ module Rye
         !channel.eof?   # otherwise keep returning true
       end
       
-      [channel[:stdout].read, channel[:stdout].read, channel[:exit_status], channel[:exit_signal]]
+      channel
     end
     
     
@@ -936,8 +940,8 @@ module Rye
     def state_await_response(channel)
       debug :await_response
       @await_response_counter ||= 0
-      if channel[:stdout].available > 0
-        channel[:state] = :read_input
+      if channel[:stdout].available > 0 || channel[:stderr].available > 0
+        channel[:state] = :read_response
       elsif @await_response_counter > 50
         @await_response_counter = 0
         channel[:state] = :await_input
@@ -945,19 +949,20 @@ module Rye
       @await_response_counter += 1
     end
     
-    def state_read_input(channel)
-      debug :read_input
-      if channel[:stdout].available > 0
-        print channel[:stdout].read
+    def state_read_response(channel)
+      debug :read_response
+      if channel[:stdout].available > 0 || channel[:stderr].available > 0
+        print channel[:stdout].read if channel[:stdout].available > 0
+        print channel[:stderr].read if channel[:stderr].available > 0
         
         if channel[:stack].empty?
           channel[:state] = :await_input
-        elsif channel[:stdout].available > 0
-          channel[:state] = :read_input
+        elsif channel[:stdout].available > 0 || channel[:stderr].available > 0
+          channel[:state] = :read_response
         else
           channel[:state] = :send_data
         end
-      else 
+      else
         channel[:state] = :await_response
       end
     end
@@ -973,7 +978,7 @@ module Rye
     def state_await_input(channel)
       debug :await_input
         if channel[:stdout].available > 0
-          channel[:state] = :read_input
+          channel[:state] = :read_response
         else
           ret = nil
           if channel[:prompt]
@@ -1038,7 +1043,11 @@ module Rye
       channel[:state] = nil
       blk = channel[:block]
       channel[:block] = nil
-      instance_eval &blk
+      begin
+        instance_eval &blk
+      rescue => ex
+        channel[:exception] = ex
+      end
       channel[:state] = :exit
     end
     

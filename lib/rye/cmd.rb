@@ -21,9 +21,9 @@ module Rye;
     
     def __shell(cmd, *args, &blk)
       self.rye_shell = true
-      ret = run_command cmd, *args, &blk
+      rap = run_command cmd, *args, &blk
       self.rye_shell = false
-      ret
+      rap
     end
     private :__shell
     
@@ -271,12 +271,14 @@ module Rye;
     def file_exists?(path)
       begin
         ret = self.quietly { ls(path) }
+        p ret
+        p ret.stderr.empty?
       rescue Rye::Err => ex
         ret = ex.rap
       end
       # "ls" returns a 0 exit code regardless of success in Linux
       # But on OSX exit code is 1. This is why we look at STDERR. 
-      ret.stderr.empty?
+      !(ret.exit_status > 0) || ret.stderr.empty?
     end
     
     # Does the calculated digest of +path+ match the known +expected_digest+?

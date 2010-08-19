@@ -40,6 +40,10 @@ module Rye;
     alias :box :obj
     alias :set :obj
     
+    def inspect
+      "[%s, %s, %s, %s]" % [self.join("").tr("\r", ''), @stderr.join("; ").tr("\r", ''), exit_status, exit_signal]
+    end
+    
     # Returns a reference to the Rye::Rap object (which 
     # acts like an Array that contains the STDOUT from the
     # command executed over SSH). This is available to 

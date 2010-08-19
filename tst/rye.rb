@@ -1,14 +1,15 @@
 require 'rye'
 
-rbox = Rye::Box.new 'api.solutious.com', :user => 'proto'
+rbox = Rye::Box.new 'localhost', :user => 'delano'
 #rbox.bash do 
-#  ret = sudo 'whoami'
-#  sudo :k
-#  p [:m, ret]
+#  ls(:l, '/etc2') rescue nil
+#  ls :l, '/etc'
 #end
 
 #rbox.bash
 
-rbox.irb :I, 'blamestella.com/lib', :r, 'blamestella'
+#rbox.irb :I, 'blamestella.com/lib', :r, 'blamestella' do
+#  puts BS.sysinfo
+#end
 
 #rbox.sh
