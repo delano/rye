@@ -912,12 +912,17 @@ module Rye
           begin
             list = self.commands.sort
 
-            comp = proc { |s| list.grep( /^#{Regexp.escape(s)}/ ) }
+            comp = proc { |s| 
+              # TODO: Something here for files
+              list.grep( /^#{Regexp.escape(s)}/ ) 
+            }
 
             Readline.completion_append_character = " "
             Readline.completion_proc = comp
             
             ret = Readline.readline(channel[:prompt] || '', true)
+            #ret = STDIN.gets
+            
             if ret.nil?
               channel[:state] = :exit
             else
@@ -992,7 +997,7 @@ module Rye
         }
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
-          @rye_stdout_hook.call(data) if @rye_stdout_hook.kind_of?(Proc)
+          @rye_stdout_hook.call(data) if !@rye_pty && !@rye_quiet && @rye_stdout_hook.kind_of?(Proc)
           if rye_pty && data =~ /password/i
             channel[:prompt] = data
             channel[:state] = :await_input
