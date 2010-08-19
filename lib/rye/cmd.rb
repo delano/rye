@@ -90,6 +90,7 @@ module Rye;
     def wget(*args) run_command('wget', args) end
     def curl(*args) run_command('curl', args) end
     def dpkg(*args) run_command('dpkg', args) end
+    def tail(*args) run_command('tail', args) end
     def unxz(*args) run_command('unxz', args) end
     
     def mount(*args) run_command("mount", args) end

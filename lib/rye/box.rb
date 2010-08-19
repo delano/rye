@@ -119,7 +119,7 @@ module Rye
       @rye_opts = {
         :safe => true,
         :port => ssh_opts[:port],
-        :keys => [],
+        :keys => Rye.keys,
         :info => nil,
         :debug => nil,
         :error => STDERR,
@@ -694,7 +694,7 @@ module Rye
     # but if it fails it will raise a Rye::NotConnected exception. 
     # 
     def run_command(*args, &blk)
-      debug "run_command with keys: #{Rye.keys.inspect}"
+      debug "run_command"
       
       cmd, args = prep_args(*args)
       
