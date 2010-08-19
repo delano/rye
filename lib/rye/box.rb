@@ -962,7 +962,6 @@ module Rye
           end
           ret = STDIN.gets
           if ret.nil?
-            channel.eof!
             channel[:state] = :exit
           else
             channel[:stack] << ret.chomp
@@ -989,15 +988,24 @@ module Rye
     def state_exit(channel)
       debug :exit_state
       channel[:state] = nil
-      puts
-      channel.eof!
-      p channel.eof?
+      if rye_pty && (!channel.eof? || !channel.closing?)
+        puts
+        channel.send_data("exit\n")
+      else
+        channel.eof!
+      end
     end
     
+    # TODO: implement callback
     def state_handle_error(channel)
       debug :handle_error
       channel[:state] = nil
-      channel.eof!
+      if rye_pty && (!channel.eof? || !channel.closing?)
+        puts
+        channel.send_data("exit\n")
+      else
+        channel.eof!
+      end
     end
     
 
