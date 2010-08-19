@@ -1,6 +1,7 @@
 
 
 module Rye
+  DEBUG = false unless defined?(Rye::DEBUG)
   
   # = Rye::Box
   #
@@ -29,6 +30,7 @@ module Rye
   class Box 
     include Rye::Cmd
     
+    attr_accessor :rye_shell
     attr_accessor :rye_pty
     
     def host; @rye_host; end
@@ -141,14 +143,14 @@ module Rye
         require @rye_templates.to_s   # should be :erb
       end
       
-      # Just in case someone sends a true value rather than IO object
-      @rye_debug = STDERR if @rye_debug == true
-      @rye_error = STDERR if @rye_error == true
-      @rye_info = STDOUT if @rye_info == true
-      
       @rye_opts[:logger] = Logger.new(@rye_debug) if @rye_debug # Enable Net::SSH debugging
       @rye_opts[:paranoid] = true unless @rye_safe == false # See Net::SSH.start
       @rye_opts[:keys] = [@rye_opts[:keys]].flatten.compact
+      
+      # Just in case someone sends a true value rather than IO object
+      @rye_debug = STDERR if @rye_debug == true || DEBUG
+      @rye_error = STDERR if @rye_error == true
+      @rye_info = STDOUT if @rye_info == true
       
       # Add the given private keys to the keychain that will be used for @rye_host
       add_keys(@rye_opts[:keys])
@@ -241,6 +243,7 @@ module Rye
     # * +run+ when set to false, it will return the SSH command as a String
     # and not open an SSH session.
     #
+    # TODO: refactor to use net_ssh_exec! in 0.9
     def interactive_ssh(run=true)
       debug "interactive_ssh with keys: #{Rye.keys.inspect}"
       run = false unless STDIN.tty?      
@@ -261,11 +264,11 @@ module Rye
       additional_keys = [additional_keys].flatten.compact || []
       return if additional_keys.empty?
       ret = Rye.add_keys(additional_keys) 
-      if ret.is_a?(Rye::Rap)
-        debug "ssh-add exit_status: #{ret.exit_status}" 
-        debug "ssh-add stdout: #{ret.stdout}"
-        debug "ssh-add stderr: #{ret.stderr}"
-      end
+      #if ret.is_a?(Rye::Rap)
+      #  debug "ssh-add exit_status: #{ret.exit_status}" 
+      #  debug "ssh-add stdout: #{ret.stdout}"
+      #  debug "ssh-add stderr: #{ret.stderr}"
+      #end
       self # MUST RETURN self
     end
     alias :add_key :add_keys
@@ -571,7 +574,7 @@ module Rye
     # Returns the return value of the block. 
     #
     def batch(*args, &block)
-      self.instance_exec *args, &block
+      self.instance_exec(*args, &block)
     end
     
     # Like batch, except it disables safe mode before executing the block. 
@@ -620,7 +623,7 @@ module Rye
     # command.
     def sudo(*args, &block)
       if block.nil?
-        __allow('sudo', args);
+        run_command('sudo', args);
       else
         previous_state = @rye_sudo
         enable_sudo
@@ -764,10 +767,12 @@ module Rye
     # This method will try to connect to the host automatically
     # but if it fails it will raise a Rye::NotConnected exception. 
     # 
-    def run_command(*args)
+    def run_command(*args, &blk)
       debug "run_command with keys: #{Rye.keys.inspect}"
       
       cmd, args = prep_args(*args)
+      
+      #p [:run_command, cmd, blk.nil?]
       
       connect if !@rye_ssh || @rye_ssh.closed?
       raise Rye::NotConnected, @rye_host unless @rye_ssh && !@rye_ssh.closed?
@@ -810,7 +815,7 @@ module Rye
         rap = Rye::Rap.new(self)
         rap.cmd = cmd_clean
         
-        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_internal)
+        stdout, stderr, ecode, esignal = net_ssh_exec!(cmd_internal, &blk)
         
         rap.add_stdout(stdout || '')
         rap.add_stderr(stderr || '')
@@ -868,7 +873,7 @@ module Rye
     end
     
     def net_ssh_exec!(cmd, &blk)
-      debug ":command #{cmd}"
+      debug ":command #{cmd} (blk: #{!blk.nil?})"
       
       pty_opts =   { :term => "xterm",
                               :chars_wide  => 80,
@@ -878,12 +883,15 @@ module Rye
                               :modes       => {} }
                               
       channel = @rye_ssh.open_channel do |channel|
-        channel.request_pty(pty_opts) do |ch,success|
-          self.rye_pty = success
-          raise Rye::NoPty if !success
+        if self.rye_shell && blk.nil?
+          channel.request_pty(pty_opts) do |ch,success|
+            self.rye_pty = success
+            raise Rye::NoPty if !success
+          end
         end
-        channel.exec(cmd, &prep_channel)
+        channel.exec(cmd, &create_channel)
         channel[:state] = :start_session
+        channel[:block] = blk
       end
       
       @rye_ssh.loop(0.1) do
@@ -901,11 +909,8 @@ module Rye
 
     def state_start_session(channel)
       debug :start_session
-      if channel[:block]
-        channel[:state] = :run_block
-      else
-        channel[:state] = :await_response
-      end
+      channel[:state] = :run_block if channel[:block] 
+      channel[:state] = :await_response if @rye_pty
     end
     
     def state_await_response(channel)
@@ -947,7 +952,7 @@ module Rye
         debug "sending #{cmd.inspect}"
         channel[:state] = :await_response
         channel.send_data("#{cmd}\n") unless channel.eof?
-        #channel.exec("#{cmd}\n", &prep_channel) 
+        #channel.exec("#{cmd}\n", &create_channel) 
       #end
     end
     
@@ -988,7 +993,7 @@ module Rye
     def state_exit(channel)
       debug :exit_state
       channel[:state] = nil
-      if rye_pty && (!channel.eof? || !channel.closing?)
+      if rye_shell && (!channel.eof? || !channel.closing?)
         puts
         channel.send_data("exit\n")
       else
@@ -1000,7 +1005,7 @@ module Rye
     def state_handle_error(channel)
       debug :handle_error
       channel[:state] = nil
-      if rye_pty && (!channel.eof? || !channel.closing?)
+      if rye_shell && (!channel.eof? || !channel.closing?)
         puts
         channel.send_data("exit\n")
       else
@@ -1018,7 +1023,7 @@ module Rye
       channel[:state] = :exit
     end
     
-    def prep_channel()
+    def create_channel()
       Proc.new do |channel,success|
         channel[:stdout  ] = Net::SSH::Buffer.new
         channel[:stderr  ] = Net::SSH::Buffer.new

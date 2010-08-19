@@ -56,7 +56,10 @@ module Rye;
     def ruby(*args); __allow('ruby', args); end
     def rudy(*args); __allow('rudy', args); end
     def perl(*args); __allow('perl', args); end
-    def bash(*args); __allow('bash', args); end
+    def bash(*args, &blk)
+      self.rye_shell = true
+      __allow('bash', args, &blk)
+    end
     def echo(*args); __allow('echo', args); end
     def test(*args); __allow('test', args); end
     def mkfs(*args); __allow('mkfs', args); end

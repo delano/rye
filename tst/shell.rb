@@ -61,7 +61,7 @@ module Rye
         debug :send_data, "calling #{cmd.inspect}"
         channel[:state] = :await_response
         channel.send_data("#{cmd}\n") unless channel.eof?
-        #channel.exec("#{cmd}\n", &prep_channel) 
+        #channel.exec("#{cmd}\n", &create_channel) 
       #end
     end
     
@@ -141,7 +141,7 @@ module Rye
           self.pty = success
           raise "pty request denied" unless success
         end
-        channel.exec(cmd, &prep_channel)
+        channel.exec(cmd, &create_channel)
         channel[:state] = :start_session
       end
       
@@ -199,7 +199,7 @@ module Rye
     
     private
     
-    def prep_channel()
+    def create_channel()
       Proc.new do |channel,success|
         channel[:stdout  ] = Net::SSH::Buffer.new
         channel[:stderr  ] = Net::SSH::Buffer.new
