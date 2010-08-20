@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2010-06-27 21:36:28 -0400</span>
+          <span class='datetime'>2010-08-19 11:51:04 -0400</span>
         </div>
       </div>
       <div id='content'>
@@ -61,39 +61,6 @@
             installed on the server side (other than an SSH daemon) so it can be run
             from any machine with Ruby, OpenSSL, and OpenSSH.
             </p>
-            <h3>SSH keys</h3>
-            <p>
-            You need SSH keys to use <a href="../classes/Rye.html">Rye</a>. After
-            installing <a href="../classes/Rye.html">Rye</a>, you can check if you have
-            any by running:
-            </p>
-            <pre>$ rye</pre>
-            <p>
-            If you get the message <em>&#8220;The agent has no identities&#8220;</em>
-            you will need to generate a keypair.
-            </p>
-            <pre>$ ssh-keygen</pre>
-            <h3>Passwordless SSH authorization</h3>
-            <p>
-            The easiest way to work with <a href="../classes/Rye.html">Rye</a> is to
-            authorize your remote accounts for passwordless logins (otherwise
-            you&#8217;ll be prompted for a password for every connection).
-            </p>
-            <p>
-            Enable passwordless logins to remote HOST1 and HOST2:
-            </p>
-            <pre>$ rye authorize HOST1 HOST2</pre>
-            <p>
-            This will copy your public SSH keys to the <tt>~/.ssh/authorized_keys</tt>
-            and <tt>~/.ssh/authorized_keys2</tt> files on the remote machine(s).
-            </p>
-            <p>
-            Enable passwordless logins to the local machine:
-            </p>
-            <pre>$ rye authorize-local</pre>
-            <p>
-            See <tt>rye -h</tt> for more info.
-            </p>
             <h2>Example 1 &#8212; Execute commands on a remote machine</h2>
             <p>
             Shell commands are executed by calling methods on a <a
@@ -109,7 +76,7 @@
             The return value for a command is a modified Array containing the contents
             of STDOUT split by line. It also gives access to STDERR and the exit code
             </p>
-            <pre>ret = rbox.uptime                      # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stderr                             # =&gt; []&#x000A;ret.exit_code                          # =&gt; 0&#x000A;ret.stdout                             # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stdout.class                       # =&gt; Array&#x000A;ret.class                              # =&gt; Rye::Rap</pre>
+            <pre>ret = rbox.uptime                      # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stderr                             # =&gt; []&#x000A;ret.exit_status                          # =&gt; 0&#x000A;ret.stdout                             # =&gt; &quot;11:02  up 16:01, 3 users&quot;&#x000A;ret.stdout.class                       # =&gt; Array&#x000A;ret.class                              # =&gt; Rye::Rap</pre>
             <h2>Example 2 &#8212; Paths and environment variables</h2>
             <p>
             You can change directories.
@@ -185,7 +152,7 @@
             (just like with <a href="../classes/Rye/Box.html">Rye::Box</a>) so you have
             access to the exit code and STDERR output:
             </p>
-            <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_code        # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
+            <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_status        # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -286,9 +253,9 @@
             process and shuts it down using at_exit. If you have code in an at_exit
             that rely&#8217;s on <a href="../classes/Rye.html">Rye</a>, make sure your
             code runs before Rye&#8217;s at_exit block is called. For example, Drydock
-            uses at_exit too which is why in <a href="bin/rye.html">bin/rye</a> you can
-            see that Drydock is called explicitly so that Rye&#8217;s at_exit is
-            executed after Drydock executes a command.
+            uses at_exit too which is why in bin/rye you can see that Drydock is called
+            explicitly so that Rye&#8217;s at_exit is executed after Drydock executes a
+            command.
             
             </li>
             <li>No support for STDIN for commands.
@@ -346,7 +313,7 @@
             <li>Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
             
             </li>
-            <li><a href="../classes/Rye/Box.html#M000169">Rye::Box#instance_exec</a> (for
+            <li><a href="../classes/Rye/Box.html#M000187">Rye::Box#instance_exec</a> (for
             Ruby 1.8) Mauricio Fernandez
             
             </li>

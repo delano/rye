@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2010-06-27 21:36:27 -0400</span>
+          <span class='datetime'>2010-08-19 15:33:29 -0400</span>
         </div>
       </div>
       <div id='content'>
@@ -41,10 +41,42 @@
             RYE, CHANGES
             </p>
             <p>
+            #### 0.9.0 (2010-08-19) #############################
+            </p>
+            <ul>
+            <li>FIXED: Pubkeys correctly added for first connection. (NOTE: some state
+            seems to be maintained by ssh-agent)
+            
+            </li>
+            <li>ADDED: Interactive and non-interactive shell support (via Net::SSH)
+            
+            </li>
+            <li>ADDED: Basic readline support for interactive mode
+            
+            </li>
+            <li>ADDED: New hook for printing STDOUT as it is returned
+            
+            </li>
+            <li>CHANGE: Removed bin/rye
+            
+            </li>
+            <li>CHANGE: Removed authorize_keys_remote and authorize_keys_local
+            
+            </li>
+            </ul>
+            <p>
+            #### 0.8.20 (2010-08-17) #############################
+            </p>
+            <ul>
+            <li>ADDED: string_append, template_write, template_upload, file_modify
+            
+            </li>
+            </ul>
+            <p>
             #### 0.8.19 (2010-06-28) #############################
             </p>
             <ul>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000111">Rye::Box#root?</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000126">Rye::Box#root?</a>
             
             </li>
             <li>ADDED: Better sudo handling.
@@ -156,7 +188,7 @@
             </p>
             <ul>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000156">Rye::Box#guess_user_home</a> for
+            href="../classes/Rye/Box.html#M000174">Rye::Box#guess_user_home</a> for
             Windows SSH support
             
             </li>
@@ -205,7 +237,7 @@
             #### 0.8.5 (2009-07-14) #############################
             </p>
             <ul>
-            <li>CHANGE: <a href="../classes/Rye/Box.html#M000148">Rye::Box#getenv</a> now
+            <li>CHANGE: <a href="../classes/Rye/Box.html#M000166">Rye::Box#getenv</a> now
             accepts an option key name
             
             </li>
@@ -213,7 +245,7 @@
             a shell command
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000160">Rye::Box#execute</a> for
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000176">Rye::Box#execute</a> for
             running arbitrary commands when not in safe mode
             
             </li>
@@ -241,15 +273,15 @@
             #### 0.8.2 (2009-06-23) #############################
             </p>
             <ul>
-            <li>FIXED: <a href="../classes/Rye/Box.html#M000142">Rye::Box.switch_user</a>
+            <li>FIXED: <a href="../classes/Rye/Box.html#M000160">Rye::Box.switch_user</a>
             will disconnect but not create a new connection.
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Cmd.html#M000105">Rye::Cmd#add_command</a>
+            <li>FIXED: <a href="../classes/Rye/Cmd.html#M000120">Rye::Cmd#add_command</a>
             hard coded argument handling for blocks
             
             </li>
-            <li>CHANGE: <a href="../classes/Rye/Rap.html#M000204">Rye::Rap#to_s</a> now
+            <li>CHANGE: <a href="../classes/Rye/Rap.html#M000223">Rye::Rap#to_s</a> now
             returns stdout.join($/)
             
             </li>
@@ -257,8 +289,8 @@
             insensitive.
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000089">Rye::Cmd#string_upload</a>
-            and <a href="../classes/Rye/Cmd.html#M000087">Rye::Cmd#string_download</a>
+            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000099">Rye::Cmd#string_upload</a>
+            and <a href="../classes/Rye/Cmd.html#M000097">Rye::Cmd#string_download</a>
             
             </li>
             <li>ADDED: <a href="../classes/Rye.html#M000011">Rye.shell</a> example to
@@ -274,7 +306,7 @@
             
             </li>
             <li>FIXED: Handling of relative paths in <a
-            href="../classes/Rye/Box.html#M000140">Rye::Box#cd</a> and Rye::Box#[]
+            href="../classes/Rye/Box.html#M000158">Rye::Box#cd</a> and Rye::Box#[]
             
             </li>
             <li>ADDED: file_upload now assumes uploading to home directory when only 1 arg
@@ -298,12 +330,12 @@
             <li>ADDED: Rye::Set#parallel and Rye::Set#parallel= methods
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000167">Rye::Box#quietly</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000185">Rye::Box#quietly</a>
             
             </li>
             <li>CHANGE: Updated <a
-            href="../classes/Rye/Set.html#M000219">Rye::Set#inspect</a> and <a
-            href="../classes/Rye/Set.html#M000218">Rye::Set#to_s</a>
+            href="../classes/Rye/Set.html#M000238">Rye::Set#inspect</a> and <a
+            href="../classes/Rye/Set.html#M000237">Rye::Set#to_s</a>
             
             </li>
             <li>CHANGE: Exception hook now receives: ex, cmd, user, host, nickname
@@ -316,7 +348,7 @@
             file_download
             
             </li>
-            <li>CHANGE: <a href="../classes/Rye/Cmd.html#M000093">Rye::Cmd#file_exists?</a>
+            <li>CHANGE: <a href="../classes/Rye/Cmd.html#M000108">Rye::Cmd#file_exists?</a>
             now executes quietly (doesn&#8217;t pollute logging)
             
             </li>
@@ -330,7 +362,7 @@
             because stdin is not a terminal.&#8220;
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Box.html#M000172">Rye::Box#disconnect</a>
+            <li>FIXED: <a href="../classes/Rye/Box.html#M000190">Rye::Box#disconnect</a>
             would hang in some instances. Now waits 3 seconds.
             
             </li>
@@ -357,11 +389,11 @@
             accepting or passing blocks.
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Set.html#M000209">Rye::Set#user</a> and <a
-            href="../classes/Rye/Set.html#M000208">Rye::Set#opts</a> methods
+            <li>ADDED: <a href="../classes/Rye/Set.html#M000228">Rye::Set#user</a> and <a
+            href="../classes/Rye/Set.html#M000227">Rye::Set#opts</a> methods
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000117">Rye::Box#nickname</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000134">Rye::Box#nickname</a>
             
             </li>
             <li>ADDED: exception hooks for <a href="../classes/Rye/Box.html">Rye::Box</a>.
@@ -378,12 +410,12 @@
             </p>
             <ul>
             <li>FIXED: Bug in <a
-            href="../classes/Rye/Box.html#M000143">Rye::Box#interactive_ssh</a> related
+            href="../classes/Rye/Box.html#M000161">Rye::Box#interactive_ssh</a> related
             to instance variable renaming from 0.7.0.
             
             </li>
             <li>FIXED: Bug in <a
-            href="../classes/Rye/Cmd.html#M000091">Rye::Cmd#file_append</a> which tried
+            href="../classes/Rye/Cmd.html#M000103">Rye::Cmd#file_append</a> which tried
             to download files that didn&#8217;t exist
             
             </li>
@@ -412,13 +444,13 @@
             <li>ADDED: Rye::Cmd#safely and Rye::Cmd#unsafely methods
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000095">Rye::Cmd#digest_md5</a>,
-            <a href="../classes/Rye/Cmd.html#M000096">Rye::Cmd#digest_sha1</a>, <a
-            href="../classes/Rye/Cmd.html#M000097">Rye::Cmd#digest_sha2</a> methods
+            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000110">Rye::Cmd#digest_md5</a>,
+            <a href="../classes/Rye/Cmd.html#M000111">Rye::Cmd#digest_sha1</a>, <a
+            href="../classes/Rye/Cmd.html#M000112">Rye::Cmd#digest_sha2</a> methods
             
             </li>
             <li>ADDED: <a
-            href="../classes/Rye/Cmd.html#M000094">Rye::Cmd#file_verified?</a> method
+            href="../classes/Rye/Cmd.html#M000109">Rye::Cmd#file_verified?</a> method
             
             </li>
             <li>ADDED: Rye::Box#net_ssh_exec! now checks and correctly prompts for a sudo
@@ -447,7 +479,7 @@
             <li>FIXED: Bug which prevented setting relative paths in non-home directory
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000105">Rye::Cmd#add_command</a>
+            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000120">Rye::Cmd#add_command</a>
             helper for adding new command methods.
             
             </li>
@@ -501,11 +533,11 @@
             href="../classes/Rye/Box.html">Rye::Box</a>
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000164">Rye::Box.batch</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000181">Rye::Box.batch</a>
             
             </li>
             <li>ADDED: Support for OS X for <a
-            href="../classes/Rye/Box.html#M000156">Rye::Box.guess_user_home</a>
+            href="../classes/Rye/Box.html#M000174">Rye::Box.guess_user_home</a>
             
             </li>
             </ul>
@@ -514,11 +546,11 @@
             </p>
             <ul>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000156">Rye::Box.guess_user_home</a>
+            href="../classes/Rye/Box.html#M000174">Rye::Box.guess_user_home</a>
             wasn&#8217;t handling the username arg (only using default name)
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000101">Rye::Cmd.can?</a>
+            <li>ADDED: <a href="../classes/Rye/Cmd.html#M000116">Rye::Cmd.can?</a>
             
             </li>
             <li>ADDED: Rye::Cmd.ostype
@@ -560,26 +592,24 @@
             href="../classes/Rye.html#M000011">Rye.shell</a>
             
             </li>
-            <li>FIXED: Removed reference to Rudy::Error in <a
-            href="bin/rye.html">bin/rye</a>
+            <li>FIXED: Removed reference to Rudy::Error in bin/rye
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000148">Rye::Box.getenv</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000166">Rye::Box.getenv</a>
             
             </li>
             <li>ADDED: Rye::Box.can?
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000141">Rye::Box.umask=</a> (a
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000159">Rye::Box.umask=</a> (a
             similar work around as cd / [])
             
             </li>
             <li>ADDED: Rye::Box.file_exists?
             
             </li>
-            <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000157">Rye::Box.authorize_keys_remote</a>
-            can now authorize for a different user
+            <li>ADDED: Rye::Box.authorize_keys_remote can now authorize for a different
+            user
             
             </li>
             <li>ADDED: Rye::Box.upload and Rye::Box.download
@@ -597,16 +627,15 @@
             </p>
             <ul>
             <li>CHANGE: Renamed <a
-            href="../classes/Rye/Box.html#M000150">Rye::Box.add_env</a> to <a
-            href="../classes/Rye/Box.html#M000149">Rye::Box.setenv</a>
+            href="../classes/Rye/Box.html#M000168">Rye::Box.add_env</a> to <a
+            href="../classes/Rye/Box.html#M000167">Rye::Box.setenv</a>
             
             </li>
             <li>CHANGE: rm and kill are available in <a
             href="../classes/Rye/Cmd.html">Rye::Cmd</a> by default
             
             </li>
-            <li>CHANGE: Rye::Box.authorize_keys renamed <a
-            href="../classes/Rye/Box.html#M000157">Rye::Box.authorize_keys_remote</a>
+            <li>CHANGE: Rye::Box.authorize_keys renamed Rye::Box.authorize_keys_remote
             
             </li>
             <li>CHANGE: The <a href="../classes/Rye/Rap.html">Rye::Rap</a> object now
@@ -644,11 +673,11 @@
             #### 0.5.3 (2009-04-20) #############################
             </p>
             <ul>
-            <li>FIXED: <a href="../classes/Rye/Box.html#M000171">Rye::Box.connect</a>
+            <li>FIXED: <a href="../classes/Rye/Box.html#M000189">Rye::Box.connect</a>
             raises exceptions instead of exits
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000171">Rye::Box.connect</a> now
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000189">Rye::Box.connect</a> now
             rescues HostKeyMismatch exceptions and prompts for a response.
             
             </li>
@@ -673,20 +702,18 @@
             
             </li>
             <li>FIXED: Bug in <a
-            href="../classes/Rye/Set.html#M000212">Rye::Set.add_boxes</a> pushing nils
+            href="../classes/Rye/Set.html#M000231">Rye::Set.add_boxes</a> pushing nils
             into the list of boxes
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000142">Rye::Box.switch_user</a>
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000160">Rye::Box.switch_user</a>
             
             </li>
             <li>ADDED: Several new commands to <a
             href="../classes/Rye/Cmd.html">Rye::Cmd</a>
             
             </li>
-            <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000158">Rye::Box.authorize_keys_local</a>
-            and &#8220;rye authorize-local
+            <li>ADDED: Rye::Box.authorize_keys_local and &#8220;rye authorize-local
             
             </li>
             </ul>
@@ -712,12 +739,12 @@
             <li>ADDED: hostname command to <a href="../classes/Rye/Cmd.html">Rye::Cmd</a>
             
             </li>
-            <li>ADDED: <a href="../classes/Rye/Box.html#M000171">Rye::Box.connect</a> now
+            <li>ADDED: <a href="../classes/Rye/Box.html#M000189">Rye::Box.connect</a> now
             supports multiple password attempts if STDIN.tty returns true
             
             </li>
             <li>ADDED: <a
-            href="../classes/Rye/Box.html#M000143">Rye::Box.interactive_ssh</a> for
+            href="../classes/Rye/Box.html#M000161">Rye::Box.interactive_ssh</a> for
             opening an SSH session to the given box.
             
             </li>
@@ -730,9 +757,7 @@
             #### 0.4.1 (2009-04-06) #############################
             </p>
             <ul>
-            <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000157">Rye::Box.authorize_keys_remote</a>
-            was not disabling safe mode properly
+            <li>FIXED: Rye::Box.authorize_keys_remote was not disabling safe mode properly
             
             </li>
             <li>FIXED: Disabled debug mode.
@@ -773,12 +798,11 @@
             <li>ADDED: Rye.host_keys
             
             </li>
-            <li>ADDED: <a href="bin/rye.html">bin/rye</a>
+            <li>ADDED: bin/rye
             
             </li>
-            <li>ADDED: commands now raise a <a
-            href="../classes/Rye/CommandError.html">Rye::CommandError</a> exception
-            when the command returns an exit code greater than 0.
+            <li>ADDED: commands now raise a <a href="../classes/Rye/Err.html">Rye::Err</a>
+            exception when the command returns an exit code greater than 0.
             
             </li>
             <li>CHANGE: Box.add_command renamed to Box.run_command
@@ -793,7 +817,7 @@
             Strings).
             
             </li>
-            <li>FIXED: <a href="../classes/Rye/Set.html#M000212">Rye::Set#add_boxes</a>
+            <li>FIXED: <a href="../classes/Rye/Set.html#M000231">Rye::Set#add_boxes</a>
             didn&#8217;t return self.
             
             </li>
@@ -810,7 +834,7 @@
             
             </li>
             <li>FIXED: <a
-            href="../classes/Rye/Box.html#M000159">Rye::Box.method_missing</a>
+            href="../classes/Rye/Box.html#M000175">Rye::Box.method_missing</a>
             Symbol/String ambiguity
             
             </li>
