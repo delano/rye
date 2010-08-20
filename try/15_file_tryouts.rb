@@ -8,5 +8,5 @@ lbox.file_exists? '/etc'
 
 ## knows files exist
 lbox = Rye::Box.new 'localhost'
-lbox.file_exists? '/etc/host'
+lbox.file_exists? '/etc/hosts'
 #=> true
