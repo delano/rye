@@ -134,7 +134,7 @@ The first argument must be the command name and the remaining arguments are sent
 The return value is a Rye::Rap object (just like with Rye::Box) so you have access to the exit code and STDERR output:
 
     ret = Rye.shell :ls, 'nofile'
-    ret.exit_status        # => 1
+    ret.exit_status      # => 1
     ret.stderr           # => "sh: nofile: No such file or directory"
     ret.class            # => Rye::Rap
 
@@ -159,7 +159,6 @@ Rye permits only a limited number of system commands to be run. This default whi
 
 == Dependencies
 
-* OpenSSH[http://www.openssh.com/]
 * OpenSSL[http://www.openssl.org] (The C library)
 * Ruby Gems:
   * net-ssh
@@ -175,19 +174,15 @@ Rye permits only a limited number of system commands to be run. This default whi
 Via Rubygems, one of:
 
     $ gem install rye
-    $ gem install delano-rye --source http://gems.github.com/
 
 or via download:
 
 * rye-latest.tar.gz[http://github.com/delano/rye/tarball/latest]
 * rye-latest.zip[http://github.com/delano/rye/zipball/latest]
 
-
-
 == Known Issues
 
 * Rye doesn't read the ~/.ssh/config file yet
-* Rye uses OpenSSH's ssh-agent (if it exists). Rye starts it up as a child process and shuts it down using at_exit. If you have code in an at_exit that rely's on Rye, make sure your code runs before Rye's at_exit block is called. For example, Drydock uses at_exit too which is why in bin/rye you can see that Drydock is called explicitly so that Rye's at_exit is executed after Drydock executes a command. 
 * No support for STDIN for commands.
 * Limited support for interactive shells. 
 
