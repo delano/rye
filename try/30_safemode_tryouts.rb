@@ -15,7 +15,7 @@ r.disable_safe_mode
 r.safe?
 #=> false
 
-## cannot execute arbitrary commands" do
+## cannot execute arbitrary commands
 begin
   r = Rye::Box.new 'localhost'
   r.execute '/bin/ls'
@@ -49,9 +49,9 @@ end
 begin
   r = Rye::Box.new 'localhost'
   r.ls '~'
-  rescue Rye::Err
-    :success
-  end
+rescue Rye::Err
+  :success
+end
 #=> :success
 
 ## can execute arbitrary commands
@@ -64,7 +64,6 @@ ret.empty?
 r = Rye::Box.new 'localhost', :safe => false
 file = "/tmp/tryouts-#{rand.to_s}"
 r.touch file
-#p [:file_exists, r.file_exists?(file)]
 r.rm file
 r.file_exists? file
 #=> false
@@ -75,7 +74,7 @@ ret = r.ls '/bin/**'
 ret.empty?
 #=> false
 
-## can use a tilda" do
+## can use a tilda
 r = Rye::Box.new 'localhost', :safe => false
 ret = r.ls '~'
 ret.empty?

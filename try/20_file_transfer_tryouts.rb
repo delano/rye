@@ -1,23 +1,17 @@
 require 'rye'
 
 @local_sandbox = File.join(Rye.sysinfo.tmpdir, 'rye-tryouts')
-@lbox = Rye::Box.new
+@lbox = Rye::Box.new 'localhost'
 Rye::Cmd.add_command :rm
 
 
 ## sandbox should not exist
-File.exists? @local_sandbox
+@lbox.file_exists? @local_sandbox
 #=> false
 
 ## create sandbox
-#begin
-puts "Creating #{@local_sandbox}"
 @lbox.mkdir :p, @local_sandbox
 @lbox.file_exists? @local_sandbox
-#rescue Rye::Err => ex
-#  p [:err, ex.stdout, ex.stderr, ex.exit_status]
-#  false
-#end
 #=> true
 
 ## upload file
@@ -33,7 +27,7 @@ ret = @lbox.file_exists? downloaded_file
 ret
 #=> true
 
-## download to StringIO" do
+## download to StringIO
 ret = @lbox.file_download File.join(@local_sandbox, 'README.rdoc')
 ret.class
 #=> StringIO
@@ -48,7 +42,6 @@ file.read == File.read(File.join(@local_sandbox, 'README.rdoc'))
 ## destroy sandbox
 Rye::Cmd.add_command :rm
 @lbox.rm :r, :f, @local_sandbox
-puts @local_sandbox
 @lbox.file_exists? @local_sandbox
 #=> false
 

@@ -22,7 +22,7 @@
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  s.executables = %w[rye]
+  s.executables = %w[]
   
   # = MANIFEST =
   # The complete list of files to be included in the release. When GitHub packages your gem, 
