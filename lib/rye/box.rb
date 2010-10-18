@@ -278,7 +278,7 @@ module Rye
       end
       additional_keys = [additional_keys].flatten.compact || []
       return if additional_keys.empty?
-      ret = Rye.add_keys(additional_keys) 
+      #ret = Rye.add_keys(additional_keys) 
       #if ret.is_a?(Rye::Rap)
       #  debug "ssh-add exit_status: #{ret.exit_status}" 
       #  debug "ssh-add stdout: #{ret.stdout}"

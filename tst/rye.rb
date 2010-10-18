@@ -10,6 +10,4 @@ rbox = Rye::Box.new 'localhost', :user => 'delano'
 
 #rbox.bash
 
-#rbox.irb :I, '/Users/delano/Projects/private/www.blamestella.com/lib', :r, 'blamestella' 
-
 rbox.sh
