@@ -31,13 +31,13 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2010-08-19 21:42:19 -0400</span>
+          <span class='datetime'>2010-09-06 11:04:42 -0400</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
-            <h1><a href="../classes/Rye.html">Rye</a> - v0.8</h1>
+            <h1><a href="../classes/Rye.html">Rye</a> - v0.9</h1>
             <p>
             <b>Safely run SSH commands on a bunch of machines at the same time (from
             Ruby)</b>.
@@ -152,7 +152,7 @@
             (just like with <a href="../classes/Rye/Box.html">Rye::Box</a>) so you have
             access to the exit code and STDERR output:
             </p>
-            <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_status        # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
+            <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_status      # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -196,9 +196,6 @@
             </p>
             <h2>Dependencies</h2>
             <ul>
-            <li><a href="http://www.openssh.com/">OpenSSH</a>
-            
-            </li>
             <li><a href="http://www.openssl.org">OpenSSL</a> (The C library)
             
             </li>
@@ -230,7 +227,7 @@
             <p>
             Via Rubygems, one of:
             </p>
-            <pre>$ gem install rye&#x000A;$ gem install delano-rye --source http://gems.github.com/</pre>
+            <pre>$ gem install rye</pre>
             <p>
             or via download:
             </p>
@@ -246,16 +243,6 @@
             <ul>
             <li><a href="../classes/Rye.html">Rye</a> doesn&#8217;t read the ~/.ssh/config
             file yet
-            
-            </li>
-            <li><a href="../classes/Rye.html">Rye</a> uses OpenSSH&#8217;s ssh-agent (if it
-            exists). <a href="../classes/Rye.html">Rye</a> starts it up as a child
-            process and shuts it down using at_exit. If you have code in an at_exit
-            that rely&#8217;s on <a href="../classes/Rye.html">Rye</a>, make sure your
-            code runs before Rye&#8217;s at_exit block is called. For example, Drydock
-            uses at_exit too which is why in bin/rye you can see that Drydock is called
-            explicitly so that Rye&#8217;s at_exit is executed after Drydock executes a
-            command.
             
             </li>
             <li>No support for STDIN for commands.
