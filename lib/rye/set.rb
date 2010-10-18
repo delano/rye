@@ -76,7 +76,7 @@ module Rye
         return @opts[:keys]
       end
       additional_keys = [additional_keys].flatten.compact || []
-      Rye.add_keys(additional_keys)
+      #Rye.add_keys(additional_keys)
       self
     end
     alias :add_keys :add_key

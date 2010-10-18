@@ -1,5 +1,8 @@
 RYE, CHANGES
 
+#### 0.9.1 (2010-10-18) #############################
+
+* CHANGE: Don't add keys to ssh-agent in Rye::Box and Rye::Set
 
 #### 0.9.0 (2010-08-19) #############################
 
