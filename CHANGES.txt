@@ -3,6 +3,8 @@ RYE, CHANGES
 #### 0.9.2 (2010-10-25) #############################
 
 * FIXED: add_keys stores key paths for Rye::Box and Rye::Set
+* ADDED: remove_keys method for Rye::Box and Rye::Set
+
 
 #### 0.9.1 (2010-10-18) #############################
 

@@ -82,6 +82,16 @@ module Rye
     end
     alias :add_key :add_keys
     
+    def remove_keys(*keys)
+      @opts[:keys] ||= []
+      @opts[:keys] -= keys.flatten.compact
+      @boxes.each do |box|
+        box.remove_keys keys.flatten.compact
+      end
+      self
+    end
+    alias :remove_key :remove_keys
+    
     # Add an environment variable. +n+ and +v+ are the name and value.
     # Returns the instance of Rye::Set
     def setenv(n, v)

@@ -267,16 +267,27 @@ module Rye
       system(cmd)
     end
     
-    # Add one or more private keys to the SSH Agent. 
-    # * +additional_keys+ is a list of file paths to private keys
+    # Add one or more private keys to the list of key paths.
+    # * +keys+ is a list of file paths to private keys
     # Returns the instance of Box
-    def add_keys(*additional_keys)
+    def add_keys(*keys)
       @rye_opts[:keys] ||= []
-      @rye_opts[:keys] += additional_keys.flatten.compact
-      @rye_opts[:keys].uniq
+      @rye_opts[:keys] += keys.flatten.compact
+      @rye_opts[:keys].uniq!
       self # MUST RETURN self
     end
     alias :add_key :add_keys
+    
+    # Remove one or more private keys fromt he list of key paths.
+    # * +keys+ is a list of file paths to private keys
+    # Returns the instance of Box
+    def remove_keys(*keys)
+      @rye_opts[:keys] ||= []
+      @rye_opts[:keys] -= keys.flatten.compact
+      @rye_opts[:keys].uniq!
+      self # MUST RETURN self
+    end
+    alias :remove_key :remove_keys
     
     # Return the value of uname in lowercase
     # This is a temporary fix. We can use SysInfo for this, upload
