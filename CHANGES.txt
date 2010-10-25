@@ -4,6 +4,7 @@ RYE, CHANGES
 
 * FIXED: add_keys stores key paths for Rye::Box and Rye::Set
 * ADDED: remove_keys method for Rye::Box and Rye::Set
+* ADDED: interactive_ssh adds private paths to ssh command
 
 
 #### 0.9.1 (2010-10-18) #############################
