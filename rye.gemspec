@@ -1,7 +1,7 @@
 @spec = Gem::Specification.new do |s|
   s.name = "rye"
   s.rubyforge_project = "rye"
-  s.version = "0.9.1"
+  s.version = "0.9.2"
   s.summary = "Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.description = s.summary
   s.author = "Delano Mandelbaum"
