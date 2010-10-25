@@ -271,19 +271,9 @@ module Rye
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Box
     def add_keys(*additional_keys)
-      if Rye.sysinfo.os == :windows
-        @rye_opts[:keys] ||= []
-        @rye_opts[:keys] += additional_keys.flatten
-        return @rye_opts[:keys]
-      end
-      additional_keys = [additional_keys].flatten.compact || []
-      return if additional_keys.empty?
-      #ret = Rye.add_keys(additional_keys) 
-      #if ret.is_a?(Rye::Rap)
-      #  debug "ssh-add exit_status: #{ret.exit_status}" 
-      #  debug "ssh-add stdout: #{ret.stdout}"
-      #  debug "ssh-add stderr: #{ret.stderr}"
-      #end
+      @rye_opts[:keys] ||= []
+      @rye_opts[:keys] += additional_keys.flatten.compact
+      @rye_opts[:keys].uniq
       self # MUST RETURN self
     end
     alias :add_key :add_keys

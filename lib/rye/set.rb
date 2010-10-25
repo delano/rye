@@ -66,20 +66,21 @@ module Rye
     end
     alias :add_boxes :add_box
     
-    # Add one or more private keys to the SSH Agent. 
+    # Add one or more private keys to each box. Also stores key paths
+    # in the set so when new boxes are added they will get the same keys,
     # * +additional_keys+ is a list of file paths to private keys
     # Returns the instance of Rye::Set
-    def add_key(*additional_keys)
-      if Rye.sysinfo.os == :windows
-        @opts[:keys] ||= []
-        @opts[:keys] += additional_keys.flatten
-        return @opts[:keys]
+    def add_keys(*additional_keys)
+      additional_keys = additional_keys.flatten.compact
+      @opts[:keys] ||= []
+      @opts[:keys] += additional_keys
+      @opts[:keys].uniq!
+      @boxes.each do |box|
+        box.add_keys *additional_keys
       end
-      additional_keys = [additional_keys].flatten.compact || []
-      #Rye.add_keys(additional_keys)
       self
     end
-    alias :add_keys :add_key
+    alias :add_key :add_keys
     
     # Add an environment variable. +n+ and +v+ are the name and value.
     # Returns the instance of Rye::Set
