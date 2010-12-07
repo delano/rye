@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2010-10-18 19:30:44 -0400</span>
+          <span class='datetime'>2010-12-06 20:16:32 -0500</span>
         </div>
       </div>
       <div id='content'>
@@ -90,7 +90,7 @@
             <p>
             You can add and remove commands to the whitelist.
             </p>
-            <pre>rbox.add_command :anything, '/path/2/anything'&#x000A;rbox.anything&#x000A;rbox.remove_command :anything&#x000A;rbox.anything                          # =&gt; Rye::CommandNotFound exception</pre>
+            <pre>Rye::Cmd.add_command :anything, '/usr/bin/uptime'&#x000A;rbox = Rye::Box.new&#x000A;rbox.anything&#x000A;Rye::Cmd.remove_command :anything&#x000A;rbox.anything                          # =&gt; Rye::CommandNotFound exception</pre>
             <h2>Example 4 &#8212; Disabling Safe Mode</h2>
             <p>
             Safe mode can be disabled on one of the following ways.

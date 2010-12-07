@@ -1,0 +1,246 @@
+#!/usr/bin/ruby
+# encoding: UTF-8
+
+# Rye -- A working example
+#
+# If your reading this via the rdocs you won't be able to see the code
+# See: http://github.com/delano/rye/blob/master/bin/try
+#
+# Usage: bin/try
+#
+
+RYE_HOME = File.join(File.dirname(__FILE__), '..')
+$:.unshift File.join(RYE_HOME, 'lib')
+%w{net-ssh sysinfo storable drydock}.each { |dir| $:.unshift File.join(File.dirname(__FILE__), '..', '..', dir, 'lib') }
+
+require 'stringio'
+require 'yaml'
+require 'rye'
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 1 -- Basic Usage
+#)
+
+rbox = Rye::Box.new('localhost')
+
+# Commands are run as methods on the Rye::Box object
+puts rbox.uptime                   # => 11:02  up 16:01, 3 users
+
+# The response value for all commands is a Rye::Rap object. The rap is a
+# subclass of Array so you can treat it as an Array, but it can also act 
+# like a String if there's only one element. 
+p rbox.ls(:a, '/')                 # => ['.', '..', 'bin', 'etc', ...]
+
+# You can change directories
+puts rbox.pwd                      # => /home/rye
+puts rbox['/usr/bin'].pwd          # => /usr/bin
+puts rbox.pwd                      # => /usr/bin
+
+# You can specify environment variables
+rbox.setenv(:RYE, "Forty Creek")
+rbox.env                           # => ['HOME=/home/rye', 'RYE=Forty Creek', ...]
+
+# The commands method returns an Array of available commands:                        
+puts rbox.commands.join(', ')      # => pwd, touch, echo, wc, ...
+
+# When you're done you can disconnect explicitly. 
+# (Although Rye does this automatically at exit.)
+rbox.disconnect
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 2 -- Disabling Safe-Mode
+#)
+
+rbox_safe = Rye::Box.new('localhost')
+rbox_wild = Rye::Box.new('localhost', :safe => false)
+
+# Safe-mode is enabled by default. In safe-mode, all command 
+# arguments are thoroughly escaped. This prevents access to
+# environment variables and file globs (among other things).
+p rbox_safe.echo('$HOME')                                    # => "$HOME"
+p rbox_safe['/etc'].ls('host*')  rescue Rye::Err    # Doesn't exist
+p rbox_safe.ls('-l | wc -l')     rescue Rye::Err    # => '|' is not a valid ls arg
+
+# Here's the same commands with safe-mode disabled:
+p rbox_wild.echo('$HOME')                   # => "/home/rye"
+p rbox_wild['/etc'].ls('host*')             # => ["hostconfig", "hosts"]
+p rbox_wild.ls('-l | wc -l')                # => 110
+p rbox_wild.echo('$HOME > /tmp/rye-home')   # => 
+p rbox_wild.cat('/tmp/rye-home')            # => "/home/rye"
+
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 3 -- Custom Commands
+#)
+
+rbox = Rye::Box.new('localhost')
+rbox.add_keys('/private/key/path')   # Specify additional private keys
+
+# There's currently no rye900 command
+p rbox.command?('rye9000')   # => false
+
+# But we can add our own commands to the Rye::Cmd class. They 
+# automatically become available to all Rye::Box objects.
+module Rye::Cmd
+  def rye9000(*args)
+    run_command("ls", args)
+  end
+  def somescript(*args)
+    run_command("/path/to/my/script", args)
+  end
+end
+
+# We can now run rye9000 (with arguments)
+p rbox.rye9000('-a')                 # => [".", "..", ".bashrc", ...]
+p rbox.command?('rye9000')           # => true
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 4 -- Accessing Multiple Machines
+#)
+
+rset = Rye::Set.new('default', :parallel => true)
+rbox = Rye::Box.new
+p rbox
+
+rset.add_keys('/private/key/path')     # For passwordless logins 
+rset.add_boxes(rbox, '127.0.0.1')      # Add boxes as hostnames or objects
+
+# Calling methods on Rye::Set objects is very similar to calling them on
+# Rye::Box objects. In fact, it's identical:
+p rset.uptime        # => [[14:19:02 up 32 days, 19:35 ...], [14:19:02 up 30 days, 01:35]]
+p rset['/usr'].ls    # => [['bin', 'etc', ...], ['bin', 'etc', ...]]
+
+# Like Rye::Box, the response value is a Rye::Rap object containing the
+# responses from each box. Each response is itself a Rye::Rap object.
+unames = rset.uname
+p unames                               # => [["Darwin"], ["Darwin"]]
+puts unames.class                      # => Rye::Rap
+
+# The Rye::Rap object also keeps a reference to the object that called the 
+# command. In this case, it will keep a reference to Rye::Set:
+puts unames.set.class                  # => Rye::Set
+puts unames.set == rset                # => true
+puts unames.size                       # => 2
+puts unames.first                      # => Darwin
+puts unames.first.class                # => Rye::Rap
+puts unames.first.box.class            # => Rye::Box
+puts unames.first.box == rbox          # => true
+
+# Envrionment variables can be set the same way as with Rye::Box
+rset.setenv(:RYE, "Forty Creek")
+p rset.env.first.select { |env| env =~ /RYE/ }  # => ["RYE=Forty Creek"]
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 5 -- ERROR HANDLING
+#)
+
+rbox = Rye::Box.new('localhost', :safe => false) # Note: safe mode is off
+
+# Rye follows the standard convention of taking exception to a non-zero 
+# exit code by raising a Rye::Err. In this case, rye9000.test
+# is not found by the ls command.
+begin
+  rbox.ls('rye.test')
+rescue Rye::Err => ex
+  puts ex.exit_status                  # => 1
+  puts ex.stderr                     # => ls: rye.test: No such file or directory
+end
+
+# The Rye:Rap response objects also give you the STDOUT and STDERR
+# content separately. Here we redirect STDOUT to STDERR, so this
+# will return nothing:
+puts rbox.uname('-a 1>&2').stdout    # =>
+
+# It all went to STDERR:
+puts rbox.uname('-a 1>&2').stderr    # => Darwin ryehost 9.6.0 ...
+
+# There were no actual errors so the exit code should be 0.
+puts rbox.uname('-a 1>&2').exit_status # => 0
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 6 -- FILE TRANSFERS
+#)
+
+dir_upload = "#{Rye.sysinfo.tmpdir}rye-upload"
+dir_download = "#{Rye.sysinfo.tmpdir}rye-download"
+
+rbox = Rye::Box.new("localhost", :info => STDOUT)
+
+# Rye ships without an rm method (for safety!). Here 
+# we add the rm method only to this instance of rbox.
+def rbox.rm(*args); __allow('rm', args); end
+
+rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
+rbox.rm(:r, :f, dir_download)
+
+rbox.file_upload("#{RYE_HOME}/README.rdoc", 
+            "#{RYE_HOME}/LICENSE.txt", dir_upload)
+
+applejack = StringIO.new("Some in-memory content")
+rbox.file_upload(applejack, "#{dir_upload}/applejack.txt")
+
+p rbox.ls(dir_upload)            # => [README.rdoc, LICENSE.txt, applejack.txt]
+p rbox.cat("#{dir_upload}/applejack.txt")   # => "Some in-memory content"
+
+filecontent = StringIO.new
+rbox.file_download("#{dir_upload}/applejack.txt", filecontent)
+filecontent.rewind           
+p filecontent.read
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 7 -- FILE TRANSFERS w/ VARIABLE INTERPOLATION
+#)
+
+dir_upload = "#{Rye.sysinfo.tmpdir}rye-upload"
+dir_download = "#{Rye.sysinfo.tmpdir}rye-download"
+
+rbox = Rye::Box.new("localhost", :info => STDOUT)
+
+# Rye ships without an rm method (for safety!). Here 
+# we add the rm method only to this instance of rbox.
+def rbox.rm(*args); __allow('rm', args); end
+
+rbox.rm(:r, :f, dir_upload) # Silently delete test dirs
+rbox.rm(:r, :f, dir_download)
+
+template = StringIO.new("Can we use templates? <%= 'Yes!' %>")
+rbox.mkdir dir_upload
+
+rbox.template_write("#{dir_upload}/template.txt", template)
+
+p rbox.ls(dir_upload)                      # => [template.txt]
+p rbox.cat("#{dir_upload}/template.txt")   # => "Can we use templates? Yes!"
+
+
+puts %Q(
+# ------------------------------------------------------------------
+#   EXAMPLE 8 -- LOCAL PROCESSES
+#)
+
+p Rye.shell :uptime
+
+p Rye.shell :ls, '*'
+p Rye.shell :ls, '-l $HOME'
+p Rye.shell :ls, :l, '$HOME > crazy.txt'
+
+Rye.shell :rm, 'crazy.txt'
+
+ret = Rye.shell :ls, 'nofile'
+p ret.exit_status                    # => 1
+p ret.stderr                         # => "sh: nofile: No such file or directory"
+p ret.class                          # => Rye::Rap
+
