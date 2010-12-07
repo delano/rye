@@ -149,7 +149,7 @@ module Rye
       end
       
       @rye_opts[:logger] = Logger.new(@rye_debug) if @rye_debug # Enable Net::SSH debugging
-      @rye_opts[:paranoid] = true unless @rye_safe == false # See Net::SSH.start
+      @rye_opts[:paranoid] ||= true unless @rye_safe == false # See Net::SSH.start
       @rye_opts[:keys] = [@rye_opts[:keys]].flatten.compact
       
       # Just in case someone sends a true value rather than IO object

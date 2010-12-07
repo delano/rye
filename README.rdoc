@@ -52,9 +52,10 @@ You can specify environment variables.
 
 You can add and remove commands to the whitelist.
 
-    rbox.add_command :anything, '/path/2/anything'
+    Rye::Cmd.add_command :anything, '/usr/bin/uptime'
+    rbox = Rye::Box.new
     rbox.anything                       
-    rbox.remove_command :anything
+    Rye::Cmd.remove_command :anything
     rbox.anything                          # => Rye::CommandNotFound exception
 
 
