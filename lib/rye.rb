@@ -87,7 +87,7 @@ module Rye
   # NOTE: does not reload rye.rb. 
   def reload
     pat = File.join(File.dirname(__FILE__), 'rye')
-    %w{key rap cmd box set gate}.each {|lib| load File.join(pat, "#{lib}.rb") }
+    %w{key rap cmd box set hop}.each {|lib| load File.join(pat, "#{lib}.rb") }
   end
   
   def mutex

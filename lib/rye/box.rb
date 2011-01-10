@@ -96,7 +96,7 @@ module Rye
     # * :safe => should Rye be safe? Default: true
     # * :port => remote server ssh port. Default: SSH config file or 22
     # * :keys => one or more private key file paths (passwordless login)
-    # * :via => the Rye::Gate to access this host through
+    # * :via => the Rye::Hop to access this host through
     # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR

@@ -13,9 +13,9 @@ module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
 
   ## TODO decide whether, or how, to have means by which
-  ##      to let a Rye::Gate have a :via attribute, so that 
+  ##      to let a Rye::Hop have a :via attribute, so that 
   ##      you could hop to a host that is more than one layer removed.
-  class Gate
+  class Hop
 
     def host; @rye_host; end
     def opts; @rye_opts; end
@@ -47,7 +47,7 @@ module Rye
     #
     # * :port => remote server ssh port. Default: SSH config file or 22
     # * :keys => one or more private key file paths (passwordless login)
-    # * :via => the Rye::Gate to access this host through
+    # * :via => the Rye::Hop to access this host through
     # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
