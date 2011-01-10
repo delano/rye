@@ -4,6 +4,7 @@ require 'net/ssh/gateway'
 # silly overrides
 class Net::SSH::Gateway
     def host ; @session.host ; end
+    def session ; @session ; end
     def busy? ; @session.busy? ; end
 end
 
@@ -15,6 +16,25 @@ module Rye
   ##      to let a Rye::Gate have a :via attribute, so that 
   ##      you could hop to a host that is more than one layer removed.
   class Gate
+
+    def host; @rye_host; end
+    def opts; @rye_opts; end
+    def user; @rye_user; end
+    def root?; user.to_s == "root" end
+    
+    def nickname; @rye_nickname || host; end
+    def via; @rye_via; end
+
+    def nickname=(val); @rye_nickname = val; end
+    def host=(val); @rye_host = val; end
+    def opts=(val); @rye_opts = val; end
+    def via=(val); @rye_via = val; end
+    
+    def via?; !@rye_via.nil?; end
+    def info?; !@rye_info.nil?; end
+    def debug?; !@rye_debug.nil?; end
+    def error?; !@rye_error.nil?; end
+    
 
     # A Hash. The keys are exception classes, the values are Procs to execute
     def exception_hook=(val); @rye_exception_hook = val; end
@@ -85,7 +105,6 @@ module Rye
       end
       
       @rye_opts[:logger] = Logger.new(@rye_debug) if @rye_debug # Enable Net::SSH debugging
-      @rye_opts[:paranoid] ||= true unless @rye_safe == false # See Net::SSH.start
       @rye_opts[:keys] = [@rye_opts[:keys]].flatten.compact
       
       # Just in case someone sends a true value rather than IO object
@@ -131,6 +150,21 @@ module Rye
     end
     alias :remove_key :remove_keys
     
+    # Reconnect as another user. This is different from su=
+    # which executes subsequent commands via +su -c COMMAND USER+. 
+    # * +newuser+ The username to reconnect as 
+    #
+    # NOTE: if there is an open connection, it's disconnected
+    # but not reconnected because it's possible it wasn't 
+    # connected yet in the first place (if you create the 
+    # instance with default settings for example)
+    def switch_user(newuser)
+      return if newuser.to_s == self.user.to_s
+      @rye_opts ||= {}
+      @rye_user = newuser
+      disconnect
+    end
+
     # Open an SSH session with +@rye_host+. This called automatically
     # when you the first comamnd is run if it's not already connected.
     # Raises a Rye::NoHost exception if +@rye_host+ is not specified.
@@ -200,6 +234,39 @@ module Rye
         debug "Exiting..."
       end
     end
+    
+    # See Rye.keys
+    def keys; Rye.keys; end
+    
+    # Returns +user@rye_host+
+    def to_s; '%s@rye_%s' % [user, @rye_host]; end
+    
+    def inspect
+      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s opts=%s keys=%s>} % 
+      [self.class.to_s, self.host, self.nickname,
+       @rye_current_working_directory, @rye_current_umask,
+       (@rye_current_environment_variables || '').inspect,
+       self.opts.inspect, self.keys.inspect]
+    end
+    
+    # Compares itself with the +other+ box. If the hostnames
+    # are the same, this will return true. Otherwise false. 
+    def ==(other)
+      @rye_host == other.host
+    end
+    
+    # Returns the host SSH keys for this box
+    def host_key
+      raise "No host" unless @rye_host
+      Rye.remote_host_keys(@rye_host)
+    end
+    
+  private
+      
+    def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end
+    def error(msg="unknown error msg"); @rye_error.puts msg if @rye_error; end
+    def pinfo(msg="unknown info msg"); @rye_info.print msg if @rye_info; end
+    def info(msg="unknown info msg"); @rye_info.puts msg if @rye_info; end
     
   end
 
