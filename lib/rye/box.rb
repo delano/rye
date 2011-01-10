@@ -50,10 +50,12 @@ module Rye
     # Returns the current value of the stash +@rye_stash+
     def stash; @rye_stash; end
     def quiet; @rye_quiet; end
+    def via; @rye_via; end
     def nickname; @rye_nickname || host; end
     
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
+    def via=(val); @rye_via = val; end
     
     # Store a value to the stash +@rye_stash+
     def stash=(val); @rye_stash = val; end
@@ -72,6 +74,7 @@ module Rye
     # The most recent valud for umask (or 0022)
     def current_umask; @rye_current_umask; end
     
+    def via?; !@rye_via.nil?; end
     def info?; !@rye_info.nil?; end
     def debug?; !@rye_debug.nil?; end
     def error?; !@rye_error.nil?; end
@@ -93,6 +96,7 @@ module Rye
     # * :safe => should Rye be safe? Default: true
     # * :port => remote server ssh port. Default: SSH config file or 22
     # * :keys => one or more private key file paths (passwordless login)
+    # * :via => the Rye::Gate to access this host through
     # * :info => an IO object to print Rye::Box command info to. Default: nil
     # * :debug => an IO object to print Rye::Box debugging info to. Default: nil
     # * :error => an IO object to print Rye::Box errors to. Default: STDERR
@@ -120,6 +124,7 @@ module Rye
         :safe => true,
         :port => ssh_opts[:port],
         :keys => Rye.keys,
+        :via => nil,
         :info => nil,
         :debug => nil,
         :error => STDERR,
@@ -135,6 +140,7 @@ module Rye
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
       # that are not meant for it. 
       @rye_safe, @rye_debug = @rye_opts.delete(:safe), @rye_opts.delete(:debug)
+      @rye_via, @rye_debug = @rye_opts.delete(:via), @rye_opts.delete(:via)
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)

@@ -16,7 +16,7 @@
   s.add_dependency 'highline', '>= 1.5.1'
   s.add_dependency 'net-ssh', '>= 2.0.13'
   s.add_dependency 'net-scp', '>= 1.0.2'
-  #s.add_dependency 'net-ssh-gateway'
+  s.add_dependency 'net-ssh-gateway'
   #s.add_dependency 'net-ssh-multi'
   
   # = EXECUTABLES =
