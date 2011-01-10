@@ -1,4 +1,5 @@
-
+# vim: set sw=2 ts=2 :
+  
 require 'net/ssh/gateway'
 
 # silly overrides
@@ -209,8 +210,11 @@ module Rye
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
-        # TODO build the connections wrappers, for if via? == true
-        @rye_ssh = Net::SSH::Gateway.start(@rye_host, @rye_user, @rye_opts || {}) 
+        # FIXME build the connections wrappers, for if via? == true
+        if (via?)
+        else
+          @rye_ssh = Net::SSH::Gateway.start(@rye_host, @rye_user, @rye_opts || {}) 
+        end
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell
@@ -300,3 +304,4 @@ module Rye
   end
 
 end
+

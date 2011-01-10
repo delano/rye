@@ -44,6 +44,7 @@
   lib/rye/key.rb
   lib/rye/rap.rb
   lib/rye/set.rb
+  lib/rye/hop.rb
   rye.gemspec
   )
   
