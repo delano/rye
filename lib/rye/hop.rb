@@ -28,7 +28,7 @@ module Rye
     def nickname=(val); @rye_nickname = val; end
     def host=(val); @rye_host = val; end
     def opts=(val); @rye_opts = val; end
-    def via=(val); @rye_via = val; end
+
     
     def via?; !@rye_via.nil?; end
     def info?; !@rye_info.nil?; end
@@ -123,6 +123,33 @@ module Rye
 
     end
     
+    # * +hops+ Rye::Hop objects will be added directly 
+    # to the set. Hostnames will be used to create new instances of Rye::Hop 
+    # h1 = Rye::Hop.new "host1"
+    # h1.via_hop "host2", :user => "service_user"
+    #
+    # OR
+    #
+    # h1 = Rye::Hop.new "host1"
+    # h2 = Rye::Hop.new "host2"
+    # h1.via_hop h2
+    #
+    def via_hop(*hops)
+      hops = hops.flatten.compact 
+      if hops.first.is_a?(Rye::Hop)
+        @rye_via = hops.first
+      elsif hops.first.is_a?(String)
+        hop = hops.shift
+        if hops.first.is_a?(Hash)
+          @rye_via = Rye::Hop.new(hop, hops.first)
+        else
+          @rye_via = Rye::Hop.new(hop)
+        end
+      end
+      disconnect
+      self
+    end
+    
     # Parse SSH config files for use with Net::SSH
     def ssh_config_options(host)
       return Net::SSH::Config.for(host)
@@ -182,6 +209,7 @@ module Rye
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
+        # TODO build the connections wrappers, for if via? == true
         @rye_ssh = Net::SSH::Gateway.start(@rye_host, @rye_user, @rye_opts || {}) 
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
@@ -242,10 +270,11 @@ module Rye
     def to_s; '%s@rye_%s' % [user, @rye_host]; end
     
     def inspect
-      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s opts=%s keys=%s>} % 
+      %q{#<%s:%s name=%s cwd=%s umask=%s env=%s via=%s opts=%s keys=%s>} % 
       [self.class.to_s, self.host, self.nickname,
        @rye_current_working_directory, @rye_current_umask,
        (@rye_current_environment_variables || '').inspect,
+       (@rye_via || '').inspect,
        self.opts.inspect, self.keys.inspect]
     end
     
