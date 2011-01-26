@@ -94,6 +94,7 @@ module Rye
 
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
       # that are not meant for it. 
+      @rye_safe, @rye_debug = @rye_opts.delete(:safe), @rye_opts.delete(:debug)
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
@@ -211,12 +212,20 @@ module Rye
       raise Rye::NoHost unless @rye_host
       return if @rye_ssh && !reconnect
       disconnect if @rye_ssh 
-      debug "Opening connection to #{@rye_host} as #{@rye_user}"
+      if @rye_via
+        debug "Opening connection to #{@rye_host} as #{@rye_user}, via #{@rye_via}"
+      else
+        debug "Opening connection to #{@rye_host} as #{@rye_user}"
+      end
       highline = HighLine.new # Used for password prompt
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
-        @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
+        if @rye_via
+          # XXX
+          @rye_ssh = Net::SSH.start(localhost, @rye_user, @rye_opts || {}) 
+        else
+          @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
         end
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
@@ -249,11 +258,20 @@ module Rye
       
       self
     end
+
+    # Cancel the port forward on all active local forwards
+    def remove_hops!
+      return unless @rye_ssh && @rye_ssh.forward.active_locals.count > 0
+      @rye_ssh.forward.active_locals.each {|fport, fhost| 
+        @rye_ssh.forward.cancel_local(fport, fhost)
+      }
+      return @rye_ssh.forward.active_locals.count
+    end
     
     # Close the SSH session  with +@rye_host+. This is called 
     # automatically at exit if the connection is open. 
     def disconnect
-      return unless @rye_ssh && @rye_ssh.active?
+      return unless @rye_ssh && !@rye_ssh.closed?
       begin
         if @rye_ssh.busy?;
           info "Is something still running? (ctrl-C to exit)"
@@ -298,6 +316,9 @@ module Rye
     end
     
   private
+    # Kicks off the thread that maintains the forwards
+    # if additional +Rye::Box+es add this +Rye::Hop+ as their via,
+    # it'll keep on trucking
     def port_loop
       connect unless @rye_ssh
       @active = true

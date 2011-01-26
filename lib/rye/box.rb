@@ -138,11 +138,13 @@ module Rye
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
       at_exit { self.disconnect }
+
+      # Properly handle whether the opt :via is a +Rye::Hop+ or a +String+
+      via_hop(@rye_opts.delete(:via))
       
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
       # that are not meant for it. 
       @rye_safe, @rye_debug = @rye_opts.delete(:safe), @rye_opts.delete(:debug)
-      @rye_via, @rye_debug = @rye_opts.delete(:via), @rye_opts.delete(:via)
       @rye_info, @rye_error = @rye_opts.delete(:info), @rye_opts.delete(:error)
       @rye_getenv = {} if @rye_opts.delete(:getenv) # Enable getenv with a hash
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
@@ -186,6 +188,35 @@ module Rye
       return Net::SSH::Config.for(host)
     end
     
+    # * +hops+ Rye::Hop objects will be added directly 
+    # to the set. Hostnames will be used to create new instances of Rye::Hop 
+    # h1 = Rye::Hop.new "host1"
+    # h1.via_hop "host2", :user => "service_user"
+    #
+    # OR
+    #
+    # h1 = Rye::Hop.new "host1"
+    # h2 = Rye::Hop.new "host2"
+    # h1.via_hop h2
+    #
+    def via_hop(*hops)
+      hops = hops.flatten.compact 
+      if hops.first.nil?
+        return @rye_via
+      elsif hops.first.is_a?(Rye::Hop)
+        @rye_via = hops.first
+      elsif hops.first.is_a?(String)
+        hop = hops.shift
+        if hops.first.is_a?(Hash)
+          @rye_via = Rye::Hop.new(hop, hops.first)
+        else
+          @rye_via = Rye::Hop.new(hop)
+        end
+      end
+      disconnect
+      self
+    end
+
     # Change the current working directory (sort of). 
     #
     # I haven't been able to wrangle Net::SSH to do my bidding. 
