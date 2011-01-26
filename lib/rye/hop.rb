@@ -1,15 +1,5 @@
-# vim: set sw=2 ts=2 :
+# vim : set sw=2 ts=2 :
   
-require 'net/ssh/gateway'
-
-# silly overrides
-class Net::SSH::Gateway
-    def host ; @session.host ; end
-    def session ; @session ; end
-    def busy? ; @session.busy? ; end
-end
-
-
 module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
 
@@ -17,6 +7,14 @@ module Rye
   ##      to let a Rye::Hop have a :via attribute, so that 
   ##      you could hop to a host that is more than one layer removed.
   class Hop
+
+    # The maximum port number that the gateway will attempt to use to forward
+    # connections from.
+    MAX_PORT = 65535
+
+    # The minimum port number that the gateway will attempt to use to forward
+    # connections from.
+    MIN_PORT = 1024
 
     def host; @rye_host; end
     def opts; @rye_opts; end
@@ -85,6 +83,8 @@ module Rye
         :quiet => false
       }.merge(opts)
 
+      @next_port = MAX_PORT
+
       # Close the SSH session before Ruby exits. This will do nothing
       # if disconnect has already been called explicitly. 
       at_exit { self.disconnect }
@@ -123,6 +123,8 @@ module Rye
       
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       debug @rye_opts.inspect
+
+      port_loop()
 
     end
     
@@ -214,10 +216,7 @@ module Rye
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
-        # FIXME build the connections wrappers, for if via? == true
-        if (via?)
-        else
-          @rye_ssh = Net::SSH::Gateway.start(@rye_host, @rye_user, @rye_opts || {}) 
+        @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
         end
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
@@ -299,6 +298,25 @@ module Rye
     end
     
   private
+    def port_loop
+      connect unless @rye_ssh
+      @active = true
+      @thread = Thread.new do
+        while @active
+          @rye_ssh.process(0.1)
+        end
+      end
+    end
+
+    # Grabs the next available port number and returns it.
+    def next_port
+      @port_mutex.synchronize do
+        port = @next_port
+        @next_port -= 1
+        @next_port = MAX_PORT if @next_port < MIN_PORT
+        port
+      end
+    end
       
     def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end
     def error(msg="unknown error msg"); @rye_error.puts msg if @rye_error; end
