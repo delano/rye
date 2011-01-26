@@ -1,5 +1,5 @@
 # vim : set sw=2 ts=2 :
-  
+
 module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
 
@@ -90,6 +90,7 @@ module Rye
       at_exit { self.disconnect }
 
       # Properly handle whether the opt :via is a +Rye::Hop+ or a +String+
+      # and does nothing if nil
       via_hop(@rye_opts.delete(:via))
 
       # @rye_opts gets sent to Net::SSH so we need to remove the keys
@@ -157,6 +158,20 @@ module Rye
       disconnect
       self
     end
+
+    # instance method, that will setup a forward, and
+    # return the port used
+    def fetch_port(host, port = 22, localport = nil)
+      connect unless @rye_ssh
+      if localport.nil?
+        port_used = next_port
+      else
+        port_used = localport
+      end
+      @rye_ssh.forward.local(port_used, host, port)
+      port_loop unless @thread.alive?
+      return port_used
+    end
     
     # Parse SSH config files for use with Net::SSH
     def ssh_config_options(host)
@@ -223,6 +238,9 @@ module Rye
       begin
         if @rye_via
           # XXX
+          # need a method to to the Hop to create the forward,
+          # and return the localport to use here
+          # fetch_port()
           @rye_ssh = Net::SSH.start(localhost, @rye_user, @rye_opts || {}) 
         else
           @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
@@ -331,12 +349,10 @@ module Rye
 
     # Grabs the next available port number and returns it.
     def next_port
-      @port_mutex.synchronize do
-        port = @next_port
-        @next_port -= 1
-        @next_port = MAX_PORT if @next_port < MIN_PORT
-        port
-      end
+      port = @next_port
+      @next_port -= 1
+      @next_port = MAX_PORT if @next_port < MIN_PORT
+      port
     end
       
     def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end
