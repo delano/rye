@@ -1,7 +1,7 @@
 @spec = Gem::Specification.new do |s|
   s.name = "rye"
   s.rubyforge_project = "rye"
-  s.version = "0.9.2"
+  s.version = "0.9.2_vb"
   s.summary = "Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.description = s.summary
   s.author = "Delano Mandelbaum"
@@ -16,7 +16,6 @@
   s.add_dependency 'highline', '>= 1.5.1'
   s.add_dependency 'net-ssh', '>= 2.0.13'
   s.add_dependency 'net-scp', '>= 1.0.2'
-  s.add_dependency 'net-ssh-gateway'
   #s.add_dependency 'net-ssh-multi'
   
   # = EXECUTABLES =

@@ -1,5 +1,7 @@
 # vim : set sw=2 ts=2 :
 
+require 'socket'
+
 module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
 
@@ -123,11 +125,11 @@ module Rye
       # From: capistrano/lib/capistrano/cli.rb
       STDOUT.sync = true # so that Net::SSH prompts show up
       
+      debug "starting the port forward thread"
+      port_loop
+
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       debug @rye_opts.inspect
-
-      port_loop()
-
     end
     
     # * +hops+ Rye::Hop objects will be added directly 
@@ -168,8 +170,11 @@ module Rye
       else
         port_used = localport
       end
+      # i would like to check if the port and host 
+      # are already an active_locals forward, but that 
+      # info does not get returned, and trusting the localport
+      # is not enough information, so lets just set up a new one
       @rye_ssh.forward.local(port_used, host, port)
-      port_loop unless @thread.alive?
       return port_used
     end
     
@@ -228,7 +233,7 @@ module Rye
       return if @rye_ssh && !reconnect
       disconnect if @rye_ssh 
       if @rye_via
-        debug "Opening connection to #{@rye_host} as #{@rye_user}, via #{@rye_via}"
+        debug "Opening connection to #{@rye_host} as #{@rye_user}, via #{@rye_via.host}"
       else
         debug "Opening connection to #{@rye_host} as #{@rye_user}"
       end
@@ -237,11 +242,10 @@ module Rye
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
         if @rye_via
-          # XXX
-          # need a method to to the Hop to create the forward,
-          # and return the localport to use here
-          # fetch_port()
-          @rye_ssh = Net::SSH.start(localhost, @rye_user, @rye_opts || {}) 
+          # tell the +Rye::Hop+ what and where to setup,
+          # it returns the local port used
+          @rye_localport = @rye_via.fetch_port(@rye_host, @rye_opts[:port].nil? ? 22 : @rye_opts[:port] )
+          @rye_ssh = Net::SSH.start("localhost", @rye_user, @rye_opts.merge(:port => @rye_localport) || {}) 
         else
           @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
         end
@@ -291,6 +295,8 @@ module Rye
     def disconnect
       return unless @rye_ssh && !@rye_ssh.closed?
       begin
+        debug "killing port_loop @thread"
+        @thread.kill
         if @rye_ssh.busy?;
           info "Is something still running? (ctrl-C to exit)"
           Timeout::timeout(10) do
@@ -298,7 +304,11 @@ module Rye
           end
         end
         debug "Closing connection to #{@rye_ssh.host}"
-        @rye_ssh.shutdown!
+        @rye_ssh.close
+        if @rye_via
+          debug "disconnecting Hop #{@rye_via.host}"
+          @rye_via.disconnect
+        end
       rescue SystemCallError, Timeout::Error => ex
         error "Disconnect timeout"
       rescue Interrupt
@@ -341,7 +351,7 @@ module Rye
       connect unless @rye_ssh
       @active = true
       @thread = Thread.new do
-        while @active
+        while true
           @rye_ssh.process(0.1)
         end
       end
@@ -352,7 +362,16 @@ module Rye
       port = @next_port
       @next_port -= 1
       @next_port = MAX_PORT if @next_port < MIN_PORT
-      port
+      # check if the port is in use, if so get the next_port
+      begin
+        TCPSocket.new '127.0.0.1', port
+      rescue Errno::EADDRINUSE
+        next_port()
+      rescue Errno::ECONNREFUSED
+        port
+      else
+        next_port()
+      end
     end
       
     def debug(msg="unknown debug msg"); @rye_debug.puts msg if @rye_debug; end

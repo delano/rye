@@ -199,16 +199,20 @@ module Rye
     # h2 = Rye::Hop.new "host2"
     # h1.via_hop h2
     #
-    def via_hop(*hops)
-      hops = hops.flatten.compact 
-      if hops.first.nil?
+    def via_hop(*args)
+      args = args.flatten.compact 
+      if args.first.nil?
         return @rye_via
-      elsif hops.first.is_a?(Rye::Hop)
-        @rye_via = hops.first
-      elsif hops.first.is_a?(String)
-        hop = hops.shift
-        if hops.first.is_a?(Hash)
-          @rye_via = Rye::Hop.new(hop, hops.first)
+      elsif args.first.is_a?(Rye::Hop)
+        @rye_via = args.first
+      elsif args.first.is_a?(String)
+        hop = args.shift
+        if args.first.is_a?(Hash)
+          @rye_via = Rye::Hop.new(hop, args.first.merge(
+                                        :debug => @rye_debug,
+                                        :info => @rye_info,
+                                        :error => @rye_error)
+                                 )
         else
           @rye_via = Rye::Hop.new(hop)
         end
@@ -641,12 +645,24 @@ module Rye
       raise Rye::NoHost unless @rye_host
       return if @rye_ssh && !reconnect
       disconnect if @rye_ssh 
-      debug "Opening connection to #{@rye_host} as #{@rye_user}"
+      if @rye_via
+        debug "Opening connection to #{@rye_host} as #{@rye_user}, via #{@rye_via.host}"
+      else
+        debug "Opening connection to #{@rye_host} as #{@rye_user}"
+      end
       highline = HighLine.new # Used for password prompt
       retried = 0
       @rye_opts[:keys].compact!  # A quick fix in Windows. TODO: Why is there a nil?
       begin
-        @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
+        if @rye_via
+          # tell the +Rye::Hop+ what and where to setup,
+          # it returns the local port used
+          @rye_localport = @rye_via.fetch_port(@rye_host, @rye_opts[:port].nil? ? 22 : @rye_opts[:port] )
+          debug "fetched localport #{@rye_localport}"
+          @rye_ssh = Net::SSH.start("localhost", @rye_user, @rye_opts.merge(:port => @rye_localport) || {}) 
+        else
+          @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
+        end
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell
@@ -692,6 +708,10 @@ module Rye
         end
         debug "Closing connection to #{@rye_ssh.host}"
         @rye_ssh.close
+        if @rye_via
+          debug "disconnecting Hop #{@rye_via.host}"
+          @rye_via.disconnect
+        end
       rescue SystemCallError, Timeout::Error => ex
         error "Disconnect timeout"
       rescue Interrupt
