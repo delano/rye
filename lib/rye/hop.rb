@@ -5,9 +5,27 @@ require 'socket'
 module Rye
   DEBUG = false unless defined?(Rye::DEBUG)
 
-  ## TODO decide whether, or how, to have means by which
-  ##      to let a Rye::Hop have a :via attribute, so that 
-  ##      you could hop to a host that is more than one layer removed.
+  # = Rye::Hop
+  #
+  # The Rye::Hop class represents a machine. 
+  # This class allows boxes to by accessed via it.
+  #
+  #     rhop = Rye::Hop.new('firewall.lan')
+  #     rbox = Rye::Box.new('filibuster', :via => rhop)
+  #     rbox.uptime     # => 20:53  up 1 day,  1:52, 4 users
+  #
+  # Or
+  #
+  #     rbox = Rye::Box.new('filibuster', :via => 'firewall.lan')
+  #
+  #--
+  # * When anything confusing happens, enable debug in initialize
+  # by passing :debug => STDERR. This will output Rye debug info
+  # as well as Net::SSH info. This is VERY helpful for figuring
+  # out why some command is hanging or otherwise acting weird. 
+  # * If a remote command is hanging, it's probably because a
+  # Net::SSH channel is waiting on_extended_data (a prompt). 
+  #++
   class Hop
 
     # The maximum port number that the gateway will attempt to use to forward
