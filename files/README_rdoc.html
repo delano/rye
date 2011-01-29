@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2010-12-06 20:16:32 -0500</span>
+          <span class='datetime'>2011-01-29 13:09:23 -0500</span>
         </div>
       </div>
       <div id='content'>
@@ -153,6 +153,19 @@
             access to the exit code and STDERR output:
             </p>
             <pre>ret = Rye.shell :ls, 'nofile'&#x000A;ret.exit_status      # =&gt; 1&#x000A;ret.stderr           # =&gt; &quot;sh: nofile: No such file or directory&quot;&#x000A;ret.class            # =&gt; Rye::Rap</pre>
+            <h2>Example 8a &#8212; Hopping Firewalls</h2>
+            <p>
+            When working with machines that are behind another host (assuming that you
+            have ssh access to the firewall host):
+            </p>
+            <pre>   rhop = Rye::Hop.new('firewall.lan')&#x000A;   rbox = Rye::Box.new('filibuster', :via =&gt; rhop)&#x000A;   rbox.uptime     # =&gt; 20:53  up 1 day,  1:52, 4 users&#x000A;&#x000A;Or&#x000A;&#x000A;   rbox = Rye::Box.new('filibuster', :via =&gt; 'firewall.lan')</pre>
+            <p>
+            The information for the <a href="../classes/Rye/Box.html">Rye::Box</a> is
+            then relative from the position of the firewall. So, the hostname
+            &#8216;filibuster&#8217; is used from &#8216;firewall.lan&#8216;
+            </p>
+            <h2>Example 8b &#8212; Hopping Firewalls, in groups</h2>
+            <pre>rset = Rye::Set.new &quot;guarded_few&quot;, :parallel =&gt; true&#x000A;rhop = Rye::Hop.new &quot;firewall.lan&quot;&#x000A;rbox1 = Rye::Box.new &quot;192.168.1.10&quot;, :via =&gt; rhop&#x000A;rbox2 = Rye::Box.new &quot;192.168.1.15&quot;, :via =&gt; rhop&#x000A;rset.add_boxes rbox1, rbox2&#x000A;rset.uptime&#x000A;    # =&gt; [[17:17:44 up 548 days, 13:37, 20 users,  load average: 0.12, 0.07, 0.06], [01:17:49 up 6 days,  1:39,  9 users,  load average: 0.13, 0.09, 0.09]]</pre>
             <h2>About Safe-Mode</h2>
             <p>
             In safe-mode:
@@ -273,6 +286,10 @@
             href="http://github.com/justincase/">github.com/justincase/</a>) for fixes
             
             </li>
+            <li>Vincent Batts (<a href="http://hashbangbash.com/">hashbangbash.com/</a>)
+            for <a href="../classes/Rye/Hop.html">Rye::Hop</a>
+            
+            </li>
             </ul>
             <h2>More Info</h2>
             <ul>
@@ -300,7 +317,7 @@
             <li>Escape, Copyright (C) 2006,2007 Tanaka Akira <akr@fsij.org>
             
             </li>
-            <li><a href="../classes/Rye/Box.html#M000189">Rye::Box#instance_exec</a> (for
+            <li><a href="../classes/Rye/Box.html#M000193">Rye::Box#instance_exec</a> (for
             Ruby 1.8) Mauricio Fernandez
             
             </li>
