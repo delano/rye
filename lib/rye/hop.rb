@@ -143,9 +143,6 @@ module Rye
       # From: capistrano/lib/capistrano/cli.rb
       STDOUT.sync = true # so that Net::SSH prompts show up
       
-      debug "starting the port forward thread"
-      port_loop
-
       debug "ssh-agent info: #{Rye.sshagent_info.inspect}"
       debug @rye_opts.inspect
     end
@@ -267,6 +264,8 @@ module Rye
         else
           @rye_ssh = Net::SSH.start(@rye_host, @rye_user, @rye_opts || {}) 
         end
+        debug "starting the port forward thread"
+        port_loop
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell

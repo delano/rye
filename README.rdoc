@@ -140,6 +140,32 @@ The return value is a Rye::Rap object (just like with Rye::Box) so you have acce
     ret.class            # => Rye::Rap
 
 
+== Example 8a -- Hopping Firewalls
+
+When working with machines that are behind another host (assuming that you have ssh access to the firewall host):
+
+    rhop = Rye::Hop.new('firewall.lan')
+    rbox = Rye::Box.new('filibuster', :via => rhop)
+    rbox.uptime     # => 20:53  up 1 day,  1:52, 4 users
+
+ Or
+
+    rbox = Rye::Box.new('filibuster', :via => 'firewall.lan')
+
+The information for the Rye::Box is then relative from the position of the firewall. 
+So, the hostname 'filibuster' is used from 'firewall.lan'
+
+== Example 8b -- Hopping Firewalls, in groups
+
+    rset = Rye::Set.new "guarded_few", :parallel => true
+    rhop = Rye::Hop.new "firewall.lan"
+    rbox1 = Rye::Box.new "192.168.1.10", :via => rhop
+    rbox2 = Rye::Box.new "192.168.1.15", :via => rhop
+    rset.add_boxes rbox1, rbox2
+    rset.uptime
+        # => [[17:17:44 up 548 days, 13:37, 20 users,  load average: 0.12, 0.07, 0.06], [01:17:49 up 6 days,  1:39,  9 users,  load average: 0.13, 0.09, 0.09]]
+
+
 == About Safe-Mode
 
 In safe-mode:
