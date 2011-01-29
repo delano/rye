@@ -320,7 +320,7 @@ module Rye
         debug "removing active forwards"
         remove_hops!
         debug "killing port_loop @rye_port_thread"
-        @rye_port_thread.kill!
+        @rye_port_thread.kill
         if @rye_ssh.busy?;
           info "Is something still running? (ctrl-C to exit)"
           Timeout::timeout(10) do
