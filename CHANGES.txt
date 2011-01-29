@@ -1,8 +1,9 @@
 RYE, CHANGES
 
-#### 0.9.3 (2011-01-??) #############################
+#### 0.9.3 (2011-01-29) #############################
 
-* ADDED: Rye::Hop for gateway support.
+* ADDED: Rye::Hop for gateway support. 
+  (https://github.com/delano/rye/issues/closed#issue/10)
 * CHANGE: Don't overwrite :paranoid option
 
 
