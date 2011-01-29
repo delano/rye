@@ -304,6 +304,11 @@ module Rye
       @rye_ssh.forward.active_locals.each {|fport, fhost| 
         @rye_ssh.forward.cancel_local(fport, fhost)
       }
+      if !@rye_ssh.channels.empty?
+        @rye_ssh.channels.each {|channel|
+          channel[-1].close
+        }
+      end
       return @rye_ssh.forward.active_locals.count
     end
     
@@ -312,8 +317,10 @@ module Rye
     def disconnect
       return unless @rye_ssh && !@rye_ssh.closed?
       begin
-        debug "killing port_loop @thread"
-        @thread.kill
+        debug "removing active forwards"
+        remove_hops!
+        debug "killing port_loop @rye_port_thread"
+        @rye_port_thread.kill!
         if @rye_ssh.busy?;
           info "Is something still running? (ctrl-C to exit)"
           Timeout::timeout(10) do
@@ -327,7 +334,8 @@ module Rye
           @rye_via.disconnect
         end
       rescue SystemCallError, Timeout::Error => ex
-        error "Disconnect timeout"
+        error "Rye::Hop: Disconnect timeout (#{ex.message})"
+        debug ex.backtrace
       rescue Interrupt
         debug "Exiting..."
       end
@@ -367,8 +375,8 @@ module Rye
     def port_loop
       connect unless @rye_ssh
       @active = true
-      @thread = Thread.new do
-        while true
+      @rye_port_thread = Thread.new do
+        while @active
           @rye_ssh.process(0.1)
         end
       end
