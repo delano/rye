@@ -459,7 +459,9 @@ module Rye
     # A handler for undefined commands. 
     # Raises Rye::CommandNotFound exception.
     def method_missing(cmd, *args, &block)
-      if @rye_safe
+      if cmd == :to_ary
+        super
+      elsif @rye_safe
         ex = Rye::CommandNotFound.new(cmd.to_s)
         raise ex unless @rye_exception_hook.has_key? ex.class
         @rye_exception_hook[Rye::CommandNotFound].call ex

@@ -11,7 +11,7 @@
   # = DEPENDENCIES =
   # Add all gem dependencies
   s.add_dependency 'annoy'
-  s.add_dependency 'sysinfo', '>= 0.7.0'
+  s.add_dependency 'sysinfo', '>= 0.7.3'
   
   s.add_dependency 'highline', '>= 1.5.1'
   s.add_dependency 'net-ssh', '>= 2.0.13'
