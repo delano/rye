@@ -143,7 +143,9 @@ module Rye
       # Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.
       meth = (Rye.sysinfo.ruby[1] == 8) ? meth.to_s : meth.to_sym
       raise Rye::NoBoxes if @boxes.empty?
-      raise Rye::CommandNotFound, meth.to_s unless Rye::Box.instance_methods.member?(meth)
+      if @safe
+        raise Rye::CommandNotFound, meth.to_s unless Rye::Box.instance_methods.member?(meth)
+      end
       run_command(meth, *args, &block)
     end
     
