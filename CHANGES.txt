@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.5 (2012-01-05) #############################
+
+* FIXED: Bugfix for Sets to allow unsafe commands [vishnugopal]
+
 #### 0.9.4 (2011-02-14) #############################
 
 * FIXED: Box#method_missing fix for to_ary exception in Ruby 1.9.2
