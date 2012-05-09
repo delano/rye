@@ -170,11 +170,18 @@ module Rye
         end
       end
 
-      # Should it bubble up the exception for a single box? socket errors?
       threads.each do |t|
-        Kernel.sleep 0.03     # Give the thread some breathing room
-        t.join                # Wait for the thread to finish
-        raps << t[:rap]       # Grab the result
+        Kernel.sleep 0.03 # Give the thread some breathing room
+
+        begin
+          t.join # Wait for the thread to finish
+        rescue Exception => ex
+          # Store the exception in the result
+          raps << Rap.new(self, [ex])
+          next
+        end
+
+        raps << t[:rap] # Grab the result
       end
 
       raps
