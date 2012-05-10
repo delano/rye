@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Rye::Tpl</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/rye_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye.rb">lib/rye.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Object</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-i-delete">#delete</a></li>
+          
+          <li><a href="#method-i-path">#path</a></li>
+          
+          <li><a href="#method-i-result-21">#result!</a></li>
+          
+          <li><a href="#method-i-to_s">#to_s</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../CHANGES_txt.html">CHANGES.txt</a></li>
+        
+          <li class="file"><a href="../LICENSE_txt.html">LICENSE.txt</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../bin/try.html">try</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Rye.html">Rye</a></li>
+        
+          <li><a href="../Rye/Box.html">Rye::Box</a></li>
+        
+          <li><a href="../Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+          <li><a href="../Rye/Cmd.html">Rye::Cmd</a></li>
+        
+          <li><a href="../Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+        
+          <li><a href="../Rye/Err.html">Rye::Err</a></li>
+        
+          <li><a href="../Rye/Hop.html">Rye::Hop</a></li>
+        
+          <li><a href="../Rye/Key.html">Rye::Key</a></li>
+        
+          <li><a href="../Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+        
+          <li><a href="../Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+        
+          <li><a href="../Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+        
+          <li><a href="../Rye/NoHost.html">Rye::NoHost</a></li>
+        
+          <li><a href="../Rye/NoPassword.html">Rye::NoPassword</a></li>
+        
+          <li><a href="../Rye/NoPty.html">Rye::NoPty</a></li>
+        
+          <li><a href="../Rye/NotConnected.html">Rye::NotConnected</a></li>
+        
+          <li><a href="../Rye/Rap.html">Rye::Rap</a></li>
+        
+          <li><a href="../Rye/RyeError.html">Rye::RyeError</a></li>
+        
+          <li><a href="../Rye/Set.html">Rye::Set</a></li>
+        
+          <li><a href="../Rye/Tpl.html">Rye::Tpl</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Rye::Tpl</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="basename-attribute-method" class="method-detail">
+          <a name="basename"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">basename</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="result-attribute-method" class="method-detail">
+          <a name="result"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">result</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="src-attribute-method" class="method-detail">
+          <a name="src"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">src</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(src, basename='rye-template')</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 265</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">basename</span>=<span class="ruby-string">'rye-template'</span>)
+  <span class="ruby-ivar">@basename</span> = <span class="ruby-identifier">basename</span>
+  <span class="ruby-identifier">src</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-ivar">@src</span>, <span class="ruby-ivar">@template</span> = <span class="ruby-identifier">src</span>, <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">src</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="delete-method" class="method-detail ">
+          <a name="method-i-delete"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">delete</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="delete-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 278</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">path</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">path</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- delete-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- delete-method -->
+
+      
+        <div id="path-method" class="method-detail ">
+          <a name="method-i-path"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">path</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="path-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-ivar">@tf</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">basename</span>
+    <span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">write</span> <span class="ruby-ivar">@result</span>
+    <span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@tf</span>.<span class="ruby-identifier">path</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- path-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- path-method -->
+
+      
+        <div id="result-21-method" class="method-detail ">
+          <a name="method-i-result-21"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">result!</span><span
+              class="method-args">(binding)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="result-21-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 281</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">result!</span>(<span class="ruby-identifier">binding</span>)
+  <span class="ruby-ivar">@result</span> = <span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- result-21-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- result-21-method -->
+
+      
+        <div id="to_s-method" class="method-detail ">
+          <a name="method-i-to_s"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">to_s</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="to_s-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 287</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>() <span class="ruby-identifier">src</span> <span class="ruby-keyword">end</span></pre>
+            </div><!-- to_s-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- to_s-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

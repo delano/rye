@@ -1,0 +1,3357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Rye::Box</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/rye/box_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/box.rb">lib/rye/box.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Object</p>
+        
+      </div>
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">MODULE</span> <a href="Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-i-3D-3D">#==</a></li>
+          
+          <li><a href="#method-i-5B-5D">#[]</a></li>
+          
+          <li><a href="#method-i-add_env">#add_env</a></li>
+          
+          <li><a href="#method-i-add_key">#add_key</a></li>
+          
+          <li><a href="#method-i-add_keys">#add_keys</a></li>
+          
+          <li><a href="#method-i-batch">#batch</a></li>
+          
+          <li><a href="#method-i-cd">#cd</a></li>
+          
+          <li><a href="#method-i-connect">#connect</a></li>
+          
+          <li><a href="#method-i-current_umask">#current_umask</a></li>
+          
+          <li><a href="#method-i-current_working_directory">#current_working_directory</a></li>
+          
+          <li><a href="#method-i-debug-3F">#debug?</a></li>
+          
+          <li><a href="#method-i-disable_quiet_mode">#disable_quiet_mode</a></li>
+          
+          <li><a href="#method-i-disable_safe_mode">#disable_safe_mode</a></li>
+          
+          <li><a href="#method-i-disable_sudo">#disable_sudo</a></li>
+          
+          <li><a href="#method-i-disconnect">#disconnect</a></li>
+          
+          <li><a href="#method-i-enable_quiet_mode">#enable_quiet_mode</a></li>
+          
+          <li><a href="#method-i-enable_safe_mode">#enable_safe_mode</a></li>
+          
+          <li><a href="#method-i-enable_sudo">#enable_sudo</a></li>
+          
+          <li><a href="#method-i-error-3F">#error?</a></li>
+          
+          <li><a href="#method-i-exception_hook">#exception_hook</a></li>
+          
+          <li><a href="#method-i-exception_hook-3D">#exception_hook=</a></li>
+          
+          <li><a href="#method-i-execute">#execute</a></li>
+          
+          <li><a href="#method-i-getenv">#getenv</a></li>
+          
+          <li><a href="#method-i-guess_user_home">#guess_user_home</a></li>
+          
+          <li><a href="#method-i-host">#host</a></li>
+          
+          <li><a href="#method-i-host-3D">#host=</a></li>
+          
+          <li><a href="#method-i-host_key">#host_key</a></li>
+          
+          <li><a href="#method-i-impltype">#impltype</a></li>
+          
+          <li><a href="#method-i-impltype-3D">#impltype=</a></li>
+          
+          <li><a href="#method-i-info-3F">#info?</a></li>
+          
+          <li><a href="#method-i-inspect">#inspect</a></li>
+          
+          <li><a href="#method-i-instance_exec">#instance_exec</a></li>
+          
+          <li><a href="#method-i-interactive_ssh">#interactive_ssh</a></li>
+          
+          <li><a href="#method-i-keys">#keys</a></li>
+          
+          <li><a href="#method-i-method_missing">#method_missing</a></li>
+          
+          <li><a href="#method-i-nickname">#nickname</a></li>
+          
+          <li><a href="#method-i-nickname-3D">#nickname=</a></li>
+          
+          <li><a href="#method-i-opts">#opts</a></li>
+          
+          <li><a href="#method-i-opts-3D">#opts=</a></li>
+          
+          <li><a href="#method-i-ostype">#ostype</a></li>
+          
+          <li><a href="#method-i-ostype-3D">#ostype=</a></li>
+          
+          <li><a href="#method-i-post_command_hook">#post_command_hook</a></li>
+          
+          <li><a href="#method-i-post_command_hook-3D">#post_command_hook=</a></li>
+          
+          <li><a href="#method-i-pre_command_hook">#pre_command_hook</a></li>
+          
+          <li><a href="#method-i-pre_command_hook-3D">#pre_command_hook=</a></li>
+          
+          <li><a href="#method-i-preview_command">#preview_command</a></li>
+          
+          <li><a href="#method-i-quiet">#quiet</a></li>
+          
+          <li><a href="#method-i-quietly">#quietly</a></li>
+          
+          <li><a href="#method-i-remove_key">#remove_key</a></li>
+          
+          <li><a href="#method-i-remove_keys">#remove_keys</a></li>
+          
+          <li><a href="#method-i-root-3F">#root?</a></li>
+          
+          <li><a href="#method-i-safe">#safe</a></li>
+          
+          <li><a href="#method-i-safe-3F">#safe?</a></li>
+          
+          <li><a href="#method-i-safely">#safely</a></li>
+          
+          <li><a href="#method-i-setenv">#setenv</a></li>
+          
+          <li><a href="#method-i-ssh_config_options">#ssh_config_options</a></li>
+          
+          <li><a href="#method-i-stash">#stash</a></li>
+          
+          <li><a href="#method-i-stash-3D">#stash=</a></li>
+          
+          <li><a href="#method-i-stdout_hook">#stdout_hook</a></li>
+          
+          <li><a href="#method-i-stdout_hook-3D">#stdout_hook=</a></li>
+          
+          <li><a href="#method-i-sudo">#sudo</a></li>
+          
+          <li><a href="#method-i-sudo-3F">#sudo?</a></li>
+          
+          <li><a href="#method-i-switch_user">#switch_user</a></li>
+          
+          <li><a href="#method-i-templates">#templates</a></li>
+          
+          <li><a href="#method-i-templates-3F">#templates?</a></li>
+          
+          <li><a href="#method-i-to_s">#to_s</a></li>
+          
+          <li><a href="#method-i-umask-3D">#umask=</a></li>
+          
+          <li><a href="#method-i-unsafely">#unsafely</a></li>
+          
+          <li><a href="#method-i-user">#user</a></li>
+          
+          <li><a href="#method-i-via">#via</a></li>
+          
+          <li><a href="#method-i-via-3D">#via=</a></li>
+          
+          <li><a href="#method-i-via-3F">#via?</a></li>
+          
+          <li><a href="#method-i-via_hop">#via_hop</a></li>
+          
+          <li><a href="#method-i-wildly">#wildly</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Included Modules -->
+      <div id="includes-section" class="section">
+        <h3 class="section-header">Included Modules</h3>
+        <ul class="link-list">
+        
+        
+          <li><a class="include" href="Cmd.html">Rye::Cmd</a></li>
+        
+        
+        
+          <li><a class="include" href="Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+        
+        </ul>
+      </div>
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../CHANGES_txt.html">CHANGES.txt</a></li>
+        
+          <li class="file"><a href="../LICENSE_txt.html">LICENSE.txt</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../bin/try.html">try</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Rye.html">Rye</a></li>
+        
+          <li><a href="../Rye/Box.html">Rye::Box</a></li>
+        
+          <li><a href="../Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+          <li><a href="../Rye/Cmd.html">Rye::Cmd</a></li>
+        
+          <li><a href="../Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+        
+          <li><a href="../Rye/Err.html">Rye::Err</a></li>
+        
+          <li><a href="../Rye/Hop.html">Rye::Hop</a></li>
+        
+          <li><a href="../Rye/Key.html">Rye::Key</a></li>
+        
+          <li><a href="../Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+        
+          <li><a href="../Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+        
+          <li><a href="../Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+        
+          <li><a href="../Rye/NoHost.html">Rye::NoHost</a></li>
+        
+          <li><a href="../Rye/NoPassword.html">Rye::NoPassword</a></li>
+        
+          <li><a href="../Rye/NoPty.html">Rye::NoPty</a></li>
+        
+          <li><a href="../Rye/NotConnected.html">Rye::NotConnected</a></li>
+        
+          <li><a href="../Rye/Rap.html">Rye::Rap</a></li>
+        
+          <li><a href="../Rye/RyeError.html">Rye::RyeError</a></li>
+        
+          <li><a href="../Rye/Set.html">Rye::Set</a></li>
+        
+          <li><a href="../Rye/Tpl.html">Rye::Tpl</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Rye::Box</h1>
+
+    <div id="description" class="description">
+      
+<h1><a href="Box.html">Rye::Box</a></h1>
+
+<p>The <a href="Box.html">Rye::Box</a> class represents a machine. All system
+commands are made through this class.</p>
+
+<pre>rbox = Rye::Box.new('filibuster')
+rbox.hostname   # =&gt; filibuster
+rbox.uname      # =&gt; FreeBSD
+rbox.uptime     # =&gt; 20:53  up 1 day,  1:52, 4 users</pre>
+
+<p>You can also run local commands through SSH</p>
+
+<pre>rbox = Rye::Box.new('localhost') 
+rbox.hostname   # =&gt; localhost
+rbox.uname(:a)  # =&gt; Darwin vanya 9.6.0 ...</pre>
+
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="rye_pty-attribute-method" class="method-detail">
+          <a name="rye_pty"></a>
+          
+          <a name="rye_pty="></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">rye_pty</span><span
+              class="attribute-access-type">[RW]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="rye_shell-attribute-method" class="method-detail">
+          <a name="rye_shell"></a>
+          
+          <a name="rye_shell="></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">rye_shell</span><span
+              class="attribute-access-type">[RW]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(host='localhost', opts={})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <ul><li>
+<p><tt>host</tt> The hostname to <a
+href="Box.html#method-i-connect">connect</a> to. Default: localhost.</p>
+</li><li>
+<p><tt>user</tt> The username to <a
+href="Box.html#method-i-connect">connect</a> as. Default: SSH config file
+or current shell <a href="Box.html#method-i-user">user</a>.</p>
+</li><li>
+<p><tt>opts</tt> a hash of optional arguments.</p>
+</li></ul>
+
+<p>The <tt>opts</tt> hash excepts the following <a
+href="Box.html#method-i-keys">keys</a>:</p>
+<ul><li>
+<p>:<a href="Box.html#method-i-safe">safe</a> =&gt; should <a
+href="../Rye.html">Rye</a> be <a href="Box.html#method-i-safe-3F">safe?</a>
+Default: true</p>
+</li><li>
+<p>:port =&gt; remote server ssh port. Default: SSH config file or 22</p>
+</li><li>
+<p>:<a href="Box.html#method-i-keys">keys</a> =&gt; one or more private key
+file paths (passwordless login)</p>
+</li><li>
+<p>:<a href="Box.html#method-i-via">via</a> =&gt; the <a
+href="Hop.html">Rye::Hop</a> to access this <a
+href="Box.html#method-i-host">host</a> through</p>
+</li><li>
+<p>:info =&gt; an IO object to print <a href="Box.html">Rye::Box</a> command
+info to. Default: nil</p>
+</li><li>
+<p>:debug =&gt; an IO object to print <a href="Box.html">Rye::Box</a>
+debugging info to. Default: nil</p>
+</li><li>
+<p>:error =&gt; an IO object to print <a href="Box.html">Rye::Box</a> errors
+to. Default: STDERR</p>
+</li><li>
+<p>:<a href="Box.html#method-i-getenv">getenv</a> =&gt; pre-fetch
+<tt>host</tt> environment variables? (default: true)</p>
+</li><li>
+<p>:password =&gt; the <a href="Box.html#method-i-user">user</a>'s password
+(ignored if there's a valid private key)</p>
+</li><li>
+<p>:<a href="Box.html#method-i-templates">templates</a> =&gt; the template
+engine to use for uploaded files. One of: :erb (default)</p>
+</li><li>
+<p>:<a href="Box.html#method-i-sudo">sudo</a> =&gt; Run all commands <a
+href="Box.html#method-i-via">via</a> <a
+href="Box.html#method-i-sudo">sudo</a> (default: false)</p>
+</li></ul>
+
+<p>NOTE: <tt>opts</tt> can also contain any parameter supported by 
+Net::SSH.start that is not already mentioned above.</p>
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">host</span>=<span class="ruby-string">'localhost'</span>, <span class="ruby-identifier">opts</span>={})
+  <span class="ruby-identifier">ssh_opts</span> = <span class="ruby-identifier">ssh_config_options</span>(<span class="ruby-identifier">host</span>)
+  <span class="ruby-ivar">@rye_exception_hook</span> = {}
+  <span class="ruby-ivar">@rye_host</span> = <span class="ruby-identifier">host</span>
+  
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:user</span>]
+    <span class="ruby-ivar">@rye_user</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:user</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@rye_user</span> = <span class="ruby-identifier">ssh_opts</span>[<span class="ruby-value">:user</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">user</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># These opts are use by Rye::Box and also passed to Net::SSH</span>
+  <span class="ruby-ivar">@rye_opts</span> = {
+    <span class="ruby-value">:safe</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ssh_opts</span>[<span class="ruby-value">:port</span>],
+    <span class="ruby-value">:keys</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>,
+    <span class="ruby-value">:via</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:info</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:debug</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">STDERR</span>,
+    <span class="ruby-value">:getenv</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:templates</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:erb</span>,
+    <span class="ruby-value">:quiet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>
+  }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+  
+  <span class="ruby-comment"># Close the SSH session before Ruby exits. This will do nothing</span>
+  <span class="ruby-comment"># if disconnect has already been called explicitly. </span>
+  <span class="ruby-identifier">at_exit</span> { <span class="ruby-keyword">self</span>.<span class="ruby-identifier">disconnect</span> }
+
+  <span class="ruby-comment"># Properly handle whether the opt :via is a +Rye::Hop+ or a +String+</span>
+  <span class="ruby-identifier">via_hop</span>(<span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:via</span>))
+  
+  <span class="ruby-comment"># @rye_opts gets sent to Net::SSH so we need to remove the keys</span>
+  <span class="ruby-comment"># that are not meant for it. </span>
+  <span class="ruby-ivar">@rye_safe</span>, <span class="ruby-ivar">@rye_debug</span> = <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:safe</span>), <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:debug</span>)
+  <span class="ruby-ivar">@rye_info</span>, <span class="ruby-ivar">@rye_error</span> = <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:info</span>), <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:error</span>)
+  <span class="ruby-ivar">@rye_getenv</span> = {} <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:getenv</span>) <span class="ruby-comment"># Enable getenv with a hash</span>
+  <span class="ruby-ivar">@rye_ostype</span>, <span class="ruby-ivar">@rye_impltype</span> = <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:ostype</span>), <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:impltype</span>)
+  <span class="ruby-ivar">@rye_quiet</span>, <span class="ruby-ivar">@rye_sudo</span> = <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:quiet</span>), <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:sudo</span>)
+  <span class="ruby-ivar">@rye_templates</span> = <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:templates</span>)
+  
+  <span class="ruby-comment"># Store the state of the terminal </span>
+  <span class="ruby-ivar">@rye_stty_save</span> = <span class="ruby-value">`stty -g`</span>.<span class="ruby-identifier">chomp</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_templates</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-ivar">@rye_templates</span>.<span class="ruby-identifier">to_s</span>   <span class="ruby-comment"># should be :erb</span>
+  <span class="ruby-keyword">end</span>
+  
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:logger</span>] = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@rye_debug</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_debug</span> <span class="ruby-comment"># Enable Net::SSH debugging</span>
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:paranoid</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_safe</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span> <span class="ruby-comment"># See Net::SSH.start</span>
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>] = [<span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>]].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  
+  <span class="ruby-comment"># Just in case someone sends a true value rather than IO object</span>
+  <span class="ruby-ivar">@rye_debug</span> = <span class="ruby-constant">STDERR</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_debug</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEBUG</span>
+  <span class="ruby-ivar">@rye_error</span> = <span class="ruby-constant">STDERR</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_error</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@rye_info</span> = <span class="ruby-constant">STDOUT</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_info</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>
+  
+  <span class="ruby-comment"># Add the given private keys to the keychain that will be used for @rye_host</span>
+  <span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>])
+  
+  <span class="ruby-comment"># We don't want Net::SSH to handle the keypairs. This may change</span>
+  <span class="ruby-comment"># but for we're letting ssh-agent do it. </span>
+  <span class="ruby-comment"># TODO: Check if this should ot should not be enabled. </span>
+  <span class="ruby-comment">#@rye_opts.delete(:keys)</span>
+  
+  <span class="ruby-comment"># From: capistrano/lib/capistrano/cli.rb</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span> <span class="ruby-comment"># so that Net::SSH prompts show up</span>
+  
+  <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;ssh-agent info: #{Rye.sshagent_info.inspect}&quot;</span>
+  <span class="ruby-identifier">debug</span> <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">inspect</span>
+
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="3D-3D-method" class="method-detail ">
+          <a name="method-i-3D-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">==</span><span
+              class="method-args">(other)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Compares itself with the <tt>other</tt> box. If the hostnames are the same,
+this will return true. Otherwise false.</p>
+            
+
+            
+            <div class="method-source-code" id="3D-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 404</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-ivar">@rye_host</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">host</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- 3D-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- 3D-3D-method -->
+
+      
+        <div id="5B-5D-method" class="method-detail ">
+          <a name="method-i-5B-5D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">[]</span><span
+              class="method-args">(fpath=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Change the current working directory (sort of).</p>
+
+<p>I haven't been able to wrangle Net::SSH to do my bidding.  "My bidding" in
+this case, is maintaining an open channel between commands. I'm using
+Net::SSH::Connection::Session#exec for all commands which is like a funky
+helper method that opens a <a href="Box.html#method-c-new">new</a> channel
+each time it's called. This seems to be okay for one-off  commands but
+changing the directory only works for the channel it's executed in. The
+next time exec is called, there's a <a href="Box.html#method-c-new">new</a>
+channel which is back in the default (home) directory.</p>
+
+<p>Long story short, the work around is to maintain the current directory
+locally and send it with each command.</p>
+
+<pre>rbox.pwd              # =&gt; /home/rye ($ pwd )
+rbox['/usr/bin'].pwd  # =&gt; /usr/bin  ($ cd /usr/bin &amp;&amp; pwd)
+rbox.pwd              # =&gt; /usr/bin  ($ cd /usr/bin &amp;&amp; pwd)</pre>
+            
+
+            
+            <div class="method-source-code" id="5B-5D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 242</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">fpath</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">'/'</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">fpath</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># Append to non-absolute paths</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_current_working_directory</span>
+      <span class="ruby-identifier">newpath</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@rye_current_working_directory</span>, <span class="ruby-identifier">fpath</span>)
+      <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">newpath</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@rye_current_working_directory</span> = <span class="ruby-identifier">fpath</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;CWD: #{@rye_current_working_directory}&quot;</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- 5B-5D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- 5B-5D-method -->
+
+      
+        <div id="add_env-method" class="method-detail method-alias">
+          <a name="method-i-add_env"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_env</span><span
+              class="method-args">(n, v)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Box.html#method-i-setenv">setenv</a>
+          </div>
+          
+        </div><!-- add_env-method -->
+
+      
+        <div id="add_key-method" class="method-detail method-alias">
+          <a name="method-i-add_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_key</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Box.html#method-i-add_keys">add_keys</a>
+          </div>
+          
+        </div><!-- add_key-method -->
+
+      
+        <div id="add_keys-method" class="method-detail ">
+          <a name="method-i-add_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_keys</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Add one or more private <a href="Box.html#method-i-keys">keys</a> to the
+list of key paths.</p>
+<ul><li>
+<p><tt>keys</tt> is a list of file paths to private <a
+href="Box.html#method-i-keys">keys</a></p>
+</li></ul>
+
+<p>Returns the instance of <a href="Box.html">Box</a></p>
+            
+
+            
+            <div class="method-source-code" id="add_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 319</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_keys</span>(*<span class="ruby-identifier">keys</span>)
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">||=</span> []
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>].<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-keyword">self</span> <span class="ruby-comment"># MUST RETURN self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- add_keys-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Box.html#method-i-add_key">add_key</a>
+          </div>
+          
+
+          
+        </div><!-- add_keys-method -->
+
+      
+        <div id="batch-method" class="method-detail ">
+          <a name="method-i-batch"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">batch</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Execute a block in the context of an instance of <a
+href="Box.html">Rye::Box</a>.</p>
+
+<pre>rbox = Rye::Box.new
+
+rbox.batch do
+  ls :l
+  uname :a
+end</pre>
+
+<p>OR</p>
+
+<pre>rbox.batch(&amp;block)</pre>
+
+<p>The <a href="Box.html#method-i-batch">batch</a> can also accept arguments.</p>
+
+<pre>rbox.batch('path/2/file') do |file|
+  ls :l file
+end</pre>
+
+<p>Returns the return value of the block.</p>
+            
+
+            
+            <div class="method-source-code" id="batch-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 547</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">batch</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_exec</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- batch-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- batch-method -->
+
+      
+        <div id="cd-method" class="method-detail ">
+          <a name="method-i-cd"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">cd</span><span
+              class="method-args">(fpath=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Like [] except it returns an empty <a href="Rap.html">Rye::Rap</a> object
+to mimick a regular command method. Call with nil key (or no arg) to 
+reset.</p>
+            
+
+            
+            <div class="method-source-code" id="cd-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 260</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cd</span>(<span class="ruby-identifier">fpath</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>[<span class="ruby-identifier">fpath</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- cd-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- cd-method -->
+
+      
+        <div id="connect-method" class="method-detail ">
+          <a name="method-i-connect"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">connect</span><span
+              class="method-args">(reconnect=true)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Open an SSH session with +@rye_host+. This called automatically when you
+the first comamnd is run if it's not already connected. Raises a <a
+href="NoHost.html">Rye::NoHost</a> exception if +@rye_host+ is not
+specified. Will attempt a password login up to 3 times if the initial 
+authentication fails.</p>
+<ul><li>
+<p><tt>reconnect</tt> Disconnect first if already connected. The default</p>
+</li></ul>
+
+<p>is true. When set to false, <a href="Box.html#method-i-connect">connect</a>
+will do nothing if already  connected.</p>
+            
+
+            
+            <div class="method-source-code" id="connect-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 646</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">reconnect</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">NoHost</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_host</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_ssh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reconnect</span>
+  <span class="ruby-identifier">disconnect</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_ssh</span> 
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_via</span>
+    <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Opening connection to #{@rye_host} as #{@rye_user}, via #{@rye_via.host}&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Opening connection to #{@rye_host} as #{@rye_user}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">highline</span> = <span class="ruby-constant">HighLine</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment"># Used for password prompt</span>
+  <span class="ruby-identifier">retried</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>].<span class="ruby-identifier">compact!</span>  <span class="ruby-comment"># A quick fix in Windows. TODO: Why is there a nil?</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_via</span>
+      <span class="ruby-comment"># tell the +Rye::Hop+ what and where to setup,</span>
+      <span class="ruby-comment"># it returns the local port used</span>
+      <span class="ruby-ivar">@rye_localport</span> = <span class="ruby-ivar">@rye_via</span>.<span class="ruby-identifier">fetch_port</span>(<span class="ruby-ivar">@rye_host</span>, <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:port</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-value">22</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:port</span>] )
+      <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;fetched localport #{@rye_localport}&quot;</span>
+      <span class="ruby-ivar">@rye_ssh</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span>.<span class="ruby-identifier">start</span>(<span class="ruby-string">&quot;localhost&quot;</span>, <span class="ruby-ivar">@rye_user</span>, <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@rye_localport</span>) <span class="ruby-operator">||</span> {}) 
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@rye_ssh</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span>.<span class="ruby-identifier">start</span>(<span class="ruby-ivar">@rye_host</span>, <span class="ruby-ivar">@rye_user</span>, <span class="ruby-ivar">@rye_opts</span> <span class="ruby-operator">||</span> {}) 
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">HostKeyMismatch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+    <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-string">&quot;\a&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_info</span> <span class="ruby-comment"># Ring the bell</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">highline</span>.<span class="ruby-identifier">ask</span>(<span class="ruby-string">&quot;Continue? &quot;</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/\Ay|yes|sure|ya\z/</span>)
+      <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:paranoid</span>] = <span class="ruby-keyword">false</span>
+      <span class="ruby-keyword">retry</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">HostKeyMismatch</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">AuthenticationFailed</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-string">&quot;\a&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">retried</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@rye_info</span> <span class="ruby-comment"># Ring the bell once</span>
+    <span class="ruby-identifier">retried</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">tty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">retried</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">3</span>
+      <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Passwordless login failed for #{@rye_user}&quot;</span>
+      <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:password</span>] = <span class="ruby-identifier">highline</span>.<span class="ruby-identifier">ask</span>(<span class="ruby-string">&quot;Password: &quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">q</span><span class="ruby-operator">|</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">echo</span> = <span class="ruby-string">''</span> }.<span class="ruby-identifier">strip</span>
+      <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:auth_methods</span>] <span class="ruby-operator">||=</span> []
+      <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:auth_methods</span>].<span class="ruby-identifier">push</span> *[<span class="ruby-string">'keyboard-interactive'</span>, <span class="ruby-string">'password'</span>]
+      <span class="ruby-keyword">retry</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">AuthenticationFailed</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  
+  <span class="ruby-comment"># We add :auth_methods (a Net::SSH joint) to force asking for a</span>
+  <span class="ruby-comment"># password if the initial (key-based) authentication fails. We</span>
+  <span class="ruby-comment"># need to delete the key from @rye_opts otherwise it lingers until</span>
+  <span class="ruby-comment"># the next connection (if we switch_user is called for example).</span>
+  <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">delete</span> <span class="ruby-value">:auth_methods</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_opts</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:auth_methods</span>)
+  
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- connect-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- connect-method -->
+
+      
+        <div id="current_umask-method" class="method-detail ">
+          <a name="method-i-current_umask"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_umask</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>The most recent valud for umask (or 0022)</p>
+            
+
+            
+            <div class="method-source-code" id="current_umask-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_umask</span>; <span class="ruby-ivar">@rye_current_umask</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- current_umask-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_umask-method -->
+
+      
+        <div id="current_working_directory-method" class="method-detail ">
+          <a name="method-i-current_working_directory"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">current_working_directory</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>The most recent value from <a href="Box.html#method-i-cd">Box.cd</a> or <a
+href="Box.html">Box</a>.[]</p>
+            
+
+            
+            <div class="method-source-code" id="current_working_directory-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_working_directory</span>; <span class="ruby-ivar">@rye_current_working_directory</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- current_working_directory-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- current_working_directory-method -->
+
+      
+        <div id="debug-3F-method" class="method-detail ">
+          <a name="method-i-debug-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">debug?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="debug-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug?</span>; <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_debug</span>.<span class="ruby-identifier">nil?</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- debug-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- debug-3F-method -->
+
+      
+        <div id="disable_quiet_mode-method" class="method-detail ">
+          <a name="method-i-disable_quiet_mode"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">disable_quiet_mode</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="disable_quiet_mode-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disable_quiet_mode</span>; <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-keyword">false</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- disable_quiet_mode-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- disable_quiet_mode-method -->
+
+      
+        <div id="disable_safe_mode-method" class="method-detail ">
+          <a name="method-i-disable_safe_mode"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">disable_safe_mode</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="disable_safe_mode-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disable_safe_mode</span>; <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-keyword">false</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- disable_safe_mode-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- disable_safe_mode-method -->
+
+      
+        <div id="disable_sudo-method" class="method-detail ">
+          <a name="method-i-disable_sudo"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">disable_sudo</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="disable_sudo-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disable_sudo</span>; <span class="ruby-ivar">@rye_sudo</span> = <span class="ruby-keyword">false</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- disable_sudo-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- disable_sudo-method -->
+
+      
+        <div id="disconnect-method" class="method-detail ">
+          <a name="method-i-disconnect"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">disconnect</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Close the SSH session  with +@rye_host+. This is called  automatically at
+exit if the connection is open.</p>
+            
+
+            
+            <div class="method-source-code" id="disconnect-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 702</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disconnect</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_ssh</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">closed?</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">busy?</span>;
+      <span class="ruby-identifier">info</span> <span class="ruby-string">&quot;Is something still running? (ctrl-C to exit)&quot;</span>
+      <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-value">10</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">loop</span>(<span class="ruby-value">0.3</span>) { <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">busy?</span>; }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Closing connection to #{@rye_ssh.host}&quot;</span>
+    <span class="ruby-ivar">@rye_ssh</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_via</span>
+      <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;disconnecting Hop #{@rye_via.host}&quot;</span>
+      <span class="ruby-ivar">@rye_via</span>.<span class="ruby-identifier">disconnect</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">SystemCallError</span>, <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+    <span class="ruby-identifier">error</span> <span class="ruby-node">&quot;Rye::Box: Disconnect timeout (#{ex.message})&quot;</span>
+    <span class="ruby-identifier">debug</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Interrupt</span>
+    <span class="ruby-identifier">debug</span> <span class="ruby-string">&quot;Exiting...&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- disconnect-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- disconnect-method -->
+
+      
+        <div id="enable_quiet_mode-method" class="method-detail ">
+          <a name="method-i-enable_quiet_mode"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">enable_quiet_mode</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="enable_quiet_mode-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enable_quiet_mode</span>;  <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-keyword">true</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- enable_quiet_mode-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- enable_quiet_mode-method -->
+
+      
+        <div id="enable_safe_mode-method" class="method-detail ">
+          <a name="method-i-enable_safe_mode"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">enable_safe_mode</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="enable_safe_mode-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enable_safe_mode</span>;  <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-keyword">true</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- enable_safe_mode-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- enable_safe_mode-method -->
+
+      
+        <div id="enable_sudo-method" class="method-detail ">
+          <a name="method-i-enable_sudo"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">enable_sudo</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="enable_sudo-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enable_sudo</span>; <span class="ruby-ivar">@rye_sudo</span> = <span class="ruby-keyword">true</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- enable_sudo-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- enable_sudo-method -->
+
+      
+        <div id="error-3F-method" class="method-detail ">
+          <a name="method-i-error-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">error?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="error-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">error?</span>; <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_error</span>.<span class="ruby-identifier">nil?</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- error-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- error-3F-method -->
+
+      
+        <div id="exception_hook-method" class="method-detail ">
+          <a name="method-i-exception_hook"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">exception_hook</span><span
+              class="method-args">(klass, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Supply a block to be called whenever there's an Exception. It's called with
+1 argument: the exception class. If the exception block returns  :retry,
+the command will be executed again.</p>
+
+<p>e.g.</p>
+
+<pre>rbox.exception_hook(CommandNotFound) do |ex|
+  STDERR.puts &quot;An error occurred: #{ex.class}&quot;
+  choice = Annoy.get_user_input('(S)kip  (R)etry  (A)bort: ')
+  if choice == 'R'
+    :retry 
+  elsif choice == 'S'
+    # do nothing
+  else
+    exit  # !
+  end
+end</pre>
+            
+
+            
+            <div class="method-source-code" id="exception_hook-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 523</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exception_hook</span>(<span class="ruby-identifier">klass</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-identifier">klass</span>] = <span class="ruby-identifier">block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-identifier">klass</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- exception_hook-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- exception_hook-method -->
+
+      
+        <div id="exception_hook-3D-method" class="method-detail ">
+          <a name="method-i-exception_hook-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">exception_hook=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>A Hash. The <a href="Box.html#method-i-keys">keys</a> are exception
+classes, the values are Procs to <a
+href="Box.html#method-i-execute">execute</a></p>
+            
+
+            
+            <div class="method-source-code" id="exception_hook-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exception_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_exception_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- exception_hook-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- exception_hook-3D-method -->
+
+      
+        <div id="execute-method" class="method-detail method-alias">
+          <a name="method-i-execute"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">execute</span><span
+              class="method-args">(cmd, *args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Box.html#method-i-method_missing">method_missing</a>
+          </div>
+          
+        </div><!-- execute-method -->
+
+      
+        <div id="getenv-method" class="method-detail ">
+          <a name="method-i-getenv"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">getenv</span><span
+              class="method-args">(key=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the hash containing the parsed output of "env" on the  remote
+machine. If the initialize option <tt>:getenv</tt> was set to  false, this
+will return an empty hash.  This is a lazy loaded method so it fetches the
+remote envvars the first time this method is called.</p>
+
+<pre>puts rbox.getenv['HOME']    # =&gt; &quot;/home/gloria&quot; (remote)</pre>
+
+<p>NOTE: This method should not raise an exception under normal circumstances.</p>
+            
+
+            
+            <div class="method-source-code" id="getenv-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 364</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">getenv</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_getenv</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@rye_getenv</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">can?</span>(<span class="ruby-value">:env</span>)
+    <span class="ruby-identifier">vars</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">env</span> } <span class="ruby-keyword">rescue</span> []
+    <span class="ruby-identifier">vars</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nvpair</span><span class="ruby-operator">|</span> 
+      <span class="ruby-comment"># Parse &quot;GLORIA_HOME=/gloria/lives/here&quot; into a name/value</span>
+      <span class="ruby-comment"># pair. The regexp ensures we split only at the 1st = sign</span>
+      <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">nvpair</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\A([\w_-]+?)=(.+)\z/</span>).<span class="ruby-identifier">flatten</span>
+      <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">key</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@rye_getenv</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- getenv-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- getenv-method -->
+
+      
+        <div id="guess_user_home-method" class="method-detail ">
+          <a name="method-i-guess_user_home"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">guess_user_home</span><span
+              class="method-args">(other_user=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Uses the output of "useradd -D" to determine the default home directory.
+This returns a GUESS rather than the a <a
+href="Box.html#method-i-user">user</a>'s real home directory. Currently
+used only by authorize_keys_remote. Only useful before you've logged in.
+Otherwise check $HOME</p>
+            
+
+            
+            <div class="method-source-code" id="guess_user_home-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 418</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">guess_user_home</span>(<span class="ruby-identifier">other_user</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">this_user</span> = <span class="ruby-identifier">other_user</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:user</span>]
+  <span class="ruby-ivar">@rye_guessed_homes</span> <span class="ruby-operator">||=</span> {}
+  
+  <span class="ruby-comment"># A simple cache. </span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@rye_guessed_homes</span>[<span class="ruby-identifier">this_user</span>] <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_guessed_homes</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">this_user</span>)
+  
+  <span class="ruby-comment"># Some junk to determine where user home directories are by default.</span>
+  <span class="ruby-comment"># We're relying on the command &quot;useradd -D&quot; so this may not work on</span>
+  <span class="ruby-comment"># different Linuxen and definitely won't work on Windows.</span>
+  <span class="ruby-comment"># This code will be abstracted out once I find a decent home for it.</span>
+  <span class="ruby-comment"># /etc/default/useradd, HOME=/home OR useradd -D</span>
+  <span class="ruby-comment"># /etc/adduser.config, DHOME=/home OR ??</span>
+  <span class="ruby-identifier">user_defaults</span> = {}
+  <span class="ruby-identifier">ostmp</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">ostype</span>
+  <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">ostype</span>.<span class="ruby-identifier">to_s</span>
+  
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;sunos&quot;</span>
+    <span class="ruby-comment">#nv.scan(/([\w_-]+?)=(.+?)\s/).each do |n, v|</span>
+    <span class="ruby-comment">#  n = 'HOME' if n == 'basedir'</span>
+    <span class="ruby-comment">#  user_defaults[n.upcase] = v.strip</span>
+    <span class="ruby-comment">#end</span>
+    <span class="ruby-comment"># In Solaris, useradd -D says the default home path is /home</span>
+    <span class="ruby-comment"># but that directory is not writable. See: http://bit.ly/IJDD0</span>
+    <span class="ruby-identifier">user_defaults</span>[<span class="ruby-string">'HOME'</span>] = <span class="ruby-string">'/export/home'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;darwin&quot;</span>
+    <span class="ruby-identifier">user_defaults</span>[<span class="ruby-string">'HOME'</span>] = <span class="ruby-string">'/Users'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">ostmp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;windows&quot;</span>
+    <span class="ruby-identifier">user_defaults</span>[<span class="ruby-string">'HOME'</span>] = <span class="ruby-string">'C:/Documents and Settings'</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raw</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">useradd</span>(<span class="ruby-value">:D</span>) } <span class="ruby-keyword">rescue</span> []
+    <span class="ruby-identifier">raw</span> = [<span class="ruby-string">&quot;HOME=/home&quot;</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nv</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">nv</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\A([\w_-]+?)=(.+)\z/</span>).<span class="ruby-identifier">flatten</span>
+      <span class="ruby-identifier">user_defaults</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  
+  <span class="ruby-ivar">@rye_guessed_homes</span>[<span class="ruby-identifier">this_user</span>] = <span class="ruby-node">&quot;#{user_defaults['HOME']}/#{this_user}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- guess_user_home-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- guess_user_home-method -->
+
+      
+        <div id="host-method" class="method-detail ">
+          <a name="method-i-host"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">host</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="host-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host</span>; <span class="ruby-ivar">@rye_host</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- host-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- host-method -->
+
+      
+        <div id="host-3D-method" class="method-detail ">
+          <a name="method-i-host-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">host=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="host-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_host</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- host-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- host-3D-method -->
+
+      
+        <div id="host_key-method" class="method-detail ">
+          <a name="method-i-host_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">host_key</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the <a href="Box.html#method-i-host">host</a> SSH <a
+href="Box.html#method-i-keys">keys</a> for this box</p>
+            
+
+            
+            <div class="method-source-code" id="host_key-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 409</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host_key</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;No host&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_host</span>
+  <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">remote_host_keys</span>(<span class="ruby-ivar">@rye_host</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- host_key-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- host_key-method -->
+
+      
+        <div id="impltype-method" class="method-detail ">
+          <a name="method-i-impltype"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">impltype</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="impltype-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 349</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">impltype</span>
+  <span class="ruby-ivar">@rye_impltype</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- impltype-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- impltype-method -->
+
+      
+        <div id="impltype-3D-method" class="method-detail ">
+          <a name="method-i-impltype-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">impltype=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="impltype-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">impltype=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_impltype</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- impltype-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- impltype-3D-method -->
+
+      
+        <div id="info-3F-method" class="method-detail ">
+          <a name="method-i-info-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">info?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="info-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">info?</span>; <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_info</span>.<span class="ruby-identifier">nil?</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- info-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- info-3F-method -->
+
+      
+        <div id="inspect-method" class="method-detail ">
+          <a name="method-i-inspect"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inspect</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="inspect-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 394</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-string">%{#&lt;%s:%s name=%s cwd=%s umask=%s env=%s safe=%s opts=%s keys=%s&gt;}</span> <span class="ruby-operator">%</span> 
+  [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">host</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">nickname</span>,
+   <span class="ruby-ivar">@rye_current_working_directory</span>, <span class="ruby-ivar">@rye_current_umask</span>,
+   (<span class="ruby-ivar">@rye_current_environment_variables</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>).<span class="ruby-identifier">inspect</span>,
+   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">safe</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">opts</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">inspect</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inspect-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inspect-method -->
+
+      
+        <div id="instance_exec-method" class="method-detail ">
+          <a name="method-i-instance_exec"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">instance_exec</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="instance_exec-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 612</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">instance_exec</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>) <span class="ruby-comment"># !&gt; method redefined; discarding old instance_exec</span>
+  <span class="ruby-identifier">mname</span> = <span class="ruby-node">&quot;__instance_exec_#{Thread.current.object_id.abs}_#{object_id.abs}&quot;</span>
+  <span class="ruby-constant">InstanceExecHelper</span>.<span class="ruby-identifier">module_eval</span>{ <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">mname</span>, &amp;<span class="ruby-identifier">block</span>) }
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">mname</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-constant">InstanceExecHelper</span>.<span class="ruby-identifier">module_eval</span>{ <span class="ruby-identifier">undef_method</span>(<span class="ruby-identifier">mname</span>) } <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- instance_exec-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- instance_exec-method -->
+
+      
+        <div id="interactive_ssh-method" class="method-detail ">
+          <a name="method-i-interactive_ssh"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">interactive_ssh</span><span
+              class="method-args">(run=true)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>If STDIN.tty? is true (i.e. if we're connected to a terminal with a human
+at the helm), this will open an SSH connection <a
+href="Box.html#method-i-via">via</a> the regular SSH command (<a
+href="Box.html#method-i-via">via</a> a call to system). This  requires the
+SSH command-line executable (ssh).</p>
+
+<p>If STDIN.tty? is false or <tt>run</tt> is false, this will return  the SSH
+command (a String) that would have been run.</p>
+
+<p>NOTE: As of <a href="../Rye.html">Rye</a> 0.9 you can run interactive
+sessions with rye by calling any shell method without arguments.</p>
+
+<p>e.g.</p>
+
+<pre>rbox = Rye::Box.new 'somemachine'
+rbox.bash</pre>
+
+<p>TODO: refactor to use net_ssh_exec! in 0.9</p>
+            
+
+            
+            <div class="method-source-code" id="interactive_ssh-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 305</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">interactive_ssh</span>(<span class="ruby-identifier">run</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;interactive_ssh with keys: #{@rye_opts[:keys].inspect}&quot;</span>
+  <span class="ruby-identifier">run</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">tty?</span>
+  <span class="ruby-identifier">args</span> = []
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span> *[<span class="ruby-value">:i</span>, <span class="ruby-identifier">key</span>] }
+  <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{@rye_user}@#{@rye_host}&quot;</span>
+  <span class="ruby-identifier">cmd</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">prepare_command</span>(<span class="ruby-string">&quot;ssh&quot;</span>, <span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">cmd</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">run</span>
+  <span class="ruby-identifier">system</span>(<span class="ruby-identifier">cmd</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- interactive_ssh-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- interactive_ssh-method -->
+
+      
+        <div id="keys-method" class="method-detail ">
+          <a name="method-i-keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">keys</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>See <a href="../Rye.html#method-i-keys">Rye.keys</a></p>
+            
+
+            
+            <div class="method-source-code" id="keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 389</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">keys</span>; <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- keys-method -->
+
+      
+        <div id="method_missing-method" class="method-detail ">
+          <a name="method-i-method_missing"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">method_missing</span><span
+              class="method-args">(cmd, *args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>A handler for undefined commands.  Raises <a
+href="CommandNotFound.html">Rye::CommandNotFound</a> exception.</p>
+            
+
+            
+            <div class="method-source-code" id="method_missing-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 461</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">cmd</span> <span class="ruby-operator">==</span> <span class="ruby-value">:to_ary</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@rye_safe</span>
+    <span class="ruby-identifier">ex</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-identifier">ex</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_exception_hook</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">class</span>
+    <span class="ruby-ivar">@rye_exception_hook</span>[<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>].<span class="ruby-identifier">call</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">run_command</span> <span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">ex</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-identifier">ex</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@rye_exception_hook</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">class</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- method_missing-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Box.html#method-i-execute">execute</a>
+          </div>
+          
+
+          
+        </div><!-- method_missing-method -->
+
+      
+        <div id="nickname-method" class="method-detail ">
+          <a name="method-i-nickname"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">nickname</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="nickname-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nickname</span>; <span class="ruby-ivar">@rye_nickname</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">host</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- nickname-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- nickname-method -->
+
+      
+        <div id="nickname-3D-method" class="method-detail ">
+          <a name="method-i-nickname-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">nickname=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="nickname-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">nickname=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_nickname</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- nickname-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- nickname-3D-method -->
+
+      
+        <div id="opts-method" class="method-detail ">
+          <a name="method-i-opts"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">opts</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="opts-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">opts</span>; <span class="ruby-ivar">@rye_opts</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- opts-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- opts-method -->
+
+      
+        <div id="opts-3D-method" class="method-detail ">
+          <a name="method-i-opts-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">opts=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="opts-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">opts=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_opts</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- opts-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- opts-3D-method -->
+
+      
+        <div id="ostype-method" class="method-detail ">
+          <a name="method-i-ostype"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">ostype</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Return the value of uname in lowercase This is a temporary fix. We can use
+SysInfo for this, upload it, <a
+href="Box.html#method-i-execute">execute</a> it directly, parse the output.</p>
+            
+
+            
+            <div class="method-source-code" id="ostype-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 341</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ostype</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@rye_ostype</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rye_ostype</span> <span class="ruby-comment"># simple cache</span>
+  <span class="ruby-identifier">os</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">quietly</span> { <span class="ruby-identifier">uname</span>.<span class="ruby-identifier">first</span> } <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">os</span> <span class="ruby-operator">||=</span> <span class="ruby-string">'unknown'</span>
+  <span class="ruby-identifier">os</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">os</span>.<span class="ruby-identifier">downcase</span>
+  <span class="ruby-ivar">@rye_ostype</span> = <span class="ruby-identifier">os</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- ostype-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- ostype-method -->
+
+      
+        <div id="ostype-3D-method" class="method-detail ">
+          <a name="method-i-ostype-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">ostype=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="ostype-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ostype=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_ostype</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- ostype-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- ostype-3D-method -->
+
+      
+        <div id="post_command_hook-method" class="method-detail ">
+          <a name="method-i-post_command_hook"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">post_command_hook</span><span
+              class="method-args">(&block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Supply a block to be called after every command. It's called with one
+argument: an instance of <a href="Rap.html">Rye::Rap</a>.</p>
+
+<p>When this block is supplied, the command does not raise an  exception when
+the exit code is greater than 0 (the typical behavior) so the block needs
+to check the <a href="Rap.html">Rye::Rap</a> object to determine whether an
+exception should be raised.</p>
+            
+
+            
+            <div class="method-source-code" id="post_command_hook-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 631</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_command_hook</span>(&amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@rye_post_command_hook</span> = <span class="ruby-identifier">block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_post_command_hook</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- post_command_hook-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- post_command_hook-method -->
+
+      
+        <div id="post_command_hook-3D-method" class="method-detail ">
+          <a name="method-i-post_command_hook-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">post_command_hook=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="post_command_hook-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_command_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_post_command_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- post_command_hook-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- post_command_hook-3D-method -->
+
+      
+        <div id="pre_command_hook-method" class="method-detail ">
+          <a name="method-i-pre_command_hook"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pre_command_hook</span><span
+              class="method-args">(&block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Supply a block to be called before every command. It's called with three
+arguments: command name, an Array of arguments, <a
+href="Box.html#method-i-user">user</a> name, hostname e.g.</p>
+
+<pre>rbox.pre_command_hook do |cmd,args,user,host|
+  ...
+end</pre>
+            
+
+            
+            <div class="method-source-code" id="pre_command_hook-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 491</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pre_command_hook</span>(&amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@rye_pre_command_hook</span> = <span class="ruby-identifier">block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_pre_command_hook</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- pre_command_hook-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pre_command_hook-method -->
+
+      
+        <div id="pre_command_hook-3D-method" class="method-detail ">
+          <a name="method-i-pre_command_hook-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pre_command_hook=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="pre_command_hook-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pre_command_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_pre_command_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- pre_command_hook-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pre_command_hook-3D-method -->
+
+      
+        <div id="preview_command-method" class="method-detail ">
+          <a name="method-i-preview_command"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">preview_command</span><span
+              class="method-args">(*args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the command an arguments as a String.</p>
+            
+
+            
+            <div class="method-source-code" id="preview_command-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 480</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">preview_command</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">prep_args</span>(*<span class="ruby-identifier">args</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- preview_command-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- preview_command-method -->
+
+      
+        <div id="quiet-method" class="method-detail ">
+          <a name="method-i-quiet"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">quiet</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="quiet-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">quiet</span>; <span class="ruby-ivar">@rye_quiet</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- quiet-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- quiet-method -->
+
+      
+        <div id="quietly-method" class="method-detail ">
+          <a name="method-i-quietly"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">quietly</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Like <a href="Box.html#method-i-batch">batch</a>, except it enables <a
+href="Box.html#method-i-quiet">quiet</a> mode before executing the block. 
+After executing the block, <a href="Box.html#method-i-quiet">quiet</a> mode
+is returned back to whichever state it was previously in. In other words,
+this method won't enable <a href="Box.html#method-i-quiet">quiet</a> mode
+if it was already disabled.</p>
+
+<p>In <a href="Box.html#method-i-quiet">quiet</a> mode, the pre and post
+command hooks are not called. This  is used internally when calling
+commands like <tt>ls</tt> to check whether a file path exists (to prevent
+polluting the logs).</p>
+            
+
+            
+            <div class="method-source-code" id="quietly-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 581</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">quietly</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_quiet</span>
+  <span class="ruby-identifier">enable_quiet_mode</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_exec</span> *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_quiet</span> = <span class="ruby-identifier">previous_state</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- quietly-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- quietly-method -->
+
+      
+        <div id="remove_key-method" class="method-detail method-alias">
+          <a name="method-i-remove_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">remove_key</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Box.html#method-i-remove_keys">remove_keys</a>
+          </div>
+          
+        </div><!-- remove_key-method -->
+
+      
+        <div id="remove_keys-method" class="method-detail ">
+          <a name="method-i-remove_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">remove_keys</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Remove one or more private <a href="Box.html#method-i-keys">keys</a> fromt
+he list of key paths.</p>
+<ul><li>
+<p><tt>keys</tt> is a list of file paths to private <a
+href="Box.html#method-i-keys">keys</a></p>
+</li></ul>
+
+<p>Returns the instance of <a href="Box.html">Box</a></p>
+            
+
+            
+            <div class="method-source-code" id="remove_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 330</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_keys</span>(*<span class="ruby-identifier">keys</span>)
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">||=</span> []
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-ivar">@rye_opts</span>[<span class="ruby-value">:keys</span>].<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-keyword">self</span> <span class="ruby-comment"># MUST RETURN self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- remove_keys-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Box.html#method-i-remove_key">remove_key</a>
+          </div>
+          
+
+          
+        </div><!-- remove_keys-method -->
+
+      
+        <div id="root-3F-method" class="method-detail ">
+          <a name="method-i-root-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">root?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="root-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">root?</span>; <span class="ruby-identifier">user</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;root&quot;</span> <span class="ruby-keyword">end</span></pre>
+            </div><!-- root-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- root-3F-method -->
+
+      
+        <div id="safe-method" class="method-detail ">
+          <a name="method-i-safe"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">safe</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="safe-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">safe</span>; <span class="ruby-ivar">@rye_safe</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- safe-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- safe-method -->
+
+      
+        <div id="safe-3F-method" class="method-detail ">
+          <a name="method-i-safe-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">safe?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="safe-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">safe?</span>; <span class="ruby-ivar">@rye_safe</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- safe-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- safe-3F-method -->
+
+      
+        <div id="safely-method" class="method-detail ">
+          <a name="method-i-safely"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">safely</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>See <a href="Box.html#method-i-unsafely">unsafely</a> (except in reverse)</p>
+            
+
+            
+            <div class="method-source-code" id="safely-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 565</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">safely</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_safe</span>
+  <span class="ruby-identifier">enable_safe_mode</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_exec</span> *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-identifier">previous_state</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- safely-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- safely-method -->
+
+      
+        <div id="setenv-method" class="method-detail ">
+          <a name="method-i-setenv"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">setenv</span><span
+              class="method-args">(n, v)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Add an environment variable. <tt>n</tt> and <tt>v</tt> are the name and
+value. Returns the instance of <a href="Box.html">Rye::Box</a></p>
+            
+
+            
+            <div class="method-source-code" id="setenv-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 379</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setenv</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)
+  <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Adding env: #{n}=#{v}&quot;</span>
+  <span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;prev value: #{@rye_getenv[n]}&quot;</span>
+  <span class="ruby-ivar">@rye_getenv</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+  (<span class="ruby-ivar">@rye_current_environment_variables</span> <span class="ruby-operator">||=</span> {})[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- setenv-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Box.html#method-i-add_env">add_env</a>
+          </div>
+          
+
+          
+        </div><!-- setenv-method -->
+
+      
+        <div id="ssh_config_options-method" class="method-detail ">
+          <a name="method-i-ssh_config_options"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">ssh_config_options</span><span
+              class="method-args">(host)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Parse SSH config files for use with Net::SSH</p>
+            
+
+            
+            <div class="method-source-code" id="ssh_config_options-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ssh_config_options</span>(<span class="ruby-identifier">host</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">SSH</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">for</span>(<span class="ruby-identifier">host</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- ssh_config_options-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- ssh_config_options-method -->
+
+      
+        <div id="stash-method" class="method-detail ">
+          <a name="method-i-stash"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">stash</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns the current value of the <a
+href="Box.html#method-i-stash">stash</a> +@rye_stash+</p>
+            
+
+            
+            <div class="method-source-code" id="stash-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stash</span>; <span class="ruby-ivar">@rye_stash</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- stash-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- stash-method -->
+
+      
+        <div id="stash-3D-method" class="method-detail ">
+          <a name="method-i-stash-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">stash=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Store a value to the <a href="Box.html#method-i-stash">stash</a>
++@rye_stash+</p>
+            
+
+            
+            <div class="method-source-code" id="stash-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stash=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_stash</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- stash-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- stash-3D-method -->
+
+      
+        <div id="stdout_hook-method" class="method-detail ">
+          <a name="method-i-stdout_hook"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">stdout_hook</span><span
+              class="method-args">(&block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Supply a block to be called every time a command receives STDOUT data.</p>
+
+<p>e.g.</p>
+
+<pre>rbox.stdout_hook do |content|
+  ...
+end</pre>
+            
+
+            
+            <div class="method-source-code" id="stdout_hook-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 502</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stdout_hook</span>(&amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@rye_stdout_hook</span> = <span class="ruby-identifier">block</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_stdout_hook</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- stdout_hook-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- stdout_hook-method -->
+
+      
+        <div id="stdout_hook-3D-method" class="method-detail ">
+          <a name="method-i-stdout_hook-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">stdout_hook=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="stdout_hook-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stdout_hook=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_stdout_hook</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- stdout_hook-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- stdout_hook-3D-method -->
+
+      
+        <div id="sudo-method" class="method-detail ">
+          <a name="method-i-sudo"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sudo</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Like <a href="Box.html#method-i-batch">batch</a>, except it enables <a
+href="Box.html#method-i-sudo">sudo</a> mode before executing the block. If
+the <a href="Box.html#method-i-user">user</a> is already root, this has no
+effect. Otherwise all  commands executed in the block will run <a
+href="Box.html#method-i-via">via</a> <a
+href="Box.html#method-i-sudo">sudo</a>.</p>
+
+<p>If no block is specified then <a href="Box.html#method-i-sudo">sudo</a> is
+called just like a regular command.</p>
+            
+
+            
+            <div class="method-source-code" id="sudo-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 595</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sudo</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">run_command</span>(<span class="ruby-string">'sudo'</span>, <span class="ruby-identifier">args</span>);
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_sudo</span>
+    <span class="ruby-identifier">enable_sudo</span>
+    <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_exec</span> *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>
+    <span class="ruby-ivar">@rye_sudo</span> = <span class="ruby-identifier">previous_state</span>
+    <span class="ruby-identifier">ret</span>  
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sudo-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sudo-method -->
+
+      
+        <div id="sudo-3F-method" class="method-detail ">
+          <a name="method-i-sudo-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sudo?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sudo-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sudo?</span>; <span class="ruby-ivar">@rye_sudo</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">end</span></pre>
+            </div><!-- sudo-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sudo-3F-method -->
+
+      
+        <div id="switch_user-method" class="method-detail ">
+          <a name="method-i-switch_user"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">switch_user</span><span
+              class="method-args">(newuser)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Reconnect as another <a href="Box.html#method-i-user">user</a>. This is
+different from su= which executes subsequent commands <a
+href="Box.html#method-i-via">via</a> +su -c COMMAND USER+.</p>
+<ul><li>
+<p><tt>newuser</tt> The username to reconnect as</p>
+</li></ul>
+
+<p>NOTE: if there is an open connection, it's disconnected but not reconnected
+because it's possible it wasn't  connected yet in the first place (if you
+create the  instance with default settings for example)</p>
+            
+
+            
+            <div class="method-source-code" id="switch_user-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 280</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">switch_user</span>(<span class="ruby-identifier">newuser</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">newuser</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-ivar">@rye_opts</span> <span class="ruby-operator">||=</span> {}
+  <span class="ruby-ivar">@rye_user</span> = <span class="ruby-identifier">newuser</span>
+  <span class="ruby-identifier">disconnect</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- switch_user-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- switch_user-method -->
+
+      
+        <div id="templates-method" class="method-detail ">
+          <a name="method-i-templates"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">templates</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="templates-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">templates</span>; <span class="ruby-ivar">@rye_templates</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- templates-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- templates-method -->
+
+      
+        <div id="templates-3F-method" class="method-detail ">
+          <a name="method-i-templates-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">templates?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="templates-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">templates?</span>; <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_templates</span>.<span class="ruby-identifier">nil?</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- templates-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- templates-3F-method -->
+
+      
+        <div id="to_s-method" class="method-detail ">
+          <a name="method-i-to_s"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">to_s</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns +<a href="Box.html#method-i-user">user</a>@rye_host+</p>
+            
+
+            
+            <div class="method-source-code" id="to_s-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 392</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>; <span class="ruby-string">'%s@rye_%s'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">user</span>, <span class="ruby-ivar">@rye_host</span>]; <span class="ruby-keyword">end</span></pre>
+            </div><!-- to_s-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- to_s-method -->
+
+      
+        <div id="umask-3D-method" class="method-detail ">
+          <a name="method-i-umask-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">umask=</span><span
+              class="method-args">(val='0022')</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Change the current umask (sort of -- works the same way as <a
+href="Box.html#method-i-cd">cd</a>) The default umask is 0022</p>
+            
+
+            
+            <div class="method-source-code" id="umask-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 266</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">umask=</span>(<span class="ruby-identifier">val</span>=<span class="ruby-string">'0022'</span>)
+  <span class="ruby-ivar">@rye_current_umask</span> = <span class="ruby-identifier">val</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- umask-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- umask-3D-method -->
+
+      
+        <div id="unsafely-method" class="method-detail ">
+          <a name="method-i-unsafely"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">unsafely</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Like <a href="Box.html#method-i-batch">batch</a>, except it disables <a
+href="Box.html#method-i-safe">safe</a> mode before executing the block. 
+After executing the block, <a href="Box.html#method-i-safe">safe</a> mode
+is returned back to whichever state it was previously in. In other words,
+this method won't enable <a href="Box.html#method-i-safe">safe</a> mode if
+it was already disabled.</p>
+            
+
+            
+            <div class="method-source-code" id="unsafely-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 555</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unsafely</span>(*<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">previous_state</span> = <span class="ruby-ivar">@rye_safe</span>
+  <span class="ruby-identifier">disable_safe_mode</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">instance_exec</span> *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@rye_safe</span> = <span class="ruby-identifier">previous_state</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- unsafely-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Box.html#method-i-wildly">wildly</a>
+          </div>
+          
+
+          
+        </div><!-- unsafely-method -->
+
+      
+        <div id="user-method" class="method-detail ">
+          <a name="method-i-user"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">user</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="user-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user</span>; <span class="ruby-ivar">@rye_user</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- user-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- user-method -->
+
+      
+        <div id="via-method" class="method-detail ">
+          <a name="method-i-via"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">via</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="via-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">via</span>; <span class="ruby-ivar">@rye_via</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- via-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- via-method -->
+
+      
+        <div id="via-3D-method" class="method-detail ">
+          <a name="method-i-via-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">via=</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="via-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">via=</span>(<span class="ruby-identifier">val</span>); <span class="ruby-ivar">@rye_via</span> = <span class="ruby-identifier">val</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- via-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- via-3D-method -->
+
+      
+        <div id="via-3F-method" class="method-detail ">
+          <a name="method-i-via-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">via?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="via-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">via?</span>; <span class="ruby-operator">!</span><span class="ruby-ivar">@rye_via</span>.<span class="ruby-identifier">nil?</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- via-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- via-3F-method -->
+
+      
+        <div id="via_hop-method" class="method-detail ">
+          <a name="method-i-via_hop"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">via_hop</span><span
+              class="method-args">(*args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <ul><li>
+<p><tt>hops</tt> <a href="Hop.html">Rye::Hop</a> objects will be added
+directly</p>
+</li></ul>
+
+<p>to the set. Hostnames will be used to create <a
+href="Box.html#method-c-new">new</a> instances of <a
+href="Hop.html">Rye::Hop</a>  h1 = <a
+href="Hop.html#method-c-new">Rye::Hop.new</a> "host1" h1.<a
+href="Box.html#method-i-via_hop">via_hop</a> "host2", :<a
+href="Box.html#method-i-user">user</a> =&gt; "service_user"</p>
+
+<p>OR</p>
+
+<p>h1 = <a href="Hop.html#method-c-new">Rye::Hop.new</a> "host1" h2 = <a
+href="Hop.html#method-c-new">Rye::Hop.new</a> "host2" h1.<a
+href="Box.html#method-i-via_hop">via_hop</a> h2</p>
+            
+
+            
+            <div class="method-source-code" id="via_hop-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/box.rb, line 202</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">via_hop</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> 
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@rye_via</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Hop</span>)
+    <span class="ruby-ivar">@rye_via</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+    <span class="ruby-identifier">hop</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-ivar">@rye_via</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Hop</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hop</span>, <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">merge</span>(
+                                    <span class="ruby-value">:debug</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@rye_debug</span>,
+                                    <span class="ruby-value">:info</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@rye_info</span>,
+                                    <span class="ruby-value">:error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@rye_error</span>)
+                             )
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@rye_via</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Hop</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hop</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">disconnect</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- via_hop-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- via_hop-method -->
+
+      
+        <div id="wildly-method" class="method-detail method-alias">
+          <a name="method-i-wildly"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">wildly</span><span
+              class="method-args">(*args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Box.html#method-i-unsafely">unsafely</a>
+          </div>
+          
+        </div><!-- wildly-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

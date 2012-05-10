@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).</title>
+
+  <link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="indexpage">
+
+  
+  <h1>Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).</h1>
+
+  
+  <p>This is the API documentation for 'Rye: Safely run SSH commands on a bunch of machines at the same time (from Ruby).'.</p>
+  
+
+  
+  
+  <h2>Files</h2>
+  <ul>
+    
+      <li class="file"><a href="CHANGES_txt.html">CHANGES.txt</a></li>
+    
+      <li class="file"><a href="LICENSE_txt.html">LICENSE.txt</a></li>
+    
+      <li class="file"><a href="README_rdoc.html">README.rdoc</a></li>
+    
+      <li class="file"><a href="bin/try.html">try</a></li>
+    
+  </ul>
+  
+
+  <h2 id="classes">Classes/Modules</h2>
+  <ul>
+    
+    <li class="module"><a href="Rye.html">Rye</a></li>
+    
+    <li class="class"><a href="Rye/Box.html">Rye::Box</a></li>
+    
+    <li class="module"><a href="Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+    
+    <li class="module"><a href="Rye/Cmd.html">Rye::Cmd</a></li>
+    
+    <li class="class"><a href="Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+    
+    <li class="class"><a href="Rye/Err.html">Rye::Err</a></li>
+    
+    <li class="class"><a href="Rye/Hop.html">Rye::Hop</a></li>
+    
+    <li class="class"><a href="Rye/Key.html">Rye::Key</a></li>
+    
+    <li class="class"><a href="Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+    
+    <li class="class"><a href="Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+    
+    <li class="class"><a href="Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+    
+    <li class="class"><a href="Rye/NoHost.html">Rye::NoHost</a></li>
+    
+    <li class="class"><a href="Rye/NoPassword.html">Rye::NoPassword</a></li>
+    
+    <li class="class"><a href="Rye/NoPty.html">Rye::NoPty</a></li>
+    
+    <li class="class"><a href="Rye/NotConnected.html">Rye::NotConnected</a></li>
+    
+    <li class="class"><a href="Rye/Rap.html">Rye::Rap</a></li>
+    
+    <li class="class"><a href="Rye/RyeError.html">Rye::RyeError</a></li>
+    
+    <li class="class"><a href="Rye/Set.html">Rye::Set</a></li>
+    
+    <li class="class"><a href="Rye/Tpl.html">Rye::Tpl</a></li>
+    
+  </ul>
+
+  <h2 id="methods">Methods</h2>
+  <ul>
+    
+      <li><a href="Rye/Cmd.html#method-c-add_command">::add_command &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-c-can-3F">::can? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-from_file">::from_file &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-generate_pkey">::generate_pkey &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key/BadPerm.html#method-c-new">::new &mdash; Rye::Key::BadPerm</a></li>
+    
+      <li><a href="Rye/Tpl.html#method-c-new">::new &mdash; Rye::Tpl</a></li>
+    
+      <li><a href="Rye/Err.html#method-c-new">::new &mdash; Rye::Err</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-new">::new &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Box.html#method-c-new">::new &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Rap.html#method-c-new">::new &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Hop.html#method-c-new">::new &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Key/BadFile.html#method-c-new">::new &mdash; Rye::Key::BadFile</a></li>
+    
+      <li><a href="Rye/Set.html#method-c-new">::new &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-public_key_to_ssh2">::public_key_to_ssh2 &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-c-remove_command">::remove_command &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-sign">::sign &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-sign_aws">::sign_aws &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-supported_authentication-3F">::supported_authentication? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-c-supported_keytype-3F">::supported_keytype? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye.html#method-c-sysinfo">::sysinfo &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-3D-3D">#== &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-3D-3D">#== &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-3E">#> &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-3E-3E">#>> &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-5B-5D">#[] &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-5B-5D">#[] &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ab">#ab &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-add_box">#add_box &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-add_boxes">#add_boxes &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-add_env">#add_env &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-add_exit_status">#add_exit_status &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-add_key">#add_key &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-add_key">#add_key &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-add_key">#add_key &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-add_keys">#add_keys &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-add_keys">#add_keys &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-add_keys">#add_keys &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye.html#method-i-add_keys">#add_keys &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-add_stderr">#add_stderr &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-add_stdout">#add_stdout &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-aptitude">#aptitude &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-awk">#awk &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-bash">#bash &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-batch">#batch &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-bunzip2">#bunzip2 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-bzip2">#bzip2 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-can">#can &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-can-3F">#can? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-cat">#cat &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-cd">#cd &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-cd">#cd &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-chmod">#chmod &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-chown">#chown &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-cmd-3F">#cmd? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-cmds">#cmds &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-code">#code &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-command-3F">#command? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-commands">#commands &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-configure">#configure &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-connect">#connect &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-connect">#connect &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-cp">#cp &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-curl">#curl &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-current_umask">#current_umask &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-current_working_directory">#current_working_directory &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-cvs">#cvs &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-date">#date &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-debug-3F">#debug? &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-debug-3F">#debug? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-decrypt">#decrypt &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Tpl.html#method-i-delete">#delete &mdash; Rye::Tpl</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-df">#df &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-digest_md5">#digest_md5 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-digest_sha1">#digest_sha1 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-digest_sha2">#digest_sha2 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-dir">#dir &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-dir_download">#dir_download &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-dir_upload">#dir_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-directory_download">#directory_download &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-directory_upload">#directory_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-disable_quiet_mode">#disable_quiet_mode &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-disable_safe_mode">#disable_safe_mode &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-disable_sudo">#disable_sudo &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-disconnect">#disconnect &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-disconnect">#disconnect &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-dpkg">#dpkg &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-dsa-3F">#dsa? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-du">#du &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-dump">#dump &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-echo">#echo &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-empty-3F">#empty? &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-enable_quiet_mode">#enable_quiet_mode &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-enable_safe_mode">#enable_safe_mode &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-enable_sudo">#enable_sudo &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-encrypt">#encrypt &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-encrypted-3F">#encrypted? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-env">#env &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-error-3F">#error? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-error-3F">#error? &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye.html#method-i-escape">#escape &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-exception_hook">#exception_hook &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-exception_hook-3D">#exception_hook= &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-exception_hook-3D">#exception_hook= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-execute">#execute &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Err.html#method-i-exit_status">#exit_status &mdash; Rye::Err</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-fetch_port">#fetch_port &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_append">#file_append &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_download">#file_download &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_exists-3F">#file_exists? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_modify">#file_modify &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_upload">#file_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_verified-3F">#file_verified? &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-file_write">#file_write &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-find_private_keys">#find_private_keys &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-getconf">#getconf &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-getenv">#getenv &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-git">#git &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-grep">#grep &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-guess_user_home">#guess_user_home &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-gunzip">#gunzip &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-gzip">#gzip &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-hg">#hg &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-history">#history &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-host">#host &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-host">#host &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-host-3D">#host= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-host-3D">#host= &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-host_key">#host_key &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-host_key">#host_key &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-hostname">#hostname &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-impltype">#impltype &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-impltype-3D">#impltype= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-info-3F">#info? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-info-3F">#info? &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-inspect">#inspect &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-inspect">#inspect &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-inspect">#inspect &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-inspect">#inspect &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-inspect">#inspect &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-instance_exec">#instance_exec &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-interactive_ssh">#interactive_ssh &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-irb">#irb &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-keys">#keys &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-keys">#keys &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye.html#method-i-keys">#keys &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-keys">#keys &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ldconfig">#ldconfig &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ln">#ln &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ls">#ls &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-make">#make &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/NoPassword.html#method-i-message">#message &mdash; Rye::NoPassword</a></li>
+    
+      <li><a href="Rye/Err.html#method-i-message">#message &mdash; Rye::Err</a></li>
+    
+      <li><a href="Rye/Key/BadPerm.html#method-i-message">#message &mdash; Rye::Key::BadPerm</a></li>
+    
+      <li><a href="Rye/Key/BadFile.html#method-i-message">#message &mdash; Rye::Key::BadFile</a></li>
+    
+      <li><a href="Rye/NoPty.html#method-i-message">#message &mdash; Rye::NoPty</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-method_missing">#method_missing &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-method_missing">#method_missing &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-mkdir">#mkdir &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-mkfs">#mkfs &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-mount">#mount &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-mutex">#mutex &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-mv">#mv &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-nickname">#nickname &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-nickname">#nickname &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-nickname-3D">#nickname= &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-nickname-3D">#nickname= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-opts">#opts &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-opts">#opts &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-opts-3D">#opts= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-opts-3D">#opts= &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-ostype">#ostype &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-ostype-3D">#ostype= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Tpl.html#method-i-path">#path &mdash; Rye::Tpl</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-perl">#perl &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-post_command_hook">#post_command_hook &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-post_command_hook-3D">#post_command_hook= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-pre_command_hook">#pre_command_hook &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-pre_command_hook-3D">#pre_command_hook= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye.html#method-i-prepare_command">#prepare_command &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-preview_command">#preview_command &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-printenv">#printenv &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-private-3F">#private? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-private_key">#private_key &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ps">#ps &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-public-3F">#public? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-public_key">#public_key &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-pwd">#pwd &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-python">#python &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-quiet">#quiet &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-quietly">#quietly &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rake">#rake &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-reload">#reload &mdash; Rye</a></li>
+    
+      <li><a href="Rye.html#method-i-remote_host_keys">#remote_host_keys &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-remove_hops-21">#remove_hops! &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-remove_key">#remove_key &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-remove_key">#remove_key &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-remove_key">#remove_key &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-remove_keys">#remove_keys &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-remove_keys">#remove_keys &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-remove_keys">#remove_keys &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Tpl.html#method-i-result-21">#result! &mdash; Rye::Tpl</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-root-3F">#root? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-root-3F">#root? &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-root-3F">#root? &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-rsa-3F">#rsa? &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-ruby">#ruby &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rudy">#rudy &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rudy_ec2">#rudy_ec2 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rudy_s3">#rudy_s3 &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rudy_sdb">#rudy_sdb &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-rye">#rye &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-safe">#safe &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-safe-3F">#safe? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-safely">#safely &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-sed">#sed &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-setenv">#setenv &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-setenv">#setenv &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-setenvironment_variable">#setenvironment_variable &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-sh">#sh &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-shell">#shell &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-siege">#siege &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-sign">#sign &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-sleep">#sleep &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-ssh_config_options">#ssh_config_options &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-ssh_config_options">#ssh_config_options &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye.html#method-i-sshagent_info">#sshagent_info &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-stash">#stash &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-stash-3D">#stash= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Err.html#method-i-stderr">#stderr &mdash; Rye::Err</a></li>
+    
+      <li><a href="Rye/Err.html#method-i-stdout">#stdout &mdash; Rye::Err</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-stdout">#stdout &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-stdout_hook">#stdout_hook &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-stdout_hook-3D">#stdout_hook= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-stella">#stella &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-str_download">#str_download &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-str_upload">#str_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-strand">#strand &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-string_append">#string_append &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-string_download">#string_download &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-string_upload">#string_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-su">#su &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-sudo">#sudo &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-sudo-3F">#sudo? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-svn">#svn &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-switch_user">#switch_user &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-switch_user">#switch_user &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye.html#method-i-sysinfo">#sysinfo &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-tail">#tail &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-tar">#tar &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-template_upload">#template_upload &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-template_write">#template_write &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-templates">#templates &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-templates-3F">#templates? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-test">#test &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Tpl.html#method-i-to_s">#to_s &mdash; Rye::Tpl</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-to_s">#to_s &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Key.html#method-i-to_s">#to_s &mdash; Rye::Key</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-to_s">#to_s &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-to_s">#to_s &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Rap.html#method-i-to_s">#to_s &mdash; Rye::Rap</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-touch">#touch &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-try">#try &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-umask-3D">#umask= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-umount">#umount &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-uname">#uname &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-unsafely">#unsafely &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-unxz">#unxz &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-unzip">#unzip &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-uptime">#uptime &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-user">#user &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Set.html#method-i-user">#user &mdash; Rye::Set</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-user">#user &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-useradd">#useradd &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-via">#via &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-via">#via &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-via-3D">#via= &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-via-3F">#via? &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-via-3F">#via? &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-via_hop">#via_hop &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye/Hop.html#method-i-via_hop">#via_hop &mdash; Rye::Hop</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-wc">#wc &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-wget">#wget &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-which">#which &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye.html#method-i-which">#which &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-whoami">#whoami &mdash; Rye::Cmd</a></li>
+    
+      <li><a href="Rye/Box.html#method-i-wildly">#wildly &mdash; Rye::Box</a></li>
+    
+      <li><a href="Rye.html#method-i-without_indent">#without_indent &mdash; Rye</a></li>
+    
+      <li><a href="Rye/Cmd.html#method-i-xz">#xz &mdash; Rye::Cmd</a></li>
+    
+  </ul>
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+</body>
+</html>

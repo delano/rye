@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Module: Rye</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="module">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./lib/rye/box_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/box.rb">lib/rye/box.rb</a></li>
+          
+            <li><a href="./lib/rye/cmd_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/cmd.rb">lib/rye/cmd.rb</a></li>
+          
+            <li><a href="./lib/rye/hop_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/hop.rb">lib/rye/hop.rb</a></li>
+          
+            <li><a href="./lib/rye/key_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/key.rb">lib/rye/key.rb</a></li>
+          
+            <li><a href="./lib/rye/rap_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/rap.rb">lib/rye/rap.rb</a></li>
+          
+            <li><a href="./lib/rye/set_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/set.rb">lib/rye/set.rb</a></li>
+          
+            <li><a href="./lib/rye_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye.rb">lib/rye.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">MODULE</span> <a href="Rye/Cmd.html">Rye::Cmd</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Box.html">Rye::Box</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Err.html">Rye::Err</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Hop.html">Rye::Hop</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Key.html">Rye::Key</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/NoHost.html">Rye::NoHost</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/NoPassword.html">Rye::NoPassword</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/NoPty.html">Rye::NoPty</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/NotConnected.html">Rye::NotConnected</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Rap.html">Rye::Rap</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/RyeError.html">Rye::RyeError</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Set.html">Rye::Set</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Rye/Tpl.html">Rye::Tpl</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-sysinfo">::sysinfo</a></li>
+          
+          <li><a href="#method-i-add_keys">#add_keys</a></li>
+          
+          <li><a href="#method-i-escape">#escape</a></li>
+          
+          <li><a href="#method-i-find_private_keys">#find_private_keys</a></li>
+          
+          <li><a href="#method-i-keys">#keys</a></li>
+          
+          <li><a href="#method-i-mutex">#mutex</a></li>
+          
+          <li><a href="#method-i-prepare_command">#prepare_command</a></li>
+          
+          <li><a href="#method-i-reload">#reload</a></li>
+          
+          <li><a href="#method-i-remote_host_keys">#remote_host_keys</a></li>
+          
+          <li><a href="#method-i-shell">#shell</a></li>
+          
+          <li><a href="#method-i-sshagent_info">#sshagent_info</a></li>
+          
+          <li><a href="#method-i-strand">#strand</a></li>
+          
+          <li><a href="#method-i-sysinfo">#sysinfo</a></li>
+          
+          <li><a href="#method-i-which">#which</a></li>
+          
+          <li><a href="#method-i-without_indent">#without_indent</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./CHANGES_txt.html">CHANGES.txt</a></li>
+        
+          <li class="file"><a href="./LICENSE_txt.html">LICENSE.txt</a></li>
+        
+          <li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="./bin/try.html">try</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Rye.html">Rye</a></li>
+        
+          <li><a href="./Rye/Box.html">Rye::Box</a></li>
+        
+          <li><a href="./Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+          <li><a href="./Rye/Cmd.html">Rye::Cmd</a></li>
+        
+          <li><a href="./Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+        
+          <li><a href="./Rye/Err.html">Rye::Err</a></li>
+        
+          <li><a href="./Rye/Hop.html">Rye::Hop</a></li>
+        
+          <li><a href="./Rye/Key.html">Rye::Key</a></li>
+        
+          <li><a href="./Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+        
+          <li><a href="./Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+        
+          <li><a href="./Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+        
+          <li><a href="./Rye/NoHost.html">Rye::NoHost</a></li>
+        
+          <li><a href="./Rye/NoPassword.html">Rye::NoPassword</a></li>
+        
+          <li><a href="./Rye/NoPty.html">Rye::NoPty</a></li>
+        
+          <li><a href="./Rye/NotConnected.html">Rye::NotConnected</a></li>
+        
+          <li><a href="./Rye/Rap.html">Rye::Rap</a></li>
+        
+          <li><a href="./Rye/RyeError.html">Rye::RyeError</a></li>
+        
+          <li><a href="./Rye/Set.html">Rye::Set</a></li>
+        
+          <li><a href="./Rye/Tpl.html">Rye::Tpl</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="module">Rye</h1>
+
+    <div id="description" class="description">
+      
+<p>vim: set sw=2 ts=2 :</p>
+<hr style="height: 1px">
+
+<p>vim: set sw=2 ts=2 :</p>
+<hr style="height: 1px">
+
+<p>vim: set sw=2 ts=2 :</p>
+<hr style="height: 1px">
+
+<p>vim: set sw=2 ts=2 :</p>
+<hr style="height: 1px">
+
+<h1><a href="Rye.html">Rye</a></h1>
+
+<p>Safely run remote commands via SSH in Ruby.</p>
+
+<p><a href="Rye.html">Rye</a> is similar to <a
+href="http://rush.heroku.com">Rush</a> but everything  happens over SSH (no
+HTTP daemon) and the default settings are less dangerous (for safety). For
+example, file globs and the "rm" command are disabled so unless otherwise
+specified, you  can't do this: <tt>rbox.rm('/etc/*<b>/</b>')</tt>.</p>
+
+<p>However, you can do this:</p>
+
+<p>rset = <a href="Rye/Set.html#method-c-new">Rye::Set.new</a>("dev-machines")
+rset.add_boxes('host1', 'host2', 'host3', 'host4') rset.ps('aux')</p>
+<ul><li>
+<p>See <tt>bin/try</tt> for a bunch of working examples.</p>
+</li><li>
+<p>See Rye::Box#initialize for info about disabling safe-mode.</p>
+</li></ul>
+
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+      <!-- Constants -->
+      <div id="constants-list" class="section">
+        <h3 class="section-header">Constants</h3>
+        <dl>
+        
+          <dt><a name="DEBUG">DEBUG</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="VERSION">VERSION</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+        </dl>
+      </div>
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="sysinfo-method" class="method-detail ">
+          <a name="method-c-sysinfo"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sysinfo</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Accessor for an instance of SystemInfo</p>
+            
+
+            
+            <div class="method-source-code" id="sysinfo-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>
+  <span class="ruby-identifier">@@sysinfo</span> = <span class="ruby-constant">SysInfo</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@sysinfo</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">@@sysinfo</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sysinfo-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sysinfo-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="add_keys-method" class="method-detail ">
+          <a name="method-i-add_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_keys</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Add one or more private <a href="Rye.html#method-i-keys">keys</a> to the
+SSH Agent.</p>
+<ul><li>
+<p><tt>keys</tt> one or more file paths to private <a
+href="Rye.html#method-i-keys">keys</a> used for passwordless logins.</p>
+</li></ul>
+            
+
+            
+            <div class="method-source-code" id="add_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 124</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_keys</span>(*<span class="ruby-identifier">keys</span>)
+  <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-string">&quot;ssh-add&quot;</span>, <span class="ruby-identifier">keys</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- add_keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- add_keys-method -->
+
+      
+        <div id="escape-method" class="method-detail ">
+          <a name="method-i-escape"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">escape</span><span
+              class="method-args">(safe, cmd, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Creates a string from <tt>cmd</tt> and <tt>args</tt>. If <tt>safe</tt> is
+true it will send them through Escape.shell_command otherwise  it will
+return them joined by a space character.</p>
+            
+
+            
+            <div class="method-source-code" id="escape-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 234</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">safe</span>, <span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []
+  <span class="ruby-identifier">safe</span> <span class="ruby-operator">?</span> <span class="ruby-constant">Escape</span>.<span class="ruby-identifier">shell_command</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> [<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">args</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- escape-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- escape-method -->
+
+      
+        <div id="find_private_keys-method" class="method-detail ">
+          <a name="method-i-find_private_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">find_private_keys</span><span
+              class="method-args">(path)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Looks for private <a href="Rye.html#method-i-keys">keys</a> in
+<tt>path</tt> and returns and Array of paths to the files it finds. Raises
+an Exception if path does not exist. If path is a file rather than a
+directory, it will check whether that single file is a private key.</p>
+            
+
+            
+            <div class="method-source-code" id="find_private_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_private_keys</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;#{path} does not exist&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">files</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">file</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">files</span> = [<span class="ruby-identifier">path</span>]
+  <span class="ruby-keyword">end</span>
+  
+  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">file</span>)
+    <span class="ruby-identifier">pk</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">file</span>) 
+      <span class="ruby-identifier">pk</span> = <span class="ruby-identifier">tmp</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">private?</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-operator">!</span><span class="ruby-identifier">pk</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">files</span> <span class="ruby-operator">||</span> []
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- find_private_keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- find_private_keys-method -->
+
+      
+        <div id="keys-method" class="method-detail ">
+          <a name="method-i-keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">keys</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns an Array of info about the currently available SSH <a
+href="Rye.html#method-i-keys">keys</a>, as provided by the SSH Agent.</p>
+
+<p>Returns: [[bits, finger-print, file-path], ...]</p>
+            
+
+            
+            <div class="method-source-code" id="keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">keys</span>
+  <span class="ruby-comment"># 2048 76:cb:d7:82:90:92:ad:75:3d:68:6c:a9:21:ca:7b:7f /Users/rye/.ssh/id_rsa (RSA)</span>
+  <span class="ruby-comment"># 2048 7b:a6:ba:55:b1:10:1d:91:9f:73:3a:aa:0c:d4:88:0e /Users/rye/.ssh/id_dsa (DSA)</span>
+  <span class="ruby-comment">#keystr = Rye.shell(&quot;ssh-add&quot;, '-l')</span>
+  <span class="ruby-comment">#return nil unless keystr</span>
+  <span class="ruby-comment">#keystr.collect do |key|</span>
+  <span class="ruby-comment">#  key.split(/\s+/)</span>
+  <span class="ruby-comment">#end</span>
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">home</span>, <span class="ruby-string">'.ssh'</span>, <span class="ruby-string">'id_*sa'</span>))
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- keys-method -->
+
+      
+        <div id="mutex-method" class="method-detail ">
+          <a name="method-i-mutex"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">mutex</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="mutex-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mutex</span>
+  <span class="ruby-identifier">@@mutex</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- mutex-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- mutex-method -->
+
+      
+        <div id="prepare_command-method" class="method-detail ">
+          <a name="method-i-prepare_command"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">prepare_command</span><span
+              class="method-args">(cmd, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Takes a command with arguments and returns it in a  single String with
+escaped args and some other stuff.</p>
+<ul><li>
+<p><tt>cmd</tt> The <a href="Rye.html#method-i-shell">shell</a> command name
+or absolute path.</p>
+</li><li>
+<p><tt>args</tt> an Array of command arguments.</p>
+</li></ul>
+
+<p>The command is searched for in the local PATH (where <a
+href="Rye.html">Rye</a> is running). An exception is raised if it's not
+found. NOTE: Because this happens locally, you won't want to use this
+method if the environment is quite different from the remote machine it
+will be executed on.</p>
+
+<p>The command arguments are passed through Escape.shell_command (that means
+you can't use environment variables or asterisks).</p>
+            
+
+            
+            <div class="method-source-code" id="prepare_command-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">prepare_command</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span> <span class="ruby-operator">&amp;&amp;=</span> [<span class="ruby-identifier">args</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-identifier">found_cmd</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">which</span>(<span class="ruby-identifier">cmd</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">CommandNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span> <span class="ruby-operator">||</span> <span class="ruby-string">'[unknown]'</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">found_cmd</span>
+  <span class="ruby-comment"># Symbols to switches. :l -&gt; -l, :help -&gt; --help</span>
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-node">&quot;-#{a}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-node">&quot;--#{a}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+    <span class="ruby-identifier">a</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-ivar">@safe</span>, <span class="ruby-identifier">found_cmd</span>, *<span class="ruby-identifier">args</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- prepare_command-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- prepare_command-method -->
+
+      
+        <div id="reload-method" class="method-detail ">
+          <a name="method-i-reload"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">reload</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Reload <a href="Rye.html">Rye</a> dynamically. Useful with irb.  NOTE: does
+not <a href="Rye.html#method-i-reload">reload</a> rye.rb.</p>
+            
+
+            
+            <div class="method-source-code" id="reload-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">pat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>), <span class="ruby-string">'rye'</span>)
+  <span class="ruby-node">%{key rap cmd box set hop}</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">lib</span><span class="ruby-operator">|</span> <span class="ruby-identifier">load</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">pat</span>, <span class="ruby-node">&quot;#{lib}.rb&quot;</span>) }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- reload-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- reload-method -->
+
+      
+        <div id="remote_host_keys-method" class="method-detail ">
+          <a name="method-i-remote_host_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">remote_host_keys</span><span
+              class="method-args">(*hostnames)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="remote_host_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remote_host_keys</span>(*<span class="ruby-identifier">hostnames</span>)
+  <span class="ruby-identifier">hostnames</span> = <span class="ruby-identifier">hostnames</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span> <span class="ruby-operator">||</span> []
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">hostnames</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">shell</span>(<span class="ruby-string">&quot;ssh-keyscan&quot;</span>, <span class="ruby-identifier">hostnames</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- remote_host_keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- remote_host_keys-method -->
+
+      
+        <div id="shell-method" class="method-detail ">
+          <a name="method-i-shell"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">shell</span><span
+              class="method-args">(cmd, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Execute a local system command (via the <a
+href="Rye.html#method-i-shell">shell</a>, not SSH)</p>
+<ul><li>
+<p><tt>cmd</tt> the executable path (relative or absolute)</p>
+</li><li>
+<p><tt>args</tt> Array of arguments to be sent to the command. Each element</p>
+</li></ul>
+
+<p>is one argument:. i.e. <tt>['-l', 'some/path']</tt></p>
+
+<p>NOTE: <a href="Rye.html#method-i-shell">shell</a> is a bit paranoid so it
+escapes every argument. This means you can only use literal values. That
+means no asterisks too.</p>
+
+<p>Returns a <a href="Rye/Rap.html">Rye::Rap</a> object.</p>
+            
+
+            
+            <div class="method-source-code" id="shell-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shell</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-identifier">cmd</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+  <span class="ruby-comment"># TODO: allow stdin to be sent to the cmd</span>
+  <span class="ruby-identifier">tf</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cmd</span>)
+  <span class="ruby-identifier">cmd</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">prepare_command</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">cmd</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; 2&gt;#{tf.path}&quot;</span> <span class="ruby-comment"># Redirect STDERR to file. Works in DOS too.</span>
+  <span class="ruby-comment"># Deal with STDOUT</span>
+  <span class="ruby-identifier">handle</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">popen</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-string">&quot;r&quot;</span>)
+  <span class="ruby-identifier">stdout</span> = <span class="ruby-identifier">handle</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">chomp</span>
+  <span class="ruby-identifier">handle</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-comment"># Then STDERR</span>
+  <span class="ruby-identifier">stderr</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">tf</span>.<span class="ruby-identifier">path</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">tf</span>.<span class="ruby-identifier">path</span>) <span class="ruby-operator">:</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">tf</span>.<span class="ruby-identifier">delete</span>
+  <span class="ruby-comment"># Create the response object</span>
+  <span class="ruby-identifier">rap</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_stdout</span>(<span class="ruby-identifier">stdout</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+  <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_stderr</span>(<span class="ruby-identifier">stderr</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+  <span class="ruby-identifier">rap</span>.<span class="ruby-identifier">add_exit_status</span>(<span class="ruby-identifier">$?</span>)
+  <span class="ruby-identifier">rap</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- shell-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- shell-method -->
+
+      
+        <div id="sshagent_info-method" class="method-detail ">
+          <a name="method-i-sshagent_info"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sshagent_info</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sshagent_info-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 239</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sshagent_info</span>
+  <span class="ruby-identifier">@@agent_env</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sshagent_info-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sshagent_info-method -->
+
+      
+        <div id="strand-method" class="method-detail ">
+          <a name="method-i-strand"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">strand</span><span
+              class="method-args">( len=8, safe=true )</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Generates a string of random alphanumeric characters.</p>
+<ul><li>
+<p><tt>len</tt> is the length, an Integer. Default: 8</p>
+</li><li>
+<p><tt>safe</tt> in safe-mode, ambiguous characters are removed (default:
+true):</p>
+
+<pre>i l o 1 0</pre>
+</li></ul>
+            
+
+            
+            <div class="method-source-code" id="strand-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 255</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strand</span>( <span class="ruby-identifier">len</span>=<span class="ruby-value">8</span>, <span class="ruby-identifier">safe</span>=<span class="ruby-keyword">true</span> )
+   <span class="ruby-identifier">chars</span> = (<span class="ruby-string">&quot;a&quot;</span><span class="ruby-operator">..</span><span class="ruby-string">&quot;z&quot;</span>).<span class="ruby-identifier">to_a</span> <span class="ruby-operator">+</span> (<span class="ruby-string">&quot;0&quot;</span><span class="ruby-operator">..</span><span class="ruby-string">&quot;9&quot;</span>).<span class="ruby-identifier">to_a</span>
+   <span class="ruby-identifier">chars</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-node">%(i l o 1 0)</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">v</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">safe</span>
+   <span class="ruby-identifier">str</span> = <span class="ruby-string">&quot;&quot;</span>
+   <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">len</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chars</span>[<span class="ruby-identifier">rand</span>(<span class="ruby-identifier">chars</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)] }
+   <span class="ruby-identifier">str</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- strand-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- strand-method -->
+
+      
+        <div id="sysinfo-method" class="method-detail ">
+          <a name="method-i-sysinfo"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sysinfo</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Accessor for an instance of SystemInfo</p>
+            
+
+            
+            <div class="method-source-code" id="sysinfo-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sysinfo</span>; <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span> <span class="ruby-keyword">end</span></pre>
+            </div><!-- sysinfo-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sysinfo-method -->
+
+      
+        <div id="which-method" class="method-detail ">
+          <a name="method-i-which"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">which</span><span
+              class="method-args">(executable)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>An all ruby implementation of unix "<a
+href="Rye.html#method-i-which">which</a>" command.</p>
+<ul><li>
+<p><tt>executable</tt> the name of the executable</p>
+</li></ul>
+
+<p>Returns the absolute path if found in PATH otherwise nil.</p>
+            
+
+            
+            <div class="method-source-code" id="which-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">which</span>(<span class="ruby-identifier">executable</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">executable</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">executable</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">os</span> <span class="ruby-operator">==</span> <span class="ruby-value">:windows</span>
+  <span class="ruby-comment">#return executable if File.exists?(executable) # SHOULD WORK, MUST TEST</span>
+  <span class="ruby-identifier">shortname</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">executable</span>)
+  <span class="ruby-identifier">dir</span> = <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">paths</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>    <span class="ruby-comment"># dir contains all of the </span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-identifier">path</span>             <span class="ruby-comment"># occurrences of shortname  </span>
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">entries</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">shortname</span>)  <span class="ruby-comment"># found in the paths. </span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">shortname</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-comment"># Return just the first</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- which-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- which-method -->
+
+      
+        <div id="without_indent-method" class="method-detail ">
+          <a name="method-i-without_indent"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">without_indent</span><span
+              class="method-args">(str)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Returns <tt>str</tt> with the leading indentation removed.  Stolen from <a
+href="http://github.com/mynyml/unindent/">github.com/mynyml/unindent/</a>
+because it was better.</p>
+            
+
+            
+            <div class="method-source-code" id="without_indent-source">
+<pre>
+<span class="ruby-comment"># File lib/rye.rb, line 245</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">without_indent</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">indent</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">$/</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">empty?</span> }.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">index</span>(<span class="ruby-regexp">/[^\s]/</span>) }.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-node">/^[[:blank:]]{#{indent}}/</span>, <span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- without_indent-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- without_indent-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
