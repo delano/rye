@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.6 (2012-05-10) #############################
+
+* Added: Feature/capture parallel set exceptions [Dan Richert]
+
 #### 0.9.5 (2012-01-05) #############################
 
 * FIXED: Bugfix for Sets to allow unsafe commands [vishnugopal]
