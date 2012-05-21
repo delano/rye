@@ -2,20 +2,19 @@ require "rye"
 
 ## Don't prompt for password if "publickey" is the only :auth_method
 
+# May need to update this in the future with a 
+# different free SSH provider
+hostname = "shellmix.com"
+
 box = Rye::Box.new(
-  "localhost",
+  hostname,
   :auth_methods => ["publickey"]
 )
-box.remove_keys(*box.keys)
-box.add_keys("tst/10-key1")
-puts box.keys
 
-e = nil
 begin
   box.connect
 rescue Net::SSH::AuthenticationFailed => ex
-  e = ex
+  ex.class
 end
-puts e.class
 #=> Net::SSH::AuthenticationFailed
 
