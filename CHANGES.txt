@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.7 (2012-05-??) #############################
+
+* Added: Feature/raise auth failure if publickey only [Dan Richert]
+
 #### 0.9.6 (2012-05-10) #############################
 
 * Added: Feature/capture parallel set exceptions [Dan Richert]
