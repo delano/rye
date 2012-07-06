@@ -165,6 +165,12 @@ So, the hostname 'filibuster' is used from 'firewall.lan'
     rset.uptime
         # => [[17:17:44 up 548 days, 13:37, 20 users,  load average: 0.12, 0.07, 0.06], [01:17:49 up 6 days,  1:39,  9 users,  load average: 0.13, 0.09, 0.09]]
 
+== Example 9 -- Disable password prompt
+
+If you're running in a terminal but you want <tt>Net::SSH::AuthenticationFailed</tt> to be raised instead of getting a password prompt when authentication fails, use the <tt>:no_password_prompt</tt> option:
+
+    rbox = Rye::Box.new("foo.com", :user => "dan", :password => "inkorrect", :no_password_prompt => true)
+    rbox.uptime # => raises Net::SSH::AuthenticationFailed
 
 == About Safe-Mode
 
