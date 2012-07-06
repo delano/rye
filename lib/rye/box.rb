@@ -682,7 +682,7 @@ module Rye
 
         # Raise Net::SSH::AuthenticationFailed if publickey is the 
         # only auth method
-        if @rye_opts[:auth_methods].first == "publickey" && @rye_opts[:auth_methods].length == 1
+        if @rye_opts[:auth_methods] == ["publickey"]
           raise Net::SSH::AuthenticationFailed
         elsif STDIN.tty? && retried <= 3
           STDERR.puts "Passwordless login failed for #{@rye_user}"
