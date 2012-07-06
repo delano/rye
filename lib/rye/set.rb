@@ -41,9 +41,9 @@ module Rye
 
       @parallel = @opts.delete(:parallel) # Rye::Box doesn't have :parallel
 
-      @safe = @opts.delete(:safe)
-      @debug = @opts.delete(:debug)
-      @error = @opts.delete(:error)
+      @safe = @opts[:safe]
+      @debug = @opts[:debug]
+      @error = @opts[:error]
 
       @opts[:keys] = [@opts[:keys]].flatten.compact
 
