@@ -2,11 +2,13 @@ RYE, CHANGES
 
 #### 0.9.7 (2012-05-??) #############################
 
-* Added: Feature/raise auth failure if publickey only [Dan Richert]
+* FIXED: STDERR output was printing to STDOUT in one case (Thanks rrepen)
+* ADDED: Feature/raise auth failure if publickey only [Dan Richert]
+
 
 #### 0.9.6 (2012-05-10) #############################
 
-* Added: Feature/capture parallel set exceptions [Dan Richert]
+* ADDED: Feature/capture parallel set exceptions [Dan Richert]
 
 #### 0.9.5 (2012-01-05) #############################
 
