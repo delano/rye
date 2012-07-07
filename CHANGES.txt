@@ -1,6 +1,6 @@
 RYE, CHANGES
 
-#### 0.9.7 (2012-05-??) #############################
+#### 0.9.7 (2012-07-06) #############################
 
 * FIXED: STDERR output was printing to STDOUT in one case (Thanks rrepen)
 * FIXED: Pass options from Set to Box
