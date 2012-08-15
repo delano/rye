@@ -106,7 +106,7 @@ module Rye
     # * :password => the user's password (ignored if there's a valid private key)
     # * :templates => the template engine to use for uploaded files. One of: :erb (default)
     # * :sudo => Run all commands via sudo (default: false)
-    # * :password_prompt => Never show a password prompt on auth failure (default: true)
+    # * :password_prompt => Show a password prompt on auth failure (default: true)
     #
     # NOTE: +opts+ can also contain any parameter supported by 
     # Net::SSH.start that is not already mentioned above.
