@@ -106,7 +106,7 @@ module Rye
     # * :password => the user's password (ignored if there's a valid private key)
     # * :templates => the template engine to use for uploaded files. One of: :erb (default)
     # * :sudo => Run all commands via sudo (default: false)
-    # * :no_password_prompt => Never show a password prompt on auth failure (default: false)
+    # * :password_prompt => Never show a password prompt on auth failure (default: true)
     #
     # NOTE: +opts+ can also contain any parameter supported by 
     # Net::SSH.start that is not already mentioned above.
@@ -134,7 +134,7 @@ module Rye
         :getenv => true,
         :templates => :erb,
         :quiet => false,
-        :no_password_prompt => false
+        :password_prompt => true
       }.merge(opts)
       
       # Close the SSH session before Ruby exits. This will do nothing
@@ -152,7 +152,7 @@ module Rye
       @rye_ostype, @rye_impltype = @rye_opts.delete(:ostype), @rye_opts.delete(:impltype)
       @rye_quiet, @rye_sudo = @rye_opts.delete(:quiet), @rye_opts.delete(:sudo)
       @rye_templates = @rye_opts.delete(:templates)
-      @rye_no_password_prompt = @rye_opts.delete(:no_password_prompt)
+      @rye_password_prompt = @rye_opts.delete(:password_prompt)
 
       # Store the state of the terminal
       @rye_stty_save = `stty -g`.chomp rescue nil
@@ -687,7 +687,7 @@ module Rye
         # only auth method
         if @rye_opts[:auth_methods] == ["publickey"]
           raise Net::SSH::AuthenticationFailed
-        elsif !@rye_no_password_prompt && (STDIN.tty? && retried <= 3)
+        elsif @rye_password_prompt && (STDIN.tty? && retried <= 3)
           STDERR.puts "Passwordless login failed for #{@rye_user}"
           @rye_opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }.strip
           @rye_opts[:auth_methods].push *['keyboard-interactive', 'password']

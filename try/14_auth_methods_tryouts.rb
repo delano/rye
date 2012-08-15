@@ -18,7 +18,7 @@ end
 #=> Net::SSH::AuthenticationFailed
 
 ## Never prompt for password if :no_password_prompt option is true
-box = Rye::Box.new(@hostname, :no_password_prompt => true)
+box = Rye::Box.new(@hostname, :password_prompt => false)
 
 begin
   box.connect

@@ -167,9 +167,9 @@ So, the hostname 'filibuster' is used from 'firewall.lan'
 
 == Example 9 -- Disable password prompt
 
-If you're running in a terminal but you want <tt>Net::SSH::AuthenticationFailed</tt> to be raised instead of getting a password prompt when authentication fails, use the <tt>:no_password_prompt</tt> option:
+If you're running in a terminal but you want <tt>Net::SSH::AuthenticationFailed</tt> to be raised instead of getting a password prompt when authentication fails, set <tt>:password_prompt</tt> option to false:
 
-    rbox = Rye::Box.new("foo.com", :user => "dan", :password => "inkorrect", :no_password_prompt => true)
+    rbox = Rye::Box.new("foo.com", :user => "dan", :password => "inkorrect", :password_prompt => false)
     rbox.uptime # => raises Net::SSH::AuthenticationFailed
 
 == About Safe-Mode
