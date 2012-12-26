@@ -94,7 +94,7 @@ module Rye
     @@mutex
   end
   
-  # Looks for private keys in +path+ and returns and Array of paths
+  # Looks for private keys in +path+ and returns an Array of paths
   # to the files it finds. Raises an Exception if path does not exist.
   # If path is a file rather than a directory, it will check whether
   # that single file is a private key.

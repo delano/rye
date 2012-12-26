@@ -16,12 +16,13 @@
   s.add_dependency 'highline', '>= 1.5.1'
   s.add_dependency 'net-ssh', '>= 2.0.13'
   s.add_dependency 'net-scp', '>= 1.0.2'
+  s.add_dependency 'docile', '>= 1.0.1'
   #s.add_dependency 'net-ssh-multi'
   
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  s.executables = %w[]
+  s.executables = %w[rye]
   
   # = MANIFEST =
   # The complete list of files to be included in the release. When GitHub packages your gem, 
@@ -36,6 +37,7 @@
   Rakefile
   Rudyfile
   bin/try
+  bin/rye
   lib/esc.rb
   lib/rye.rb
   lib/rye/box.rb
@@ -44,6 +46,7 @@
   lib/rye/rap.rb
   lib/rye/set.rb
   lib/rye/hop.rb
+  lib/rye/dsl.rb
   rye.gemspec
   )
   

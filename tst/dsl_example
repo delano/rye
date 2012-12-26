@@ -1,0 +1,66 @@
+# vim: filetype=ruby
+
+# Specify a host, and run some commands
+# Pretty much anything you can do with
+# a Rye::Box instance you can do in the block
+host '192.168.56.101', :user => 'root' do
+  cd '/'
+  info ls '-lah'
+end
+
+# Just specify a host, the instance stays alive
+host '192.168.56.102', :user => 'root'
+
+# Don't run parallel.  This presents a more expected behavior of
+# serial runs than what is natively possible by rye via Sets, 
+# even in non-parallel mode:
+# Server 1:
+#   Do X
+#   Do Y
+#   Do Z
+# Server 2:
+#   Do X
+#   Do Y
+#   Do Z
+# Instead of:
+# Server 1 and 2:
+#   Do X
+# Server 1 and 2:
+#   Do Y
+# Server 1 and 2:
+#   Do Z
+parallel false
+
+# If the global host instances don't exist, create 'em.
+# The Set Class will never have to run Rye::Box.new
+hostset 'virtualbox machines', '192.168.56.101', '192.168.56.102' do
+  disable_safe_mode
+  disable_quiet_mode
+  cd '/root'
+  puts uname(:a)
+  puts ls '-lah'
+end
+
+# Yes, it remembers the previously defined hostset instance
+hostset 'virtualbox machines' do
+  puts uname(:a)
+  puts execute 'ps -Af | grep "getty"'
+end
+
+host 'main01', :user => 'root'
+host 'test01', :user => 'root'
+
+# A hostset can also be simply defined, does not need a block
+hostset 'virtualbox machines by hostname', 'main01', 'test01'
+
+# Back to the normal rye behavior, with .parallel enabled (why not?)
+parallel true
+
+hostset 'virtualbox machines by hostname' do
+  # Since this is a different Rye::Set instance from 'virtualbox machines', it starts from scratch
+  # so safe mode has to be disabled again to run ping
+  disable_safe_mode
+  disable_quiet_mode
+  puts execute 'ping -c 5 google.com'
+end
+

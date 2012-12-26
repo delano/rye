@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# vim: filetype=ruby
+
+require 'rubygems'
+require 'rye'
+require 'rye/dsl'
+
+ARGV.each do |file|
+  load file
+end
