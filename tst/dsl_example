@@ -37,14 +37,14 @@ hostset 'virtualbox machines', '192.168.56.101', '192.168.56.102' do
   disable_safe_mode
   disable_quiet_mode
   cd '/root'
-  puts uname(:a)
-  puts ls '-lah'
+  info uname(:a)
+  info ls '-lah'
 end
 
 # Yes, it remembers the previously defined hostset instance
 hostset 'virtualbox machines' do
-  puts uname(:a)
-  puts execute 'ps -Af | grep "getty"'
+  info uname(:a)
+  info execute 'ps -Af | grep "getty"'
 end
 
 host 'main01', :user => 'root'
@@ -61,6 +61,46 @@ hostset 'virtualbox machines by hostname' do
   # so safe mode has to be disabled again to run ping
   disable_safe_mode
   disable_quiet_mode
-  puts execute 'ping -c 5 google.com'
+  info execute 'ping -c 1 localhost'
 end
+
+# All of these commands run in the context of Rye::Set
+command_group 'library list' do
+  cd '/usr/lib/'
+  info uname(:a)
+  info ls('-la | head -n 5')
+end
+
+command_group 'top five processes' do
+  info uname(:a)
+  info execute 'ps -Af | grep head'
+end
+
+command_group 'check tmux' do
+  puts
+  info uname(:a)
+  puts
+  if execute('ps -Af | grep tmux | grep start-server').exit_status != -1
+    info "do something"
+  end
+end
+
+parallel false
+
+hostset 'virtualbox machines by hostname' do
+  run 'library list'
+end
+
+host 'main01', :user => 'root' do
+  disable_safe_mode
+  run 'library list'
+  run 'top five processes'
+  info ls '-la /etc | head -n 5'
+end
+
+host 'localhost' do
+  disable_safe_mode
+  run 'check tmux'
+end
+
 

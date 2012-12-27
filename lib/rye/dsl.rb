@@ -1,11 +1,19 @@
 require 'docile'
 
-@hosts, @hostsets, @commands, @contexts = {}, {}, {}, {}
+module Rye
+  class Set
+    def run cmd
+      instance_eval &@@command[cmd]
+    end
+  end
+end
+
+@hosts, @hostsets, @@command, @contexts = {}, {}, {}, {}
 @parallel = false
 
 def host(hostname, *args, &block)
   @hosts[hostname] = Rye::Box.new(hostname, *args)
-  Docile.dsl_eval(@hosts[hostname], &block) if block_given?
+  Docile.dsl_eval(Rye::Set.new.add_box(@hosts[hostname]), &block) if block_given?
 end
 
 def hostset(setname, *args, &block)
@@ -19,7 +27,7 @@ def hostset(setname, *args, &block)
     Docile.dsl_eval(@hostsets[setname], &block) if block_given?
   else
     @hostsets[setname].boxes.each do |host|
-      Docile.dsl_eval(host, &block) if block_given?
+      Docile.dsl_eval(Rye::Set.new.add_box(host), &block) if block_given?
     end
   end
 end
@@ -27,7 +35,8 @@ end
 def context
 end
 
-def command
+def command_group(name, &block)
+  @@command[name] = Proc.new &block
 end
 
 def parallel state
