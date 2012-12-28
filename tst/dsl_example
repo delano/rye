@@ -3,6 +3,7 @@
 # Specify a host, and run some commands
 # Pretty much anything you can do with
 # a Rye::Box instance you can do in the block
+
 host '192.168.56.101', :user => 'root' do
   cd '/'
   info ls '-lah'
@@ -56,6 +57,7 @@ hostset 'virtualbox machines by hostname', 'main01', 'test01'
 # Back to the normal rye behavior, with .parallel enabled (why not?)
 parallel true
 
+colors false
 hostset 'virtualbox machines by hostname' do
   # Since this is a different Rye::Set instance from 'virtualbox machines', it starts from scratch
   # so safe mode has to be disabled again to run ping
@@ -76,9 +78,11 @@ command_group 'top five processes' do
   info execute 'ps -Af | grep head'
 end
 
+colors true
+
 command_group 'check tmux' do
   puts
-  info uname(:a)
+  err uname(:a)
   puts
   if execute('ps -Af | grep tmux | grep start-server').exit_status != -1
     info "do something"
@@ -91,16 +95,15 @@ hostset 'virtualbox machines by hostname' do
   run 'library list'
 end
 
-host 'main01', :user => 'root' do
+host 'main01' do
   disable_safe_mode
   run 'library list'
   run 'top five processes'
-  info ls '-la /etc | head -n 5'
+  debug ls '-la /etc | head -n 5'
 end
 
 host 'localhost' do
   disable_safe_mode
   run 'check tmux'
 end
-
 

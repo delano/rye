@@ -1,6 +1,13 @@
 require 'docile'
+require 'colorize'
+
 
 module Rye
+  class Box
+    def run cmd
+      self.instance_exec &@@command[cmd]
+    end
+  end
   class Set
     def run cmd
       instance_eval &@@command[cmd]
@@ -8,11 +15,17 @@ module Rye
   end
 end
 
+@@colors = false || ENV['COLORS'] || ENV['TERM'].match(/.*color.*/)
 @hosts, @hostsets, @@command, @contexts = {}, {}, {}, {}
-@parallel = false
+@parallel = nil
+
+def colors state
+  @@colors = state
+end
 
 def host(hostname, *args, &block)
-  @hosts[hostname] = Rye::Box.new(hostname, *args)
+  @hosts[hostname] = Rye::Box.new(hostname, *args) unless @hosts.key? hostname
+  #Docile.dsl_eval(@hosts[hostname], &block) if block_given?
   Docile.dsl_eval(Rye::Set.new.add_box(@hosts[hostname]), &block) if block_given?
 end
 
@@ -43,7 +56,29 @@ def parallel state
   @parallel = state
 end
 
-def info msg
-  STDOUT.puts msg
+def colorwrap(msg, color, colorize)
+  out = ''
+  unless @@colors
+    msg.each do |str|
+      out += str.to_s.gsub!(/^/, "[#{str.obj.hostname}] ")
+    end
+  else
+    msg.each do |str|
+      out += str.to_s.gsub!(/^(.*)$/, "\[#{str.obj.hostname}\] ".cyan + '\1'.send(color)) + "\n"
+    end
+  end
+  out
+end
+
+def info(msg, colorize = nil)
+  STDOUT.puts colorwrap(msg, :green, @@colors || colorize)
+end
+
+def err msg, colorize = nil
+  STDOUT.puts colorwrap(msg, :red, @@colors || colorize)
+end
+
+def debug msg, colorize = nil
+  STDOUT.puts colorwrap(msg, :yellow, @@colors || colorize)
 end
 

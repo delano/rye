@@ -17,6 +17,7 @@
   s.add_dependency 'net-ssh', '>= 2.0.13'
   s.add_dependency 'net-scp', '>= 1.0.2'
   s.add_dependency 'docile', '>= 1.0.1'
+  s.add_dependency 'colorize'
   #s.add_dependency 'net-ssh-multi'
   
   # = EXECUTABLES =
