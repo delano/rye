@@ -17,13 +17,12 @@
   s.add_dependency 'net-ssh', '>= 2.0.13'
   s.add_dependency 'net-scp', '>= 1.0.2'
   s.add_dependency 'docile', '>= 1.0.1'
-  s.add_dependency 'colorize'
   #s.add_dependency 'net-ssh-multi'
   
   # = EXECUTABLES =
   # The list of executables in your project (if any). Don't include the path, 
   # just the base filename.
-  s.executables = %w[rye]
+  s.executables = %w[]
   
   # = MANIFEST =
   # The complete list of files to be included in the release. When GitHub packages your gem, 

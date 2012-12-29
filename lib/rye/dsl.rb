@@ -1,13 +1,6 @@
 require 'docile'
-require 'colorize'
-
 
 module Rye
-  class Box
-    def run cmd
-      self.instance_exec &@@command[cmd]
-    end
-  end
   class Set
     def run cmd
       instance_eval &@@command[cmd]
@@ -15,17 +8,17 @@ module Rye
   end
 end
 
-@@colors = false || ENV['COLORS'] || ENV['TERM'].match(/.*color.*/)
-@hosts, @hostsets, @@command, @contexts = {}, {}, {}, {}
+@hosts, @hostsets, @contexts = {}, {}, {}
 @parallel = nil
 
-def colors state
-  @@colors = state
-end
+@@colors = false || ENV['COLORS'] || ENV['TERM'].match(/.*color.*/)
+@@command = {}
+
+def parallel state; @parallel = state; end
+def colors   state; @@colors  = state; end
 
 def host(hostname, *args, &block)
   @hosts[hostname] = Rye::Box.new(hostname, *args) unless @hosts.key? hostname
-  #Docile.dsl_eval(@hosts[hostname], &block) if block_given?
   Docile.dsl_eval(Rye::Set.new.add_box(@hosts[hostname]), &block) if block_given?
 end
 
@@ -45,40 +38,63 @@ def hostset(setname, *args, &block)
   end
 end
 
-def context
-end
-
 def command_group(name, &block)
   @@command[name] = Proc.new &block
 end
 
-def parallel state
-  @parallel = state
+def exit_status_check(cmd, opts={})
+  enable_quiet_mode
+  @pass = opts[:pass_str] || cmd.to_s + ' Passed Status Check'
+  @fail = opts[:fail_str] || cmd.to_s + ' Failed Status Check'
+  def results(obj, out)
+    if obj.exit_status == 0
+      info out, :altstring => @pass
+    else
+      err out, :altstring => @fail
+    end
+  end
+  out = execute cmd
+  if out[0].class == Rye::Rap
+    out.each do |rap|
+      results(rap, out)
+    end
+  elsif out.exit_status == 0
+    results(out, out)
+  end
+  disable_quiet_mode
 end
 
-def colorwrap(msg, color, colorize)
+def strwrap(msg, color, opts={})
   out = ''
   unless @@colors
     msg.each do |str|
-      out += str.to_s.gsub!(/^/, "[#{str.obj.hostname}] ")
+      unless opts.key? :altstring
+        out += str.to_s.gsub!(/^/, "[#{str.obj.hostname}] ") + "\n"
+      else
+        out += "[#{str.obj.hostname}] #{opts[:altstring]}\n"
+      end
     end
   else
     msg.each do |str|
-      out += str.to_s.gsub!(/^(.*)$/, "\[#{str.obj.hostname}\] ".cyan + '\1'.send(color)) + "\n"
+      unless opts.key? :altstring
+        out += str.to_s.gsub!(/^(.*)$/, "\033[0;36m[#{str.obj.hostname}] \033[0m\033[0;#{color+30}m" + '\1') + "\033[0m\n"
+      else
+        out += "\033[0;36m[#{str.obj.hostname}] \033[0m\033[0;#{color+30}m" + opts[:altstring] + "\033[0m\n"
+      end
     end
   end
   out
 end
 
-def info(msg, colorize = nil)
-  STDOUT.puts colorwrap(msg, :green, @@colors || colorize)
+def info msg, *opts
+  STDOUT.puts strwrap(msg, 2, *opts)
 end
 
-def err msg, colorize = nil
-  STDOUT.puts colorwrap(msg, :red, @@colors || colorize)
+def err msg, *opts 
+  STDOUT.puts strwrap(msg, 1, *opts)
 end
 
-def debug msg, colorize = nil
-  STDOUT.puts colorwrap(msg, :yellow, @@colors || colorize)
+def debug msg, *opts
+  STDOUT.puts strwrap(msg, 3, *opts)
 end
 
