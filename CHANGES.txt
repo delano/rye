@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.8 (2013-01-??) #############################
+
+* ADDED: Rudimentary DSL (see tst/dsl_example.rb) [Randy D. Wallace Jr]
+
 #### 0.9.7 (2012-07-06) #############################
 
 * FIXED: STDERR output was printing to STDOUT in one case (Thanks rrepen)
@@ -21,7 +25,7 @@ RYE, CHANGES
 
 #### 0.9.3 (2011-01-29) #############################
 
-* ADDED: Rye::Hop for gateway support. 
+* ADDED: Rye::Hop for gateway support.
   (https://github.com/delano/rye/issues/closed#issue/10)
 * CHANGE: Don't overwrite :paranoid option
 
@@ -39,7 +43,7 @@ RYE, CHANGES
 
 #### 0.9.0 (2010-08-19) #############################
 
-* FIXED: Pubkeys correctly added for first connection. 
+* FIXED: Pubkeys correctly added for first connection.
   (NOTE: some state seems to be maintained by ssh-agent)
 * ADDED: Interactive and non-interactive shell support (via Net::SSH)
 * ADDED: Basic readline support for interactive mode
@@ -55,7 +59,7 @@ RYE, CHANGES
 #### 0.8.19 (2010-06-28) #############################
 
 * ADDED: Rye::Box#root?
-* ADDED: Better sudo handling. 
+* ADDED: Better sudo handling.
 
 
 #### 0.8.18 (2010-06-19) #############################
@@ -91,7 +95,7 @@ RYE, CHANGES
 #### 0.8.12 (2010-01-16) #############################
 
 * FIXED: Removed dependency on ssh-agent. Also fixes starting
-  many instances of said executable. 
+  many instances of said executable.
 * FIXED: file_append was overwriting when supplied a String (!)
 * ADDED: Use SSH config file by default [Justin Case]
 
@@ -102,7 +106,7 @@ RYE, CHANGES
 
 #### 0.8.10 (2009-10-07) #############################
 
-* CHANGE: Improved startup time. 
+* CHANGE: Improved startup time.
 
 #### 0.8.9 (2009-08-26) #############################
 
@@ -118,7 +122,7 @@ RYE, CHANGES
 
 #### 0.8.7 (2009-08-11) #############################
 
-* FIXED: Rye::Box info level output is cleaner 
+* FIXED: Rye::Box info level output is cleaner
 * FIXED: file_upload / download now expanding local tildas when safemode is disabled
 * ADDED: Interactive handling for removing gems
 * ADDED: dir_upload and dir_download
@@ -132,11 +136,11 @@ RYE, CHANGES
 #### 0.8.5 (2009-07-14) #############################
 
 * CHANGE: Rye::Box#getenv now accepts an option key name
-* CHANGE: When not in safe mode, method missing will execute a 
+* CHANGE: When not in safe mode, method missing will execute a
   method name as a shell command
-* ADDED: Rye::Box#execute for running arbitrary commands when 
+* ADDED: Rye::Box#execute for running arbitrary commands when
   not in safe mode
-  
+
 
 #### 0.8.4 (2009-06-30) #############################
 
@@ -180,24 +184,24 @@ RYE, CHANGES
 
 #### 0.7.6 (2009-06-19) #############################
 
-* FIXED: Raise Rye::NoPty exception when Net::SSH returns message 
+* FIXED: Raise Rye::NoPty exception when Net::SSH returns message
   "Pseudo-terminal will not be allocated because stdin is not a terminal."
-* FIXED: Rye::Box#disconnect would hang in some instances. Now waits 3 seconds. 
+* FIXED: Rye::Box#disconnect would hang in some instances. Now waits 3 seconds.
 * FIXED: Bug in net_ssh_exec which was causing it to not return an exit code
-* CHANGE: All exceptions now inherit from Rye::Error (Runtimerror)  
+* CHANGE: All exceptions now inherit from Rye::Error (Runtimerror)
 * CHANGE: A NoPassword exception is raised when a password prompt returns nil.
-* CHANGE: pre_command_hook block arguments have changed: 
+* CHANGE: pre_command_hook block arguments have changed:
      NEW: complete command, user, host, nickname
      OLD: command, args, user, host, nickname
-     
-     
+
+
 #### 0.7.5 (2009-06-13) #############################
 
-* FIXED: Rye::Set methods were not accepting or passing blocks. 
+* FIXED: Rye::Set methods were not accepting or passing blocks.
 * ADDED: Rye::Set#user and Rye::Set#opts methods
 * ADDED: Rye::Box#nickname
 * ADDED: exception hooks for Rye::Box.
-* CHANGE: Rye::Set method missing now forwards to Rye::Box 
+* CHANGE: Rye::Set method missing now forwards to Rye::Box
   methods instead of Rye::Cmd
 
 
@@ -217,9 +221,9 @@ RYE, CHANGES
 * ADDED: Rye::Cmd#safely and Rye::Cmd#unsafely methods
 * ADDED: Rye::Cmd#digest_md5, Rye::Cmd#digest_sha1, Rye::Cmd#digest_sha2 methods
 * ADDED: Rye::Cmd#file_verified? method
-* ADDED: Rye::Box#net_ssh_exec! now checks and correctly prompts for a sudo response password. 
-  Note: this will be upgraded in for 0.8 to support any prompt. 
-* FIXED: Net::SSH paranoid now set to false when safe mode is disabled.  
+* ADDED: Rye::Box#net_ssh_exec! now checks and correctly prompts for a sudo response password.
+  Note: this will be upgraded in for 0.8 to support any prompt.
+* FIXED: Net::SSH paranoid now set to false when safe mode is disabled.
 
 
 #### 0.7.2 (2009-06-01) #############################
@@ -230,14 +234,14 @@ RYE, CHANGES
 
 * CHANGE: Removed broken grep method from Rye::Rap
 * FIXED: Bug which prevented setting relative paths in non-home directory
-* ADDED: Rye::Cmd#add_command helper for adding new command methods. 
+* ADDED: Rye::Cmd#add_command helper for adding new command methods.
 * ADDED: pre-command-hook now sends the hostname to the block
 
 
 #### 0.7.0 (2009-05-30) #############################
 
 * CHANGE: Rye::Box now uses unique instance variable names to encourage using
-  instance variables in batch command blocks. 
+  instance variables in batch command blocks.
 * ADDED: Rye::Box#file_append
 
 #### 0.6.6 (2009-05-21) #############################
@@ -253,7 +257,7 @@ RYE, CHANGES
 
 #### 0.6.4 (2009-05-04) #############################
 
-* FIXED: authorize_remote was not returning to the directory it started with. 
+* FIXED: authorize_remote was not returning to the directory it started with.
 * ADDED: pre and post command hooks to Rye::Box
 * ADDED: Rye::Box.batch
 * ADDED: Support for OS X for Rye::Box.guess_user_home
@@ -283,13 +287,13 @@ RYE, CHANGES
 * FIXED: handling of Process::Status ($?) in Rye.shell
 * FIXED: Removed reference to Rudy::Error in bin/rye
 * ADDED: Rye::Box.getenv
-* ADDED: Rye::Box.can? 
+* ADDED: Rye::Box.can?
 * ADDED: Rye::Box.umask= (a similar work around as cd / [])
 * ADDED: Rye::Box.file_exists?
 * ADDED: Rye::Box.authorize_keys_remote can now authorize for a different user
 * ADDED: Rye::Box.upload and Rye::Box.download
 * ADDED: Rye::SystemInfo.tmpdir
-* CHANGE: Rye::Box.prep_args doesn't treat multicharacter Symbols as 
+* CHANGE: Rye::Box.prep_args doesn't treat multicharacter Symbols as
 command-line options any more (single character ones are still converted)
 * CHANGE: Renamed Rye::Box.add_env to Rye::Box.setenv
 * CHANGE: rm and kill are available in Rye::Cmd by default
@@ -310,9 +314,9 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 #### 0.5.3 (2009-04-20) #############################
 
 * FIXED: Rye::Box.connect raises exceptions instead of exits
-* ADDED: Rye::Box.connect now rescues HostKeyMismatch exceptions and 
-  prompts for a response. 
-  
+* ADDED: Rye::Box.connect now rescues HostKeyMismatch exceptions and
+  prompts for a response.
+
 #### 0.5.2 (2009-04-19) #############################
 
 * FIXED: authorize-local command attempted to connect via SSH before authorizing.
@@ -336,21 +340,21 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 
 * ADDED: More helpful debug output
 * ADDED: hostname command to Rye::Cmd
-* ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true 
+* ADDED: Rye::Box.connect now supports multiple password attempts if STDIN.tty returns true
 * ADDED: Rye::Box.interactive_ssh for opening an SSH session to the given box.
-* CHANGE: Using OpenSSH's ssh-agent but also let's Net::SSH handle the ssh keys. 
+* CHANGE: Using OpenSSH's ssh-agent but also let's Net::SSH handle the ssh keys.
 
 
 #### 0.4.1 (2009-04-06) #############################
 
 * FIXED: Rye::Box.authorize_keys_remote was not disabling safe mode properly
-* FIXED: Disabled debug mode. 
-* ADDED: "rye authorize" now specifically enforces the auth method order 
+* FIXED: Disabled debug mode.
+* ADDED: "rye authorize" now specifically enforces the auth method order
 
 
 #### 0.4.0 (2009-04-06) #############################
 
-* FIXED: Box.run_command was parsing arguments incorrectly 
+* FIXED: Box.run_command was parsing arguments incorrectly
 * FIXED: Box.net_ssh_exec was working on nil stderr
 * FIXED: bin/try handles the new command exceptions
 * ADDED: to_s and inspect methods for cleaner debugging output
@@ -359,8 +363,8 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 * ADDED: Command switches can now be sent as Symbols (rbox.ls(:h))
 * ADDED: Rye.host_keys
 * ADDED: bin/rye
-* ADDED: commands now raise a Rye::Err exception 
-  when the command returns an exit code greater than 0. 
+* ADDED: commands now raise a Rye::Err exception
+  when the command returns an exit code greater than 0.
 * CHANGE: Box.add_command renamed to Box.run_command
 
 
@@ -375,9 +379,9 @@ Rye.shell and Rye::Box.run_command (SSH) commands.
 
 * FIXED: Rye::Box wasn't properly adding keypairs to SSH Agent
 * FIXED: Rye::Box.method_missing Symbol/String ambiguity
-* ADDED: Rye::Set supports executing commands parallel 
+* ADDED: Rye::Set supports executing commands parallel
 * ADDED: Rye::Rap now contains STDERR output from command
-* ADDED: Supports all options provided by Net::SSH#start. This 
+* ADDED: Supports all options provided by Net::SSH#start. This
   includes support for password logins and proxies.
 * ADDED: Safe mode can now be disabled (to allow file globs
   and environment variable access).
@@ -398,5 +402,5 @@ Initial public release
 
 #### TODO ###########################################
 
-* Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output. 
+* Re-implement Rye::Rap as an Observable StringIO object for dynamic printing of output.
 * Fingerprints: ssh-keygen -l -f id_rsa_repos.pub

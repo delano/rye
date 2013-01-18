@@ -64,7 +64,7 @@ def exit_status_check(cmd, opts={})
   disable_quiet_mode
 end
 
-def strwrap(msg, color, opts={})
+def strwrap(msg, opts={})
   out = ''
   unless @@colors
     msg.each do |str|
@@ -77,9 +77,9 @@ def strwrap(msg, color, opts={})
   else
     msg.each do |str|
       unless opts.key? :altstring
-        out += str.to_s.gsub!(/^(.*)$/, "\033[0;36m[#{str.obj.hostname}] \033[0m\033[0;#{color+30}m" + '\1') + "\033[0m\n"
+        out += str.to_s.gsub!(/^(.*)$/, str.obj.hostname)
       else
-        out += "\033[0;36m[#{str.obj.hostname}] \033[0m\033[0;#{color+30}m" + opts[:altstring] + "\033[0m\n"
+        out += "#{str.obj.hostname} " + opts[:altstring]
       end
     end
   end
@@ -87,14 +87,14 @@ def strwrap(msg, color, opts={})
 end
 
 def info msg, *opts
-  STDOUT.puts strwrap(msg, 2, *opts)
+  STDOUT.puts strwrap(msg, *opts)
 end
 
-def err msg, *opts 
-  STDOUT.puts strwrap(msg, 1, *opts)
+def err msg, *opts
+  STDOUT.puts strwrap(msg, *opts)
 end
 
 def debug msg, *opts
-  STDOUT.puts strwrap(msg, 3, *opts)
+  STDOUT.puts strwrap(msg, *opts)
 end
 
