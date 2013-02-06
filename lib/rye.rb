@@ -1,5 +1,11 @@
 # vim: set sw=2 ts=2 :
 
+module Rye
+  unless defined?(Rye::HOME)
+    HOME = File.expand_path( File.join(File.dirname(__FILE__), '..') )
+  end
+end
+
 require 'logger'
 require 'thread'
 require 'base64'
@@ -19,11 +25,11 @@ require 'esc'
 #
 # Safely run remote commands via SSH in Ruby.
 #
-# Rye is similar to Rush[http://rush.heroku.com] but everything 
+# Rye is similar to Rush[http://rush.heroku.com] but everything
 # happens over SSH (no HTTP daemon) and the default settings are
 # less dangerous (for safety). For example, file globs and the
-# "rm" command are disabled so unless otherwise specified, you 
-# can't do this: <tt>rbox.rm('/etc/**/*')</tt>. 
+# "rm" command are disabled so unless otherwise specified, you
+# can't do this: <tt>rbox.rm('/etc/**/*')</tt>.
 #
 # However, you can do this:
 #
@@ -31,7 +37,7 @@ require 'esc'
 # rset.add_boxes('host1', 'host2', 'host3', 'host4')
 # rset.ps('aux')
 #
-# * See +bin/try+ for a bunch of working examples. 
+# * See +bin/try+ for a bunch of working examples.
 # * See Rye::Box#initialize for info about disabling safe-mode.
 #
 #--
@@ -42,22 +48,38 @@ require 'esc'
 #++
 module Rye
   extend self
-  
-  VERSION = "0.9.7".freeze unless defined?(VERSION)
-  
+
+  module VERSION
+    @path = File.join(Rye::HOME, 'VERSION')
+    class << self
+      attr_reader :version, :path
+      def version
+        @version || read_version
+      end
+      def read_version
+        return if @version
+        @version = File.read(path).strip!
+      end
+      def prerelease?() false end
+      def to_a()     version.split('.')   end
+      def to_s()     version              end
+      def inspect()  version              end
+    end
+  end
+
   @@sysinfo = nil
   @@agent_env = Hash.new  # holds ssh-agent env vars
   @@mutex = Mutex.new     # for synchronizing threads
-  
+
   # Accessor for an instance of SystemInfo
   def Rye.sysinfo
     @@sysinfo = SysInfo.new if @@sysinfo.nil?
     @@sysinfo
   end
-  
+
   # Accessor for an instance of SystemInfo
   def sysinfo; Rye.sysinfo end
-  
+
   class RyeError < RuntimeError; end
   class NoBoxes < RyeError; end
   class NoPassword < RyeError
@@ -82,18 +104,18 @@ module Rye
     def stdout; @rap.stdout if @rap; end
     def exit_status; @rap.exit_status if @rap; end
   end
-  
-  # Reload Rye dynamically. Useful with irb. 
-  # NOTE: does not reload rye.rb. 
+
+  # Reload Rye dynamically. Useful with irb.
+  # NOTE: does not reload rye.rb.
   def reload
     pat = File.join(File.dirname(__FILE__), 'rye')
     %w{key rap cmd box set hop}.each {|lib| load File.join(pat, "#{lib}.rb") }
   end
-  
+
   def mutex
     @@mutex
   end
-  
+
   # Looks for private keys in +path+ and returns an Array of paths
   # to the files it finds. Raises an Exception if path does not exist.
   # If path is a file rather than a directory, it will check whether
@@ -105,12 +127,12 @@ module Rye
     else
       files = [path]
     end
-    
+
     files = files.select do |file|
       next if File.directory?(file)
       pk = nil
       begin
-        tmp = Rye::Key.from_file(file) 
+        tmp = Rye::Key.from_file(file)
         pk = tmp if tmp.private?
       rescue OpenSSL::PKey::PKeyError
       end
@@ -118,15 +140,15 @@ module Rye
     end
     files || []
   end
-  
-  # Add one or more private keys to the SSH Agent. 
-  # * +keys+ one or more file paths to private keys used for passwordless logins. 
+
+  # Add one or more private keys to the SSH Agent.
+  # * +keys+ one or more file paths to private keys used for passwordless logins.
   def add_keys(*keys)
     keys = keys.flatten.compact || []
     return if keys.empty?
     Rye.shell("ssh-add", keys)
   end
-  
+
   # Returns an Array of info about the currently available
   # SSH keys, as provided by the SSH Agent.
   #
@@ -142,25 +164,25 @@ module Rye
     #end
     Dir.glob(File.join(Rye.sysinfo.home, '.ssh', 'id_*sa'))
   end
-  
+
   def remote_host_keys(*hostnames)
     hostnames = hostnames.flatten.compact || []
     return if hostnames.empty?
     Rye.shell("ssh-keyscan", hostnames)
   end
-  
-  # Takes a command with arguments and returns it in a 
-  # single String with escaped args and some other stuff. 
-  # 
+
+  # Takes a command with arguments and returns it in a
+  # single String with escaped args and some other stuff.
+  #
   # * +cmd+ The shell command name or absolute path.
-  # * +args+ an Array of command arguments.  
+  # * +args+ an Array of command arguments.
   #
   # The command is searched for in the local PATH (where
   # Rye is running). An exception is raised if it's not
   # found. NOTE: Because this happens locally, you won't
   # want to use this method if the environment is quite
   # different from the remote machine it will be executed
-  # on. 
+  # on.
   #
   # The command arguments are passed through Escape.shell_command
   # (that means you can't use environment variables or asterisks).
@@ -177,32 +199,32 @@ module Rye
     end
     Rye.escape(@safe, found_cmd, *args)
   end
-  
-  # An all ruby implementation of unix "which" command. 
+
+  # An all ruby implementation of unix "which" command.
   #
   # * +executable+ the name of the executable
-  # 
+  #
   # Returns the absolute path if found in PATH otherwise nil.
   def which(executable)
     return unless executable.is_a?(String)
     return executable if Rye.sysinfo.os == :windows
     #return executable if File.exists?(executable) # SHOULD WORK, MUST TEST
     shortname = File.basename(executable)
-    dir = Rye.sysinfo.paths.select do |path|    # dir contains all of the 
-      next unless File.exists? path             # occurrences of shortname  
-      Dir.new(path).entries.member?(shortname)  # found in the paths. 
+    dir = Rye.sysinfo.paths.select do |path|    # dir contains all of the
+      next unless File.exists? path             # occurrences of shortname
+      Dir.new(path).entries.member?(shortname)  # found in the paths.
     end
     File.join(dir.first, shortname) unless dir.empty? # Return just the first
   end
-  
+
   # Execute a local system command (via the shell, not SSH)
-  #  
+  #
   # * +cmd+ the executable path (relative or absolute)
   # * +args+ Array of arguments to be sent to the command. Each element
   # is one argument:. i.e. <tt>['-l', 'some/path']</tt>
   #
   # NOTE: shell is a bit paranoid so it escapes every argument. This means
-  # you can only use literal values. That means no asterisks too. 
+  # you can only use literal values. That means no asterisks too.
   #
   # Returns a Rye::Rap object.
   #
@@ -227,27 +249,27 @@ module Rye
     rap.add_exit_status($?)
     rap
   end
-  
+
   # Creates a string from +cmd+ and +args+. If +safe+ is true
-  # it will send them through Escape.shell_command otherwise 
-  # it will return them joined by a space character. 
+  # it will send them through Escape.shell_command otherwise
+  # it will return them joined by a space character.
   def escape(safe, cmd, *args)
     args = args.flatten.compact || []
     safe ? Escape.shell_command(cmd, *args).to_s : [cmd, args].flatten.compact.join(' ')
   end
-  
+
   def sshagent_info
     @@agent_env
   end
-  
-  # Returns +str+ with the leading indentation removed. 
+
+  # Returns +str+ with the leading indentation removed.
   # Stolen from http://github.com/mynyml/unindent/ because it was better.
   def without_indent(str)
     indent = str.split($/).each {|line| !line.strip.empty? }.map {|line| line.index(/[^\s]/) }.compact.min
     str.gsub(/^[[:blank:]]{#{indent}}/, '')
   end
-  
-  # 
+
+  #
   # Generates a string of random alphanumeric characters.
   # * +len+ is the length, an Integer. Default: 8
   # * +safe+ in safe-mode, ambiguous characters are removed (default: true):
@@ -259,7 +281,7 @@ module Rye
      1.upto(len) { |i| str << chars[rand(chars.size-1)] }
      str
   end
-  
+
   class Tpl
     attr_reader :src, :result, :basename
     def initialize(src, basename='rye-template')
@@ -286,13 +308,13 @@ module Rye
     end
     def to_s() src end
   end
-  
-  private 
-  
+
+  private
+
   Rye.reload
-  
+
 end
 
 
 
-  
+

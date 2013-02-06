@@ -17,13 +17,12 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
-    ".rvmrc",
-    "BUILD.yml",
     "CHANGES.txt",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "Rudyfile",
+    "VERSION",
     "lib/esc.rb",
     "lib/rye.rb",
     "lib/rye/box.rb",
@@ -66,7 +65,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/delano/rye"
   s.require_paths = ["lib"]
   s.rubyforge_project = "rye"
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.25"
   s.summary = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
 
   if s.respond_to? :specification_version then
