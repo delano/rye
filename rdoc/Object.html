@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=US-ASCII" http-equiv="Content-Type">
+
+<title>class Object - rye 0.9.8</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rye/dsl.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">BasicObject
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-colors">#colors</a>
+    
+    <li><a href="#method-i-command_group">#command_group</a>
+    
+    <li><a href="#method-i-debug">#debug</a>
+    
+    <li><a href="#method-i-err">#err</a>
+    
+    <li><a href="#method-i-exit_status_check">#exit_status_check</a>
+    
+    <li><a href="#method-i-host">#host</a>
+    
+    <li><a href="#method-i-hostset">#hostset</a>
+    
+    <li><a href="#method-i-info">#info</a>
+    
+    <li><a href="#method-i-parallel">#parallel</a>
+    
+    <li><a href="#method-i-results">#results</a>
+    
+    <li><a href="#method-i-strwrap">#strwrap</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./LICENSE_txt.html">LICENSE</a>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+    <li class="file"><a href="./VERSION.html">VERSION</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Rye.html">Rye</a>
+  
+    <li><a href="./Rye/Box.html">Rye::Box</a>
+  
+    <li><a href="./Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a>
+  
+    <li><a href="./Rye/Cmd.html">Rye::Cmd</a>
+  
+    <li><a href="./Rye/CommandNotFound.html">Rye::CommandNotFound</a>
+  
+    <li><a href="./Rye/Err.html">Rye::Err</a>
+  
+    <li><a href="./Rye/Hop.html">Rye::Hop</a>
+  
+    <li><a href="./Rye/Key.html">Rye::Key</a>
+  
+    <li><a href="./Rye/Key/BadFile.html">Rye::Key::BadFile</a>
+  
+    <li><a href="./Rye/Key/BadPerm.html">Rye::Key::BadPerm</a>
+  
+    <li><a href="./Rye/NoBoxes.html">Rye::NoBoxes</a>
+  
+    <li><a href="./Rye/NoHost.html">Rye::NoHost</a>
+  
+    <li><a href="./Rye/NoPassword.html">Rye::NoPassword</a>
+  
+    <li><a href="./Rye/NoPty.html">Rye::NoPty</a>
+  
+    <li><a href="./Rye/NotConnected.html">Rye::NotConnected</a>
+  
+    <li><a href="./Rye/Rap.html">Rye::Rap</a>
+  
+    <li><a href="./Rye/RyeError.html">Rye::RyeError</a>
+  
+    <li><a href="./Rye/Set.html">Rye::Set</a>
+  
+    <li><a href="./Rye/Tpl.html">Rye::Tpl</a>
+  
+    <li><a href="./Rye/VERSION.html">Rye::VERSION</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Object</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-colors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">colors</span><span
+            class="method-args">(state;)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="colors-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">colors</span>   <span class="ruby-identifier">state</span>; <span class="ruby-identifier">@@colors</span>  = <span class="ruby-identifier">state</span>; <span class="ruby-keyword">end</span></pre>
+          </div><!-- colors-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- colors-method -->
+
+    
+      <div id="method-i-command_group" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">command_group</span><span
+            class="method-args">(name, &block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="command_group-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">command_group</span>(<span class="ruby-identifier">name</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">@@command</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> &amp;<span class="ruby-identifier">block</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- command_group-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- command_group-method -->
+
+    
+      <div id="method-i-debug" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">debug</span><span
+            class="method-args">(msg, *opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="debug-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span> <span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">strwrap</span>(<span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- debug-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- debug-method -->
+
+    
+      <div id="method-i-err" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">err</span><span
+            class="method-args">(msg, *opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="err-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">err</span> <span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">strwrap</span>(<span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- err-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- err-method -->
+
+    
+      <div id="method-i-exit_status_check" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">exit_status_check</span><span
+            class="method-args">(cmd, opts={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="exit_status_check-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exit_status_check</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>={})
+  <span class="ruby-identifier">enable_quiet_mode</span>
+  <span class="ruby-ivar">@pass</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:pass_str</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">' Passed Status Check'</span>
+  <span class="ruby-ivar">@fail</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:fail_str</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">' Failed Status Check'</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">results</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">out</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">exit_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">info</span> <span class="ruby-identifier">out</span>, <span class="ruby-value">:altstring</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pass</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">err</span> <span class="ruby-identifier">out</span>, <span class="ruby-value">:altstring</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@fail</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">out</span> = <span class="ruby-identifier">execute</span> <span class="ruby-identifier">cmd</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">out</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Rap</span>
+    <span class="ruby-identifier">out</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rap</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">results</span>(<span class="ruby-identifier">rap</span>, <span class="ruby-identifier">out</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">out</span>.<span class="ruby-identifier">exit_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">results</span>(<span class="ruby-identifier">out</span>, <span class="ruby-identifier">out</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">disable_quiet_mode</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- exit_status_check-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- exit_status_check-method -->
+
+    
+      <div id="method-i-host" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">host</span><span
+            class="method-args">(hostname, *args, &block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="host-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host</span>(<span class="ruby-identifier">hostname</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@hosts</span>[<span class="ruby-identifier">hostname</span>] = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hostname</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@hosts</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">hostname</span>
+  <span class="ruby-constant">Docile</span>.<span class="ruby-identifier">dsl_eval</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">add_box</span>(<span class="ruby-ivar">@hosts</span>[<span class="ruby-identifier">hostname</span>]), &amp;<span class="ruby-identifier">block</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- host-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- host-method -->
+
+    
+      <div id="method-i-hostset" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">hostset</span><span
+            class="method-args">(setname, *args, &block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="hostset-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">hostset</span>(<span class="ruby-identifier">setname</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>] = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">setname</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@hostsets</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">setname</span>
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">host</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@hosts</span>[<span class="ruby-identifier">host</span>] = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@hosts</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">host</span>
+    <span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>].<span class="ruby-identifier">add_box</span> <span class="ruby-ivar">@hosts</span>[<span class="ruby-identifier">host</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>].<span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">include?</span> <span class="ruby-ivar">@hosts</span>[<span class="ruby-identifier">host</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parallel</span>
+    <span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>].<span class="ruby-identifier">parallel</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-constant">Docile</span>.<span class="ruby-identifier">dsl_eval</span>(<span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>], &amp;<span class="ruby-identifier">block</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@hostsets</span>[<span class="ruby-identifier">setname</span>].<span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">host</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">Docile</span>.<span class="ruby-identifier">dsl_eval</span>(<span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">add_box</span>(<span class="ruby-identifier">host</span>), &amp;<span class="ruby-identifier">block</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- hostset-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- hostset-method -->
+
+    
+      <div id="method-i-info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">info</span><span
+            class="method-args">(msg, *opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="info-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span> <span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">strwrap</span>(<span class="ruby-identifier">msg</span>, *<span class="ruby-identifier">opts</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- info-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- info-method -->
+
+    
+      <div id="method-i-parallel" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parallel</span><span
+            class="method-args">(state;)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parallel-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parallel</span> <span class="ruby-identifier">state</span>; <span class="ruby-ivar">@parallel</span> = <span class="ruby-identifier">state</span>; <span class="ruby-keyword">end</span></pre>
+          </div><!-- parallel-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parallel-method -->
+
+    
+      <div id="method-i-results" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">results</span><span
+            class="method-args">(obj, out)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="results-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">results</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">out</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">exit_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">info</span> <span class="ruby-identifier">out</span>, <span class="ruby-value">:altstring</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@pass</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">err</span> <span class="ruby-identifier">out</span>, <span class="ruby-value">:altstring</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@fail</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- results-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- results-method -->
+
+    
+      <div id="method-i-strwrap" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strwrap</span><span
+            class="method-args">(msg, opts={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strwrap-source">
+            <pre><span class="ruby-comment"># File lib/rye/dsl.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strwrap</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-identifier">opts</span>={})
+  <span class="ruby-identifier">out</span> = <span class="ruby-string">''</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">@@colors</span>
+    <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">key?</span> <span class="ruby-value">:altstring</span>
+        <span class="ruby-identifier">out</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r^/</span>, <span class="ruby-node">&quot;[#{str.obj.hostname}] &quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">out</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;[#{str.obj.hostname}] #{opts[:altstring]}\n&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">key?</span> <span class="ruby-value">:altstring</span>
+        <span class="ruby-identifier">out</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r^(.*)$/</span>, <span class="ruby-identifier">str</span>.<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">hostname</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">out</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{str.obj.hostname} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:altstring</span>]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">out</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- strwrap-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- strwrap-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
