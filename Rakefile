@@ -1,90 +1,46 @@
-require 'rubygems'
-require 'rake/clean'
-require 'rake/gempackagetask'
-require 'fileutils'
-include FileUtils
- 
+require "rubygems"
+require "rake"
+require "rake/clean"
+require 'yaml'
+
+require 'rdoc/task'
+
+config = YAML.load_file("BUILD.yml")
+task :default => ["build"]
+CLEAN.include [ 'pkg', 'rdoc' ]
+name = "rye"
+
 begin
- require 'hanna/rdoctask'
+  require "jeweler"
+  Jeweler::Tasks.new do |gem|
+    gem.version = "#{config[:MAJOR]}.#{config[:MINOR]}.#{config[:PATCH]}"
+    gem.name = name
+    gem.rubyforge_project = gem.name
+    gem.summary = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
+    gem.description = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
+    gem.email = "delano@solutious.com"
+    gem.homepage = "https://github.com/delano/rye"
+    gem.authors = ["Delano Mandelbaum"]
+    gem.add_dependency 'annoy'
+    gem.add_dependency 'sysinfo',         '>= 0.7.3'
+    gem.add_dependency 'highline',        '>= 1.5.1'
+    gem.add_dependency 'net-ssh',         '>= 2.0.13'
+    gem.add_dependency 'net-scp',         '>= 1.0.2'
+    gem.add_dependency 'docile',          '>= 1.0.1'
+    #gem.add_dependency 'net-ssh-multi'
+  end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
- require 'rake/rdoctask'
+  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
-
-task :default => :package
- 
-# CONFIG =============================================================
-
-# Change the following according to your needs
-README = "README.rdoc"
-CHANGES = "CHANGES.txt"
-LICENSE = "LICENSE.txt"
-
-# Files and directories to be deleted when you run "rake clean"
-CLEAN.include [ 'doc', 'pkg', '*.gem', '.config' ]
-
-# Virginia assumes your project and gemspec have the same name
-name = (Dir.glob('*.gemspec') || ['rye']).first.split('.').first
-load "#{name}.gemspec"
-version = @spec.version
-
-# That's it! The following defaults should allow you to get started
-# on other things. 
-
-
-# TESTS/SPECS =========================================================
-
-
-
-# INSTALL =============================================================
-
-Rake::GemPackageTask.new(@spec) do |p|
-  p.need_tar = true if RUBY_PLATFORM !~ /mswin/
+RDoc::Task.new do |rdoc|
+  version = "#{config[:MAJOR]}.#{config[:MINOR]}.#{config[:PATCH]}"
+  rdoc.rdoc_dir = "rdoc"
+  rdoc.title = "#{name} #{version}"
+  rdoc.rdoc_files.include("README*")
+  rdoc.rdoc_files.include("LICENSE.txt")
+  rdoc.rdoc_files.include("bin/*.rb")
+  rdoc.rdoc_files.include("lib/**/*.rb")
 end
-
-task :build => [ :release ]
-task :release => [ :rdoc, :package ]
-task :install => [ :rdoc, :package ] do
-  sh %{sudo gem install pkg/#{name}-#{version}.gem}
-end
-task :uninstall => [ :clean ] do
-  sh %{sudo gem uninstall #{name}}
-end
-
-
-# RUBYFORGE RELEASE / PUBLISH TASKS ==================================
-
-if @spec.rubyforge_project
-  desc 'Publish website to rubyforge'
-  task 'publish:rdoc' => 'doc/index.html' do
-    sh "scp -rp doc/* rubyforge.org:/var/www/gforge-projects/#{name}/"
-  end
-
-  desc 'Public release to rubyforge'
-  task 'publish:gem' => [:package] do |t|
-    sh <<-end
-      rubyforge add_release -o Any -a #{CHANGES} -f -n #{README} #{name} #{name} #{@spec.version} pkg/#{name}-#{@spec.version}.gem &&
-      rubyforge add_file -o Any -a #{CHANGES} -f -n #{README} #{name} #{name} #{@spec.version} pkg/#{name}-#{@spec.version}.tgz 
-    end
-  end
-end
-
-
-
-# RUBY DOCS TASK ==================================
-
-Rake::RDocTask.new do |t|
-  t.rdoc_dir = 'doc'
-  t.title    = @spec.summary
-  t.options << '--line-numbers' << '-A cattr_accessor=object'
-  t.options << '--charset' << 'utf-8'
-  t.rdoc_files.include(LICENSE)
-  t.rdoc_files.include(README)
-  t.rdoc_files.include(CHANGES)
-  t.rdoc_files.include('bin/*')
-  t.rdoc_files.include('lib/**/*.rb')
-end
-
-
-
 
