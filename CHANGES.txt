@@ -1,8 +1,10 @@
 RYE, CHANGES
 
-#### 0.9.8 (2013-01-??) #############################
+#### 0.9.8 (2013-02-06) #############################
 
 * ADDED: Rudimentary DSL (see tst/dsl_example.rb) [Randy D. Wallace Jr]
+* CHANGE: All releases will now be signed. See "Installation" in the readme.
+
 
 #### 0.9.7 (2012-07-06) #############################
 
