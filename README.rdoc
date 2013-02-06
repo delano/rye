@@ -209,7 +209,13 @@ Via Rubygems:
 
     $ gem install rye
 
-However, in order to be sure the code you're install is the code I wrote, I recommended that you verify the signiture[http://docs.rubygems.org/read/chapter/21]. To do this, you need to add my public key as a trusted certificate (you only need to do this once):
+or via download:
+
+* rye-latest.tar.gz[http://github.com/delano/rye/tarball/latest]
+* rye-latest.zip[http://github.com/delano/rye/zipball/latest]
+
+
+However, in order to be sure the code you're installing hasn't been tampered with, it's recommended that you verify the signiture[http://docs.rubygems.org/read/chapter/21]. To do this, you need to add my public key as a trusted certificate (you only need to do this once):
 
     # Add the public key as a trusted certificate
     # (You only need to do this once)
@@ -221,11 +227,6 @@ Then, when install the gem, do so with high security:
     $ gem install rye -P HighSecurity
 
 If you don't add the public key, you'll see an error like "Couldn't verify data signature". If you're still having trouble let me know and I'll give you a hand.
-
-or via download:
-
-* rye-latest.tar.gz[http://github.com/delano/rye/tarball/latest]
-* rye-latest.zip[http://github.com/delano/rye/zipball/latest]
 
 
 == Contributing
