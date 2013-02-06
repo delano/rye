@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>2013-02-06 05:19:47 -0800</span>
+          <span class='datetime'>2013-02-06 05:22:57 -0800</span>
         </div>
       </div>
       <div id='content'>
@@ -40,8 +40,8 @@
             
             <h1 id="label-Rye+-+v0.9"><a href="../classes/Rye.html">Rye</a> - v0.9</h1>
             
-            <p>&lt;strong&gt;Safely run SSH commands on a bunch of machines at the same
-            time (from Ruby)&lt;/stong&gt;.</p>
+            <p><strong>Safely run SSH commands on a bunch of machines at the same time
+            (from Ruby)</strong>.</p>
             
             <p>Inspired by <a target="_top" href="http://rush.heroku.com">Rush</a> and compatible with
             Ruby 1.8, 1.9, and JRuby 1.3+!</p>
@@ -219,9 +219,15 @@
             
             <p>However, in order to be sure the code you're install is the code I wrote, I
             recommended that you verify the <a
-            href="http://docs.rubygems.org/read/chapter/21">signiture</a>. To do this</p>
+            href="http://docs.rubygems.org/read/chapter/21">signiture</a>. To do this,
+            you need to add my public key as a trusted certificate (you only need to do
+            this once):</p>
             
-            <pre># Add the public key as a trusted certificate&#x000A;# (You only need to do this once)&#x000A;$ curl -O https://raw.github.com/delano/rye/master/gem-public_cert.pem&#x000A;$ gem cert --add gem-public_cert.pem&#x000A;$ gem install rye -P HighSecurity</pre>
+            <pre># Add the public key as a trusted certificate&#x000A;# (You only need to do this once)&#x000A;$ curl -O https://raw.github.com/delano/rye/master/gem-public_cert.pem&#x000A;$ gem cert --add gem-public_cert.pem</pre>
+            
+            <p>Then, when install the gem, do so with high security:</p>
+            
+            <pre>$ gem install rye -P HighSecurity</pre>
             
             <p>If you don't add the public key, you'll see an error like "Couldn't verify
             data signature". If you're still having trouble let me know and I'll give
