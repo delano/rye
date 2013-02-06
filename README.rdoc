@@ -1,6 +1,6 @@
 = Rye - v0.9
 
-<strong>Safely run SSH commands on a bunch of machines at the same time (from Ruby)</stong>.
+<b>Safely run SSH commands on a bunch of machines at the same time (from Ruby)</b>.
 
 Inspired by Rush[http://rush.heroku.com] and compatible with Ruby 1.8, 1.9, and JRuby 1.3+!
 
@@ -209,12 +209,14 @@ Via Rubygems:
 
     $ gem install rye
 
-However, in order to be sure the code you're install is the code I wrote, I recommended that you verify the signiture[http://docs.rubygems.org/read/chapter/21]. To do this
+However, in order to be sure the code you're install is the code I wrote, I recommended that you verify the signiture[http://docs.rubygems.org/read/chapter/21]. To do this, you need to add my public key as a trusted certificate (you only need to do this once):
 
     # Add the public key as a trusted certificate
     # (You only need to do this once)
     $ curl -O https://raw.github.com/delano/rye/master/gem-public_cert.pem
     $ gem cert --add gem-public_cert.pem
+
+Then, when install the gem, do so with high security:
 
     $ gem install rye -P HighSecurity
 
