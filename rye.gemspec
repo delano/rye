@@ -11,13 +11,14 @@ Gem::Specification.new do |s|
   s.authors = ["Delano Mandelbaum"]
   s.date = "2013-02-06"
   s.description = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
-  s.email = "delano@blamestella.com"
+  s.email = "delano@solutious.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
   ]
   s.files = [
     ".rvmrc",
+    "BUILD.yml",
     "CHANGES.txt",
     "LICENSE.txt",
     "README.rdoc",
@@ -72,12 +73,27 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<bundler>, [">= 1.2.1"])
+      s.add_runtime_dependency(%q<annoy>, [">= 0"])
+      s.add_runtime_dependency(%q<sysinfo>, [">= 0.7.3"])
+      s.add_runtime_dependency(%q<highline>, [">= 1.5.1"])
+      s.add_runtime_dependency(%q<net-ssh>, [">= 2.0.13"])
+      s.add_runtime_dependency(%q<net-scp>, [">= 1.0.2"])
+      s.add_runtime_dependency(%q<docile>, [">= 1.0.1"])
     else
-      s.add_dependency(%q<bundler>, [">= 1.2.1"])
+      s.add_dependency(%q<annoy>, [">= 0"])
+      s.add_dependency(%q<sysinfo>, [">= 0.7.3"])
+      s.add_dependency(%q<highline>, [">= 1.5.1"])
+      s.add_dependency(%q<net-ssh>, [">= 2.0.13"])
+      s.add_dependency(%q<net-scp>, [">= 1.0.2"])
+      s.add_dependency(%q<docile>, [">= 1.0.1"])
     end
   else
-    s.add_dependency(%q<bundler>, [">= 1.2.1"])
+    s.add_dependency(%q<annoy>, [">= 0"])
+    s.add_dependency(%q<sysinfo>, [">= 0.7.3"])
+    s.add_dependency(%q<highline>, [">= 1.5.1"])
+    s.add_dependency(%q<net-ssh>, [">= 2.0.13"])
+    s.add_dependency(%q<net-scp>, [">= 1.0.2"])
+    s.add_dependency(%q<docile>, [">= 1.0.1"])
   end
 end
 
