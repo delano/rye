@@ -68,7 +68,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = "rye"
   s.rubygems_version = "1.8.25"
-  s.signing_key = "/mnt/gem/gem-private_key.pem"
+  if File.exists?("/mnt/gem/gem-private_key.pem")
+    s.signing_key = "/mnt/gem/gem-private_key.pem"
+  end
   s.summary = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
 
   if s.respond_to? :specification_version then
