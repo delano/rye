@@ -817,6 +817,8 @@ module Rye
         rap.cmd = cmd_clean
         
         channel = net_ssh_exec!(cmd_internal, &blk)
+        channel[:stderr].position = 0
+        channel[:stdout].position = 0
         
         if channel[:exception]
           rap = channel[:exception].rap
