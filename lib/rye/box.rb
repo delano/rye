@@ -671,7 +671,12 @@ module Rye
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell
-        raise Net::SSH::HostKeyMismatch
+        if highline.ask("Continue? ").strip.match(/\Ay|yes|sure|ya\z/i)
+          @rye_opts[:paranoid] = false
+          retry
+        else
+          raise Net::SSH::HostKeyMismatch
+        end
       rescue Net::SSH::AuthenticationFailed => ex
         print "\a" if retried == 0 && @rye_info # Ring the bell once
         retried += 1
