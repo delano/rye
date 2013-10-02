@@ -681,14 +681,14 @@ module Rye
         # Raise Net::SSH::AuthenticationFailed if publickey is the 
         # only auth method
         if @rye_opts[:auth_methods] == ["publickey"]
-          raise Net::SSH::AuthenticationFailed
+          raise ex
         elsif @rye_password_prompt && (STDIN.tty? && retried <= 3)
           STDERR.puts "Passwordless login failed for #{@rye_user}"
           @rye_opts[:password] = highline.ask("Password: ") { |q| q.echo = '' }.strip
           @rye_opts[:auth_methods].push *['keyboard-interactive', 'password']
           retry
         else
-          raise Net::SSH::AuthenticationFailed
+          raise ex
         end
       end
       
