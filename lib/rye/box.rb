@@ -671,7 +671,7 @@ module Rye
       rescue Net::SSH::HostKeyMismatch => ex
         STDERR.puts ex.message
         print "\a" if @rye_info # Ring the bell
-        raise Net::SSH::HostKeyMismatch
+        raise ex
       rescue Net::SSH::AuthenticationFailed => ex
         print "\a" if retried == 0 && @rye_info # Ring the bell once
         retried += 1
