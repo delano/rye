@@ -273,7 +273,7 @@ module Rye
           @rye_opts[:paranoid] = false
           retry
         else
-          raise Net::SSH::HostKeyMismatch
+          raise ex
         end
       rescue Net::SSH::AuthenticationFailed => ex
         print "\a" if retried == 0 && @rye_info # Ring the bell once
@@ -285,7 +285,7 @@ module Rye
           @rye_opts[:auth_methods].push *['keyboard-interactive', 'password']
           retry
         else
-          raise Net::SSH::AuthenticationFailed
+          raise ex
         end
       end
       
