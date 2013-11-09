@@ -42,7 +42,7 @@ rescue LoadError
 end
 
 RDoc::Task.new do |rdoc|
-  rdoc.rdoc_dir = "rdoc"
+  rdoc.rdoc_dir = "doc"
   rdoc.title = "#{name} #{version}"
   rdoc.generator = 'hanna'
   rdoc.main = 'README.rdoc'
