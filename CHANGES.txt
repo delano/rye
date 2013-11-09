@@ -1,5 +1,14 @@
 RYE, CHANGES
 
+
+#### 0.9.9 (2013-11-09) #############################
+
+* FIXED: Stderr channel fix for lost Rye::Set error messages [megeek]
+* CHANGE: Propagate original Net::SSH exceptions [Musannif Zahir]
+* CHANGE: Raise Net::SSH::HostKeyMismatch instead of waiting input [Ruy Rocha]
+* CHANGE: Add Gemfile, make setting signing_key in gemspec conditional [Dan Peterson]
+
+
 #### 0.9.8 (2013-02-06) #############################
 
 * ADDED: Rudimentary DSL (see tst/dsl_example.rb) [Randy D. Wallace Jr]

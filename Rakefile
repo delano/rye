@@ -6,6 +6,7 @@ require "rdoc/task"
 task :default => ["build"]
 CLEAN.include [ 'pkg', 'rdoc' ]
 name = "rye"
+key = File.join('/mnt/gem/', 'gem-private_key.pem');
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require name
@@ -29,8 +30,11 @@ begin
     s.add_dependency 'net-scp',         '>= 1.0.2'
     s.add_dependency 'docile',          '>= 1.0.1'
 
-    s.signing_key = File.join('/mnt/gem/', 'gem-private_key.pem')
-    s.cert_chain  = ['gem-public_cert.pem']
+    if File.exists?(key)
+      s.cert_chain  = ['gem-public_cert.pem']
+      s.signing_key = key
+    end
+
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
