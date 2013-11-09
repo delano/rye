@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
+
+  <title>Class: Rye::Set</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/rye/dsl_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/dsl.rb">lib/rye/dsl.rb</a></li>
+          
+            <li><a href="../lib/rye/set_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/set.rb">lib/rye/set.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"><a href="../Object.html">Object</a></p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-i-5B-5D">#[]</a></li>
+          
+          <li><a href="#method-i-add_box">#add_box</a></li>
+          
+          <li><a href="#method-i-add_boxes">#add_boxes</a></li>
+          
+          <li><a href="#method-i-add_key">#add_key</a></li>
+          
+          <li><a href="#method-i-add_keys">#add_keys</a></li>
+          
+          <li><a href="#method-i-cd">#cd</a></li>
+          
+          <li><a href="#method-i-empty-3F">#empty?</a></li>
+          
+          <li><a href="#method-i-inspect">#inspect</a></li>
+          
+          <li><a href="#method-i-keys">#keys</a></li>
+          
+          <li><a href="#method-i-method_missing">#method_missing</a></li>
+          
+          <li><a href="#method-i-remove_key">#remove_key</a></li>
+          
+          <li><a href="#method-i-remove_keys">#remove_keys</a></li>
+          
+          <li><a href="#method-i-root-3F">#root?</a></li>
+          
+          <li><a href="#method-i-run">#run</a></li>
+          
+          <li><a href="#method-i-setenv">#setenv</a></li>
+          
+          <li><a href="#method-i-setenvironment_variable">#setenvironment_variable</a></li>
+          
+          <li><a href="#method-i-to_s">#to_s</a></li>
+          
+          <li><a href="#method-i-user">#user</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../LICENSE_txt.html">LICENSE.txt</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../VERSION.html">VERSION</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Rye.html">Rye</a></li>
+        
+          <li><a href="../Rye/Box.html">Rye::Box</a></li>
+        
+          <li><a href="../Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+          <li><a href="../Rye/Cmd.html">Rye::Cmd</a></li>
+        
+          <li><a href="../Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+        
+          <li><a href="../Rye/Err.html">Rye::Err</a></li>
+        
+          <li><a href="../Rye/Hop.html">Rye::Hop</a></li>
+        
+          <li><a href="../Rye/Key.html">Rye::Key</a></li>
+        
+          <li><a href="../Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+        
+          <li><a href="../Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+        
+          <li><a href="../Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+        
+          <li><a href="../Rye/NoHost.html">Rye::NoHost</a></li>
+        
+          <li><a href="../Rye/NoPassword.html">Rye::NoPassword</a></li>
+        
+          <li><a href="../Rye/NoPty.html">Rye::NoPty</a></li>
+        
+          <li><a href="../Rye/NotConnected.html">Rye::NotConnected</a></li>
+        
+          <li><a href="../Rye/Rap.html">Rye::Rap</a></li>
+        
+          <li><a href="../Rye/RyeError.html">Rye::RyeError</a></li>
+        
+          <li><a href="../Rye/Set.html">Rye::Set</a></li>
+        
+          <li><a href="../Rye/Tpl.html">Rye::Tpl</a></li>
+        
+          <li><a href="../Rye/VERSION.html">Rye::VERSION</a></li>
+        
+          <li><a href="../Object.html">Object</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Rye::Set</h1>
+
+    <div id="description" class="description">
+      
+<h1><a href="Set.html">Rye::Set</a></h1>
+
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="boxes-attribute-method" class="method-detail">
+          <a name="boxes"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">boxes</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="name-attribute-method" class="method-detail">
+          <a name="name"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">name</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="opts-attribute-method" class="method-detail">
+          <a name="opts"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">opts</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="parallel-attribute-method" class="method-detail">
+          <a name="parallel"></a>
+          
+          <a name="parallel="></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">parallel</span><span
+              class="attribute-access-type">[RW]</span>
+          </div>
+
+          <div class="method-description">
+          
+          <p>Run commands in parallel? A Boolean value. Default: false.</p>
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(name='default', opts={})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <ul><li>
+<p><tt>name</tt> The name of the set of machines</p>
+</li><li>
+<p><tt>opts</tt> a hash of optional arguments</p>
+</li></ul>
+
+<p>The <tt>opts</tt> hash is used as defaults for all for all <a
+href="Box.html">Rye::Box</a> objects. All args supported by <a
+href="Box.html">Rye::Box</a> are available here with the addition of:</p>
+<ul><li>
+<p>:parallel =&gt; run the commands in parallel? true or false (default).</p>
+</li></ul>
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>=<span class="ruby-string">'default'</span>, <span class="ruby-identifier">opts</span>={})
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>
+  <span class="ruby-ivar">@boxes</span> = []
+
+  <span class="ruby-comment"># These opts are use by Rye::Box and also passed to Net::SSH</span>
+  <span class="ruby-ivar">@opts</span> = {
+    <span class="ruby-value">:parallel</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>,
+    <span class="ruby-value">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">user</span>,
+    <span class="ruby-value">:safe</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">22</span>,
+    <span class="ruby-value">:keys</span> =<span class="ruby-operator">&gt;</span> [],
+    <span class="ruby-value">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:proxy</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:debug</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">STDERR</span>,
+  }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">opts</span>)
+
+  <span class="ruby-ivar">@parallel</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:parallel</span>) <span class="ruby-comment"># Rye::Box doesn't have :parallel</span>
+
+  <span class="ruby-ivar">@safe</span> = <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:safe</span>]
+  <span class="ruby-ivar">@debug</span> = <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:debug</span>]
+  <span class="ruby-ivar">@error</span> = <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:error</span>]
+
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>] = [<span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>]].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+
+  <span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="5B-5D-method" class="method-detail ">
+          <a name="method-i-5B-5D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">[]</span><span
+              class="method-args">(key=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>See <a href="Box.html">Rye::Box</a>.[]</p>
+            
+
+            
+            <div class="method-source-code" id="5B-5D-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">run_command</span>(<span class="ruby-value">:cd</span>, <span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- 5B-5D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- 5B-5D-method -->
+
+      
+        <div id="add_box-method" class="method-detail ">
+          <a name="method-i-add_box"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_box</span><span
+              class="method-args">(*boxes)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <ul><li>
+<p><tt>boxes</tt> one or more boxes. <a href="Box.html">Rye::Box</a> objects
+will be added directly</p>
+</li></ul>
+
+<p>to the set. Hostnames will be used to create new instances of <a
+href="Box.html">Rye::Box</a> and those will be added to the list.</p>
+            
+
+            
+            <div class="method-source-code" id="add_box-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_box</span>(*<span class="ruby-identifier">boxes</span>)
+  <span class="ruby-identifier">boxes</span> = <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-ivar">@boxes</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">boxes</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">box</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">box</span> = <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">box</span>, <span class="ruby-ivar">@opts</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">box</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+    <span class="ruby-identifier">box</span>.<span class="ruby-identifier">add_keys</span>(<span class="ruby-ivar">@keys</span>)
+    <span class="ruby-identifier">box</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- add_box-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Set.html#method-i-add_boxes">add_boxes</a>
+          </div>
+          
+
+          
+        </div><!-- add_box-method -->
+
+      
+        <div id="add_boxes-method" class="method-detail method-alias">
+          <a name="method-i-add_boxes"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_boxes</span><span
+              class="method-args">(*boxes)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Set.html#method-i-add_box">add_box</a>
+          </div>
+          
+        </div><!-- add_boxes-method -->
+
+      
+        <div id="add_key-method" class="method-detail method-alias">
+          <a name="method-i-add_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_key</span><span
+              class="method-args">(*additional_keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Set.html#method-i-add_keys">add_keys</a>
+          </div>
+          
+        </div><!-- add_key-method -->
+
+      
+        <div id="add_keys-method" class="method-detail ">
+          <a name="method-i-add_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">add_keys</span><span
+              class="method-args">(*additional_keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Add one or more private keys to each box. Also stores key paths in the set
+so when new boxes are added they will get the same keys,</p>
+<ul><li>
+<p><tt>additional_keys</tt> is a list of file paths to private keys</p>
+</li></ul>
+
+<p>Returns the instance of <a href="Set.html">Rye::Set</a></p>
+            
+
+            
+            <div class="method-source-code" id="add_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_keys</span>(*<span class="ruby-identifier">additional_keys</span>)
+  <span class="ruby-identifier">additional_keys</span> = <span class="ruby-identifier">additional_keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">||=</span> []
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">additional_keys</span>
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>].<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">box</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">box</span>.<span class="ruby-identifier">add_keys</span> *<span class="ruby-identifier">additional_keys</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- add_keys-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Set.html#method-i-add_key">add_key</a>
+          </div>
+          
+
+          
+        </div><!-- add_keys-method -->
+
+      
+        <div id="cd-method" class="method-detail ">
+          <a name="method-i-cd"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">cd</span><span
+              class="method-args">(key=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>alias :cd :'[]'  # fix for jruby</p>
+            
+
+            
+            <div class="method-source-code" id="cd-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cd</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">run_command</span>(<span class="ruby-value">:cd</span>, <span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- cd-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- cd-method -->
+
+      
+        <div id="empty-3F-method" class="method-detail ">
+          <a name="method-i-empty-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">empty?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Are there any boxes in this set?</p>
+            
+
+            
+            <div class="method-source-code" id="empty-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
+  <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- empty-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- empty-3F-method -->
+
+      
+        <div id="inspect-method" class="method-detail ">
+          <a name="method-i-inspect"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inspect</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="inspect-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">a</span> = [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-ivar">@name</span>, <span class="ruby-ivar">@parallel</span>, <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">inspect</span>]
+  <span class="ruby-string">%{#&lt;%s:%s parallel=%s opts=%s boxes=%s&gt;}</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">a</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inspect-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inspect-method -->
+
+      
+        <div id="keys-method" class="method-detail ">
+          <a name="method-i-keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">keys</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>See <a href="../Rye.html#method-i-keys">Rye.keys</a></p>
+            
+
+            
+            <div class="method-source-code" id="keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">keys</span>
+  <span class="ruby-constant">Rye</span>.<span class="ruby-identifier">keys</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- keys-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- keys-method -->
+
+      
+        <div id="method_missing-method" class="method-detail ">
+          <a name="method-i-method_missing"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">method_missing</span><span
+              class="method-args">(meth, *args, &block)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Catches calls to <a href="Box.html">Rye::Box</a> commands. If <tt>meth</tt>
+is the name of an instance method defined in <a
+href="Cmd.html">Rye::Cmd</a> then we call it against all the boxes in
++@boxes+. Otherwise this method raises a <a
+href="CommandNotFound.html">Rye::CommandNotFound</a> exception. It will
+also raise a <a href="NoBoxes.html">Rye::NoBoxes</a> exception if this set
+has no boxes defined.</p>
+
+<p>Returns a <a href="Rap.html">Rye::Rap</a> object containing the responses
+from each <a href="Box.html">Rye::Box</a>.</p>
+            
+
+            
+            <div class="method-source-code" id="method_missing-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">meth</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-comment"># Ruby 1.8 populates Module.instance_methods with Strings. 1.9 uses Symbols.</span>
+  <span class="ruby-identifier">meth</span> = (<span class="ruby-constant">Rye</span>.<span class="ruby-identifier">sysinfo</span>.<span class="ruby-identifier">ruby</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">8</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_sym</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">NoBoxes</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@safe</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Box</span>.<span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">meth</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">run_command</span>(<span class="ruby-identifier">meth</span>, *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- method_missing-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- method_missing-method -->
+
+      
+        <div id="remove_key-method" class="method-detail method-alias">
+          <a name="method-i-remove_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">remove_key</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Set.html#method-i-remove_keys">remove_keys</a>
+          </div>
+          
+        </div><!-- remove_key-method -->
+
+      
+        <div id="remove_keys-method" class="method-detail ">
+          <a name="method-i-remove_keys"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">remove_keys</span><span
+              class="method-args">(*keys)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="remove_keys-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_keys</span>(*<span class="ruby-identifier">keys</span>)
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">||=</span> []
+  <span class="ruby-ivar">@opts</span>[<span class="ruby-value">:keys</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-ivar">@boxes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">box</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">box</span>.<span class="ruby-identifier">remove_keys</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- remove_keys-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Set.html#method-i-remove_key">remove_key</a>
+          </div>
+          
+
+          
+        </div><!-- remove_keys-method -->
+
+      
+        <div id="root-3F-method" class="method-detail ">
+          <a name="method-i-root-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">root?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="root-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">root?</span>; <span class="ruby-identifier">user</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;root&quot;</span> <span class="ruby-keyword">end</span></pre>
+            </div><!-- root-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- root-3F-method -->
+
+      
+        <div id="run-method" class="method-detail ">
+          <a name="method-i-run"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">run</span><span
+              class="method-args">(cmd)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="run-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/dsl.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span> <span class="ruby-identifier">cmd</span>
+  <span class="ruby-identifier">instance_eval</span> &amp;<span class="ruby-identifier">@@command</span>[<span class="ruby-identifier">cmd</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- run-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- run-method -->
+
+      
+        <div id="setenv-method" class="method-detail ">
+          <a name="method-i-setenv"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">setenv</span><span
+              class="method-args">(n, v)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Add an environment variable. <tt>n</tt> and <tt>v</tt> are the name and
+value. Returns the instance of <a href="Set.html">Rye::Set</a></p>
+            
+
+            
+            <div class="method-source-code" id="setenv-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setenv</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)
+  <span class="ruby-identifier">run_command</span>(<span class="ruby-value">:setenv</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>)
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- setenv-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Set.html#method-i-setenvironment_variable">setenvironment_variable</a>
+          </div>
+          
+
+          
+        </div><!-- setenv-method -->
+
+      
+        <div id="setenvironment_variable-method" class="method-detail method-alias">
+          <a name="method-i-setenvironment_variable"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">setenvironment_variable</span><span
+              class="method-args">(n, v)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="Set.html#method-i-setenv">setenv</a>
+          </div>
+          
+        </div><!-- setenvironment_variable-method -->
+
+      
+        <div id="to_s-method" class="method-detail ">
+          <a name="method-i-to_s"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">to_s</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="to_s-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-string">&quot;%s:%s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-ivar">@name</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- to_s-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- to_s-method -->
+
+      
+        <div id="user-method" class="method-detail ">
+          <a name="method-i-user"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">user</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="user-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/set.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user</span>; (<span class="ruby-ivar">@opts</span> <span class="ruby-operator">||</span> {})[<span class="ruby-value">:user</span>]; <span class="ruby-keyword">end</span></pre>
+            </div><!-- user-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- user-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

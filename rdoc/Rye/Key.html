@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
+
+  <title>Class: Rye::Key</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/rye/key_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/rye/key.rb">lib/rye/key.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"><a href="../Object.html">Object</a></p>
+        
+      </div>
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">CLASS</span> <a href="Key/BadFile.html">Rye::Key::BadFile</a></li>
+          
+          <li><span class="type">CLASS</span> <a href="Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-from_file">::from_file</a></li>
+          
+          <li><a href="#method-c-generate_pkey">::generate_pkey</a></li>
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-c-public_key_to_ssh2">::public_key_to_ssh2</a></li>
+          
+          <li><a href="#method-c-sign">::sign</a></li>
+          
+          <li><a href="#method-c-sign_aws">::sign_aws</a></li>
+          
+          <li><a href="#method-c-supported_authentication-3F">::supported_authentication?</a></li>
+          
+          <li><a href="#method-c-supported_keytype-3F">::supported_keytype?</a></li>
+          
+          <li><a href="#method-i-decrypt">#decrypt</a></li>
+          
+          <li><a href="#method-i-dsa-3F">#dsa?</a></li>
+          
+          <li><a href="#method-i-dump">#dump</a></li>
+          
+          <li><a href="#method-i-encrypt">#encrypt</a></li>
+          
+          <li><a href="#method-i-encrypted-3F">#encrypted?</a></li>
+          
+          <li><a href="#method-i-inspect">#inspect</a></li>
+          
+          <li><a href="#method-i-private-3F">#private?</a></li>
+          
+          <li><a href="#method-i-private_key">#private_key</a></li>
+          
+          <li><a href="#method-i-public-3F">#public?</a></li>
+          
+          <li><a href="#method-i-public_key">#public_key</a></li>
+          
+          <li><a href="#method-i-rsa-3F">#rsa?</a></li>
+          
+          <li><a href="#method-i-sign">#sign</a></li>
+          
+          <li><a href="#method-i-to_s">#to_s</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../LICENSE_txt.html">LICENSE.txt</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../VERSION.html">VERSION</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Rye.html">Rye</a></li>
+        
+          <li><a href="../Rye/Box.html">Rye::Box</a></li>
+        
+          <li><a href="../Rye/Box/InstanceExecHelper.html">Rye::Box::InstanceExecHelper</a></li>
+        
+          <li><a href="../Rye/Cmd.html">Rye::Cmd</a></li>
+        
+          <li><a href="../Rye/CommandNotFound.html">Rye::CommandNotFound</a></li>
+        
+          <li><a href="../Rye/Err.html">Rye::Err</a></li>
+        
+          <li><a href="../Rye/Hop.html">Rye::Hop</a></li>
+        
+          <li><a href="../Rye/Key.html">Rye::Key</a></li>
+        
+          <li><a href="../Rye/Key/BadFile.html">Rye::Key::BadFile</a></li>
+        
+          <li><a href="../Rye/Key/BadPerm.html">Rye::Key::BadPerm</a></li>
+        
+          <li><a href="../Rye/NoBoxes.html">Rye::NoBoxes</a></li>
+        
+          <li><a href="../Rye/NoHost.html">Rye::NoHost</a></li>
+        
+          <li><a href="../Rye/NoPassword.html">Rye::NoPassword</a></li>
+        
+          <li><a href="../Rye/NoPty.html">Rye::NoPty</a></li>
+        
+          <li><a href="../Rye/NotConnected.html">Rye::NotConnected</a></li>
+        
+          <li><a href="../Rye/Rap.html">Rye::Rap</a></li>
+        
+          <li><a href="../Rye/RyeError.html">Rye::RyeError</a></li>
+        
+          <li><a href="../Rye/Set.html">Rye::Set</a></li>
+        
+          <li><a href="../Rye/Tpl.html">Rye::Tpl</a></li>
+        
+          <li><a href="../Rye/VERSION.html">Rye::VERSION</a></li>
+        
+          <li><a href="../Object.html">Object</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Rye::Key</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="authtype-attribute-method" class="method-detail">
+          <a name="authtype"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">authtype</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          <p>Authentication type: RSA or DSA</p>
+          
+          </div>
+        </div>
+        
+        <div id="keytype-attribute-method" class="method-detail">
+          <a name="keytype"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">keytype</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          <p><a href="Key.html">Key</a> type: public or private</p>
+          
+          </div>
+        </div>
+        
+        <div id="name-attribute-method" class="method-detail">
+          <a name="name"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">name</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          <p>A nickname for this key. If a path was specified this defaults to the
+basename.</p>
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="from_file-method" class="method-detail ">
+          <a name="method-c-from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">from_file</span><span
+              class="method-args">(path)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="from_file-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_file</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadFile</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+  <span class="ruby-identifier">pkey</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">file_perms</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">mode</span> &amp; <span class="ruby-value">600</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadPerm</span>, <span class="ruby-identifier">path</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">file_perms</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pkey</span>.<span class="ruby-identifier">private?</span>
+  <span class="ruby-identifier">pkey</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- from_file-method -->
+
+      
+        <div id="generate_pkey-method" class="method-detail ">
+          <a name="method-c-generate_pkey"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">generate_pkey</span><span
+              class="method-args">(authtype="RSA", bits=1024)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="generate_pkey-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">generate_pkey</span>(<span class="ruby-identifier">authtype</span>=<span class="ruby-string">&quot;RSA&quot;</span>, <span class="ruby-identifier">bits</span>=<span class="ruby-value">1024</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">authtype</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-node">&quot;Unknown authentication: #{authttype}&quot;</span> 
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">bits</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">bits</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;RSA&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span> <span class="ruby-operator">:</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">DSA</span>
+  <span class="ruby-identifier">pk</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">bits</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- generate_pkey-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- generate_pkey-method -->
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(data, name=nil)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">name</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">data</span>
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-string">'default'</span>
+  <span class="ruby-identifier">parse_data</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+        <div id="public_key_to_ssh2-method" class="method-detail ">
+          <a name="method-c-public_key_to_ssh2"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">public_key_to_ssh2</span><span
+              class="method-args">(pubkey)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <ul><li>
+<p><tt>pubkey</tt> an instance of OpenSSL::PKey::RSA or OpenSSL::PKey::DSA</p>
+</li></ul>
+
+<p>Returns a public key in SSH format (suitable for ~/.ssh/authorized_keys)</p>
+            
+
+            
+            <div class="method-source-code" id="public_key_to_ssh2-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-identifier">pubkey</span>)
+  <span class="ruby-identifier">authtype</span> = <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'::'</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">downcase</span>
+  <span class="ruby-identifier">b64pub</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_blob</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[\r\n]/</span>, <span class="ruby-string">''</span>)
+  <span class="ruby-string">&quot;ssh-%s %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">authtype</span>, <span class="ruby-identifier">b64pub</span>]  <span class="ruby-comment"># =&gt; ssh-rsa AAAAB3NzaC1...=</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- public_key_to_ssh2-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- public_key_to_ssh2-method -->
+
+      
+        <div id="sign-method" class="method-detail ">
+          <a name="method-c-sign"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sign</span><span
+              class="method-args">(secret, string, digesttype="sha1")</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sign-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-string">&quot;sha1&quot;</span>)
+  <span class="ruby-identifier">@@digest</span> <span class="ruby-operator">||=</span> {} 
+  <span class="ruby-identifier">@@digest</span>[<span class="ruby-identifier">digest</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">digesttype</span>)
+  <span class="ruby-identifier">sig</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">HMAC</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">@@digest</span>[<span class="ruby-identifier">digest</span>], <span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>).<span class="ruby-identifier">strip</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sign-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sign-method -->
+
+      
+        <div id="sign_aws-method" class="method-detail ">
+          <a name="method-c-sign_aws"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sign_aws</span><span
+              class="method-args">(secret, string)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sign_aws-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sign_aws</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>)
+  <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">string</span>, <span class="ruby-string">&quot;sha1&quot;</span>)).<span class="ruby-identifier">strip</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sign_aws-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sign_aws-method -->
+
+      
+        <div id="supported_authentication-3F-method" class="method-detail ">
+          <a name="method-c-supported_authentication-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">supported_authentication?</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="supported_authentication-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">supported_authentication?</span>(<span class="ruby-identifier">val</span>)
+  [<span class="ruby-string">&quot;RSA&quot;</span>, <span class="ruby-string">&quot;DSA&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- supported_authentication-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- supported_authentication-3F-method -->
+
+      
+        <div id="supported_keytype-3F-method" class="method-detail ">
+          <a name="method-c-supported_keytype-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">supported_keytype?</span><span
+              class="method-args">(val)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="supported_keytype-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">supported_keytype?</span>(<span class="ruby-identifier">val</span>)
+  [<span class="ruby-string">&quot;PRIVATE&quot;</span>, <span class="ruby-string">&quot;PUBLIC&quot;</span>].<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">val</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- supported_keytype-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- supported_keytype-3F-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="decrypt-method" class="method-detail ">
+          <a name="method-i-decrypt"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">decrypt</span><span
+              class="method-args">(text)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="decrypt-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">decrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_decrypt&quot;</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">text</span>)); <span class="ruby-keyword">end</span></pre>
+            </div><!-- decrypt-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- decrypt-method -->
+
+      
+        <div id="dsa-3F-method" class="method-detail ">
+          <a name="method-i-dsa-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dsa?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="dsa-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;DSA&quot;</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- dsa-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dsa-3F-method -->
+
+      
+        <div id="dump-method" class="method-detail ">
+          <a name="method-i-dump"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dump</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="dump-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dump</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_text</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_pem</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- dump-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dump-method -->
+
+      
+        <div id="encrypt-method" class="method-detail ">
+          <a name="method-i-encrypt"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">encrypt</span><span
+              class="method-args">(text)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Encrypt <tt>text</tt> with this public or private key. The key must</p>
+            
+
+            
+            <div class="method-source-code" id="encrypt-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">encrypt</span>(<span class="ruby-identifier">text</span>); <span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{keytype.downcase}_encrypt&quot;</span>, <span class="ruby-identifier">text</span>)); <span class="ruby-keyword">end</span></pre>
+            </div><!-- encrypt-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- encrypt-method -->
+
+      
+        <div id="encrypted-3F-method" class="method-detail ">
+          <a name="method-i-encrypted-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">encrypted?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="encrypted-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">encrypted?</span>; <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/ENCRYPTED/</span>); <span class="ruby-keyword">end</span></pre>
+            </div><!-- encrypted-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- encrypted-3F-method -->
+
+      
+        <div id="inspect-method" class="method-detail ">
+          <a name="method-i-inspect"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inspect</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Reveals some metadata about the key. Does not print the key.</p>
+
+<pre>&lt;Rye::Key:id_rsa.pub authtype=&quot;RSA&quot; keytype=&quot;PRIVATE&quot;&gt;</pre>
+            
+
+            
+            <div class="method-source-code" id="inspect-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-string">'&lt;%s:%s authtype=&quot;%s&quot; keytype=&quot;%s&quot;&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>, <span class="ruby-ivar">@authtype</span>, <span class="ruby-ivar">@keytype</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inspect-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inspect-method -->
+
+      
+        <div id="private-3F-method" class="method-detail ">
+          <a name="method-i-private-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">private?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="private-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">private?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;PRIVATE&quot;</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- private-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- private-3F-method -->
+
+      
+        <div id="private_key-method" class="method-detail ">
+          <a name="method-i-private_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">private_key</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="private_key-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">private_key</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-string">&quot;No private key&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">public?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>
+  <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- private_key-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- private_key-method -->
+
+      
+        <div id="public-3F-method" class="method-detail ">
+          <a name="method-i-public-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">public?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="public-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">public?</span>; <span class="ruby-ivar">@keytype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;PUBLIC&quot;</span>;  <span class="ruby-keyword">end</span></pre>
+            </div><!-- public-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- public-3F-method -->
+
+      
+        <div id="public_key-method" class="method-detail ">
+          <a name="method-i-public_key"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">public_key</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="public_key-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">public_key</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">PKeyError</span>, <span class="ruby-string">&quot;No public key&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@keypair</span>
+  <span class="ruby-identifier">pubkey</span> = <span class="ruby-identifier">public?</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@keypair</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">public_key</span>
+  <span class="ruby-comment"># Add the to_ssh2 method to the instance of OpenSSL::PKey::*SA only</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">to_ssh2</span>; <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">public_key_to_ssh2</span>(<span class="ruby-keyword">self</span>);  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">pubkey</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- public_key-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- public_key-method -->
+
+      
+        <div id="rsa-3F-method" class="method-detail ">
+          <a name="method-i-rsa-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">rsa?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="rsa-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rsa?</span>; <span class="ruby-ivar">@authtype</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;RSA&quot;</span>; <span class="ruby-keyword">end</span></pre>
+            </div><!-- rsa-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- rsa-3F-method -->
+
+      
+        <div id="sign-method" class="method-detail ">
+          <a name="method-i-sign"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">sign</span><span
+              class="method-args">(string, digesttype="sha1")</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="sign-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sign</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>=<span class="ruby-string">&quot;sha1&quot;</span>)
+  <span class="ruby-constant">Rye</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-ivar">@keypair</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">digesttype</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- sign-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- sign-method -->
+
+      
+        <div id="to_s-method" class="method-detail ">
+          <a name="method-i-to_s"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">to_s</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Reveals the key basename. Does not print the key.</p>
+
+<pre>&lt;Rye::Key:id_rsa.pub&gt;</pre>
+            
+
+            
+            <div class="method-source-code" id="to_s-source">
+<pre>
+<span class="ruby-comment"># File lib/rye/key.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-string">'&lt;%s:%s&gt;'</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">name</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- to_s-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- to_s-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
