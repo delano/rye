@@ -6,7 +6,7 @@ require "rdoc/task"
 task :default => ["build"]
 CLEAN.include [ 'pkg', 'doc', 'rdoc' ]
 name = "rye"
-key = File.join('/mnt/gem/', 'gem-private_key.pem');
+key = '/etc/certs/gem-private_key.pem';
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require name
