@@ -4,7 +4,7 @@ require "rake/clean"
 require "rdoc/task"
 
 task :default => ["build"]
-CLEAN.include [ 'pkg', 'rdoc' ]
+CLEAN.include [ 'pkg', 'doc', 'rdoc' ]
 name = "rye"
 key = File.join('/mnt/gem/', 'gem-private_key.pem');
 
