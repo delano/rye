@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "rye"
-  s.version = "0.9.8"
+  s.version = "0.9.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Delano Mandelbaum"]
   s.cert_chain = ["gem-public_cert.pem"]
-  s.date = "2013-02-06"
+  s.date = "2013-11-11"
   s.description = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.email = "delano@solutious.com"
   s.extra_rdoc_files = [
@@ -67,10 +67,8 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/delano/rye"
   s.require_paths = ["lib"]
   s.rubyforge_project = "rye"
-  s.rubygems_version = "1.8.25"
-  if File.exists?("/mnt/gem/gem-private_key.pem")
-    s.signing_key = "/mnt/gem/gem-private_key.pem"
-  end
+  s.rubygems_version = "1.8.23"
+  s.signing_key = "/etc/certs/gem-private_key.pem"
   s.summary = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
 
   if s.respond_to? :specification_version then
