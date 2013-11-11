@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.11 (2013-11-11) #############################
+
+* CHANGE: Removed Gemspec to avoid install issues
+
 #### 0.9.10 (2013-11-11) #############################
 
 * FIXED: gemspec fix for windows install error (rye requires rye)
