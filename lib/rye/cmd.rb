@@ -11,7 +11,7 @@ module Rye;
   # with mixins. 
   #
   #     require 'rye'
-  #     module Rye::Box::Cmd
+  #     module Rye::Cmd
   #       def special(*args); run_command("/your/special/command", args); end
   #     end
   #
