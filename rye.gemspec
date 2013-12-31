@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Delano Mandelbaum"]
   s.cert_chain = ["gem-public_cert.pem"]
   s.date = "2013-11-11"
+  s.license = 'MIT'
   s.description = "Run SSH commands on a bunch of machines at the same time (from Ruby)."
   s.email = "delano@solutious.com"
   s.extra_rdoc_files = [
