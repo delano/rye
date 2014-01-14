@@ -90,11 +90,11 @@ module Rye
     def exception_hook=(val); @rye_exception_hook = val; end
 
     # * +host+ The hostname to connect to. Default: localhost.
-    # * +user+ The username to connect as. Default: SSH config file or current shell user.
     # * +opts+ a hash of optional arguments.
     #
     # The +opts+ hash excepts the following keys:
     #
+    # * :user => the username to connect as. Default: SSH config file or current shell user.
     # * :safe => should Rye be safe? Default: true
     # * :port => remote server ssh port. Default: SSH config file or 22
     # * :keys => one or more private key file paths (passwordless login)
