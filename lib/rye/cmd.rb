@@ -176,7 +176,7 @@ module Rye;
     #
     # Returns a String containing the content of all remote *paths*. 
     def string_download(*paths)
-      net_scp_transfer!(:download, *paths).string
+      net_scp_transfer!(:download, false, *paths).string
     end
     alias_method :str_download, :string_download
     
