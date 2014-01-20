@@ -184,7 +184,7 @@ module Rye;
     #
     # Uploads the content of the String +str+ to +remote_path+. Returns nil
     def string_upload(str, remote_path)
-      net_scp_transfer!(:upload, StringIO.new(str), remote_path)
+      net_scp_transfer!(:upload, false, StringIO.new(str), remote_path)
     end
     alias_method :str_upload, :string_upload
     
