@@ -1069,7 +1069,7 @@ module Rye
         }
         channel.on_data                   { |ch, data| 
           channel[:handler] = ":on_data"
-          @rye_stdout_hook.call(data) if !@rye_pty && !@rye_quiet && @rye_stdout_hook.kind_of?(Proc)
+          @rye_stdout_hook.call(data, user, host, nickname) if !@rye_pty && !@rye_quiet && @rye_stdout_hook.kind_of?(Proc)
           if rye_pty && data =~ /password/i
             channel[:prompt] = data
             channel[:state] = :await_input
