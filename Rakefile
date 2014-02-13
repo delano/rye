@@ -24,7 +24,7 @@ begin
     s.homepage = "https://github.com/delano/rye"
     s.authors = ["Delano Mandelbaum"]
     s.add_dependency 'annoy'
-    s.add_dependency 'sysinfo',         '>= 0.7.3'
+    s.add_dependency 'sysinfo',         '>= 0.8.1'
     s.add_dependency 'highline',        '>= 1.5.1'
     s.add_dependency 'net-ssh',         '>= 2.0.13'
     s.add_dependency 'net-scp',         '>= 1.0.2'
