@@ -1,8 +1,6 @@
 require "rye"
 
-# May need to update this in the future with a
-# different free SSH provider
-@hostname = "shellmix.com"
+@hostname = "onetimesecret.com"
 
 ## Don't prompt for password if "publickey" is the only :auth_method
 box = Rye::Box.new(
