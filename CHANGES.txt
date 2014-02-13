@@ -1,5 +1,11 @@
 RYE, CHANGES
 
+#### 0.9.12 (2014-02-11) #############################
+
+* CHANGE: Bumped up sysinfo dep to 0.8.1
+* CHANGE: Pass user, host, nickname to stdout_hook [crandles]
+
+
 #### 0.9.11 (2013-11-11) #############################
 
 * CHANGE: Removed Gemspec to avoid install issues
