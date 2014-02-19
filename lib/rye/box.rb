@@ -1097,7 +1097,7 @@ module Rye
         end
         channel.on_process                { 
           channel[:handler] = :on_process
-          STDERR.print channel[:stderr].read if channel[:stderr].available > 0
+          #STDERR.print channel[:stderr].read if channel[:stderr].available > 0
           begin
             send("state_#{channel[:state]}", channel) unless channel[:state].nil?
           rescue Interrupt
