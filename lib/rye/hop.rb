@@ -122,9 +122,6 @@ module Rye
       @rye_quiet, @rye_sudo = @rye_opts.delete(:quiet), @rye_opts.delete(:sudo)
       @rye_templates = @rye_opts.delete(:templates)
       
-      # Store the state of the terminal 
-      @rye_stty_save = `stty -g`.chomp rescue nil
-      
       unless @rye_templates.nil?
         require @rye_templates.to_s   # should be :erb
       end
