@@ -155,7 +155,7 @@ module Rye
       @rye_password_prompt = @rye_opts.delete(:password_prompt)
 
       # Store the state of the terminal
-      @rye_stty_save = `stty -g`.chomp rescue nil
+      @rye_stty_save = `stty -g`.chomp if STDIN.tty? 
       
       unless @rye_templates.nil?
         require @rye_templates.to_s   # should be :erb
