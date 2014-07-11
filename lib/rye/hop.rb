@@ -123,7 +123,7 @@ module Rye
       @rye_templates = @rye_opts.delete(:templates)
       
       # Store the state of the terminal 
-      @rye_stty_save = `stty -g`.chomp if STDIN.tty? 
+      @rye_stty_save = `stty -g`.chomp if STDIN.tty? rescue nil 
       
       unless @rye_templates.nil?
         require @rye_templates.to_s   # should be :erb
