@@ -1,5 +1,9 @@
 RYE, CHANGES
 
+#### 0.9.13 (2014-02-11) #############################
+
+* FIXED: Fixup for stty annoyance #58 [derjohn]
+
 #### 0.9.12 (2014-02-11) #############################
 
 * CHANGE: Bumped up sysinfo dep to 0.8.1
