@@ -719,6 +719,7 @@ module Rye
           @rye_via.disconnect
         end
       rescue SystemCallError, Timeout::Error => ex
+        @rye_ssh.close if @rye_ssh
         error "Rye::Box: Disconnect timeout (#{ex.message})"
         debug ex.backtrace
       rescue Interrupt
