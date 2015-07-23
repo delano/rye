@@ -335,7 +335,7 @@ module Rye
             @rye_via.disconnect
           end
         end
-      rescue SystemCallErro => ex
+      rescue SystemCallError => ex
         error "Rye::Hop: Disconnect timeout (#{ex.message})"
         debug ex.backtrace
       rescue Interrupt
