@@ -14,7 +14,6 @@ require 'net/scp'
 require 'openssl'
 require 'tempfile'
 require 'highline'
-require 'timeout'
 
 require 'storable'
 require 'sysinfo'
@@ -314,7 +313,3 @@ module Rye
   Rye.reload
 
 end
-
-
-
-
